@@ -8,12 +8,11 @@ import java.util.Hashtable;
  */
 
 class X_Symbol extends X_Object {
-    private static Hashtable<String, X_Symbol> table;
+    private static Hashtable<String, X_Symbol> table = new Hashtable<>();
     private String name;
 
     X_Symbol(String s) {
         name = s;
-        table = new Hashtable<>();
     }
 
     public String getName() {
