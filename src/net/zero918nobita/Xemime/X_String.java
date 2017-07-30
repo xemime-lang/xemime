@@ -11,4 +11,9 @@ class X_String extends X_Object {
     X_String(String str) {
         value = str;
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }
