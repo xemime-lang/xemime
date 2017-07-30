@@ -1,5 +1,5 @@
 package net.zero918nobita.Xemime;
 
 enum TokenType {
-    INT, DOUBLE, STRING, SYMBOL
+    T, NIL, INT, DOUBLE, STRING, SYMBOL, EOS
 }

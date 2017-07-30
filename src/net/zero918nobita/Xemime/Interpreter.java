@@ -5,11 +5,13 @@ import java.util.TreeMap;
 
 class Interpreter {
     private static HashMap<String, Reference> consts;
+    private static HashMap<String, Reference> local;
     private static HashMap<String, Reference> params;
     private static TreeMap<String, X_Object> entities;
 
     Interpreter() {
         consts = new HashMap<>();
+        local = new HashMap<>();
         params = new HashMap<>();
         entities = new TreeMap<>();
         initializeBuiltinFuncs();
@@ -40,17 +42,24 @@ class Interpreter {
         return (params.containsKey(symbol.getName()));
     }
 
-    private static boolean isLocalVar(X_Symbol symbol, Environment env) {
-        return (env.getLocal().containsKey(symbol.getName()));
+    private static boolean isLocalVar(X_Symbol symbol) {
+        return (local.containsKey(symbol.getName()));
     }
 
     /**
      * シンボルの値を取得する
      */
-    X_Object getValueOfSymbol(X_Symbol symbol, Environment env) {
-        if (isLocalVar(symbol, env)) return env.getLocal().get(symbol.getName()).fetch(entities);
+    X_Object getValueOfSymbol(X_Symbol symbol) {
+        if (isLocalVar(symbol)) return local.get(symbol.getName()).fetch(entities);
         if (isConst(symbol)) return consts.get(symbol.getName()).fetch(entities);
         if (isGlobalVar(symbol)) return params.get(symbol.getName()).fetch(entities);
         return null;
+    }
+
+    /**
+     * 変数に値をセットする
+     */
+    void set(X_Symbol sym, X_Object obj) {
+        params.put(sym.getName(), register(obj));
     }
 }

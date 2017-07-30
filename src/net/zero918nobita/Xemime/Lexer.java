@@ -18,7 +18,7 @@ class Lexer {
         reader = new LexerReader(r);
     }
 
-    public boolean advance() {
+    boolean advance() {
         try {
             skipWhiteSpace();
             int c = reader.read();
@@ -79,8 +79,12 @@ class Lexer {
         return true;
     }
 
-    public int token() {
+    int token() {
         return tok;
+    }
+
+    TokenType tokenType() {
+        return tokenType;
     }
 
     public X_Object value() {

@@ -14,6 +14,11 @@ class X_Double extends X_Numeric {
     }
 
     @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    @Override
     Double getValue() {
         return value;
     }

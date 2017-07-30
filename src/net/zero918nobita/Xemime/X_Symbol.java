@@ -26,7 +26,7 @@ class X_Symbol extends X_Object {
     }
 
     public X_Object run(Environment env) throws Exception {
-        X_Object c = env.getInterpreter().getValueOfSymbol(this, env);
+        X_Object c = env.getInterpreter().getValueOfSymbol(this);
         if (c == null) throw new Exception("シンボル" + name + "は定義されていません");
         return c;
     }

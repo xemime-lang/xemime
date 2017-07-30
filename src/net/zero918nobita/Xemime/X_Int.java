@@ -13,6 +13,10 @@ class X_Int extends X_Numeric {
         value = num;
     }
 
+    public String toString() {
+        return String.valueOf(value);
+    }
+
     @Override
     Integer getValue() {
         return value;
