@@ -79,7 +79,7 @@ class Parser {
         X_Object obj = term();
         switch (tokenType) {
             case ADD:
-            case MUL:
+            case SUB:
             case OR:
                 obj = simpleExpr2(obj);
         }
