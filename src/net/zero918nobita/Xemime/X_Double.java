@@ -6,7 +6,6 @@ package net.zero918nobita.Xemime;
  */
 
 class X_Double extends X_Numeric {
-    private double value;
 
     X_Double(double num) {
         super();
@@ -19,8 +18,12 @@ class X_Double extends X_Numeric {
     }
 
     @Override
-    Double getValue() {
-        return value;
+    public boolean equals(Object obj) {
+        return (obj instanceof X_Double) && (((X_Double) obj).getValue() == this.value.doubleValue());
+    }
+
+    double getValue() {
+        return value.doubleValue();
     }
 
     @Override
@@ -28,11 +31,11 @@ class X_Double extends X_Numeric {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
-            result = new X_Double(value + i.getValue());
+            result = new X_Double(value.doubleValue() + i.getValue());
             return result;
         } else if (obj.getClass() == X_Double.class) {
             X_Double dbl = (X_Double) obj;
-            result = new X_Double(value + dbl.getValue());
+            result = new X_Double(value.doubleValue() + dbl.getValue());
             return result;
         } else {
             throw new Exception("数値以外のものを足そうとしました");
@@ -44,11 +47,11 @@ class X_Double extends X_Numeric {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
-            result = new X_Double(value - i.getValue());
+            result = new X_Double(value.doubleValue() - i.getValue());
             return result;
         } else if (obj.getClass() == X_Double.class) {
             X_Double dbl = (X_Double)obj;
-            result = new X_Double(value - dbl.getValue());
+            result = new X_Double(value.doubleValue() - dbl.getValue());
             return result;
         } else {
             throw new Exception("数値以外のものを引こうとしました");
@@ -60,11 +63,11 @@ class X_Double extends X_Numeric {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
-            result = new X_Double(value * i.getValue());
+            result = new X_Double(value.doubleValue() * i.getValue());
             return result;
         } else if (obj.getClass() == X_Double.class) {
             X_Double dbl = (X_Double)obj;
-            result = new X_Double(value * dbl.getValue());
+            result = new X_Double(value.doubleValue() * dbl.getValue());
             return result;
         } else {
             throw new Exception("数値以外のものを掛けようとしました");
@@ -76,14 +79,42 @@ class X_Double extends X_Numeric {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
-            result = new X_Double(value / i.getValue());
+            result = new X_Double(value.doubleValue() / i.getValue());
             return result;
         } else if (obj.getClass() == X_Double.class) {
             X_Double dbl = (X_Double)obj;
-            result = new X_Double(value / dbl.getValue());
+            result = new X_Double(value.doubleValue() / dbl.getValue());
             return result;
         } else {
             throw new Exception("数値以外のものを割ろうとしました");
         }
+    }
+
+    @Override
+    X_Object less(X_Object obj) throws Exception {
+        if (obj instanceof X_Int) return (this.getValue() < ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
+        else if (obj instanceof X_Double) return (this.getValue() < ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
+        else throw new Exception("Int, Double 以外のデータ型と大小を比較することはできません");
+    }
+
+    @Override
+    X_Object le(X_Object obj) throws Exception {
+        if (obj instanceof X_Int) return (this.getValue() <= ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
+        else if (obj instanceof X_Double) return (this.getValue() <= ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
+        else throw new Exception("Int, Double 以外のデータ型と大小を比較することはできません");
+    }
+
+    @Override
+    X_Object greater(X_Object obj) throws Exception {
+        if (obj instanceof X_Int) return (this.getValue() > ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
+        else if (obj instanceof X_Double) return (this.getValue() > ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
+        else throw new Exception("Int, Double 以外のデータ型と大小を比較することはできません");
+    }
+
+    @Override
+    X_Bool ge(X_Object obj) throws Exception {
+        if (obj instanceof X_Int) return (this.getValue() >= ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
+        else if (obj instanceof X_Double) return (this.getValue() >= ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
+        else throw new Exception("Int, Double 以外のデータ型と大小を比較することはできません");
     }
 }

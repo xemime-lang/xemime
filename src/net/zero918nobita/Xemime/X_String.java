@@ -16,4 +16,9 @@ class X_String extends X_Object {
     public String toString() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof X_String) && (this.value.equals(obj.toString()));
+    }
 }

@@ -8,15 +8,12 @@ package net.zero918nobita.Xemime;
 class Parser {
     private Lexer lex;
     private TokenType tokenType;
-    private int token;
 
     private void getToken() {
         if (lex.advance()) {
             tokenType = lex.tokenType();
-            token = lex.token();
         } else {
             tokenType = TokenType.EOS;
-            token = -1;
         }
     }
 
@@ -35,10 +32,11 @@ class Parser {
     private X_Object statement() throws Exception {
         X_Object obj = expr();
         if (obj != null) {
-            switch (token) {
-                case ';':
+            switch (tokenType) {
+                case SEMICOLON:
                     break;
                 default:
+                    System.out.println(tokenType);
                     throw new Exception("文法エラーです");
             }
         }
@@ -46,10 +44,14 @@ class Parser {
     }
 
     private X_Object expr() throws Exception {
-        X_Object obj = term();
-        switch (token) {
-            case '+':
-            case '-':
+        X_Object obj = simpleExpr();
+        switch (tokenType) {
+            case L:
+            case G:
+            case EQ:
+            case NE:
+            case LE:
+            case GE:
                 obj = expr2(obj);
                 break;
         }
@@ -58,21 +60,55 @@ class Parser {
 
     private X_Object expr2(X_Object obj) throws Exception {
         X_BinExpr result = null;
-        while ((token == '+') || (token == '-')) {
-            int op = token;
+        while ((tokenType == TokenType.L) ||
+                (tokenType == TokenType.G) ||
+                (tokenType == TokenType.EQ) ||
+                (tokenType == TokenType.NE) ||
+                (tokenType == TokenType.LE) ||
+                (tokenType == TokenType.GE)) {
+            TokenType op = tokenType;
             getToken();
-            X_Object obj2 = term();
+            X_Object obj2 = simpleExpr();
             if (result == null) result = new X_BinExpr(op, obj, obj2);
             else result = new X_BinExpr(op, result, obj2);
         }
         return result;
     }
 
+    private X_Object simpleExpr() throws Exception {
+        X_Object obj = term();
+        switch (tokenType) {
+            case ADD:
+            case MUL:
+            case OR:
+                obj = simpleExpr2(obj);
+        }
+        return obj;
+    }
+
+    private X_Object simpleExpr2(X_Object obj) throws Exception {
+        X_BinExpr result = null;
+        while ((tokenType == TokenType.ADD) ||
+                (tokenType == TokenType.SUB) ||
+                (tokenType == TokenType.OR)) {
+            TokenType op = tokenType;
+            getToken();
+            X_Object obj2 = term();
+            if (result == null) {
+                result = new X_BinExpr(op, obj, obj2);
+            } else {
+                result = new X_BinExpr(op, result, obj2);
+            }
+        }
+        return result;
+    }
+
     private X_Object term() throws Exception {
         X_Object obj = factor();
-        switch (token) {
-            case '*':
-            case '/':
+        switch (tokenType) {
+            case MUL:
+            case DIV:
+            case AND:
                 obj = term2(obj);
                 break;
         }
@@ -81,8 +117,10 @@ class Parser {
 
     private X_Object term2(X_Object obj) throws Exception {
         X_BinExpr result = null;
-        while ((token == '*') || (token == '/')) {
-            int op = token;
+        while ((tokenType == TokenType.MUL) ||
+                (tokenType == TokenType.DIV) ||
+                (tokenType == TokenType.AND)) {
+            TokenType op = tokenType;
             getToken();
             X_Object obj2 = term();
             if (result == null) {
@@ -110,7 +148,7 @@ class Parser {
             case SYMBOL:
                 X_Symbol sym = (X_Symbol)lex.value();
                 getToken();
-                if (token == '=') {
+                if (tokenType == TokenType.ASSIGN) {
                     getToken();
                     obj = new X_Assign(sym, expr());
                 } else {
@@ -129,21 +167,22 @@ class Parser {
                 obj = X_Bool.Nil;
                 getToken();
                 break;
+            case SUB:
+                getToken();
+                obj = new X_Minus(factor());
+                break;
+            case LP:
+                getToken();
+                obj = expr();
+                if (tokenType != TokenType.RP) throw new Exception("文法エラー: 対応する括弧がありません");
+                getToken();
+                break;
+            case NOT:
+                getToken();
+                obj = new X_Not(factor());
+                break;
             default:
-                switch (token) {
-                    case '-':
-                        getToken();
-                        obj = new X_Minus(factor());
-                        break;
-                    case '(':
-                        getToken();
-                        obj = expr();
-                        if (token != ')') throw new Exception("文法エラー: 対応する括弧がありません");
-                        getToken();
-                        break;
-                    default:
-                        throw new Exception("文法エラーです");
-                }
+                throw new Exception("文法エラーです");
         }
         return obj;
     }

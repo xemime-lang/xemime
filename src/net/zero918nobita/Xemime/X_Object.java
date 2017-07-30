@@ -55,4 +55,28 @@ class X_Object {
     X_Object divide(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `/` 演算子は使用できません");
     }
+
+    X_Object less(X_Object obj) throws Exception {
+        throw new Exception("このオブジェクトに `<` 演算子は使用できません");
+    }
+
+    X_Object le(X_Object obj) throws Exception {
+        throw new Exception("このオブジェクトに `<=` 演算子は使用できません");
+    }
+
+    X_Object greater(X_Object obj) throws Exception {
+        throw new Exception("このオブジェクトに `>` 演算子は使用できません");
+    }
+
+    X_Object ge(X_Object obj) throws Exception {
+        throw new Exception("このオブジェクトに `>=` 演算子は使用できません");
+    }
+
+    X_Object and(X_Object obj) throws Exception {
+        throw new Exception("このオブジェクトに `&&` 演算子は使用できません");
+    }
+
+    X_Object or(X_Object obj) throws Exception {
+        throw new Exception("このオブジェクトに `||` 演算子は使用できません");
+    }
 }

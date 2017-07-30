@@ -7,7 +7,7 @@ package net.zero918nobita.Xemime;
 
 class X_Assign extends X_BinExpr {
     X_Assign(X_Symbol symbol, X_Object obj) {
-        super('=', symbol, obj);
+        super(TokenType.ASSIGN, symbol, obj);
     }
 
     X_Object run(Environment env) throws Exception {

@@ -11,7 +11,6 @@ import java.util.Hashtable;
 
 class Lexer {
     private TokenType tokenType;
-    private int tok;
     private X_Object val;
     private LexerReader reader;
 
@@ -33,14 +32,74 @@ class Lexer {
             if (c < 0) return false;
             switch (c) {
                 case ';':
+                    tokenType = TokenType.SEMICOLON;
+                    break;
                 case '+':
+                    tokenType = TokenType.ADD;
+                    break;
                 case '-':
+                    tokenType = TokenType.SUB;
+                    break;
                 case '*':
+                    tokenType = TokenType.MUL;
+                    break;
                 case '(':
+                    tokenType = TokenType.LP;
+                    break;
                 case ')':
+                    tokenType = TokenType.RP;
+                    break;
                 case '=':
-                    tokenType = TokenType.SIGN;
-                    tok = c;
+                    c = reader.read();
+                    if (c == '=') {
+                        tokenType = TokenType.EQ;
+                    } else {
+                        reader.unread();
+                        tokenType = TokenType.ASSIGN;
+                    }
+                    break;
+                case '!':
+                    c = reader.read();
+                    if (c == '=') {
+                        tokenType = TokenType.NE;
+                    } else {
+                        reader.unread();
+                        tokenType = TokenType.NOT;
+                    }
+                    break;
+                case '<':
+                    c = reader.read();
+                    if (c == '=') {
+                        tokenType = TokenType.LE;
+                    } else {
+                        reader.unread();
+                        tokenType = TokenType.L;
+                    }
+                    break;
+                case '>':
+                    c = reader.read();
+                    if (c == '=') {
+                        tokenType = TokenType.GE;
+                    } else {
+                        reader.unread();
+                        tokenType = TokenType.G;
+                    }
+                    break;
+                case '&':
+                    c = reader.read();
+                    if (c == '&') {
+                        tokenType = TokenType.AND;
+                    } else {
+                        throw new Exception("演算子 & は使えません");
+                    }
+                    break;
+                case '|':
+                    c = reader.read();
+                    if (c == '|') {
+                        tokenType = TokenType.OR;
+                    } else {
+                        throw new Exception("演算子 | は使えません");
+                    }
                     break;
                 case '/':
                     c = reader.read();
@@ -52,13 +111,12 @@ class Lexer {
                         return advance();
                     } else {
                         reader.unread();
-                        tok = '/';
+                        tokenType = TokenType.DIV;
                     }
                     break;
                 case '"':
                     lexString();
                     tokenType = TokenType.STRING;
-                    tok = '"';
                     break;
                 default:
                     if (Character.isDigit((char) c)) {
@@ -66,11 +124,9 @@ class Lexer {
                         lexDigit();
                         if (val.getClass() == X_Int.class) {
                             tokenType = TokenType.INT;
-                            tok = c;
                         }
                         if (val.getClass() == X_Double.class) {
                             tokenType = TokenType.DOUBLE;
-                            tok = c;
                         }
                     } else if (Character.isJavaIdentifierStart((char)c)) {
                         reader.unread();
@@ -85,10 +141,6 @@ class Lexer {
             return false;
         }
         return true;
-    }
-
-    int token() {
-        return tok;
     }
 
     TokenType tokenType() {
@@ -159,10 +211,8 @@ class Lexer {
 
         if (s.toUpperCase().equals("T")) {
             tokenType = TokenType.T;
-            tok = 'T';
         } else if (s.toUpperCase().equals("NIL")) {
             tokenType = TokenType.NIL;
-            tok = 'N';
         }
     }
 

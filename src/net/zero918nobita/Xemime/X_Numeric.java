@@ -6,5 +6,15 @@ package net.zero918nobita.Xemime;
  */
 
 abstract class X_Numeric extends X_Object {
-    abstract Number getValue();
+    protected Number value;
+
+    @Override
+    X_Object and(X_Object obj) throws Exception {
+        throw new Exception("このオブジェクトに `&&` 演算子は使用できません");
+    }
+
+    @Override
+    X_Object or(X_Object obj) throws Exception {
+        throw new Exception("このオブジェクトに `||` 演算子は使用できません");
+    }
 }
