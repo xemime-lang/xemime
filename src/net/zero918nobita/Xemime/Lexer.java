@@ -31,7 +31,7 @@ class Lexer {
                 case '(':
                 case ')':
                 case '=':
-                    // ;,+,-,*,/ のときには文字コードがそのままトークンの種類を表す
+                    tokenType = TokenType.SIGN;
                     tok = c;
                     break;
                 case '/':
