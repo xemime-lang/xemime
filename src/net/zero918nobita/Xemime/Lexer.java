@@ -101,6 +101,9 @@ class Lexer {
                         throw new Exception("演算子 | は使えません");
                     }
                     break;
+                case '^':
+                    tokenType = TokenType.XOR;
+                    break;
                 case '/':
                     c = reader.read();
                     if (c == '/') {

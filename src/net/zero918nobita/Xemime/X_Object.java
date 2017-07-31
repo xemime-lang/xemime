@@ -79,4 +79,8 @@ class X_Object {
     X_Object or(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `||` 演算子は使用できません");
     }
+
+    X_Object xor(X_Object obj) throws Exception {
+        throw new Exception("このオブジェクトに `^` 演算子は使用できません");
+    }
 }

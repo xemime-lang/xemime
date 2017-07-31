@@ -85,4 +85,10 @@ class X_Bool extends X_Object {
         if (obj instanceof X_Bool) return (p || (((X_Bool) obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("`||` 演算子の右辺が真偽値ではありません");
     }
+
+    @Override
+    X_Object xor(X_Object obj) throws Exception {
+        if (obj instanceof X_Bool) return (p ^ (((X_Bool) obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
+        else throw new Exception("`^` 演算子の右辺が真偽値ではありません");
+    }
 }

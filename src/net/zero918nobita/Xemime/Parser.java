@@ -110,6 +110,7 @@ class Parser {
             case MUL:
             case DIV:
             case AND:
+            case XOR:
                 obj = term2(obj);
                 break;
         }
@@ -120,7 +121,8 @@ class Parser {
         X_BinExpr result = null;
         while ((tokenType == TokenType.MUL) ||
                 (tokenType == TokenType.DIV) ||
-                (tokenType == TokenType.AND)) {
+                (tokenType == TokenType.AND) ||
+                (tokenType == TokenType.XOR)) {
             TokenType op = tokenType;
             getToken();
             X_Object obj2 = term();

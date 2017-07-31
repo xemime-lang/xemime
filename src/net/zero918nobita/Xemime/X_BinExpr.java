@@ -25,6 +25,8 @@ class X_BinExpr extends X_Object {
             result = o1.and(o2);
         } else if (op == TokenType.OR) {
             result = o1.or(o2);
+        } else if (op == TokenType.XOR) {
+            result = o1.xor(o2);
         } else {
             switch (op) { // 演算子ごとに処理を振り分ける
                 case ADD:
