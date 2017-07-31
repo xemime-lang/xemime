@@ -82,6 +82,7 @@ class Parser {
             case SUB:
             case OR:
                 obj = simpleExpr2(obj);
+                break;
         }
         return obj;
     }

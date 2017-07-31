@@ -19,13 +19,13 @@ class X_BinExpr extends X_Object {
     X_Object run(Environment env) throws Exception {
         X_Object result = null;
         X_Object o1 = obj1.run(env);
+        X_Object o2 = obj2.run(env);
 
         if (op == TokenType.AND) {
-            result = obj1.and(obj2);
+            result = o1.and(o2);
         } else if (op == TokenType.OR) {
-            result = obj1.or(obj2);
+            result = o1.or(o2);
         } else {
-            X_Object o2 = obj2.run(env);
             switch (op) { // 演算子ごとに処理を振り分ける
                 case ADD:
                     result = o1.add(o2);
