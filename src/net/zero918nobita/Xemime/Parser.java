@@ -198,10 +198,14 @@ class Parser {
         ArrayList<X_Object> list = null;
         getToken();
         while (tokenType != TokenType.RB) {
-            X_Object o = statement();
+            X_Object o = expr();
+            if (tokenType == TokenType.SEMICOLON) {
+                if (list == null) list = new ArrayList<>();
+                list.add(o);
+            } else {
+                throw new Exception("文法エラーです");
+            }
             getToken();
-            if (list == null) list = new ArrayList<>();
-            list.add(o);
         }
         getToken();
         return new X_Block(list);

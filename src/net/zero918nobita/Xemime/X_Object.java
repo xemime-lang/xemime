@@ -36,7 +36,7 @@ class X_Object {
         return members.get(key);
     }
 
-    X_Object run(Environment env) throws Exception {
+    X_Object run() throws Exception {
         return this;
     }
 

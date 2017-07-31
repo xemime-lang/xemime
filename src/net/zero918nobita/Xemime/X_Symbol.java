@@ -1,6 +1,6 @@
 package net.zero918nobita.Xemime;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 
 /**
  * シンボル
@@ -8,11 +8,21 @@ import java.util.Hashtable;
  */
 
 class X_Symbol extends X_Object {
-    private static Hashtable<String, X_Symbol> table = new Hashtable<>();
+    private static HashMap<String, X_Symbol> table = new HashMap<>();
     private String name;
 
     X_Symbol(String s) {
         name = s;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof X_Symbol && ((X_Symbol)obj).getName().equals(this.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
     public String getName() {
@@ -24,8 +34,8 @@ class X_Symbol extends X_Object {
         else return new X_Symbol(s);
     }
 
-    public X_Object run(Environment env) throws Exception {
-        X_Object c = env.getInterpreter().getValueOfSymbol(this);
+    public X_Object run() throws Exception {
+        X_Object c = Main.getValueOfSymbol(this);
         if (c == null) throw new Exception("シンボル" + name + "は定義されていません");
         return c;
     }

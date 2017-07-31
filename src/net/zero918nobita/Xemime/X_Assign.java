@@ -10,10 +10,10 @@ class X_Assign extends X_BinExpr {
         super(TokenType.ASSIGN, symbol, obj);
     }
 
-    X_Object run(Environment env) throws Exception {
+    X_Object run() throws Exception {
         X_Symbol sym = (X_Symbol)obj1;
-        X_Object o = obj2.run(env);
-        env.getInterpreter().set(sym, o);
+        X_Object o = obj2.run();
+        Main.setValue(sym, o);
         return o;
     }
 }

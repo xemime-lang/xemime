@@ -16,10 +16,10 @@ class X_BinExpr extends X_Object {
         obj2 = o2;
     }
 
-    X_Object run(Environment env) throws Exception {
+    X_Object run() throws Exception {
         X_Object result = null;
-        X_Object o1 = obj1.run(env);
-        X_Object o2 = obj2.run(env);
+        X_Object o1 = obj1.run();
+        X_Object o2 = obj2.run();
 
         if (op == TokenType.AND) {
             result = o1.and(o2);

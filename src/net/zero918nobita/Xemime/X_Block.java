@@ -15,9 +15,9 @@ class X_Block extends X_Object {
     }
 
     @Override
-    X_Object run(Environment env) throws Exception {
+    X_Object run() throws Exception {
         X_Object obj = null;
-        if (list != null) for (X_Object o : list) obj = o.run(env);
+        if (list != null) for (X_Object o : list) obj = o.run();
         if (obj == null) throw new Exception("ブロックの戻り値が記述されていません");
         return obj;
     }

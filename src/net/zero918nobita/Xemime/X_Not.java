@@ -13,8 +13,8 @@ class X_Not extends X_Object {
     }
 
     @Override
-    X_Object run(Environment env) throws Exception {
-        X_Object o = obj.run(env);
+    X_Object run() throws Exception {
+        X_Object o = obj.run();
         if (o.getClass() != X_Bool.class) throw new Exception("");
         X_Bool p = (X_Bool)o;
         if (p.isTrue()) return X_Bool.Nil;
