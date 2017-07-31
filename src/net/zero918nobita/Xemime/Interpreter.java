@@ -48,6 +48,8 @@ class Interpreter {
 
     /**
      * シンボルの値を取得する
+     * @param symbol シンボル
+     * @return シンボルの値
      */
     X_Object getValueOfSymbol(X_Symbol symbol) {
         if (isLocalVar(symbol)) return local.get(symbol.getName()).fetch(entities);
@@ -58,6 +60,8 @@ class Interpreter {
 
     /**
      * 変数に値をセットする
+     * @param sym シンボル
+     * @param obj 値
      */
     void set(X_Symbol sym, X_Object obj) {
         params.put(sym.getName(), register(obj));
