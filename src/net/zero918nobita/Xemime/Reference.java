@@ -12,7 +12,7 @@ class Reference {
     Reference(int address) {
         this.address = address;
     }
-    X_Object fetch(TreeMap<String, X_Object> entities) {
-        return entities.get(String.valueOf(this.address));
+    X_Object fetch(TreeMap<X_Address, X_Object> entities) {
+        return entities.get(new X_Address(address));
     }
 }
