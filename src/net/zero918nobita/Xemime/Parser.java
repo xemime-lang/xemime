@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime;
 
+import java.util.ArrayList;
+
 /**
  * 構文解析器
  * @author Kodai Matsumoto
@@ -36,7 +38,6 @@ class Parser {
                 case SEMICOLON:
                     break;
                 default:
-                    System.out.println(tokenType);
                     throw new Exception("文法エラーです");
             }
         }
@@ -184,9 +185,25 @@ class Parser {
                 getToken();
                 obj = new X_Not(factor());
                 break;
+            case LB:
+                obj = block();
+                break;
             default:
                 throw new Exception("文法エラーです");
         }
         return obj;
+    }
+
+    private X_Object block() throws Exception {
+        ArrayList<X_Object> list = null;
+        getToken();
+        while (tokenType != TokenType.RB) {
+            X_Object o = statement();
+            getToken();
+            if (list == null) list = new ArrayList<>();
+            list.add(o);
+        }
+        getToken();
+        return new X_Block(list);
     }
 }

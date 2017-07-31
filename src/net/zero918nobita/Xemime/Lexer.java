@@ -2,7 +2,6 @@ package net.zero918nobita.Xemime;
 
 import java.io.Reader;
 import java.math.BigDecimal;
-import java.util.Hashtable;
 
 /**
  * 字句解析器
@@ -13,13 +12,6 @@ class Lexer {
     private TokenType tokenType;
     private X_Object val;
     private LexerReader reader;
-
-    private static Hashtable<String, X_Object> reserved = new Hashtable<>();
-
-    static {
-        reserved.put("T", new X_Bool(true));
-        reserved.put("Nil", new X_Bool(false));
-    }
 
     Lexer(Reader r) {
         reader = new LexerReader(r);
@@ -48,6 +40,12 @@ class Lexer {
                     break;
                 case ')':
                     tokenType = TokenType.RP;
+                    break;
+                case '{':
+                    tokenType = TokenType.LB;
+                    break;
+                case '}':
+                    tokenType = TokenType.RB;
                     break;
                 case '=':
                     c = reader.read();
