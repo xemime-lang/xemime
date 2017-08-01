@@ -90,21 +90,21 @@ class X_Int extends X_Numeric {
     }
 
     @Override
-    X_Object less(X_Object obj) throws Exception {
+    X_Bool less(X_Object obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() < ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() < ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("Int, Double 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
-    X_Object le(X_Object obj) throws Exception {
+    X_Bool le(X_Object obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() <= ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() <= ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("Int, Double 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
-    X_Object greater(X_Object obj) throws Exception {
+    X_Bool greater(X_Object obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() > ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() > ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("Int, Double 以外のデータ型と大小を比較することはできません");

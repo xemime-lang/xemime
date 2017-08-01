@@ -56,31 +56,31 @@ class X_Object {
         throw new Exception("このオブジェクトに `/` 演算子は使用できません");
     }
 
-    X_Object less(X_Object obj) throws Exception {
+    X_Bool less(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `<` 演算子は使用できません");
     }
 
-    X_Object le(X_Object obj) throws Exception {
+    X_Bool le(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `<=` 演算子は使用できません");
     }
 
-    X_Object greater(X_Object obj) throws Exception {
+    X_Bool greater(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `>` 演算子は使用できません");
     }
 
-    X_Object ge(X_Object obj) throws Exception {
+    X_Bool ge(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `>=` 演算子は使用できません");
     }
 
-    X_Object and(X_Object obj) throws Exception {
+    X_Bool and(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `&&` 演算子は使用できません");
     }
 
-    X_Object or(X_Object obj) throws Exception {
+    X_Bool or(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `||` 演算子は使用できません");
     }
 
-    X_Object xor(X_Object obj) throws Exception {
+    X_Bool xor(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `^` 演算子は使用できません");
     }
 }

@@ -55,39 +55,39 @@ class X_Bool extends X_Object {
     }
 
     @Override
-    X_Object less(X_Object obj) throws Exception {
+    X_Bool less(X_Object obj) throws Exception {
         throw new Exception("真偽値に `<` 演算子は使用できません");
     }
 
     @Override
-    X_Object le(X_Object obj) throws Exception {
+    X_Bool le(X_Object obj) throws Exception {
         throw new Exception("真偽値に `<=` 演算子は使用できません");
     }
 
     @Override
-    X_Object greater(X_Object obj) throws Exception {
+    X_Bool greater(X_Object obj) throws Exception {
         throw new Exception("真偽値に `>` 演算子は使用できません");
     }
 
     @Override
-    X_Object ge(X_Object obj) throws Exception {
+    X_Bool ge(X_Object obj) throws Exception {
         throw new Exception("真偽値に `>=` 演算子は使用できません");
     }
 
     @Override
-    X_Object and(X_Object obj) throws Exception {
+    X_Bool and(X_Object obj) throws Exception {
         if (obj instanceof X_Bool) return (p && (((X_Bool)obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("`&&` 演算子の右辺が真偽値ではありません");
     }
 
     @Override
-    X_Object or(X_Object obj) throws Exception {
+    X_Bool or(X_Object obj) throws Exception {
         if (obj instanceof X_Bool) return (p || (((X_Bool) obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("`||` 演算子の右辺が真偽値ではありません");
     }
 
     @Override
-    X_Object xor(X_Object obj) throws Exception {
+    X_Bool xor(X_Object obj) throws Exception {
         if (obj instanceof X_Bool) return (p ^ (((X_Bool) obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("`^` 演算子の右辺が真偽値ではありません");
     }
