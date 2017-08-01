@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime;
 
+import java.util.TreeMap;
+
 class X_Address implements Comparable {
     private int address;
 
@@ -9,6 +11,10 @@ class X_Address implements Comparable {
 
     int getAddress() {
         return address;
+    }
+
+    X_Object fetch(TreeMap<X_Address, X_Object> entities) {
+        return entities.get(this);
     }
 
     @Override

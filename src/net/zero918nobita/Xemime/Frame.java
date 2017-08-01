@@ -1,7 +1,6 @@
 package net.zero918nobita.Xemime;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Stack;
 import java.util.TreeMap;
 
@@ -11,13 +10,13 @@ import java.util.TreeMap;
  */
 
 class Frame {
-    private Stack<HashMap<X_Symbol, Reference>> locals = new Stack<>();
+    private Stack<HashMap<X_Symbol, X_Address>> locals = new Stack<>();
 
     int size() {
         return locals.size();
     }
 
-    void pushLocals(HashMap<X_Symbol, Reference> table) {
+    void pushLocals(HashMap<X_Symbol, X_Address> table) {
         locals.push(table);
     }
 
@@ -33,9 +32,9 @@ class Frame {
         return false;
     }
 
-    Reference getReferenceOfSymbol(X_Symbol sym) {
+    X_Address getAddressOfSymbol(X_Symbol sym) {
         if (locals.size() != 0) {
-            HashMap<X_Symbol, Reference> table = locals.peek();
+            HashMap<X_Symbol, X_Address> table = locals.peek();
             if (table.containsKey(sym)) return table.get(sym);
         }
         return null;
@@ -43,37 +42,37 @@ class Frame {
 
     X_Object getValueOfSymbol(X_Symbol sym, TreeMap<X_Address, X_Object> entities) {
         if (locals.size() != 0) {
-            HashMap<X_Symbol, Reference> table = locals.peek();
+            HashMap<X_Symbol, X_Address> table = locals.peek();
             if (table.containsKey(sym)) return table.get(sym).fetch(entities);
         }
         return null;
     }
 
-    void setReference(X_Symbol sym, Reference ref) {
+    void setAddress(X_Symbol sym, X_Address ref) {
         if (locals.size() != 0) {
-            HashMap<X_Symbol, Reference> table = locals.peek();
+            HashMap<X_Symbol, X_Address> table = locals.peek();
             if (table.containsKey(sym)) table.put(sym, ref);
         }
     }
 
     void setValue(X_Symbol sym, X_Object obj) {
         if (locals.size() != 0) {
-            HashMap<X_Symbol, Reference> table = locals.peek();
+            HashMap<X_Symbol, X_Address> table = locals.peek();
             if (table.containsKey(sym)) {
-                Reference ref = Main.register(obj);
+                X_Address ref = Main.register(obj);
                 table.put(sym, ref);
             }
         }
     }
 
-    void defReference(X_Symbol sym, Reference ref) {
-        HashMap<X_Symbol, Reference> table = locals.peek();
+    void defAddress(X_Symbol sym, X_Address ref) {
+        HashMap<X_Symbol, X_Address> table = locals.peek();
         table.put(sym, ref);
     }
 
     void defValue(X_Symbol sym, X_Object obj) {
-        HashMap<X_Symbol, Reference> table = locals.peek();
-        Reference ref = Main.register(obj);
+        HashMap<X_Symbol, X_Address> table = locals.peek();
+        X_Address ref = Main.register(obj);
         table.put(sym, ref);
     }
 }

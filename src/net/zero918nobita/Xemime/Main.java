@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public class Main {
-    private static HashMap<X_Symbol, Reference> Globals = new HashMap<>();
+    private static HashMap<X_Symbol, X_Address> Globals = new HashMap<>();
     private static TreeMap<X_Address, X_Object> entities = new TreeMap<>();
     private static Frame frame = new Frame();
 
-    static void pushLocals(HashMap<X_Symbol, Reference> table) {
+    static void pushLocals(HashMap<X_Symbol, X_Address> table) {
         frame.pushLocals(table);
     }
 
@@ -27,8 +27,8 @@ public class Main {
      * @param sym シンボル
      * @return 参照
      */
-    static Reference getReferenceOfSymbol(X_Symbol sym) {
-        return (frame.hasSymbol(sym)) ? frame.getReferenceOfSymbol(sym) : Globals.get(sym);
+    static X_Address getAddressOfSymbol(X_Symbol sym) {
+        return (frame.hasSymbol(sym)) ? frame.getAddressOfSymbol(sym) : Globals.get(sym);
     }
 
     /**
@@ -45,8 +45,8 @@ public class Main {
      * @param sym シンボル
      * @param ref 参照
      */
-    static void setReference(X_Symbol sym, Reference ref) {
-        if (frame.hasSymbol(sym)) { frame.setReference(sym, ref); return; }
+    static void setAddress(X_Symbol sym, X_Address ref) {
+        if (frame.hasSymbol(sym)) { frame.setAddress(sym, ref); return; }
         Globals.put(sym, ref);
     }
 
@@ -57,7 +57,7 @@ public class Main {
      */
     static void setValue(X_Symbol sym, X_Object obj) {
         if (frame.hasSymbol(sym)) { frame.setValue(sym, obj); return; }
-        Reference ref = register(obj);
+        X_Address ref = register(obj);
         Globals.put(sym, ref);
     }
 
@@ -66,8 +66,8 @@ public class Main {
      * @param sym 変数
      * @param ref 参照
      */
-    static void defReference(X_Symbol sym, Reference ref) {
-        if (frame.size() != 0) { frame.defReference(sym, ref); return; }
+    static void defAddress(X_Symbol sym, X_Address ref) {
+        if (frame.size() != 0) { frame.defAddress(sym, ref); return; }
         Globals.put(sym, ref);
     }
 
@@ -78,13 +78,13 @@ public class Main {
      */
     static void defValue(X_Symbol sym, X_Object obj) {
         if (frame.size() != 0) { frame.defValue(sym, obj); return; }
-        Reference ref = register(obj);
+        X_Address ref = register(obj);
         Globals.put(sym, ref);
     }
 
-    static Reference register(X_Object obj) {
+    static X_Address register(X_Object obj) {
         entities.put(new X_Address(entities.lastKey().getAddress() + 1), obj);
-        return new Reference(entities.lastKey().getAddress());
+        return new X_Address(entities.lastKey().getAddress());
     }
 
     public static void main(String[] args) {
@@ -98,7 +98,6 @@ public class Main {
                 X_Object obj = parser.parse(lex);
                 if (obj == null) break;
                 System.out.println(obj.run().toString());
-                System.out.println(entities);
             }
         } catch(Exception e) {
             e.printStackTrace();
