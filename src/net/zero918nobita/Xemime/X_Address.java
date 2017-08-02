@@ -2,6 +2,13 @@ package net.zero918nobita.Xemime;
 
 import java.util.TreeMap;
 
+/**
+ * アドレス
+ * グローバルフレーム、ローカルフレームで管理され、シンボルとその値にあたる実体を結びつける。
+ * フレームの値であり、実体テーブルのキーでもある。
+ * @author Kodai Matsumoto
+ */
+
 class X_Address implements Comparable {
     private int address;
 

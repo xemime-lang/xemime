@@ -16,7 +16,7 @@ class X_Bool extends X_Object {
         Nil = new X_Bool(false);
     }
 
-    X_Bool(boolean b) {
+    private X_Bool(boolean b) {
         p = b;
     }
 

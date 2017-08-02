@@ -5,30 +5,38 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+/**
+ * エントリーポイント
+ * Xemime の対話的実行環境
+ * @author Kodai Matsumoto
+ */
+
 public class Main {
-    private static HashMap<X_Symbol, X_Address> Globals = new HashMap<>();
+    private static HashMap<X_Symbol, X_Address> globalSymbols = new HashMap<>();
     private static TreeMap<X_Address, X_Object> entities = new TreeMap<>();
     private static Frame frame = new Frame();
 
-    static void pushLocals(HashMap<X_Symbol, X_Address> table) {
-        frame.pushLocals(table);
+    static void loadLocalFrame(HashMap<X_Symbol, X_Address> table) {
+        frame.loadLocalFrame(table);
     }
 
-    static void popLocals() {
-        frame.popLocals();
+    static void unloadLocalFrame() {
+        frame.unloadLocalFrame();
     }
 
     static boolean hasSymbol(X_Symbol sym) {
-        return frame.hasSymbol(sym) || Globals.containsKey(sym);
+        return frame.hasSymbol(sym) || globalSymbols.containsKey(sym);
     }
 
     /**
-     * シンボルの参照を取得する
+     * シンボルの参照先アドレスを取得する
      * @param sym シンボル
      * @return 参照
      */
     static X_Address getAddressOfSymbol(X_Symbol sym) {
-        return (frame.hasSymbol(sym)) ? frame.getAddressOfSymbol(sym) : Globals.get(sym);
+        return (frame.hasSymbol(sym)) ?
+                frame.getAddressOfSymbol(sym) :
+                globalSymbols.get(sym);
     }
 
     /**
@@ -37,7 +45,9 @@ public class Main {
      * @return 値
      */
     static X_Object getValueOfSymbol(X_Symbol sym) {
-        return (frame.hasSymbol(sym)) ? frame.getValueOfSymbol(sym, entities) : Globals.get(sym).fetch(entities);
+        return (frame.hasSymbol(sym)) ?
+                frame.getValueOfSymbol(sym, entities) :
+                globalSymbols.get(sym).fetch(entities);
     }
 
     /**
@@ -47,7 +57,7 @@ public class Main {
      */
     static void setAddress(X_Symbol sym, X_Address ref) {
         if (frame.hasSymbol(sym)) { frame.setAddress(sym, ref); return; }
-        Globals.put(sym, ref);
+        globalSymbols.put(sym, ref);
     }
 
     /**
@@ -58,7 +68,7 @@ public class Main {
     static void setValue(X_Symbol sym, X_Object obj) {
         if (frame.hasSymbol(sym)) { frame.setValue(sym, obj); return; }
         X_Address ref = register(obj);
-        Globals.put(sym, ref);
+        globalSymbols.put(sym, ref);
     }
 
     /**
@@ -67,8 +77,8 @@ public class Main {
      * @param ref 参照
      */
     static void defAddress(X_Symbol sym, X_Address ref) {
-        if (frame.size() != 0) { frame.defAddress(sym, ref); return; }
-        Globals.put(sym, ref);
+        if (frame.numberOfLayers() != 0) { frame.defAddress(sym, ref); return; }
+        globalSymbols.put(sym, ref);
     }
 
     /**
@@ -77,9 +87,9 @@ public class Main {
      * @param obj 値
      */
     static void defValue(X_Symbol sym, X_Object obj) {
-        if (frame.size() != 0) { frame.defValue(sym, obj); return; }
+        if (frame.numberOfLayers() != 0) { frame.defValue(sym, obj); return; }
         X_Address ref = register(obj);
-        Globals.put(sym, ref);
+        globalSymbols.put(sym, ref);
     }
 
     static X_Address register(X_Object obj) {
