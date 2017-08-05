@@ -19,7 +19,11 @@ class X_Double extends X_Numeric {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof X_Double) && (((X_Double) obj).getValue() == this.value.doubleValue());
+        if (obj instanceof X_Double) {
+            return ((X_Double) obj).getValue() == this.value.doubleValue();
+        } else {
+            return (obj instanceof X_Int) && ((X_Int) obj).getValue() == this.value.doubleValue();
+        }
     }
 
     double getValue() {

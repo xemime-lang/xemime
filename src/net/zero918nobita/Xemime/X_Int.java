@@ -18,7 +18,11 @@ class X_Int extends X_Numeric {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof X_Int) && (((X_Int)obj).getValue() == this.value.intValue());
+        if (obj instanceof X_Int) {
+            return ((X_Int) obj).getValue() == this.value.intValue();
+        } else {
+            return (obj instanceof X_Double) && ((X_Double) obj).getValue() == this.value.doubleValue();
+        }
     }
 
     int getValue() {
