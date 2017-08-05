@@ -45,9 +45,12 @@ public class Main {
      * @return 値
      */
     static X_Object getValueOfSymbol(X_Symbol sym) {
-        return (frame.hasSymbol(sym)) ?
-                frame.getValueOfSymbol(sym, entities) :
-                globalSymbols.get(sym).fetch(entities);
+        if (frame.hasSymbol(sym)) {
+            return frame.getValueOfSymbol(sym, entities);
+        } else {
+            return (globalSymbols.containsKey(sym)) ?
+                    globalSymbols.get(sym).fetch(entities) : null;
+        }
     }
 
     /**
@@ -99,6 +102,7 @@ public class Main {
 
     public static void main(String[] args) {
         entities.put(new X_Address(0), X_Bool.T);
+        globalSymbols.put(new X_Symbol("pow"), register(new X_Pow()));
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             Lexer lex = new Lexer(in);

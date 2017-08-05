@@ -155,6 +155,8 @@ class Parser {
                 if (tokenType == TokenType.ASSIGN) {
                     getToken();
                     obj = new X_Assign(sym, expr());
+                } else if (tokenType == TokenType.LP) {
+                    obj = methodCall(sym);
                 } else {
                     obj = sym;
                 }
@@ -209,5 +211,27 @@ class Parser {
         }
         getToken();
         return new X_Block(list);
+    }
+
+    private X_Object methodCall(X_Symbol sym) throws Exception {
+        getToken();
+        ArrayList<X_Object> list = args();
+        if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
+        getToken();
+        return new X_Funcall(sym, list);
+    }
+
+    private ArrayList<X_Object> args() throws Exception {
+        ArrayList<X_Object> list = null;
+        if (tokenType != TokenType.RP) {
+            list = new ArrayList<>();
+            list.add(expr());
+            while (tokenType != TokenType.RP) {
+                if (tokenType != TokenType.COMMA) throw new Exception("文法エラーです");
+                getToken();
+                list.add(expr());
+            }
+        }
+        return list;
     }
 }

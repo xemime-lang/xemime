@@ -8,20 +8,19 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-class X_Function extends X_Object {
-    /**
-     * 仮引数のリスト
-     */
-    private ArrayList<X_Symbol> arguments;
-    /**
-     * 呼び出された時に評価される式
-     */
-    private String formula;
+abstract class X_Function extends X_Object {
 
-    X_Function(ArrayList<X_Symbol> args, String expr) {
-        arguments = args;
-        formula = expr;
+    /** 引数の個数 */
+    protected int numberOfArgs = 0;
+
+    X_Object call(ArrayList<X_Object> params) throws Exception {
+        if (params == null) {
+            if (numberOfArgs != 0) throw new Exception("引数の個数が違います");
+        } else {
+            if (params.size() != numberOfArgs) throw new Exception("引数の個数が違います");
+        }
+        return exec(params);
     }
 
-    // X_Object call() {}
+    protected abstract X_Object exec(ArrayList<X_Object> params) throws Exception;
 }

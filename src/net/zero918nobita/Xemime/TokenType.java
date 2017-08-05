@@ -14,6 +14,7 @@ enum TokenType {
          /** シンボル */ SYMBOL,
        /** 代入演算子 */ ASSIGN,
        /** セミコロン */ SEMICOLON,
+          /** コンマ */ COMMA,
 /** ソースコードの末端 */ EOS,
        /** 加算演算子 */ ADD,
        /** 減算演算子 */ SUB,

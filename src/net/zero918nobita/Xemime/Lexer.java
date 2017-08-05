@@ -26,6 +26,9 @@ class Lexer {
                 case ';':
                     tokenType = TokenType.SEMICOLON;
                     break;
+                case ',':
+                    tokenType = TokenType.COMMA;
+                    break;
                 case '+':
                     tokenType = TokenType.ADD;
                     break;

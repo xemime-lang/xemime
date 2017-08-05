@@ -11,7 +11,7 @@ class X_Symbol extends X_Object {
     private static HashMap<String, X_Symbol> table = new HashMap<>();
     private String name;
 
-    private X_Symbol(String s) {
+    X_Symbol(String s) {
         name = s;
     }
 
