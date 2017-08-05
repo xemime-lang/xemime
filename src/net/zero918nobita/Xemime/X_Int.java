@@ -25,6 +25,10 @@ class X_Int extends X_Numeric {
         return value.intValue();
     }
 
+    X_Double to_d() {
+        return new X_Double(this.getValue());
+    }
+    
     @Override
     X_Numeric add(X_Object obj) throws Exception {
         X_Numeric result;
