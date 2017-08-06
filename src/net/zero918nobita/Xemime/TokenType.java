@@ -34,5 +34,6 @@ enum TokenType {
           /** 右括弧 */ RP,
         /** 左波括弧 */ LB,
         /** 右波括弧 */ RB,
+           /** lambda */ LAMBDA,
              /** -> */ ARROW
 }

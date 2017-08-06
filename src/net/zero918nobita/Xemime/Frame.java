@@ -1,7 +1,7 @@
 package net.zero918nobita.Xemime;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 import java.util.TreeMap;
 
 /**
@@ -11,69 +11,58 @@ import java.util.TreeMap;
  */
 
 class Frame {
-    private Stack<HashMap<X_Symbol, X_Address>> localSymbols = new Stack<>();
+    private ArrayList<HashMap<X_Symbol, X_Address>> localFrames = new ArrayList<>();
 
     int numberOfLayers() {
-        return localSymbols.size();
+        return localFrames.size();
     }
 
     void loadLocalFrame(HashMap<X_Symbol, X_Address> table) {
-        localSymbols.push(table);
+        localFrames.add(table);
     }
 
     void unloadLocalFrame() {
-        localSymbols.pop();
+        localFrames.remove(localFrames.size() - 1);
     }
 
     boolean hasSymbol(X_Symbol sym) {
-        if (localSymbols.size() != 0) {
-            HashMap table = localSymbols.peek();
-            if (table.containsKey(sym.getName())) return true;
-        }
+        if (localFrames.size() != 0)
+            for (int i = localFrames.size() - 1; i > -1; i--)
+                if (localFrames.get(i).containsKey(sym)) return true;
         return false;
     }
 
     X_Address getAddressOfSymbol(X_Symbol sym) {
-        if (localSymbols.size() != 0) {
-            HashMap<X_Symbol, X_Address> table = localSymbols.peek();
-            if (table.containsKey(sym)) return table.get(sym);
-        }
+        if (localFrames.size() != 0)
+            for (int i = localFrames.size() - 1; i > -1; i--)
+                if (localFrames.get(i).containsKey(sym)) return localFrames.get(i).get(sym);
         return null;
     }
 
     X_Object getValueOfSymbol(X_Symbol sym, TreeMap<X_Address, X_Object> entities) {
-        if (localSymbols.size() != 0) {
-            HashMap<X_Symbol, X_Address> table = localSymbols.peek();
-            if (table.containsKey(sym)) return table.get(sym).fetch(entities);
-        }
+        if (localFrames.size() != 0)
+            for (int i = localFrames.size() - 1; i > -1; i--)
+                if (localFrames.get(i).containsKey(sym)) return localFrames.get(i).get(sym).fetch(entities);
         return null;
     }
 
     void setAddress(X_Symbol sym, X_Address ref) {
-        if (localSymbols.size() != 0) {
-            HashMap<X_Symbol, X_Address> table = localSymbols.peek();
-            if (table.containsKey(sym)) table.put(sym, ref);
-        }
+        if (localFrames.size() != 0)
+            for (int i = localFrames.size() - 1; i > -1; i--)
+                if (localFrames.get(i).containsKey(sym)) localFrames.get(i).put(sym, ref);
     }
 
     void setValue(X_Symbol sym, X_Object obj) {
-        if (localSymbols.size() != 0) {
-            HashMap<X_Symbol, X_Address> table = localSymbols.peek();
-            if (table.containsKey(sym)) {
-                X_Address ref = Main.register(obj);
-                table.put(sym, ref);
-            }
-        }
+        if (localFrames.size() != 0)
+            for (int i = localFrames.size() - 1; i > -1; i--)
+                if (localFrames.get(i).containsKey(sym)) localFrames.get(i).put(sym, Main.register(obj));
     }
 
     void defAddress(X_Symbol sym, X_Address ref) {
-        HashMap<X_Symbol, X_Address> table = localSymbols.peek();
-        table.put(sym, ref);
+        localFrames.get(localFrames.size() - 1).put(sym, ref);
     }
 
     void defValue(X_Symbol sym, X_Object obj) {
-        HashMap<X_Symbol, X_Address> table = localSymbols.peek();
-        X_Address ref = Main.register(obj);
-        table.put(sym, ref);
+        localFrames.get(localFrames.size() - 1).put(sym, Main.register(obj));
     }
 }

@@ -223,6 +223,8 @@ class Lexer {
             tokenType = TokenType.T;
         } else if (s.toUpperCase().equals("NIL")) {
             tokenType = TokenType.NIL;
+        } else if (s.toLowerCase().equals("lambda")) {
+            tokenType = TokenType.LAMBDA;
         }
     }
 

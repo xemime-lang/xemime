@@ -190,6 +190,9 @@ class Parser {
             case LB:
                 obj = block();
                 break;
+            case LAMBDA:
+                obj = lambda();
+                break;
             default:
                 throw new Exception("文法エラーです");
         }
@@ -230,6 +233,32 @@ class Parser {
                 if (tokenType != TokenType.COMMA) throw new Exception("文法エラーです");
                 getToken();
                 list.add(expr());
+            }
+        }
+        return list;
+    }
+
+    private X_Object lambda() throws Exception {
+        getToken();
+        if (tokenType != TokenType.LP) throw new Exception("文法エラーです");
+        getToken();
+        ArrayList<X_Object> list = symbols();
+        if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
+        getToken();
+        return new X_Lambda(list, factor());
+    }
+
+    private ArrayList<X_Object> symbols() throws Exception {
+        ArrayList<X_Object> list = null;
+        if (tokenType != TokenType.LP) {
+            list = new ArrayList<>();
+            list.add(expr());
+            while (tokenType != TokenType.RP) {
+                if (tokenType != TokenType.COMMA) throw new Exception("文法エラーです");
+                getToken();
+                if (tokenType != TokenType.SYMBOL) throw new Exception("文法エラーです");
+                list.add(lex.value());
+                getToken();
             }
         }
         return list;
