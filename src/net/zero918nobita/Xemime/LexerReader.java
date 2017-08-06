@@ -8,16 +8,16 @@ import java.io.Reader;
  * @author Kodai Matsumoto
  */
 
-public class LexerReader {
+class LexerReader {
     private Reader reader;
     private boolean unget_p = false;
     private int ch;
 
-    public LexerReader(Reader r) {
+    LexerReader(Reader r) {
         reader = r;
     }
 
-    public int read() throws IOException {
+    int read() throws IOException {
         if (unget_p) {
             unget_p = false;
         } else {
@@ -26,7 +26,7 @@ public class LexerReader {
         return ch;
     }
 
-    public void unread() {
+    void unread() {
         unget_p = true;
     }
 }
