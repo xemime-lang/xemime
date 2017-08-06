@@ -33,7 +33,13 @@ class Lexer {
                     tokenType = TokenType.ADD;
                     break;
                 case '-':
-                    tokenType = TokenType.SUB;
+                    c = reader.read();
+                    if (c == '>') {
+                        tokenType = TokenType.ARROW;
+                    } else {
+                        reader.unread();
+                        tokenType = TokenType.SUB;
+                    }
                     break;
                 case '*':
                     tokenType = TokenType.MUL;
