@@ -18,7 +18,7 @@ class LexerReader {
 
     int read() throws IOException {
         progress += 1;
-        return str.charAt(progress);
+        return (progress < str.length()) ? str.charAt(progress) : -1;
     }
 
     void unread() {
