@@ -165,6 +165,19 @@ public class Main {
             setMember(new X_Symbol("if"), new X_If());
             setMember(new X_Symbol("print"), new X_Print());
             setMember(new X_Symbol("println"), new X_Println());
+            setMember(new X_Symbol("exit"), new X_Exit());
+        }
+
+        private static class X_Exit extends X_Native {
+            X_Exit() {
+                super(1);
+            }
+
+            @Override
+            protected X_Object exec(ArrayList<X_Object> params) throws Exception {
+                System.exit(0);
+                return new X_Int(0);
+            }
         }
 
         private static class X_Print extends X_Native {
