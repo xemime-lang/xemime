@@ -1,13 +1,13 @@
 package net.zero918nobita.Xemime;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
  * エントリーポイント
- * Xemime の対話的実行環境
  * @author Kodai Matsumoto
  */
 
@@ -101,14 +101,30 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        boolean interactive = false;
+
+        if (args.length >= 2) {
+            usage();
+            return;
+        }
+
         entities.put(new X_Address(0), X_Bool.T);
         globalSymbols.put(new X_Symbol("pow"), register(new X_Pow()));
+
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader in;
+            if (args.length == 0) {
+                in = new BufferedReader(new InputStreamReader(System.in));
+                interactive = true;
+            } else {
+                in = new BufferedReader(new FileReader(args[0]));
+            }
             Lexer lex = new Lexer(in);
             Parser parser = new Parser();
             while (true) {
-                System.out.print("Prelude> ");
+                if (interactive) {
+                    System.out.print("Prelude> ");
+                }
                 X_Object obj = parser.parse(lex);
                 if (obj == null) break;
                 System.out.println(obj.run().toString());
@@ -116,5 +132,15 @@ public class Main {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void usage() {
+        System.out.println("   _  __               _              \n" +
+                "  | |/ /__  ____ ___  (_)___ ___  ___ \n" +
+                "  |   / _ \\/ __ `__ \\/ / __ `__ \\/ _ \\\n" +
+                " /   /  __/ / / / / / / / / / / /  __/\n" +
+                "/_/|_\\___/_/ /_/ /_/_/_/ /_/ /_/\\___/ \n\n" +
+                "Xemime Version 1.0.0 2017-08-07\n\n" +
+                "Usage: java -jar Xemime.jar [source file name]");
     }
 }
