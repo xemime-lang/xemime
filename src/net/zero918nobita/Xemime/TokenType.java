@@ -12,6 +12,7 @@ enum TokenType {
     /** 浮動小数点定数 */ DOUBLE,
        /** 文字列定数 */ STRING,
          /** シンボル */ SYMBOL,
+         /** 変数宣言 */ DECLARE,
        /** 代入演算子 */ ASSIGN,
        /** セミコロン */ SEMICOLON,
           /** コンマ */ COMMA,

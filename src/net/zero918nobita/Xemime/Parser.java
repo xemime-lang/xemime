@@ -205,10 +205,16 @@ class Parser {
             case SYMBOL:
                 X_Symbol sym = (X_Symbol)lex.value();
                 getToken();
-                if (tokenType == TokenType.ASSIGN) {
+                if (tokenType == TokenType.DECLARE) {
+                    // 変数宣言
+                    getToken();
+                    obj = new X_Declare(sym, expr());
+                } else if (tokenType == TokenType.ASSIGN) {
+                    // 宣言済みの変数への代入
                     getToken();
                     obj = new X_Assign(sym, expr());
                 } else if (tokenType == TokenType.LP) {
+                    // 関数呼び出し
                     obj = methodCall(sym);
                 } else {
                     obj = sym;

@@ -58,24 +58,27 @@ public class Main {
      * @param sym シンボル
      * @param ref 参照
      */
-    static void setAddress(X_Symbol sym, X_Address ref) {
+    static void setAddress(X_Symbol sym, X_Address ref) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setAddress(sym, ref); return; }
+        if (!globalSymbols.containsKey(sym)) throw new Exception("変数 `" + sym.getName() + "` は宣言されていません");
         globalSymbols.put(sym, ref);
     }
 
     /**
-     * 変数に値をセットする
+     * 宣言済みの変数に値をセットします。
      * @param sym シンボル
      * @param obj 値
+     * @throws Exception 変数が宣言されていなかった場合に例外を発生させます。
      */
-    static void setValue(X_Symbol sym, X_Object obj) {
+    static void setValue(X_Symbol sym, X_Object obj) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setValue(sym, obj); return; }
         X_Address ref = register(obj);
+        if (!globalSymbols.containsKey(sym)) throw new Exception("変数 `" + sym.getName() + "` は宣言されていません");
         globalSymbols.put(sym, ref);
     }
 
     /**
-     * 変数を参照で定義する
+     * 変数を参照で宣言します。
      * @param sym 変数
      * @param ref 参照
      */
@@ -85,7 +88,7 @@ public class Main {
     }
 
     /**
-     * 変数を値で定義する
+     * 変数を値で宣言します。
      * @param sym 変数
      * @param obj 値
      */
