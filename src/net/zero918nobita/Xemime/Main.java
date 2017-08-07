@@ -3,6 +3,7 @@ package net.zero918nobita.Xemime;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
@@ -112,6 +113,7 @@ public class Main {
         }
 
         entities.put(new X_Address(0), X_Bool.T);
+        globalSymbols.put(new X_Symbol("Core"), register(new X_Core()));
 
         try {
             BufferedReader in;
@@ -130,7 +132,7 @@ public class Main {
                 lex = new Lexer(in.readLine());
                 X_Object obj = parser.parse(lex);
                 if (obj == null) break;
-                System.out.println(obj.run().toString());
+                obj.run();
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -145,5 +147,37 @@ public class Main {
                 "/_/|_\\___/_/ /_/ /_/_/_/ /_/ /_/\\___/ \n\n" +
                 "Xemime Version 1.0.0 2017-08-07\n\n" +
                 "Usage: java -jar Xemime.jar [source file name]");
+    }
+
+    static class X_Core extends X_Object {
+        X_Core() {
+            super();
+            setMember(new X_Symbol("if"), new X_If());
+            setMember(new X_Symbol("println"), new X_Println());
+        }
+
+        private class X_Println extends X_Native {
+            X_Println() {
+                super(2);
+            }
+
+            @Override
+            protected X_Object exec(ArrayList<X_Object> params) throws Exception {
+                X_Object o = params.get(1).run();
+                System.out.println(o);
+                return o;
+            }
+        }
+
+        class X_If extends X_Native {
+            X_If(){
+                super(4);
+            }
+
+            @Override
+            protected X_Object exec(ArrayList<X_Object> params) throws Exception {
+                return (params.get(1).run().equals(X_Bool.Nil)) ? params.get(3).run() : params.get(2).run();
+            }
+        }
     }
 }
