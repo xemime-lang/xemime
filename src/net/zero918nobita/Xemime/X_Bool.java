@@ -5,7 +5,7 @@ package net.zero918nobita.Xemime;
  * @author Kodai Matsumoto
  */
 
-class X_Bool extends X_Object {
+class X_Bool extends X_Handler {
     private boolean p;
 
     static X_Bool T;
@@ -35,59 +35,59 @@ class X_Bool extends X_Object {
     }
 
     @Override
-    X_Object add(X_Object obj) throws Exception {
+    X_Code add(X_Code obj) throws Exception {
         throw new Exception("真偽値の加算はできません");
     }
 
     @Override
-    X_Object sub(X_Object obj) throws Exception {
+    X_Code sub(X_Code obj) throws Exception {
         throw new Exception("真偽値の減算はできません");
     }
 
     @Override
-    X_Object multiply(X_Object obj) throws Exception {
+    X_Code multiply(X_Code obj) throws Exception {
         throw new Exception("真偽値の乗算はできません");
     }
 
     @Override
-    X_Object divide(X_Object obj) throws Exception {
+    X_Code divide(X_Code obj) throws Exception {
         throw new Exception("真偽値の除算はできません");
     }
 
     @Override
-    X_Bool less(X_Object obj) throws Exception {
+    X_Bool less(X_Code obj) throws Exception {
         throw new Exception("真偽値に `<` 演算子は使用できません");
     }
 
     @Override
-    X_Bool le(X_Object obj) throws Exception {
+    X_Bool le(X_Code obj) throws Exception {
         throw new Exception("真偽値に `<=` 演算子は使用できません");
     }
 
     @Override
-    X_Bool greater(X_Object obj) throws Exception {
+    X_Bool greater(X_Code obj) throws Exception {
         throw new Exception("真偽値に `>` 演算子は使用できません");
     }
 
     @Override
-    X_Bool ge(X_Object obj) throws Exception {
+    X_Bool ge(X_Code obj) throws Exception {
         throw new Exception("真偽値に `>=` 演算子は使用できません");
     }
 
     @Override
-    X_Bool and(X_Object obj) throws Exception {
+    X_Bool and(X_Code obj) throws Exception {
         if (obj instanceof X_Bool) return (p && (((X_Bool)obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("`&&` 演算子の右辺が真偽値ではありません");
     }
 
     @Override
-    X_Bool or(X_Object obj) throws Exception {
+    X_Bool or(X_Code obj) throws Exception {
         if (obj instanceof X_Bool) return (p || (((X_Bool) obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("`||` 演算子の右辺が真偽値ではありません");
     }
 
     @Override
-    X_Bool xor(X_Object obj) throws Exception {
+    X_Bool xor(X_Code obj) throws Exception {
         if (obj instanceof X_Bool) return (p ^ (((X_Bool) obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("`^` 演算子の右辺が真偽値ではありません");
     }

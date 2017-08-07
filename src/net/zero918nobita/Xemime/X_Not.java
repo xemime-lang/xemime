@@ -5,16 +5,16 @@ package net.zero918nobita.Xemime;
  * @author Kodai Matsumoto
  */
 
-class X_Not extends X_Object {
-    private X_Object obj;
+class X_Not extends X_Code {
+    private X_Code obj;
 
-    X_Not(X_Object o) {
+    X_Not(X_Code o) {
         obj = o;
     }
 
     @Override
-    X_Object run() throws Exception {
-        X_Object o = obj.run();
+    X_Code run() throws Exception {
+        X_Code o = obj.run();
         if (o.getClass() != X_Bool.class) throw new Exception("");
         X_Bool p = (X_Bool)o;
         if (p.isTrue()) return X_Bool.Nil;

@@ -5,21 +5,21 @@ package net.zero918nobita.Xemime;
  * @author Kodai Matsumoto
  */
 
-class X_BinExpr extends X_Object {
+class X_BinExpr extends X_Code {
     private TokenType op; // 演算子の種類(＋,－,＊,／)
-    X_Object obj1; // 左側の式
-    X_Object obj2; // 右側の式
+    X_Code obj1; // 左側の式
+    X_Code obj2; // 右側の式
 
-    X_BinExpr(TokenType operator, X_Object o1, X_Object o2) {
+    X_BinExpr(TokenType operator, X_Code o1, X_Code o2) {
         op = operator;
         obj1 = o1;
         obj2 = o2;
     }
 
-    X_Object run() throws Exception {
-        X_Object result = null;
-        X_Object o1 = obj1.run();
-        X_Object o2 = obj2.run();
+    X_Code run() throws Exception {
+        X_Code result = null;
+        X_Code o1 = obj1.run();
+        X_Code o2 = obj2.run();
 
         if (op == TokenType.AND) {
             result = o1.and(o2);

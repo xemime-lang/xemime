@@ -39,7 +39,7 @@ class Frame {
         return null;
     }
 
-    X_Object getValueOfSymbol(X_Symbol sym, TreeMap<X_Address, X_Object> entities) {
+    X_Code getValueOfSymbol(X_Symbol sym, TreeMap<X_Address, X_Code> entities) {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
                 if (localFrames.get(i).containsKey(sym)) return localFrames.get(i).get(sym).fetch(entities);
@@ -52,7 +52,7 @@ class Frame {
                 if (localFrames.get(i).containsKey(sym)) localFrames.get(i).put(sym, ref);
     }
 
-    void setValue(X_Symbol sym, X_Object obj) {
+    void setValue(X_Symbol sym, X_Code obj) {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
                 if (localFrames.get(i).containsKey(sym)) localFrames.get(i).put(sym, Main.register(obj));
@@ -62,7 +62,7 @@ class Frame {
         localFrames.get(localFrames.size() - 1).put(sym, ref);
     }
 
-    void defValue(X_Symbol sym, X_Object obj) {
+    void defValue(X_Symbol sym, X_Code obj) {
         localFrames.get(localFrames.size() - 1).put(sym, Main.register(obj));
     }
 }

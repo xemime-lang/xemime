@@ -9,7 +9,7 @@ import java.util.TreeMap;
  * @author Kodai Matsumoto
  */
 
-class X_Address implements Comparable {
+class X_Address extends X_Code implements Comparable {
     private int address;
 
     X_Address(int n) {
@@ -20,7 +20,7 @@ class X_Address implements Comparable {
         return address;
     }
 
-    X_Object fetch(TreeMap<X_Address, X_Object> entities) {
+    X_Code fetch(TreeMap<X_Address, X_Code> entities) {
         return entities.get(this);
     }
 

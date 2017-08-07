@@ -14,7 +14,7 @@ import java.util.TreeMap;
 
 public class Main {
     private static HashMap<X_Symbol, X_Address> globalSymbols = new HashMap<>();
-    private static TreeMap<X_Address, X_Object> entities = new TreeMap<>();
+    private static TreeMap<X_Address, X_Code> entities = new TreeMap<>();
     private static Frame frame = new Frame();
 
     static void loadLocalFrame(HashMap<X_Symbol, X_Address> table) {
@@ -45,7 +45,7 @@ public class Main {
      * @param sym シンボル
      * @return 値
      */
-    static X_Object getValueOfSymbol(X_Symbol sym) {
+    static X_Code getValueOfSymbol(X_Symbol sym) {
         if (frame.hasSymbol(sym)) {
             return frame.getValueOfSymbol(sym, entities);
         } else {
@@ -71,7 +71,7 @@ public class Main {
      * @param obj 値
      * @throws Exception 変数が宣言されていなかった場合に例外を発生させます。
      */
-    static void setValue(X_Symbol sym, X_Object obj) throws Exception {
+    static void setValue(X_Symbol sym, X_Code obj) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setValue(sym, obj); return; }
         X_Address ref = register(obj);
         if (!globalSymbols.containsKey(sym)) throw new Exception("変数 `" + sym.getName() + "` は宣言されていません");
@@ -93,13 +93,13 @@ public class Main {
      * @param sym 変数
      * @param obj 値
      */
-    static void defValue(X_Symbol sym, X_Object obj) {
+    static void defValue(X_Symbol sym, X_Code obj) {
         if (frame.numberOfLayers() != 0) { frame.defValue(sym, obj); return; }
         X_Address ref = register(obj);
         globalSymbols.put(sym, ref);
     }
 
-    static X_Address register(X_Object obj) {
+    static X_Address register(X_Code obj) {
         entities.put(new X_Address(entities.lastKey().getAddress() + 1), obj);
         return new X_Address(entities.lastKey().getAddress());
     }
@@ -131,7 +131,7 @@ public class Main {
                 line = in.readLine();
                 if (line != null && !line.equals("")) {
                     lex = new Lexer((interactive) ? line : line + " \n");
-                    X_Object obj = parser.parse(lex);
+                    X_Code obj = parser.parse(lex);
                     if (obj == null) break;
                     if (interactive) {
                         System.out.println(obj.run().toString());
@@ -159,7 +159,7 @@ public class Main {
                 "Usage: java -jar Xemime.jar [source file name]");
     }
 
-    private static class X_Core extends X_Object {
+    private static class X_Core extends X_Handler {
         X_Core() {
             super();
             setMember(new X_Symbol("if"), new X_If());
@@ -174,7 +174,7 @@ public class Main {
             }
 
             @Override
-            protected X_Object exec(ArrayList<X_Object> params) throws Exception {
+            protected X_Code exec(ArrayList<X_Code> params) throws Exception {
                 System.exit(0);
                 return new X_Int(0);
             }
@@ -186,8 +186,8 @@ public class Main {
             }
 
             @Override
-            protected X_Object exec(ArrayList<X_Object> params) throws Exception {
-                X_Object o = params.get(1).run();
+            protected X_Code exec(ArrayList<X_Code> params) throws Exception {
+                X_Code o = params.get(1).run();
                 System.out.print(o);
                 return o;
             }
@@ -199,8 +199,8 @@ public class Main {
             }
 
             @Override
-            protected X_Object exec(ArrayList<X_Object> params) throws Exception {
-                X_Object o = params.get(1).run();
+            protected X_Code exec(ArrayList<X_Code> params) throws Exception {
+                X_Code o = params.get(1).run();
                 System.out.println(o);
                 return o;
             }
@@ -212,7 +212,7 @@ public class Main {
             }
 
             @Override
-            protected X_Object exec(ArrayList<X_Object> params) throws Exception {
+            protected X_Code exec(ArrayList<X_Code> params) throws Exception {
                 return (params.get(1).run().equals(X_Bool.Nil)) ? params.get(3).run() : params.get(2).run();
             }
         }

@@ -5,6 +5,6 @@ package net.zero918nobita.Xemime;
  * @author Kodai Matsumoto
  */
 
-abstract class X_Numeric extends X_Object {
+abstract class X_Numeric extends X_Handler {
     protected Number value;
 }

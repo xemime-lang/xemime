@@ -5,7 +5,7 @@ package net.zero918nobita.Xemime;
  * @author Kodai Matsumoto
  */
 
-class X_String extends X_Object {
+class X_String extends X_Handler {
     private final String value;
 
     X_String(String str) {
@@ -23,7 +23,7 @@ class X_String extends X_Object {
     }
 
     @Override
-    X_String add(X_Object obj) throws Exception {
+    X_String add(X_Code obj) throws Exception {
         if (obj instanceof X_String) {
             return new X_String(this.value + ((X_String) obj).value);
         } else {

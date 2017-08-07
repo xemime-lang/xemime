@@ -6,13 +6,13 @@ package net.zero918nobita.Xemime;
  */
 
 class X_Declare extends X_BinExpr {
-    X_Declare(X_Symbol symbol, X_Object obj) {
+    X_Declare(X_Symbol symbol, X_Code obj) {
         super(TokenType.DECLARE, symbol, obj);
     }
 
-    X_Object run() throws Exception {
+    X_Code run() throws Exception {
         X_Symbol sym = (X_Symbol)obj1;
-        X_Object o = obj2.run();
+        X_Code o = obj2.run();
         Main.defValue(sym, o);
         return o;
     }

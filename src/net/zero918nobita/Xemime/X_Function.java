@@ -8,12 +8,12 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-abstract class X_Function extends X_Object {
+abstract class X_Function extends X_Code {
 
     /** 引数の個数 */
-    protected int numberOfArgs = 0;
+    int numberOfArgs = 0;
 
-    X_Object call(ArrayList<X_Object> params) throws Exception {
+    X_Code call(ArrayList<X_Code> params) throws Exception {
         if (params == null) {
             if (numberOfArgs != 0) throw new Exception("引数の個数が違います");
         } else {
@@ -22,5 +22,5 @@ abstract class X_Function extends X_Object {
         return exec(params);
     }
 
-    protected abstract X_Object exec(ArrayList<X_Object> params) throws Exception;
+    protected abstract X_Code exec(ArrayList<X_Code> params) throws Exception;
 }

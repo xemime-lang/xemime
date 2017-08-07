@@ -5,16 +5,16 @@ package net.zero918nobita.Xemime;
  * @author Kodai Matsumoto
  */
 
-class X_Minus extends X_Object {
-    private X_Object obj;
+class X_Minus extends X_Code {
+    private X_Code obj;
 
-    X_Minus(X_Object o) {
+    X_Minus(X_Code o) {
         obj = o;
     }
 
     @Override
-    X_Object run() throws Exception {
-        X_Object o = obj.run();
+    X_Code run() throws Exception {
+        X_Code o = obj.run();
         if (o.getClass() != X_Int.class && o.getClass() != X_Double.class)
             throw new Exception("数値以外のものには単項演算子を適用できません");
         if (o.getClass() == X_Int.class) return new X_Int(-((X_Int)o).getValue());

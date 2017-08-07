@@ -10,18 +10,18 @@ import java.util.HashMap;
  * @author Kodai Matsumoto
  */
 
-class X_Block extends X_Object {
-    private ArrayList<X_Object> list;
+class X_Block extends X_Code {
+    private ArrayList<X_Code> list;
 
-    X_Block(ArrayList<X_Object> l) {
+    X_Block(ArrayList<X_Code> l) {
         list = l;
     }
 
     @Override
-    X_Object run() throws Exception {
+    X_Code run() throws Exception {
         Main.loadLocalFrame(new HashMap<>());
-        X_Object obj = null;
-        if (list != null) for (X_Object o : list) obj = o.run();
+        X_Code obj = null;
+        if (list != null) for (X_Code o : list) obj = o.run();
         if (obj == null) throw new Exception("ブロックの戻り値が記述されていません");
         Main.unloadLocalFrame();
         return obj;
