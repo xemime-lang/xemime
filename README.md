@@ -11,34 +11,34 @@
 # サンプル
 
 ```
-x := 2;  // -> 2
+x := 2;
 
-(1 + x) * (3 - 4) + 6 / x;  // -> 0
+Core.println((1 + x) * (3 - 4) + 6 / x);  // -> 0
 
-T == T;              // -> T
-T == NIL;            // -> NIL
-1.0 == 1;            // -> T
-1.1 == 1;            // -> NIL
-"hello" == "hello";  // -> T
+Core.println(T == T);              // -> T
+Core.println(T == NIL);            // -> NIL
+Core.println(1.0 == 1);            // -> T
+Core.println(1.1 == 1);            // -> NIL
+Core.println("hello" == "hello");  // -> T
 
-x = x + 1;  // -> 3
+x = x + 1;
 
-2 < 3;    // -> T
-2.0 > 2;  // -> NIL
-1 >= 1;   // -> T
+Core.println(2 < x);    // -> T
+Core.println(2.0 > 2);  // -> NIL
+Core.println(1 >= 1);   // -> T
 
-(1 != 1) || (2 > 1);    // -> T
+Core.println((1 != 1) || (2 > 1));    // -> T
 
-(2 > 3) && (1 == 1.0);  // -> NIL
+Core.println((2 > 3) && (1 == 1.0));  // -> NIL
 
-(4 > 2) ^ (5 > 3);      // -> NIL
-(4 > 2) ^ (5 < 3);      // -> T
+Core.println((4 > 2) ^ (5 > 3));      // -> NIL
+Core.println((4 > 2) ^ (5 < 3));      // -> T
 
 square := lambda(x) { x * x; };
-square(5);    // -> 25
-square(5.0);  // -> 25.0
+Core.println(square(5));    // -> 25
+Core.println(square(5.0));  // -> 25.0
 
 xor := lambda(b1, b2) { b1 ^ b2; };
-xor(t, nil);    // -> T
-xor(nil, nil);  // -> NIL
+Core.println(xor(t, nil));    // -> T
+Core.println(xor(nil, nil));  // -> NIL
 ```
