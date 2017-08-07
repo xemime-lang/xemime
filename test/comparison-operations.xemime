@@ -1,9 +1,9 @@
-T == T;             // -> T
-T == NIL;           // -> NIL
-1.0 == 1;           // -> T
-1.1 == 1;           // -> NIL
-"hello" == "hello"; // -> T
+Core.println(T == T);             // -> T
+Core.println(T == NIL);           // -> NIL
+Core.println(1.0 == 1);           // -> T
+Core.println(1.1 == 1);           // -> NIL
+Core.println("hello" == "hello"); // -> T
 
-2 < 3;   // -> T
-2.0 > 2; // -> NIL
-1 >= 1;  // -> T
+Core.println(2 < 3);   // -> T
+Core.println(2.0 > 2); // -> NIL
+Core.println(1 >= 1);  // -> T
