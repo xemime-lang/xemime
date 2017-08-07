@@ -159,11 +159,25 @@ public class Main {
                 "Usage: java -jar Xemime.jar [source file name]");
     }
 
-    static class X_Core extends X_Object {
+    private static class X_Core extends X_Object {
         X_Core() {
             super();
             setMember(new X_Symbol("if"), new X_If());
+            setMember(new X_Symbol("print"), new X_Print());
             setMember(new X_Symbol("println"), new X_Println());
+        }
+
+        private static class X_Print extends X_Native {
+            X_Print() {
+                super(2);
+            }
+
+            @Override
+            protected X_Object exec(ArrayList<X_Object> params) throws Exception {
+                X_Object o = params.get(1).run();
+                System.out.print(o);
+                return o;
+            }
         }
 
         private static class X_Println extends X_Native {
