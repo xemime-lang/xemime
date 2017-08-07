@@ -23,6 +23,7 @@ class X_Block extends X_Object {
         X_Object obj = null;
         if (list != null) for (X_Object o : list) obj = o.run();
         if (obj == null) throw new Exception("ブロックの戻り値が記述されていません");
+        Main.unloadLocalFrame();
         return obj;
     }
 }
