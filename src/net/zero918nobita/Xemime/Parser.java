@@ -254,7 +254,7 @@ class Parser {
                 break;
             case SUB:
                 getToken();
-                obj = new X_Minus(factor());
+                obj = new X_Minus(first());
                 break;
             case LP:
                 getToken();
