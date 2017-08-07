@@ -1,8 +1,8 @@
-square = lambda(x) { x * x; };
+square := lambda(x) { x * x; };
 square(5);   // -> 25
 square(5.0); // -> 25.0
 
-xor = lambda(b1, b2) { b1 ^ b2; };
+xor := lambda(b1, b2) { b1 ^ b2; };
 xor(t, nil);   // -> T
 xor(nil, t);   // -> T
 xor(t, t);     // -> NIL
