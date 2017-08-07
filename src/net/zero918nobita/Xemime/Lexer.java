@@ -4,63 +4,74 @@ import java.io.Reader;
 import java.math.BigDecimal;
 
 /**
- * 字句解析器
+ * 字句解析器です。
  * @author Kodai Matsumoto
  */
 
 class Lexer {
+    /** 解析中のトークンの種類 */
     private TokenType tokenType;
+
+    /** 解析中のトークンの値 */
     private X_Object val;
+
+    /** ソースコードの読み込みに用いる戻り読み機能付き Reader */
     private LexerReader reader;
 
+    /** Reader を設定します。 */
     Lexer(Reader r) {
         reader = new LexerReader(r);
     }
 
+    /** 次のトークンを読み込み、種類を記録します。 */
     boolean advance() {
         try {
             skipWhiteSpace();
             int c = reader.read();
             if (c < 0) return false;
             switch (c) {
-                case ';':
+                case ';': // ステートメントの末尾
                     tokenType = TokenType.SEMICOLON;
                     break;
-                case ',':
+                case ',': // 引数リストまたは仮引数リストの区切り文字
                     tokenType = TokenType.COMMA;
                     break;
-                case '+':
+                case '+': // 加算演算子
                     tokenType = TokenType.ADD;
                     break;
                 case '-':
                     c = reader.read();
                     if (c == '>') {
+                        // アロー演算子 ->
                         tokenType = TokenType.ARROW;
                     } else {
+                        // 減算演算子 -
                         reader.unread();
                         tokenType = TokenType.SUB;
                     }
                     break;
-                case '*':
+                case '*': // 乗算演算子
                     tokenType = TokenType.MUL;
                     break;
-                case '(':
+                case '(': // 演算優先または引数/仮引数リストの左括弧
                     tokenType = TokenType.LP;
                     break;
-                case ')':
+                case ')': // 演算優先または引数/仮引数リストの右括弧
                     tokenType = TokenType.RP;
                     break;
-                case '{':
+                case '{': // ブロックの右括弧
                     tokenType = TokenType.LB;
                     break;
-                case '}':
+                case '}': // ブロックの左括弧
                     tokenType = TokenType.RB;
                     break;
                 case '=':
                     c = reader.read();
                     if (c == '=') {
+                        // 等価演算子 ==
                         tokenType = TokenType.EQ;
                     } else {
+                        // 代入演算子 =
                         reader.unread();
                         tokenType = TokenType.ASSIGN;
                     }
@@ -68,8 +79,10 @@ class Lexer {
                 case '!':
                     c = reader.read();
                     if (c == '=') {
+                        // 非等価演算子 !=
                         tokenType = TokenType.NE;
                     } else {
+                        // 論理否定演算子 !
                         reader.unread();
                         tokenType = TokenType.NOT;
                     }
@@ -77,8 +90,10 @@ class Lexer {
                 case '<':
                     c = reader.read();
                     if (c == '=') {
+                        // 比較演算子 <=
                         tokenType = TokenType.LE;
                     } else {
+                        // 比較演算子 <
                         reader.unread();
                         tokenType = TokenType.L;
                     }
@@ -86,8 +101,10 @@ class Lexer {
                 case '>':
                     c = reader.read();
                     if (c == '=') {
+                        // 比較演算子 >=
                         tokenType = TokenType.GE;
                     } else {
+                        // 比較演算子 >
                         reader.unread();
                         tokenType = TokenType.G;
                     }
@@ -95,6 +112,7 @@ class Lexer {
                 case '&':
                     c = reader.read();
                     if (c == '&') {
+                        // 論理積演算子
                         tokenType = TokenType.AND;
                     } else {
                         throw new Exception("演算子 & は使えません");
@@ -103,28 +121,32 @@ class Lexer {
                 case '|':
                     c = reader.read();
                     if (c == '|') {
+                        // 論理和演算子
                         tokenType = TokenType.OR;
                     } else {
                         throw new Exception("演算子 | は使えません");
                     }
                     break;
-                case '^':
+                case '^': // 排他的論理和演算子
                     tokenType = TokenType.XOR;
                     break;
                 case '/':
                     c = reader.read();
                     if (c == '/') {
+                        // 1行コメント
                         skipLineComment();
                         return advance();
                     } else if (c == '*') {
+                        // 複数行コメント
                         skipComment();
                         return advance();
                     } else {
+                        // 除算演算子
                         reader.unread();
                         tokenType = TokenType.DIV;
                     }
                     break;
-                case '"':
+                case '"': // 文字列定数の始まりを示すダブルクォート
                     lexString();
                     tokenType = TokenType.STRING;
                     break;
@@ -153,14 +175,20 @@ class Lexer {
         return true;
     }
 
+    /** 現在解析中のトークンの種類を返します。 */
     TokenType tokenType() {
         return tokenType;
     }
 
-    public X_Object value() {
+    /** 現在解析中のトークンの値を返します。 */
+    X_Object value() {
         return val;
     }
 
+    /**
+     * 数値定数の字句解析を行います。
+     * @throws Exception 小数型定数の記述中に、複数個の小数点が発見された場合に例外を発生させます。
+     */
     private void lexDigit() throws Exception {
         BigDecimal num = new BigDecimal("0");
         boolean point = false; // 小数かどうか
@@ -188,11 +216,15 @@ class Lexer {
         }
     }
 
+    /**
+     * 文字列定数の字句解析を行います。
+     * @throws Exception 文字列定数の記述中にソースコードの末端に到達した場合に例外を発生させます。
+     */
     private void lexString() throws Exception {
         StringBuilder buf = new StringBuilder();
         while (true) {
             int c = reader.read();
-            if (c < 0) throw new Exception("文字列中でファイルの終わりに到達しました");
+            if (c < 0) throw new Exception("文字列定数の記述中にソースコードの末端に到達しました");
             if (c == '"') {
                 break;
             } else if (c == '\\') {
@@ -204,49 +236,72 @@ class Lexer {
         val = new X_String(buf.toString());
     }
 
+    /**
+     * シンボルの字句解析を行い、定数や予約語であればトークンの種類を更新します。
+     * @throws Exception シンボルの読み込み中にソースコードの末端に到達した場合に例外を発生させます。
+     */
     private void lexSymbol() throws Exception {
         tokenType = TokenType.SYMBOL;
         StringBuilder buf = new StringBuilder();
         while (true) {
             int c = reader.read();
-            if (c < 0) throw new Exception("ファイルの終わりに到達しました");
+            if (c < 0) throw new Exception("ソースコードの末端に到達しました");
             if (!Character.isJavaIdentifierPart((char)c)) {
                 reader.unread();
                 break;
             }
             buf.append((char)c);
         }
-        String s = buf.toString();
-        val = X_Symbol.intern(s);
+        String s = buf.toString(); // シンボル名
 
         if (s.toUpperCase().equals("T")) {
+            // 真値
             tokenType = TokenType.T;
+            return;
         } else if (s.toUpperCase().equals("NIL")) {
+            // 偽値
             tokenType = TokenType.NIL;
+            return;
         } else if (s.toLowerCase().equals("lambda")) {
+            // ラムダ式の開始を示す予約語
             tokenType = TokenType.LAMBDA;
+            return;
         }
+
+        val = X_Symbol.intern(s); // 既存のシンボルを返すか、新規に生成したシンボルを返します。
     }
 
+    /**
+     * 空白文字を読み飛ばします。
+     * @throws Exception 後続する文字を読み込んでいるときに LexerReader が例外を発生させる場合があります。
+     */
     private void skipWhiteSpace() throws Exception {
         int c = reader.read();
         while ((c != -1) && Character.isWhitespace((char)c)) c = reader.read();
         reader.unread();
     }
 
+    /**
+     * 1行コメントを読み飛ばします。
+     * @throws Exception コメント中にソースコードの末端に達した場合に例外を発生させます。
+     */
     private void skipLineComment() throws Exception {
         int c;
         while ((c = reader.read()) != '\n') {
-            if (c < 0) throw new Exception("コメント中にファイルの末端に到達しました");
+            if (c < 0) throw new Exception("コメント中にソースコードの末端に到達しました");
         }
         reader.unread();
     }
 
+    /**
+     * 複数行コメントを読み飛ばします。
+     * @throws Exception コメント中にソースコードの末端に達した場合に例外を発生させます。
+     */
     private void skipComment() throws Exception {
         int c;
         while (true) {
             c = reader.read();
-            if (c < 0) throw new Exception("コメント中にファイルの末端に到達しました");
+            if (c < 0) throw new Exception("コメント中にソースコードの末端に到達しました");
             if (c == '*') {
                 c = reader.read();
                 if (c == '/') break;

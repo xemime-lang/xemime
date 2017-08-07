@@ -14,7 +14,7 @@ class Parser {
     /** 解析中のシンボルの種類 */
     private TokenType tokenType;
 
-    /** 次のトークンをレキサを介して取得し、その種類を記録する */
+    /** 次のトークンをレキサを介して取得し、その種類を記録します。 */
     private void getToken() {
         if (lex.advance()) {
             tokenType = lex.tokenType();
