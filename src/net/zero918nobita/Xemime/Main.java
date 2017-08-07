@@ -156,7 +156,7 @@ public class Main {
             setMember(new X_Symbol("println"), new X_Println());
         }
 
-        private class X_Println extends X_Native {
+        private static class X_Println extends X_Native {
             X_Println() {
                 super(2);
             }
@@ -169,7 +169,7 @@ public class Main {
             }
         }
 
-        class X_If extends X_Native {
+        private static class X_If extends X_Native {
             X_If(){
                 super(4);
             }
