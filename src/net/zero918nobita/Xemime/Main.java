@@ -116,6 +116,8 @@ public class Main {
         globalSymbols.put(new X_Symbol("Core"), register(new X_Core()));
 
         try {
+            Lexer lex;
+            Parser parser = new Parser();
             BufferedReader in;
             if (args.length == 0) {
                 in = new BufferedReader(new InputStreamReader(System.in));
@@ -123,17 +125,25 @@ public class Main {
             } else {
                 in = new BufferedReader(new FileReader(args[0]));
             }
-            Lexer lex;
-            Parser parser = new Parser();
+            if (interactive) System.out.print("> ");
+            String line;
             while (true) {
-                if (interactive) {
-                    System.out.print("Prelude> ");
+                line = in.readLine();
+                if (line != null && !line.equals("")) {
+                    lex = new Lexer((interactive) ? line : line + " \n");
+                    X_Object obj = parser.parse(lex);
+                    if (obj == null) break;
+                    if (interactive) {
+                        System.out.println(obj.run().toString());
+                        System.out.print("> ");
+                    } else {
+                        obj.run();
+                    }
+                } else if (line == null) {
+                    break;
                 }
-                lex = new Lexer(in.readLine());
-                X_Object obj = parser.parse(lex);
-                if (obj == null) break;
-                obj.run();
             }
+            in.close();
         } catch(Exception e) {
             e.printStackTrace();
         }
