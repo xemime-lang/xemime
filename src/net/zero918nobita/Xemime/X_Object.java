@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -12,10 +13,14 @@ class X_Object {
     /**
      * メンバのリスト
      */
-    private HashMap<String, X_Object> members;
+    private HashMap<X_Symbol, X_Object> members;
 
     X_Object() {
          members = new HashMap<>();
+    }
+
+    private boolean hasMember(X_Symbol symbol) {
+        return members.containsKey(symbol);
     }
 
     /**
@@ -23,7 +28,7 @@ class X_Object {
      * @param key メンバの名称
      * @param obj メンバの値
      */
-    void setMember(String key, X_Object obj) {
+    void setMember(X_Symbol key, X_Object obj) {
         members.put(key, obj);
     }
 
@@ -32,7 +37,7 @@ class X_Object {
      * @param key メンバの名称
      * @return メンバの値
      */
-    X_Object getMember(String key) {
+    private X_Object getMember(X_Symbol key) {
         return members.get(key);
     }
 
@@ -82,5 +87,19 @@ class X_Object {
 
     X_Bool xor(X_Object obj) throws Exception {
         throw new Exception("このオブジェクトに `^` 演算子は使用できません");
+    }
+
+    X_Object message(X_Symbol symbol) throws Exception {
+        if (!hasMember(symbol)) throw new Exception("`" + symbol.getName() + "` というフィールドはありません");
+        return getMember(symbol);
+    }
+
+    X_Object message(X_Symbol symbol, ArrayList<X_Object> params) throws Exception {
+        if (!hasMember(symbol)) throw new Exception("`" + symbol.getName() + "` というメソッドはありません");
+        X_Object o = getMember(symbol);
+        if (!(o instanceof X_Function)) throw new Exception("`" + symbol.getName() + "` はメソッドではありません");
+        if (params == null) params = new ArrayList<>();
+        params.add(0, this);
+        return ((X_Function) o).call(params);
     }
 }

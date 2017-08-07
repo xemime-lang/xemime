@@ -9,24 +9,23 @@ import java.io.Reader;
  */
 
 class LexerReader {
-    private Reader reader;
-    private boolean unget_p = false;
-    private int ch;
+    private String str;
+    private int progress = -1;
 
-    LexerReader(Reader r) {
-        reader = r;
+    LexerReader(String s) {
+        str = s;
     }
 
     int read() throws IOException {
-        if (unget_p) {
-            unget_p = false;
-        } else {
-            ch = reader.read();
-        }
-        return ch;
+        progress += 1;
+        return str.charAt(progress);
     }
 
     void unread() {
-        unget_p = true;
+        progress--;
+    }
+
+    void unread(int n) {
+        progress -= n;
     }
 }

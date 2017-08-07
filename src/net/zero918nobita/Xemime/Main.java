@@ -112,7 +112,6 @@ public class Main {
         }
 
         entities.put(new X_Address(0), X_Bool.T);
-        globalSymbols.put(new X_Symbol("pow"), register(new X_Pow()));
 
         try {
             BufferedReader in;
@@ -122,12 +121,13 @@ public class Main {
             } else {
                 in = new BufferedReader(new FileReader(args[0]));
             }
-            Lexer lex = new Lexer(in);
+            Lexer lex;
             Parser parser = new Parser();
             while (true) {
                 if (interactive) {
                     System.out.print("Prelude> ");
                 }
+                lex = new Lexer(in.readLine());
                 X_Object obj = parser.parse(lex);
                 if (obj == null) break;
                 System.out.println(obj.run().toString());

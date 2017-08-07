@@ -1,6 +1,5 @@
 package net.zero918nobita.Xemime;
 
-import java.io.Reader;
 import java.math.BigDecimal;
 
 /**
@@ -19,8 +18,8 @@ class Lexer {
     private LexerReader reader;
 
     /** Reader を設定します。 */
-    Lexer(Reader r) {
-        reader = new LexerReader(r);
+    Lexer(String s) {
+        reader = new LexerReader(s);
     }
 
     /** 次のトークンを読み込み、種類を記録します。 */
@@ -159,6 +158,9 @@ class Lexer {
                     lexString();
                     tokenType = TokenType.STRING;
                     break;
+                case '.': // メッセージ式
+                    tokenType = TokenType.PERIOD;
+                    break;
                 default:
                     if (Character.isDigit((char) c)) {
                         reader.unread();
@@ -205,12 +207,20 @@ class Lexer {
         while (true) {
             int c = reader.read();
             if (c < 0) break;
-            if (!Character.isDigit((char)c) && c != '.') { // 数字でも小数点でもないならエラー
+            if (!Character.isDigit((char)c) && c != '.') {
                 reader.unread();
+                if (decimal_place == 0 && point) {
+                    reader.unread();
+                    tokenType = TokenType.INT;
+                }
                 break;
             }
-            if (c == '.' && point) throw new Exception("文法エラー"); // 2つ以上小数点が存在するのでエラー
-            if (c == '.' && !point) point = true; // はじめて小数点が登場したので val に Double を代入するように設定
+            if (c == '.' && point) {
+                reader.unread(decimal_place);
+                tokenType = TokenType.DOUBLE;
+                break;
+            }
+            if (c == '.') point = true; // はじめて小数点が登場したので val に Double を代入するように設定
             if (point && c != '.') {
                 decimal_place++;
                 num = num.add(new BigDecimal(c-'0').multiply(new BigDecimal("0.1").pow(decimal_place)));
@@ -218,7 +228,7 @@ class Lexer {
                 num = num.multiply(new BigDecimal("10")).add(new BigDecimal(c-'0'));
             }
         }
-        if (point) {
+        if (decimal_place != 0) {
             val = new X_Double(num.doubleValue());
         } else {
             val = new X_Int(num.intValue()); // 整数だったのでint型にキャストしてから Integer を代入

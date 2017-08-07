@@ -185,11 +185,61 @@ class Parser {
     }
 
     /**
-     * 因子 ( 数値、文字列、真偽値、ブロック、符号反転、括弧で包まれた式、論理否定、シンボル、代入式、関数式、関数呼び出し ) の構文解析を行います。
+     * 因子 ( 文字列、真偽値、符号反転、論理否定、関数式、メッセージ式 ) の構文解析を行います。
      * @return 因子の評価結果 ( 演算子を含む場合は、演算可能な X_BinExpr インスタンスを返します )
      * @throws Exception 因子に不正な要素が含まれている場合 (ここではどの種類の因子にも該当しない場合、または閉じられていない括弧がある場合) に例外を発生させます。
      */
     private X_Object factor() throws Exception {
+        X_Object obj;
+        switch (tokenType) {
+            case STRING:
+                obj = lex.value();
+                getToken();
+                break;
+            case T:
+                obj = X_Bool.T;
+                getToken();
+                break;
+            case NIL:
+                obj = X_Bool.Nil;
+                getToken();
+                break;
+            case NOT:
+                getToken();
+                obj = new X_Not(factor());
+                break;
+            case LAMBDA:
+                obj = lambda();
+                break;
+            default:
+                obj = first();
+        }
+
+        // メッセージ式
+        while (tokenType == TokenType.PERIOD) {
+            getToken();
+            if (tokenType != TokenType.SYMBOL) throw new Exception("文法エラーです");
+            X_Symbol sym = (X_Symbol)lex.value();
+            getToken();
+            if (tokenType == TokenType.LP) {
+                getToken();
+                ArrayList<X_Object> list = args();
+                if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
+                getToken();
+                obj = new X_DotCall(obj, sym, list);
+            } else {
+                obj = new X_DotExpr(obj, sym);
+            }
+        }
+        return obj;
+    }
+
+    /**
+     * 一次子 ( 数値、括弧で包まれた式、シンボル、宣言式、代入式、関数呼び出し、ブロック ) の構文解析を行います。
+     * @return 一次子の評価結果
+     * @throws Exception
+     */
+    private X_Object first() throws Exception {
         X_Object obj = null;
         switch (tokenType) {
             case EOS:
@@ -201,6 +251,19 @@ class Parser {
             case DOUBLE:
                 obj = lex.value();
                 getToken();
+                break;
+            case SUB:
+                getToken();
+                obj = new X_Minus(factor());
+                break;
+            case LP:
+                getToken();
+                obj = expr();
+                if (tokenType != TokenType.RP) throw new Exception("文法エラー: 対応する括弧がありません");
+                getToken();
+                break;
+            case LB:
+                obj = block();
                 break;
             case SYMBOL:
                 X_Symbol sym = (X_Symbol)lex.value();
@@ -219,38 +282,6 @@ class Parser {
                 } else {
                     obj = sym;
                 }
-                break;
-            case STRING:
-                obj = lex.value();
-                getToken();
-                break;
-            case T:
-                obj = X_Bool.T;
-                getToken();
-                break;
-            case NIL:
-                obj = X_Bool.Nil;
-                getToken();
-                break;
-            case SUB:
-                getToken();
-                obj = new X_Minus(factor());
-                break;
-            case LP:
-                getToken();
-                obj = expr();
-                if (tokenType != TokenType.RP) throw new Exception("文法エラー: 対応する括弧がありません");
-                getToken();
-                break;
-            case NOT:
-                getToken();
-                obj = new X_Not(factor());
-                break;
-            case LB:
-                obj = block();
-                break;
-            case LAMBDA:
-                obj = lambda();
                 break;
             default:
                 throw new Exception("文法エラーです");

@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime;
 
+import java.util.ArrayList;
+
 /**
  * 整数オブジェクト
  * @author Kodai Matsumoto
@@ -8,6 +10,7 @@ package net.zero918nobita.Xemime;
 class X_Int extends X_Numeric {
     X_Int(int num) {
         super();
+        setMember(new X_Symbol("abs"), new X_Abs());
         value = num;
     }
 
@@ -123,5 +126,14 @@ class X_Int extends X_Numeric {
         if (obj instanceof X_Int) return (this.getValue() >= ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() >= ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception("Int, Double 以外のデータ型と大小を比較することはできません");
+    }
+
+    class X_Abs extends X_Native {
+        X_Abs() {
+            super(1);
+        }
+        protected X_Int exec(ArrayList<X_Object> params) throws Exception {
+            return new X_Int(Math.abs(((X_Int)params.get(0)).getValue()));
+        }
     }
 }
