@@ -55,6 +55,15 @@ public class Main {
     }
 
     /**
+     * 参照先の実体を取得する
+     * @param address アドレス
+     * @return 実体
+     */
+    static X_Code getValueOfReference(X_Address address) {
+        return entities.get(address);
+    }
+
+    /**
      * シンボルに参照をセットする
      * @param sym シンボル
      * @param ref 参照
@@ -114,6 +123,7 @@ public class Main {
 
         entities.put(new X_Address(0), X_Bool.T);
         globalSymbols.put(new X_Symbol("Core"), register(new X_Core()));
+        globalSymbols.put(new X_Symbol("Object"), register(new X_Object()));
 
         try {
             Lexer lex;
@@ -157,6 +167,24 @@ public class Main {
                 "/_/|_\\___/_/ /_/ /_/_/_/ /_/ /_/\\___/ \n\n" +
                 "Xemime Version 1.0.0 2017-08-07\n\n" +
                 "Usage: java -jar Xemime.jar [source file name]");
+    }
+
+    private static class X_Object extends X_Handler {
+        X_Object() {
+            super();
+            setMember(new X_Symbol("clone"), new X_Clone());
+        }
+
+        private static class X_Clone extends X_Native {
+            X_Clone() {
+                super(1);
+            }
+
+            @Override
+            protected X_Address exec(ArrayList<X_Code> params) throws Exception {
+                return Main.register(params.get(0).run());
+            }
+        }
     }
 
     private static class X_Core extends X_Handler {
