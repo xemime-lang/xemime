@@ -13,7 +13,7 @@ class X_Handler extends X_Code {
         members = new HashMap<>();
     }
 
-    private boolean hasMember(X_Symbol symbol) {
+    boolean hasMember(X_Symbol symbol) {
         return members.containsKey(symbol);
     }
 
@@ -35,11 +35,13 @@ class X_Handler extends X_Code {
         return Main.getValueOfReference(members.get(key));
     }
 
+    @Override
     X_Code message(X_Symbol symbol) throws Exception {
         if (!hasMember(symbol)) throw new Exception("`" + symbol.getName() + "` というフィールドはありません");
         return getMember(symbol);
     }
 
+    @Override
     X_Code message(X_Symbol symbol, ArrayList<X_Code> params) throws Exception {
         if (!hasMember(symbol)) throw new Exception("`" + symbol.getName() + "` というメソッドはありません");
         X_Code o = getMember(symbol);

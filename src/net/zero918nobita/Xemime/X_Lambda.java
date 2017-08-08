@@ -9,6 +9,7 @@ class X_Lambda extends X_Function {
 
     X_Lambda(ArrayList<X_Code> l, X_Code obj) {
         params = l;
+        params.add(0, new X_Symbol("this"));
         body = obj;
         if (params != null) numberOfArgs = params.size();
     }
@@ -40,6 +41,8 @@ class X_Lambda extends X_Function {
 
         HashMap<X_Symbol, X_Address> table = new HashMap<>();
         Main.loadLocalFrame(table);
+
+        table.put(new X_Symbol("this"), Main.register(this));
 
         for (int i = 0; i < args.size(); i++) {
             X_Symbol sym = (X_Symbol)params.get(i);

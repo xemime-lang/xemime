@@ -228,6 +228,14 @@ class Parser {
                 if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
                 getToken();
                 obj = new X_DotCall(obj, sym, list);
+            } else if (tokenType == TokenType.DECLARE) {
+                getToken();
+                X_Code c = expr();
+                obj = new X_DotDeclare(obj, sym, c);
+            } else if (tokenType == TokenType.ASSIGN) {
+                getToken();
+                X_Code c = expr();
+                obj = new X_DotAssign(obj, sym, c);
             } else {
                 obj = new X_DotExpr(obj, sym);
             }
