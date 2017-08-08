@@ -11,6 +11,7 @@ class X_Int extends X_Numeric {
     X_Int(int num) {
         super();
         setMember(new X_Symbol("abs"), new X_Abs());
+        setMember(new X_Symbol("to_s"), new X_ToS());
         value = num;
     }
 
@@ -128,12 +129,23 @@ class X_Int extends X_Numeric {
         else throw new Exception("Int, Double 以外のデータ型と大小を比較することはできません");
     }
 
-    class X_Abs extends X_Native {
+    private class X_Abs extends X_Native {
         X_Abs() {
             super(1);
         }
         protected X_Int exec(ArrayList<X_Code> params) throws Exception {
             return new X_Int(Math.abs(((X_Int)params.get(0)).getValue()));
+        }
+    }
+
+    private class X_ToS extends X_Native {
+        X_ToS() {
+            super(1);
+        }
+
+        @Override
+        protected X_String exec(ArrayList<X_Code> params) throws Exception {
+            return new X_String(params.get(0).toString());
         }
     }
 }
