@@ -13,7 +13,11 @@ class X_Assign extends X_BinExpr {
     X_Code run() throws Exception {
         X_Symbol sym = (X_Symbol)obj1;
         X_Code o = obj2.run();
-        Main.setValue(sym, o);
+        if (o instanceof X_Address) {
+            Main.setAddress(sym, (X_Address)o);
+        } else {
+            Main.setValue(sym, o);
+        }
         return o;
     }
 }

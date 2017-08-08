@@ -13,7 +13,11 @@ class X_Declare extends X_BinExpr {
     X_Code run() throws Exception {
         X_Symbol sym = (X_Symbol)obj1;
         X_Code o = obj2.run();
-        Main.defValue(sym, o);
+        if (o instanceof X_Address) {
+            Main.defAddress(sym, (X_Address)o);
+        } else {
+            Main.defValue(sym, o);
+        }
         return o;
     }
 }

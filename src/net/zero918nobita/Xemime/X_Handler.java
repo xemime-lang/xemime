@@ -7,7 +7,7 @@ class X_Handler extends X_Code {
     /**
      * メンバのリスト
      */
-    private HashMap<X_Symbol, X_Code> members;
+    private HashMap<X_Symbol, X_Address> members;
 
     X_Handler() {
         members = new HashMap<>();
@@ -23,7 +23,7 @@ class X_Handler extends X_Code {
      * @param obj メンバの値
      */
     void setMember(X_Symbol key, X_Code obj) {
-        members.put(key, obj);
+        members.put(key, Main.register(obj));
     }
 
     /**
@@ -32,7 +32,7 @@ class X_Handler extends X_Code {
      * @return メンバの値
      */
     private X_Code getMember(X_Symbol key) {
-        return members.get(key);
+        return Main.getValueOfReference(members.get(key));
     }
 
     X_Code message(X_Symbol symbol) throws Exception {
