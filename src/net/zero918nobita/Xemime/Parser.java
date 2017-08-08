@@ -222,8 +222,9 @@ class Parser {
             X_Symbol sym = (X_Symbol)lex.value();
             getToken();
             if (tokenType == TokenType.LP) {
+                ArrayList<X_Code> list = new ArrayList<>();
                 getToken();
-                ArrayList<X_Code> list = args();
+                if (tokenType != TokenType.RP) list = args();
                 if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
                 getToken();
                 obj = new X_DotCall(obj, sym, list);
@@ -318,8 +319,9 @@ class Parser {
      * @throws Exception 関数呼び出し部分で不正な要素が含まれている場合に例外を発生させます。
      */
     private X_Code methodCall(X_Symbol sym) throws Exception {
+        ArrayList<X_Code> list = new ArrayList<>();
         getToken();
-        ArrayList<X_Code> list = args();
+        if (tokenType != TokenType.RP) list = args();
         if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
         getToken();
         return new X_Funcall(sym, list);
@@ -350,10 +352,11 @@ class Parser {
      * @throws Exception 関数式中に不正な要素が含まれている場合 ( ここでは正しく括弧が閉じられていない場合 ) に例外を発生させます。
      */
     private X_Code lambda() throws Exception {
+        ArrayList<X_Code> list = new ArrayList<>();
         getToken();
         if (tokenType != TokenType.LP) throw new Exception("文法エラーです");
         getToken();
-        ArrayList<X_Code> list = symbols();
+        if (tokenType != TokenType.RP) list = symbols();
         if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
         getToken();
         return new X_Lambda(list, factor());
