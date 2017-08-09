@@ -1,5 +1,10 @@
 package net.zero918nobita.Xemime;
 
+/**
+ * オブジェクトのメンバの宣言
+ * @author Kodai Matsumoto
+ */
+
 class X_DotDeclare extends X_Code {
     private X_Code code1;
     private X_Symbol symbol;

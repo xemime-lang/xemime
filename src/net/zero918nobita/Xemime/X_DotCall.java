@@ -2,6 +2,11 @@ package net.zero918nobita.Xemime;
 
 import java.util.ArrayList;
 
+/**
+ * オブジェクトのメソッドの呼び出し
+ * @author Kodai Matsumoto
+ */
+
 class X_DotCall extends X_Code {
     private X_Code obj;
     private X_Symbol symbol;

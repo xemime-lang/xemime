@@ -1,5 +1,10 @@
 package net.zero918nobita.Xemime;
 
+/**
+ * オブジェクトのメンバを更新する代入演算子
+ * @author Kodai Matsumoto
+ */
+
 class X_DotAssign extends X_Code {
     private X_Code code1;
     private X_Symbol symbol;

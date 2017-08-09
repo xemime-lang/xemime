@@ -6,25 +6,29 @@ import java.util.TreeMap;
 
 /**
  * フレーム
- * シンボルとアドレスを対にして階層に分けて保持する。
+ * シンボルとアドレスを対にして階層に分けて保持します。
  * @author Kodai Matsumoto
  */
 
 class Frame {
     private ArrayList<HashMap<X_Symbol, X_Address>> localFrames = new ArrayList<>();
 
+    /** フレームの階層数を取得します。 */
     int numberOfLayers() {
         return localFrames.size();
     }
 
+    /** フレームに新しい階層を追加します。 */
     void loadLocalFrame(HashMap<X_Symbol, X_Address> table) {
         localFrames.add(table);
     }
 
+    /** 最後にフレームに追加された階層を破棄します。 */
     void unloadLocalFrame() {
         localFrames.remove(localFrames.size() - 1);
     }
 
+    /** 全階層で指定されたシンボルが存在するかを調べ、存在する場合は true を、存在しない場合は false を返します。 */
     boolean hasSymbol(X_Symbol sym) {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
