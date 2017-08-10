@@ -1,6 +1,6 @@
 # Xemime 2.0
 
-![Build Status](https://travis-ci.org/0918nobita/Xemime-2.png)
+[![Build Status](https://travis-ci.org/0918nobita/Xemime-2.png)](https://travis-ci.org/0918nobita/Xemime-2)  [![Build status](https://ci.appveyor.com/api/projects/status/8xwro0d8tfv3q79q/branch/master?svg=true)](https://ci.appveyor.com/project/0918nobita/xemime-2/branch/master)
 
 | 項目 | 内容 |
 | --- | --- |
