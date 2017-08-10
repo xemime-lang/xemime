@@ -1,5 +1,7 @@
 # Xemime 2.0
 
+![Build Status](https://travis-ci.org/0918nobita/Xemime-2.png)
+
 | 項目 | 内容 |
 | --- | --- |
 | パラダイム | プロトタイプベースオブジェクト指向、関数型 |
