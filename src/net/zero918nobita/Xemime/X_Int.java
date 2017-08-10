@@ -12,6 +12,9 @@ class X_Int extends X_Numeric {
         super();
         setMember(new X_Symbol("abs"), new X_Abs());
         setMember(new X_Symbol("to_s"), new X_ToS());
+        setMember(new X_Symbol("next"), new X_Succ());
+        setMember(new X_Symbol("succ"), new X_Succ());
+        setMember(new X_Symbol("pred"), new X_Pred());
         value = num;
     }
 
@@ -146,6 +149,28 @@ class X_Int extends X_Numeric {
         @Override
         protected X_String exec(ArrayList<X_Code> params) throws Exception {
             return new X_String(params.get(0).toString());
+        }
+    }
+
+    private class X_Succ extends X_Native {
+        X_Succ() {
+            super(1);
+        }
+
+        @Override
+        protected X_Int exec(ArrayList<X_Code> params) throws Exception {
+            return new X_Int(((X_Int)params.get(0)).getValue() + 1);
+        }
+    }
+
+    private class X_Pred extends X_Native {
+        X_Pred() {
+            super(1);
+        }
+
+        @Override
+        protected X_Int exec(ArrayList<X_Code> params) throws Exception {
+            return new X_Int(((X_Int)params.get(0)).getValue() - 1);
         }
     }
 }
