@@ -17,7 +17,7 @@ abstract class X_Function extends X_Code {
         if (params == null) {
             if (numberOfArgs != 0) throw new Exception("引数の個数が違います");
         } else {
-            if (params.size() != numberOfArgs) throw new Exception("引数の個数が違います");
+            if (params.size() - 1 != numberOfArgs) throw new Exception("引数の個数が違います");
         }
         return exec(params);
     }

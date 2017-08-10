@@ -127,7 +127,7 @@ class X_Double extends X_Numeric {
 
     class X_Abs extends X_Native {
         X_Abs() {
-            super(1);
+            super(0);
         }
         protected X_Double exec(ArrayList<X_Code> params) throws Exception {
             return new X_Double(Math.abs(((X_Double)params.get(0)).getValue()));

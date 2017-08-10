@@ -15,6 +15,7 @@ class X_Int extends X_Numeric {
         setMember(new X_Symbol("next"), new X_Succ());
         setMember(new X_Symbol("succ"), new X_Succ());
         setMember(new X_Symbol("pred"), new X_Pred());
+        setMember(new X_Symbol("times"), new X_Times());
         value = num;
     }
 
@@ -134,7 +135,7 @@ class X_Int extends X_Numeric {
 
     private class X_Abs extends X_Native {
         X_Abs() {
-            super(1);
+            super(0);
         }
         protected X_Int exec(ArrayList<X_Code> params) throws Exception {
             return new X_Int(Math.abs(((X_Int)params.get(0)).getValue()));
@@ -143,7 +144,7 @@ class X_Int extends X_Numeric {
 
     private class X_ToS extends X_Native {
         X_ToS() {
-            super(1);
+            super(0);
         }
 
         @Override
@@ -154,7 +155,7 @@ class X_Int extends X_Numeric {
 
     private class X_Succ extends X_Native {
         X_Succ() {
-            super(1);
+            super(0);
         }
 
         @Override
@@ -165,12 +166,33 @@ class X_Int extends X_Numeric {
 
     private class X_Pred extends X_Native {
         X_Pred() {
-            super(1);
+            super(0);
         }
 
         @Override
         protected X_Int exec(ArrayList<X_Code> params) throws Exception {
             return new X_Int(((X_Int)params.get(0)).getValue() - 1);
+        }
+    }
+
+    private class X_Times extends X_Native {
+        X_Times() {
+            super(1);
+        }
+
+        @Override
+        protected X_Code exec(ArrayList<X_Code> params) throws Exception {
+            X_Code c = params.get(1).run();
+            if (c instanceof X_Lambda) {
+                X_Lambda f = (X_Lambda)c;
+                ArrayList<X_Code> list = new ArrayList<X_Code>() {{ add(f); }};
+                for (int i = 0; i < ((X_Int)params.get(0)).getValue(); i++) {
+                    c = f.exec(list);
+                }
+            } else {
+                throw new Exception("無名関数を指定してください");
+            }
+            return c;
         }
     }
 }

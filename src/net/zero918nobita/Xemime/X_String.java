@@ -36,7 +36,7 @@ class X_String extends X_Handler {
 
     private class X_Length extends X_Native {
         X_Length() {
-            super(1);
+            super(0);
         }
 
         @Override

@@ -177,7 +177,7 @@ public class Main {
 
         private static class X_Clone extends X_Native {
             X_Clone() {
-                super(1);
+                super(0);
             }
 
             @Override
@@ -198,7 +198,7 @@ public class Main {
 
         private static class X_Exit extends X_Native {
             X_Exit() {
-                super(1);
+                super(0);
             }
 
             @Override
@@ -210,7 +210,7 @@ public class Main {
 
         private static class X_Print extends X_Native {
             X_Print() {
-                super(2);
+                super(1);
             }
 
             @Override
@@ -223,7 +223,7 @@ public class Main {
 
         private static class X_Println extends X_Native {
             X_Println() {
-                super(2);
+                super(1);
             }
 
             @Override
@@ -236,7 +236,7 @@ public class Main {
 
         private static class X_If extends X_Native {
             X_If(){
-                super(4);
+                super(3);
             }
 
             @Override
