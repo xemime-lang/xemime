@@ -4,3 +4,6 @@ jdk:
   - oraclejdk8
 
 script: mvn compile
+
+after_success:
+  - mvn clean cobertura:cobertura coveralls:cobertura
