@@ -1,5 +1,6 @@
 .idea/
 doc/
+build/
 out/
 Xemime.iml
 
