@@ -2,3 +2,7 @@
 doc/
 out/
 Xemime.iml
+
+# Gradle
+gradle/
+.gradle/
