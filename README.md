@@ -1,6 +1,6 @@
 # Xemime 2.0
 
-[![Build Status](https://travis-ci.org/0918nobita/Xemime-2.png)](https://travis-ci.org/0918nobita/Xemime-2)  [![Build status](https://ci.appveyor.com/api/projects/status/8xwro0d8tfv3q79q/branch/master?svg=true)](https://ci.appveyor.com/project/0918nobita/xemime-2/branch/master)
+[![Build Status](https://travis-ci.org/0918nobita/Xemime-2.png)](https://travis-ci.org/0918nobita/Xemime-2)  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
 
 | 項目 | 内容 |
 | --- | --- |
@@ -16,31 +16,13 @@
 x := 2;
 
 Core.println((1 + x) * (3 - 4) + 6 / x);  // -> 0
+Core.println((1 == 1.0) && Core.if(3 > 2, t, nil)); // -> T
 
-Core.println(T == T);              // -> T
-Core.println(T == NIL);            // -> NIL
-Core.println(1.0 == 1);            // -> T
-Core.println(1.1 == 1);            // -> NIL
-Core.println("hello" == "hello");  // -> T
+obj := Object.clone();
+obj.property := 2;
+obj.method := lambda(x) { x * 3; };
 
-x = x + 1;
-
-Core.println(2 < x);    // -> T
-Core.println(2.0 > 2);  // -> NIL
-Core.println(1 >= 1);   // -> T
-
-Core.println((1 != 1) || (2 > 1));    // -> T
-
-Core.println((2 > 3) && (1 == 1.0));  // -> NIL
-
-Core.println((4 > 2) ^ (5 > 3));      // -> NIL
-Core.println((4 > 2) ^ (5 < 3));      // -> T
-
-square := lambda(x) { x * x; };
-Core.println(square(5));    // -> 25
-Core.println(square(5.0));  // -> 25.0
-
-xor := lambda(b1, b2) { b1 ^ b2; };
-Core.println(xor(t, nil));    // -> T
-Core.println(xor(nil, nil));  // -> NIL
+Core.println(obj.property); // -> 2
+Core.println(obj.method); // -> <Lambda>
+Core.println(obj.method(5); // -> 15
 ```
