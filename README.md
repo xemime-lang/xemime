@@ -24,5 +24,5 @@ obj.method := lambda(x) { x * 3; };
 
 Core.println(obj.property); // -> 2
 Core.println(obj.method); // -> <Lambda>
-Core.println(obj.method(5); // -> 15
+Core.println(obj.method(5)); // -> 15
 ```
