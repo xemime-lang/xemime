@@ -3,6 +3,6 @@ obj.a := 2;
 obj.b := lambda() { 3; };
 obj.c := lambda(x) { x + 1; };
 
-Core.println("a: "    + obj.a.to_s());     // -> "a: 2"
-Core.println("b(): "  + obj.b().to_s());   // -> "b(): 3"
-Core.println("c(3): " + obj.c(3).to_s());  // -> "c(3): 4"
+println("a: "    + obj.a.to_s());     // -> "a: 2"
+println("b(): "  + obj.b().to_s());   // -> "b(): 3"
+println("c(3): " + obj.c(3).to_s());  // -> "c(3): 4"

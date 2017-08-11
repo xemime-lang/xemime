@@ -1,9 +1,9 @@
 square := lambda(x) { x * x; };
-Core.println(square(5));   // -> 25
-Core.println(square(5.0)); // -> 25.0
+println(square(5));   // -> 25
+println(square(5.0)); // -> 25.0
 
 xor := lambda(b1, b2) { b1 ^ b2; };
-Core.println(xor(t, nil));   // -> T
-Core.println(xor(nil, t));   // -> T
-Core.println(xor(t, t));     // -> NIL
-Core.println(xor(nil, nil)); // -> NIL
+println(xor(t, nil));   // -> T
+println(xor(nil, t));   // -> T
+println(xor(t, t));     // -> NIL
+println(xor(nil, nil)); // -> NIL
