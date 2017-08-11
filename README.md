@@ -19,16 +19,16 @@ Xemime は、さまざまな言語から影響を受けたプログラミング�
 ```
 x := 2;
 
-Core.println((1 + x) * (3 - 4) + 6 / x);  // -> 0
-Core.println((1 == 1.0) && Core.if(3 > 2, t, nil)); // -> T
+println((1 + x) * (3 - 4) + 6 / x);  // -> 0
+println((1 == 1.0) && Core.if(3 > 2, t, nil)); // -> T
 
 obj := Object.clone();
 obj.property := 2;
 obj.method := lambda(x) { x * 3; };
 
-Core.println(obj.property); // -> 2
-Core.println(obj.method); // -> <Lambda>
-Core.println(obj.method(5)); // -> 15
+println(obj.property); // -> 2
+println(obj.method); // -> <Lambda>
+println(obj.method(5)); // -> 15
 ```
 
 # インストール方法
