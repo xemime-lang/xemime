@@ -3,4 +3,5 @@ doc/
 target/
 out/
 node_modules/
+_book/
 Xemime.iml
