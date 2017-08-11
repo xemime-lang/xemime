@@ -9,9 +9,13 @@ import static org.hamcrest.CoreMatchers.is;
 
 public class FrameTest {
     @Test
-    public void testNumberOfLayers() throws Exception {
+    public void test() throws Exception {
+        Main.defValue(new X_Symbol("variable"), new X_String("global"));
         Main.loadLocalFrame(new HashMap<>());
-        Main.defValue(new X_Symbol("sample"), new X_String("value"));
+        Main.defValue(new X_Symbol("variable"), new X_String("local"));
         assertThat(Main.frame.numberOfLayers(), is(1));
+        assertThat(Main.getValueOfSymbol(new X_Symbol("variable")), is(new X_String("local")));
+        Main.unloadLocalFrame();
+        assertThat(Main.getValueOfSymbol(new X_Symbol("variable")), is(new X_String("global")));
     }
 }
