@@ -2,8 +2,5 @@
 doc/
 target/
 out/
+node_modules/
 Xemime.iml
-
-# Gradle
-gradle/
-.gradle/

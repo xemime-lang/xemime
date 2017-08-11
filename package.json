@@ -1,0 +1,25 @@
+{
+  "name": "xemime",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0918nobita/Xemime-2.git"
+  },
+  "author": "0918nobita",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/0918nobita/Xemime-2/issues"
+  },
+  "homepage": "https://github.com/0918nobita/Xemime-2#readme",
+  "devDependencies": {
+    "gitbook-cli": "^2.3.2"
+  }
+}
