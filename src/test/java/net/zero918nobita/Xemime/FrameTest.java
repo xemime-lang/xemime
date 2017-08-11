@@ -9,6 +9,11 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 
+/**
+ * net.zero918nobita.Xemime.Frame のテストクラスです。
+ * @author Kodai Matsumoto
+ */
+
 public class FrameTest {
     @Test
     public void test() throws Exception {
@@ -33,6 +38,16 @@ public class FrameTest {
     @Test
     public void testGetValueOfSymbol() {
         Frame frame = new Frame();
+        // 未宣言のシンボル unknown の値を取得しようとすると null が返ることを確認する
         assertThat(frame.getValueOfSymbol(new X_Symbol("unknown"), new TreeMap<>()), nullValue());
+    }
+
+    @Test
+    public void testGetAddressOfSymbol() throws Exception {
+        Frame frame = new Frame();
+        frame.loadLocalFrame(new HashMap<>());
+        X_Address address = Main.register(new X_String("value"));
+        frame.defAddress(new X_Symbol("variable"), address);
+        assertThat(frame.getAddressOfSymbol(new X_Symbol("variable")), is(address));
     }
 }
