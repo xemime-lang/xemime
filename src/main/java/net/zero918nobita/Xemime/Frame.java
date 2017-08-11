@@ -62,11 +62,13 @@ class Frame {
                 if (localFrames.get(i).containsKey(sym)) localFrames.get(i).put(sym, Main.register(obj));
     }
 
-    void defAddress(X_Symbol sym, X_Address ref) {
+    void defAddress(X_Symbol sym, X_Address ref) throws Exception {
+        if (localFrames.size() == 0) throw new Exception("フレームが存在しません");
         localFrames.get(localFrames.size() - 1).put(sym, ref);
     }
 
-    void defValue(X_Symbol sym, X_Code obj) {
+    void defValue(X_Symbol sym, X_Code obj) throws Exception {
+        if (localFrames.size() == 0) throw new Exception("フレームが存在しません");
         localFrames.get(localFrames.size() - 1).put(sym, Main.register(obj));
     }
 }

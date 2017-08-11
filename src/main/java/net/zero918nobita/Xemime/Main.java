@@ -94,7 +94,7 @@ public class Main {
      * @param sym 変数
      * @param ref 参照
      */
-    static void defAddress(X_Symbol sym, X_Address ref) {
+    static void defAddress(X_Symbol sym, X_Address ref) throws Exception {
         if (frame.numberOfLayers() != 0) { frame.defAddress(sym, ref); return; }
         globalSymbols.put(sym, ref);
     }
@@ -104,7 +104,7 @@ public class Main {
      * @param sym 変数
      * @param obj 値
      */
-    static void defValue(X_Symbol sym, X_Code obj) {
+    static void defValue(X_Symbol sym, X_Code obj) throws Exception {
         if (frame.numberOfLayers() != 0) { frame.defValue(sym, obj); return; }
         X_Address ref = register(obj);
         globalSymbols.put(sym, ref);
