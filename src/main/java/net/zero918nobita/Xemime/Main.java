@@ -14,8 +14,10 @@ import java.util.TreeMap;
 
 public class Main {
     private static HashMap<X_Symbol, X_Address> globalSymbols = new HashMap<>();
-    private static TreeMap<X_Address, X_Code> entities = new TreeMap<>();
-    private static Frame frame = new Frame();
+    private static TreeMap<X_Address, X_Code> entities = new TreeMap<X_Address, X_Code>() {{
+        put(new X_Address(0), X_Bool.T);
+    }};
+    static Frame frame = new Frame();
 
     static void loadLocalFrame(HashMap<X_Symbol, X_Address> table) {
         frame.loadLocalFrame(table);
@@ -121,7 +123,6 @@ public class Main {
             return;
         }
 
-        entities.put(new X_Address(0), X_Bool.T);
         globalSymbols.put(new X_Symbol("Core"), register(new X_Core()));
         globalSymbols.put(new X_Symbol("Object"), register(new X_Object()));
 
