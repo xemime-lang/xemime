@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/0918nobita/Xemime-2.png)](https://travis-ci.org/0918nobita/Xemime-2)  [![Coverage Status](https://coveralls.io/repos/github/0918nobita/Xemime-2/badge.svg?branch=master)](https://coveralls.io/github/0918nobita/Xemime-2?branch=master)  [![codebeat badge](https://codebeat.co/badges/d82dec15-a4ee-4bf3-a6d2-41022a1812f6)](https://codebeat.co/projects/github-com-0918nobita-xemime-2-master)  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
 
+Xemime は、さまざまな言語から影響を受けたプログラミング言語です。<br>
+純粋なプロトタイプベースオブジェクト指向言語であり、<br>
+小規模のソフトウェアを開発することを目的としています。
+
 | 項目 | 内容 |
 | --- | --- |
 | パラダイム | プロトタイプベースオブジェクト指向、関数型 |
@@ -26,3 +30,20 @@ Core.println(obj.property); // -> 2
 Core.println(obj.method); // -> <Lambda>
 Core.println(obj.method(5)); // -> 15
 ```
+
+# インストール方法
+
+安定版はまだリリースできていません。<br>
+アルファ版を随時 [Releases](https://github.com/0918nobita/Xemime-2/releases) で公開しています。
+
+# 開発方法
+
+| 項目 | 内容 |
+| ---- | ---- |
+| 開発言語 | Java 1.8 |
+| プロジェクト管理ツール | Maven |
+| 単体テストフレームワーク | JUnit 4 |
+| コードカバレッジライブラリ | JaCoCo ( ``jacoco-maven-plugin`` ) |
+| CI サービス | Travis CI ( ``.travis.yml`` ) |
+| カバレッジレポート共有サービス | Coveralls ( ``coveralls-maven-plugin`` ) |
+| ドキュメントジェネレータ | GitBook ( npm : ``package.json`` ) |
