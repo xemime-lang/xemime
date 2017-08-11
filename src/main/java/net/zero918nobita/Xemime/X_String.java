@@ -3,7 +3,7 @@ package net.zero918nobita.Xemime;
 import java.util.ArrayList;
 
 /**
- * 文字列クラス
+ * 文字列オブジェクト
  * @author Kodai Matsumoto
  */
 

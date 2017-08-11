@@ -289,13 +289,43 @@ class Parser {
                     // 関数呼び出し
                     obj = methodCall(sym);
                 } else {
-                    obj = sym;
+                    obj = methodOfCoreObject(sym);
                 }
                 break;
             default:
                 throw new Exception("文法エラーです");
         }
         return obj;
+    }
+
+    private X_Code methodOfCoreObject(X_Symbol symbol) throws Exception {
+        X_Code c;
+        X_Handler core;
+        switch (symbol.getName()){
+            case "if":
+                core = (X_Handler) Main.getValueOfSymbol(new X_Symbol("Core"));
+                if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
+                c = core.message(new X_Symbol("if"));
+                break;
+            case "print":
+                core = (X_Handler) Main.getValueOfSymbol(new X_Symbol("Core"));
+                if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
+                c = core.message(new X_Symbol("print"));
+                break;
+            case "println":
+                core = (X_Handler) Main.getValueOfSymbol(new X_Symbol("Core"));
+                if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
+                c = core.message(new X_Symbol("println"));
+                break;
+            case "exit":
+                core = (X_Handler) Main.getValueOfSymbol(new X_Symbol("Core"));
+                if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
+                c = core.message(new X_Symbol("exit"));
+                break;
+            default:
+                c = symbol;
+        }
+        return c;
     }
 
     /**
@@ -332,7 +362,7 @@ class Parser {
         if (tokenType != TokenType.RP) list = args();
         if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
         getToken();
-        return new X_Funcall(sym, list);
+        return new X_Funcall(methodOfCoreObject(sym), list);
     }
 
     /**
