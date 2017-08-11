@@ -1,6 +1,6 @@
 # Xemime 2.0
 
-[![Build Status](https://travis-ci.org/0918nobita/Xemime-2.png)](https://travis-ci.org/0918nobita/Xemime-2)  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
+[![Build Status](https://travis-ci.org/0918nobita/Xemime-2.png)](https://travis-ci.org/0918nobita/Xemime-2)  [![Coverage Status](https://coveralls.io/repos/github/0918nobita/Xemime-2/badge.svg?branch=master)](https://coveralls.io/github/0918nobita/Xemime-2?branch=master)  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
 
 | 項目 | 内容 |
 | --- | --- |
