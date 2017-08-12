@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
@@ -15,6 +16,14 @@ import static org.hamcrest.CoreMatchers.is;
 public class X_SymbolTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+
+    @Test
+    public void testEquals() {
+        X_Symbol a = X_Symbol.intern("A");
+        X_Symbol b = X_Symbol.intern("A");
+        assertTrue(a.equals(b));
+        assertTrue(b.equals(a));
+    }
 
     @Test
     public void testRun() throws Exception {
@@ -35,5 +44,11 @@ public class X_SymbolTest {
     public void testToString() {
         X_Symbol symbol = X_Symbol.intern("sample");
         assertThat(symbol.toString(), is("sample"));
+    }
+
+    @Test
+    public void testGetName() {
+        X_Symbol symbol = X_Symbol.intern("sample2");
+        assertThat(symbol.getName(), is("sample2"));
     }
 }
