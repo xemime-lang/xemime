@@ -123,8 +123,8 @@ public class Main {
             return;
         }
 
-        globalSymbols.put(new X_Symbol("Core"), register(new X_Core()));
-        globalSymbols.put(new X_Symbol("Object"), register(new X_Object()));
+        globalSymbols.put(X_Symbol.intern("Core"), register(new X_Core()));
+        globalSymbols.put(X_Symbol.intern("Object"), register(new X_Object()));
 
         try {
             Lexer lex;
@@ -173,7 +173,7 @@ public class Main {
     private static class X_Object extends X_Handler {
         X_Object() {
             super();
-            setMember(new X_Symbol("clone"), new X_Clone());
+            setMember(X_Symbol.intern("clone"), new X_Clone());
         }
 
         private static class X_Clone extends X_Native {
@@ -191,10 +191,10 @@ public class Main {
     private static class X_Core extends X_Handler {
         X_Core() {
             super();
-            setMember(new X_Symbol("if"), new X_If());
-            setMember(new X_Symbol("print"), new X_Print());
-            setMember(new X_Symbol("println"), new X_Println());
-            setMember(new X_Symbol("exit"), new X_Exit());
+            setMember(X_Symbol.intern("if"), new X_If());
+            setMember(X_Symbol.intern("print"), new X_Print());
+            setMember(X_Symbol.intern("println"), new X_Println());
+            setMember(X_Symbol.intern("exit"), new X_Exit());
         }
 
         private static class X_Exit extends X_Native {

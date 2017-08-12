@@ -10,12 +10,12 @@ import java.util.ArrayList;
 class X_Int extends X_Numeric {
     X_Int(int num) {
         super();
-        setMember(new X_Symbol("abs"), new X_Abs());
-        setMember(new X_Symbol("to_s"), new X_ToS());
-        setMember(new X_Symbol("next"), new X_Succ());
-        setMember(new X_Symbol("succ"), new X_Succ());
-        setMember(new X_Symbol("pred"), new X_Pred());
-        setMember(new X_Symbol("times"), new X_Times());
+        setMember(X_Symbol.intern("abs"), new X_Abs());
+        setMember(X_Symbol.intern("to_s"), new X_ToS());
+        setMember(X_Symbol.intern("next"), new X_Succ());
+        setMember(X_Symbol.intern("succ"), new X_Succ());
+        setMember(X_Symbol.intern("pred"), new X_Pred());
+        setMember(X_Symbol.intern("times"), new X_Times());
         value = num;
     }
 

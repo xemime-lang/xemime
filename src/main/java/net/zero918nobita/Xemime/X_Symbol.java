@@ -29,9 +29,9 @@ class X_Symbol extends X_Code {
         return name;
     }
 
-    static X_Code intern(String s) {
-        if (table.containsKey(s)) return table.get(s);
-        else return new X_Symbol(s);
+    static X_Symbol intern(String s) {
+        if (!table.containsKey(s)) table.put(s, new X_Symbol(s));
+        return table.get(s);
     }
 
     public X_Code run() throws Exception {

@@ -11,7 +11,7 @@ class X_Double extends X_Numeric {
 
     X_Double(double num) {
         super();
-        setMember(new X_Symbol("abs"), new X_Abs());
+        setMember(X_Symbol.intern("abs"), new X_Abs());
         value = num;
     }
 

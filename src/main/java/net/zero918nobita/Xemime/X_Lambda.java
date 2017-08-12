@@ -41,7 +41,7 @@ class X_Lambda extends X_Function {
         HashMap<X_Symbol, X_Address> table = new HashMap<>();
         Main.loadLocalFrame(table);
 
-        table.put(new X_Symbol("this"), Main.register(this));
+        table.put(X_Symbol.intern("this"), Main.register(this));
 
         for (int i = 0; i < args.size() - 1; i++) {
             X_Symbol sym = (X_Symbol)params.get(i);

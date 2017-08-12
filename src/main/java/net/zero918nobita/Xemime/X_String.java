@@ -12,7 +12,7 @@ class X_String extends X_Handler {
 
     X_String(String str) {
         value = str;
-        setMember(new X_Symbol("length"), new X_Length());
+        setMember(X_Symbol.intern("length"), new X_Length());
     }
 
     @Override

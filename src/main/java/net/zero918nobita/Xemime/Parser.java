@@ -303,24 +303,24 @@ class Parser {
         X_Handler core;
         switch (symbol.getName()){
             case "if":
-                core = (X_Handler) Main.getValueOfSymbol(new X_Symbol("Core"));
+                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern("Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(new X_Symbol("if"));
+                c = core.message(X_Symbol.intern("if"));
                 break;
             case "print":
-                core = (X_Handler) Main.getValueOfSymbol(new X_Symbol("Core"));
+                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern("Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(new X_Symbol("print"));
+                c = core.message(X_Symbol.intern("print"));
                 break;
             case "println":
-                core = (X_Handler) Main.getValueOfSymbol(new X_Symbol("Core"));
+                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern("Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(new X_Symbol("println"));
+                c = core.message(X_Symbol.intern("println"));
                 break;
             case "exit":
-                core = (X_Handler) Main.getValueOfSymbol(new X_Symbol("Core"));
+                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern("Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(new X_Symbol("exit"));
+                c = core.message(X_Symbol.intern("exit"));
                 break;
             default:
                 c = symbol;
