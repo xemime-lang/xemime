@@ -36,7 +36,7 @@ class X_Symbol extends X_Code {
 
     public X_Code run() throws Exception {
         X_Code c = Main.getValueOfSymbol(this);
-        if (c == null) throw new Exception("シンボル" + name + "は定義されていません");
+        if (c == null) throw new Exception("シンボル `" + name + "` は定義されていません");
         return c;
     }
 
