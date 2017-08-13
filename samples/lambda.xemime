@@ -1,8 +1,8 @@
-square := lambda(x) { x * x; };
+let square = lambda(x) { x * x; };
 println(square(5));   // -> 25
 println(square(5.0)); // -> 25.0
 
-xor := lambda(b1, b2) { b1 ^ b2; };
+let xor = lambda(b1, b2) { b1 ^ b2; };
 println(xor(t, nil));   // -> T
 println(xor(nil, t));   // -> T
 println(xor(t, t));     // -> NIL

@@ -1,7 +1,7 @@
-obj   := Object.clone();
-obj.a := 2;
-obj.b := lambda() { 3; };
-obj.c := lambda(x) { x + 1; };
+let obj = Object.clone();
+obj.a = 2;
+obj.b = lambda() { 3; };
+obj.c = lambda(x) { x + 1; };
 
 println("a: "    + obj.a.to_s());     // -> "a: 2"
 println("b(): "  + obj.b().to_s());   // -> "b(): 3"

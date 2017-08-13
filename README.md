@@ -17,14 +17,14 @@ Xemime は、さまざまな言語から影響を受けたプログラミング�
 # サンプル
 
 ```
-x := 2;
+let x = 2;
 
 println((1 + x) * (3 - 4) + 6 / x);  // -> 0
 println((1 == 1.0) && if(3 > 2, t, nil)); // -> T
 
-obj := Object.clone();
-obj.property := 2;
-obj.method := lambda(x) { x * 3; };
+let obj = Object.clone();
+obj.property = 2;
+obj.method = lambda(x) { x * 3; };
 
 println(obj.property); // -> 2
 println(obj.method); // -> <Lambda>
