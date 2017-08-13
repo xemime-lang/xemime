@@ -228,10 +228,6 @@ class Parser {
                 if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
                 getToken();
                 obj = new X_DotCall(obj, sym, list);
-            } else if (tokenType == TokenType.DECLARE) {
-                getToken();
-                X_Code c = expr();
-                obj = new X_DotDeclare(obj, sym, c);
             } else if (tokenType == TokenType.ASSIGN) {
                 getToken();
                 X_Code c = expr();
@@ -274,14 +270,25 @@ class Parser {
             case LB:
                 obj = block();
                 break;
+            case DECLARE:
+                getToken();
+                if (tokenType == TokenType.SYMBOL) {
+                    X_Symbol sym = (X_Symbol)lex.value();
+                    getToken();
+                    if (tokenType == TokenType.ASSIGN) {
+                        getToken();
+                        obj = new X_Declare(sym, expr());
+                    } else {
+                        throw new Exception("宣言式が不正です");
+                    }
+                } else {
+                    throw new Exception("宣言式が不正です");
+                }
+                break;
             case SYMBOL:
                 X_Symbol sym = (X_Symbol)lex.value();
                 getToken();
-                if (tokenType == TokenType.DECLARE) {
-                    // 変数宣言
-                    getToken();
-                    obj = new X_Declare(sym, expr());
-                } else if (tokenType == TokenType.ASSIGN) {
+                if (tokenType == TokenType.ASSIGN) {
                     // 宣言済みの変数への代入
                     getToken();
                     obj = new X_Assign(sym, expr());

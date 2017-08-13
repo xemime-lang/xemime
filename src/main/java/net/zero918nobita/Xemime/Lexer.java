@@ -35,15 +35,6 @@ class Lexer {
                 case ',': // 引数リストまたは仮引数リストの区切り文字
                     tokenType = TokenType.COMMA;
                     break;
-                case ':':
-                    c = reader.read();
-                    if (c == '=') {
-                        // 変数宣言
-                        tokenType = TokenType.DECLARE;
-                    } else {
-                        throw new Exception("演算子 : は使えません");
-                    }
-                    break;
                 case '+': // 加算演算子
                     tokenType = TokenType.ADD;
                     break;
@@ -284,6 +275,9 @@ class Lexer {
         } else if (s.toLowerCase().equals("lambda")) {
             // ラムダ式の開始を示す予約語
             tokenType = TokenType.LAMBDA;
+            return;
+        } else if (s.toLowerCase().equals("let")) {
+            tokenType = TokenType.DECLARE;
             return;
         }
 
