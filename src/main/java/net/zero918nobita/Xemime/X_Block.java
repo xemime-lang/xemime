@@ -13,7 +13,8 @@ import java.util.HashMap;
 class X_Block extends X_Code {
     private ArrayList<X_Code> list;
 
-    X_Block(ArrayList<X_Code> l) {
+    X_Block(int n, ArrayList<X_Code> l) {
+        super(n);
         list = l;
     }
 

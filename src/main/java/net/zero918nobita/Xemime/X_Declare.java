@@ -6,8 +6,8 @@ package net.zero918nobita.Xemime;
  */
 
 class X_Declare extends X_BinExpr {
-    X_Declare(X_Symbol symbol, X_Code obj) {
-        super(TokenType.DECLARE, symbol, obj);
+    X_Declare(int n, X_Symbol symbol, X_Code obj) {
+        super(n, TokenType.DECLARE, symbol, obj);
     }
 
     X_Code run() throws Exception {

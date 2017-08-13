@@ -11,7 +11,8 @@ class X_Symbol extends X_Code {
     private static HashMap<String, X_Symbol> table = new HashMap<>();
     private String name;
 
-    X_Symbol(String s) {
+    X_Symbol(int n, String s) {
+        super(n);
         name = s;
     }
 
@@ -29,14 +30,14 @@ class X_Symbol extends X_Code {
         return name;
     }
 
-    static X_Symbol intern(String s) {
-        if (!table.containsKey(s)) table.put(s, new X_Symbol(s));
+    static X_Symbol intern(int n, String s) {
+        if (!table.containsKey(s)) table.put(s, new X_Symbol(n, s));
         return table.get(s);
     }
 
     public X_Code run() throws Exception {
         X_Code c = Main.getValueOfSymbol(this);
-        if (c == null) throw new Exception("シンボル `" + name + "` は定義されていません");
+        if (c == null) throw new Exception(getLocation() + ": シンボル `" + name + "` は定義されていません");
         return c;
     }
 

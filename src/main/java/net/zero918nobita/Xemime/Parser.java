@@ -8,6 +8,8 @@ import java.util.ArrayList;
  */
 
 class Parser {
+    private int line = 1;
+
     /** 字句解析器 */
     private Lexer lex;
 
@@ -25,19 +27,28 @@ class Parser {
 
     /**
      * 構文解析を開始します。
-     * @param lexer 構文解析器
+     * @param str ソースコード
      * @return 評価結果
      */
-    X_Code parse(Lexer lexer) {
+    X_Code parse(String str) {
         X_Code obj = null;
-        lex = lexer;
+        lex = new Lexer(line, str.replaceAll("\r\n|\r", "\n"));
         getToken();
         try {
             obj = statement();
         } catch(Exception e) {
             e.printStackTrace();
         }
+        line = lex.getLocation();
         return obj;
+    }
+
+    void goDown(int n) {
+        line += n;
+    }
+
+    int getLocation() {
+        return line;
     }
 
     /**
@@ -96,8 +107,8 @@ class Parser {
             TokenType op = tokenType;
             getToken();
             X_Code obj2 = simpleExpr();
-            if (result == null) result = new X_BinExpr(op, obj, obj2);
-            else result = new X_BinExpr(op, result, obj2);
+            if (result == null) result = new X_BinExpr(lex.getLocation(), op, obj, obj2);
+            else result = new X_BinExpr(lex.getLocation(), op, result, obj2);
         }
         return result;
     }
@@ -134,9 +145,9 @@ class Parser {
             getToken();
             X_Code obj2 = term();
             if (result == null) {
-                result = new X_BinExpr(op, obj, obj2);
+                result = new X_BinExpr(lex.getLocation(), op, obj, obj2);
             } else {
-                result = new X_BinExpr(op, result, obj2);
+                result = new X_BinExpr(lex.getLocation(), op, result, obj2);
             }
         }
         return result;
@@ -176,9 +187,9 @@ class Parser {
             getToken();
             X_Code obj2 = term();
             if (result == null) {
-                result = new X_BinExpr(op, obj, obj2);
+                result = new X_BinExpr(lex.getLocation(), op, obj, obj2);
             } else {
-                result = new X_BinExpr(op, result, obj2);
+                result = new X_BinExpr(lex.getLocation(), op, result, obj2);
             }
         }
         return result;
@@ -206,7 +217,7 @@ class Parser {
                 break;
             case NOT:
                 getToken();
-                obj = new X_Not(factor());
+                obj = new X_Not(lex.getLocation(), factor());
                 break;
             case LAMBDA:
                 obj = lambda();
@@ -227,13 +238,13 @@ class Parser {
                 if (tokenType != TokenType.RP) list = args();
                 if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
                 getToken();
-                obj = new X_DotCall(obj, sym, list);
+                obj = new X_DotCall(lex.getLocation(), obj, sym, list);
             } else if (tokenType == TokenType.ASSIGN) {
                 getToken();
                 X_Code c = expr();
-                obj = new X_DotAssign(obj, sym, c);
+                obj = new X_DotAssign(lex.getLocation(), obj, sym, c);
             } else {
-                obj = new X_DotExpr(obj, sym);
+                obj = new X_DotExpr(lex.getLocation(), obj, sym);
             }
         }
         return obj;
@@ -259,7 +270,7 @@ class Parser {
                 break;
             case SUB:
                 getToken();
-                obj = new X_Minus(first());
+                obj = new X_Minus(lex.getLocation(), first());
                 break;
             case LP:
                 getToken();
@@ -277,7 +288,7 @@ class Parser {
                     getToken();
                     if (tokenType == TokenType.ASSIGN) {
                         getToken();
-                        obj = new X_Declare(sym, expr());
+                        obj = new X_Declare(lex.getLocation(), sym, expr());
                     } else {
                         throw new Exception("宣言式が不正です");
                     }
@@ -291,13 +302,16 @@ class Parser {
                 if (tokenType == TokenType.ASSIGN) {
                     // 宣言済みの変数への代入
                     getToken();
-                    obj = new X_Assign(sym, expr());
+                    obj = new X_Assign(lex.getLocation(), sym, expr());
                 } else if (tokenType == TokenType.LP) {
                     // 関数呼び出し
                     obj = methodCall(sym);
                 } else {
                     obj = methodOfCoreObject(sym);
                 }
+                break;
+            case SEMICOLON:
+                obj = null;
                 break;
             default:
                 throw new Exception("文法エラーです");
@@ -310,24 +324,24 @@ class Parser {
         X_Handler core;
         switch (symbol.getName()){
             case "if":
-                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern("Core"));
+                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern(0, "Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(X_Symbol.intern("if"));
+                c = core.message(getLocation(), X_Symbol.intern(0, "if"));
                 break;
             case "print":
-                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern("Core"));
+                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern(0, "Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(X_Symbol.intern("print"));
+                c = core.message(getLocation(), X_Symbol.intern(0, "print"));
                 break;
             case "println":
-                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern("Core"));
+                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern(0, "Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(X_Symbol.intern("println"));
+                c = core.message(getLocation(), X_Symbol.intern(0, "println"));
                 break;
             case "exit":
-                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern("Core"));
+                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern(0, "Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(X_Symbol.intern("exit"));
+                c = core.message(getLocation(), X_Symbol.intern(0, "exit"));
                 break;
             default:
                 c = symbol;
@@ -354,7 +368,7 @@ class Parser {
             getToken();
         }
         getToken();
-        return new X_Block(list);
+        return new X_Block(lex.getLocation(), list);
     }
 
     /**
@@ -369,7 +383,7 @@ class Parser {
         if (tokenType != TokenType.RP) list = args();
         if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
         getToken();
-        return new X_Funcall(methodOfCoreObject(sym), list);
+        return new X_Funcall(lex.getLocation(), methodOfCoreObject(sym), list);
     }
 
     /**
@@ -404,7 +418,7 @@ class Parser {
         if (tokenType != TokenType.RP) list = symbols();
         if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
         getToken();
-        return new X_Lambda(list, factor());
+        return new X_Lambda(lex.getLocation(), list, factor());
     }
 
     /**

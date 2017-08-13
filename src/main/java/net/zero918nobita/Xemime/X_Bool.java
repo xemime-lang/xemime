@@ -12,11 +12,12 @@ class X_Bool extends X_Handler {
     static X_Bool Nil;
 
     static {
-        T = new X_Bool(true);
-        Nil = new X_Bool(false);
+        T = new X_Bool(0,true);
+        Nil = new X_Bool(0,false);
     }
 
-    private X_Bool(boolean b) {
+    private X_Bool(int n, boolean b) {
+        super(n);
         p = b;
     }
 
@@ -35,60 +36,60 @@ class X_Bool extends X_Handler {
     }
 
     @Override
-    X_Code add(X_Code obj) throws Exception {
-        throw new Exception("真偽値の加算はできません");
+    X_Code add(int line, X_Code obj) throws Exception {
+        throw new Exception(line + ": 真偽値の加算はできません");
     }
 
     @Override
-    X_Code sub(X_Code obj) throws Exception {
-        throw new Exception("真偽値の減算はできません");
+    X_Code sub(int line, X_Code obj) throws Exception {
+        throw new Exception(line + ": 真偽値の減算はできません");
     }
 
     @Override
-    X_Code multiply(X_Code obj) throws Exception {
-        throw new Exception("真偽値の乗算はできません");
+    X_Code multiply(int line, X_Code obj) throws Exception {
+        throw new Exception(line + ": 真偽値の乗算はできません");
     }
 
     @Override
-    X_Code divide(X_Code obj) throws Exception {
-        throw new Exception("真偽値の除算はできません");
+    X_Code divide(int line, X_Code obj) throws Exception {
+        throw new Exception(line + ": 真偽値の除算はできません");
     }
 
     @Override
-    X_Bool less(X_Code obj) throws Exception {
-        throw new Exception("真偽値に `<` 演算子は使用できません");
+    X_Bool less(int line, X_Code obj) throws Exception {
+        throw new Exception(line + "真偽値に `<` 演算子は使用できません");
     }
 
     @Override
-    X_Bool le(X_Code obj) throws Exception {
-        throw new Exception("真偽値に `<=` 演算子は使用できません");
+    X_Bool le(int line, X_Code obj) throws Exception {
+        throw new Exception(line + ": 真偽値に `<=` 演算子は使用できません");
     }
 
     @Override
-    X_Bool greater(X_Code obj) throws Exception {
-        throw new Exception("真偽値に `>` 演算子は使用できません");
+    X_Bool greater(int line, X_Code obj) throws Exception {
+        throw new Exception(line + ": 真偽値に `>` 演算子は使用できません");
     }
 
     @Override
-    X_Bool ge(X_Code obj) throws Exception {
-        throw new Exception("真偽値に `>=` 演算子は使用できません");
+    X_Bool ge(int line, X_Code obj) throws Exception {
+        throw new Exception(line + ": 真偽値に `>=` 演算子は使用できません");
     }
 
     @Override
-    X_Bool and(X_Code obj) throws Exception {
+    X_Bool and(int line, X_Code obj) throws Exception {
         if (obj instanceof X_Bool) return (p && (((X_Bool)obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
-        else throw new Exception("`&&` 演算子の右辺が真偽値ではありません");
+        else throw new Exception(line + ": `&&` 演算子の右辺が真偽値ではありません");
     }
 
     @Override
-    X_Bool or(X_Code obj) throws Exception {
+    X_Bool or(int line, X_Code obj) throws Exception {
         if (obj instanceof X_Bool) return (p || (((X_Bool) obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
-        else throw new Exception("`||` 演算子の右辺が真偽値ではありません");
+        else throw new Exception(line + ": `||` 演算子の右辺が真偽値ではありません");
     }
 
     @Override
-    X_Bool xor(X_Code obj) throws Exception {
+    X_Bool xor(int line, X_Code obj) throws Exception {
         if (obj instanceof X_Bool) return (p ^ (((X_Bool) obj).isTrue())) ? X_Bool.T : X_Bool.Nil;
-        else throw new Exception("`^` 演算子の右辺が真偽値ではありません");
+        else throw new Exception(line + ": `^` 演算子の右辺が真偽値ではありません");
     }
 }

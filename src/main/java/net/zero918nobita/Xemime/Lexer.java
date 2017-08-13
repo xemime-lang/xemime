@@ -8,6 +8,9 @@ import java.math.BigDecimal;
  */
 
 class Lexer {
+    /** 行番号 */
+    private int line;
+
     /** 解析中のトークンの種類 */
     private TokenType tokenType;
 
@@ -18,8 +21,13 @@ class Lexer {
     private LexerReader reader;
 
     /** Reader を設定します。 */
-    Lexer(String s) {
+    Lexer(int n, String s) {
+        line = n;
         reader = new LexerReader(s);
+    }
+
+    int getLocation() {
+        return line;
     }
 
     /** 次のトークンを読み込み、種類を記録します。 */
@@ -114,7 +122,7 @@ class Lexer {
                         // 論理積演算子
                         tokenType = TokenType.AND;
                     } else {
-                        throw new Exception("演算子 & は使えません");
+                        throw new Exception(getLocation() + ": 演算子 & は使えません");
                     }
                     break;
                 case '|':
@@ -123,7 +131,7 @@ class Lexer {
                         // 論理和演算子
                         tokenType = TokenType.OR;
                     } else {
-                        throw new Exception("演算子 | は使えません");
+                        throw new Exception(getLocation() + ": 演算子 | は使えません");
                     }
                     break;
                 case '^': // 排他的論理和演算子
@@ -166,7 +174,7 @@ class Lexer {
                         reader.unread();
                         lexSymbol();
                     } else {
-                        throw new Exception("数字ではありません");
+                        throw new Exception(getLocation() + ": 不明なトークンです");
                     }
                     break;
             }
@@ -220,9 +228,9 @@ class Lexer {
             }
         }
         if (decimal_place != 0) {
-            val = new X_Double(num.doubleValue());
+            val = new X_Double(line, num.doubleValue());
         } else {
-            val = new X_Int(num.intValue()); // 整数だったのでint型にキャストしてから Integer を代入
+            val = new X_Int(line, num.intValue()); // 整数だったのでint型にキャストしてから Integer を代入
         }
     }
 
@@ -234,16 +242,16 @@ class Lexer {
         StringBuilder buf = new StringBuilder();
         while (true) {
             int c = reader.read();
-            if (c < 0) throw new Exception("文字列定数の記述中にソースコードの末端に到達しました");
+            if (c < 0) throw new Exception(getLocation() + ": 文字列定数の記述中にソースコードの末端に到達しました");
             if (c == '"') {
                 break;
             } else if (c == '\\') {
                 c = reader.read();
-                if (c < 0) throw new Exception("文字列中でファイルの終わりに到達しました");
+                if (c < 0) throw new Exception(getLocation() + ": 文字列中でファイルの終わりに到達しました");
             }
             buf.append((char)c);
         }
-        val = new X_String(buf.toString());
+        val = new X_String(line, buf.toString());
     }
 
     /**
@@ -255,7 +263,7 @@ class Lexer {
         StringBuilder buf = new StringBuilder();
         while (true) {
             int c = reader.read();
-            if (c < 0) throw new Exception("ソースコードの末端に到達しました");
+            if (c < 0) throw new Exception(getLocation() + ": ソースコードの末端に到達しました");
             if (!Character.isJavaIdentifierPart((char)c)) {
                 reader.unread();
                 break;
@@ -281,7 +289,7 @@ class Lexer {
             return;
         }
 
-        val = X_Symbol.intern(s); // 既存のシンボルを返すか、新規に生成したシンボルを返します。
+        val = X_Symbol.intern(line, s); // 既存のシンボルを返すか、新規に生成したシンボルを返します。
     }
 
     /**
@@ -290,7 +298,10 @@ class Lexer {
      */
     private void skipWhiteSpace() throws Exception {
         int c = reader.read();
-        while ((c != -1) && Character.isWhitespace((char)c)) c = reader.read();
+        while ((c != -1) && Character.isWhitespace((char)c)) {
+            if (c == '\n') line ++;
+            c = reader.read();
+        }
         reader.unread();
     }
 
@@ -301,7 +312,7 @@ class Lexer {
     private void skipLineComment() throws Exception {
         int c;
         while ((c = reader.read()) != '\n') {
-            if (c < 0) throw new Exception("コメント中にソースコードの末端に到達しました");
+            if (c < 0) throw new Exception(getLocation() + ": コメント中にソースコードの末端に到達しました");
         }
         reader.unread();
     }
@@ -314,7 +325,8 @@ class Lexer {
         int c;
         while (true) {
             c = reader.read();
-            if (c < 0) throw new Exception("コメント中にソースコードの末端に到達しました");
+            if (c == '\n') line++;
+            if (c < 0) throw new Exception(getLocation() + ": コメント中にソースコードの末端に到達しました");
             if (c == '*') {
                 c = reader.read();
                 if (c == '/') break;

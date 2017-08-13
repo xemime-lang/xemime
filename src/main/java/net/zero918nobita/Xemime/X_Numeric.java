@@ -7,4 +7,8 @@ package net.zero918nobita.Xemime;
 
 abstract class X_Numeric extends X_Handler {
     protected Number value;
+
+    X_Numeric(int n) {
+        super(n);
+    }
 }

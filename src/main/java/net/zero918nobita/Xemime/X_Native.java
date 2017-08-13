@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 abstract class X_Native extends X_Function {
 
-    X_Native(int n) {
-        numberOfArgs = n;
+    X_Native(int n, int args) {
+        super(n);
+        numberOfArgs = args;
     }
 
     public String toString() {

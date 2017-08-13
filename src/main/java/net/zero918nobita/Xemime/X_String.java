@@ -10,9 +10,10 @@ import java.util.ArrayList;
 class X_String extends X_Handler {
     private final String value;
 
-    X_String(String str) {
+    X_String(int n, String str) {
+        super(n);
         value = str;
-        setMember(X_Symbol.intern("length"), new X_Length());
+        setMember(X_Symbol.intern(0, "length"), new X_Length());
     }
 
     @Override
@@ -26,22 +27,22 @@ class X_String extends X_Handler {
     }
 
     @Override
-    X_String add(X_Code obj) throws Exception {
+    X_String add(int line, X_Code obj) throws Exception {
         if (obj instanceof X_String) {
-            return new X_String(this.value + ((X_String) obj).value);
+            return new X_String(0, this.value + ((X_String) obj).value);
         } else {
-            throw new Exception("String型オブジェクトに他の型のオブジェクトを加算することはできません");
+            throw new Exception(line + ": String型オブジェクトに他の型のオブジェクトを加算することはできません");
         }
     }
 
     private class X_Length extends X_Native {
         X_Length() {
-            super(0);
+            super(0, 0);
         }
 
         @Override
         protected X_Int exec(ArrayList<X_Code> params) throws Exception {
-            return new X_Int((params.get(0)).toString().length());
+            return new X_Int(0, (params.get(0)).toString().length());
         }
     }
 }

@@ -6,8 +6,8 @@ package net.zero918nobita.Xemime;
  */
 
 class X_Assign extends X_BinExpr {
-    X_Assign(X_Symbol symbol, X_Code obj) {
-        super(TokenType.ASSIGN, symbol, obj);
+    X_Assign(int n, X_Symbol symbol, X_Code obj) {
+        super(n, TokenType.ASSIGN, symbol, obj);
     }
 
     X_Code run() throws Exception {

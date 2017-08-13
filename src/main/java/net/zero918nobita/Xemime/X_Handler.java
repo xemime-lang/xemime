@@ -9,7 +9,8 @@ class X_Handler extends X_Code {
      */
     private HashMap<X_Symbol, X_Address> members;
 
-    X_Handler() {
+    X_Handler(int n) {
+        super(n);
         members = new HashMap<>();
     }
 
@@ -36,16 +37,16 @@ class X_Handler extends X_Code {
     }
 
     @Override
-    X_Code message(X_Symbol symbol) throws Exception {
-        if (!hasMember(symbol)) throw new Exception("`" + symbol.getName() + "` というフィールドはありません");
+    X_Code message(int line, X_Symbol symbol) throws Exception {
+        if (!hasMember(symbol)) throw new Exception(line + ": `" + symbol.getName() + "` というフィールドはありません");
         return getMember(symbol);
     }
 
     @Override
-    X_Code message(X_Symbol symbol, ArrayList<X_Code> params) throws Exception {
-        if (!hasMember(symbol)) throw new Exception("`" + symbol.getName() + "` というメソッドはありません");
+    X_Code message(int line, X_Symbol symbol, ArrayList<X_Code> params) throws Exception {
+        if (!hasMember(symbol)) throw new Exception(line + ": `" + symbol.getName() + "` というメソッドはありません");
         X_Code o = getMember(symbol);
-        if (!(o instanceof X_Function)) throw new Exception("`" + symbol.getName() + "` はメソッドではありません");
+        if (!(o instanceof X_Function)) throw new Exception(line + ": `" + symbol.getName() + "` はメソッドではありません");
         if (params == null) params = new ArrayList<>();
         params.add(0, this);
         return ((X_Function) o).call(params);

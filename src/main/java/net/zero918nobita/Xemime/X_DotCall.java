@@ -12,7 +12,8 @@ class X_DotCall extends X_Code {
     private X_Symbol symbol;
     private ArrayList<X_Code> list;
 
-    X_DotCall(X_Code o, X_Symbol sym, ArrayList<X_Code> l) {
+    X_DotCall(int n, X_Code o, X_Symbol sym, ArrayList<X_Code> l) {
+        super(n);
         obj = o;
         symbol = sym;
         list = l;
@@ -27,7 +28,7 @@ class X_DotCall extends X_Code {
             for (X_Code arg : list) list2.add(arg.run());
             list = list2;
         }
-        o = o.message(symbol, list);
+        o = o.message(getLocation(), symbol, list);
         return o;
     }
 }

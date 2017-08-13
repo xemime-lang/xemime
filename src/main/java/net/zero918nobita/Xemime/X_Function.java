@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 abstract class X_Function extends X_Code {
 
+    X_Function(int n) {
+        super(n);
+    }
+
     /** 引数の個数 */
     int numberOfArgs = 0;
 

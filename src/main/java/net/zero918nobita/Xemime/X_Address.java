@@ -12,8 +12,9 @@ import java.util.TreeMap;
 class X_Address extends X_Code implements Comparable {
     private int address;
 
-    X_Address(int n) {
-        address = n;
+    X_Address(int n, int a) {
+        super(n);
+        address = a;
     }
 
     /** アドレスを取得します。 */

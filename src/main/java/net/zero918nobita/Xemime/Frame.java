@@ -63,12 +63,12 @@ class Frame {
     }
 
     void defAddress(X_Symbol sym, X_Address ref) throws Exception {
-        if (localFrames.size() == 0) throw new Exception("フレームが存在しません");
+        if (localFrames.size() == 0) throw new Exception("深刻なエラー: フレームが存在しません");
         localFrames.get(localFrames.size() - 1).put(sym, ref);
     }
 
     void defValue(X_Symbol sym, X_Code obj) throws Exception {
-        if (localFrames.size() == 0) throw new Exception("フレームが存在しません");
+        if (localFrames.size() == 0) throw new Exception("深刻なエラー: フレームが存在しません");
         localFrames.get(localFrames.size() - 1).put(sym, Main.register(obj));
     }
 }

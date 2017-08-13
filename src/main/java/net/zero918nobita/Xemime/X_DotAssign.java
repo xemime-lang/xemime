@@ -10,7 +10,8 @@ class X_DotAssign extends X_Code {
     private X_Symbol symbol;
     private X_Code code2;
 
-    X_DotAssign(X_Code c, X_Symbol sym, X_Code c2) {
+    X_DotAssign(int n, X_Code c, X_Symbol sym, X_Code c2) {
+        super(n);
         code1 = c;
         symbol = sym;
         code2 = c2;
