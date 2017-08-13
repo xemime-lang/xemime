@@ -67,6 +67,6 @@ declaration = "let" , symbol , "=" , expr ;
 function_call = symbol , "(" , [ expr , [ { "," , expr } ] ] , ")" ;
 
 message_expr = factor , symbol
-    | factor , symbol , "(" , [ expr , [ { "," , expr } ] ] , ")" ;
+    | factor , symbol , "(" , [ expr , [ { "," , expr } ] ] , ")"
     ;
 ```
