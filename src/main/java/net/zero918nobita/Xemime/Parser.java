@@ -80,6 +80,7 @@ class Parser {
             case L:
             case G:
             case EQ:
+            case EQL:
             case NE:
             case LE:
             case GE:
@@ -101,6 +102,7 @@ class Parser {
         while ((tokenType == TokenType.L) ||
                 (tokenType == TokenType.G) ||
                 (tokenType == TokenType.EQ) ||
+                (tokenType == TokenType.EQL) ||
                 (tokenType == TokenType.NE) ||
                 (tokenType == TokenType.LE) ||
                 (tokenType == TokenType.GE)) {

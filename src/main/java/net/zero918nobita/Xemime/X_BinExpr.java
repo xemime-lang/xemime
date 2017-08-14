@@ -58,6 +58,15 @@ class X_BinExpr extends X_Code {
                     result = o1.ge(getLocation(), o2);
                     break;
                 case EQ:
+                    if (obj1 instanceof X_Symbol && obj2 instanceof X_Symbol) {
+                        X_Address a1 = ((X_Symbol)obj1).getAddress();
+                        X_Address a2 = ((X_Symbol)obj2).getAddress();
+                        result = a1.equals(a2) ? X_Bool.T : X_Bool.Nil;
+                    } else {
+                        result = X_Bool.Nil;
+                    }
+                    break;
+                case EQL:
                     if (o1.equals(o2)) result = X_Bool.T;
                     else result = X_Bool.Nil;
                     break;

@@ -78,8 +78,15 @@ class Lexer {
                 case '=':
                     c = reader.read();
                     if (c == '=') {
-                        // 等価演算子 ==
-                        tokenType = TokenType.EQ;
+                        c = reader.read();
+                        if (c == '=') {
+                            // 等値演算子
+                            tokenType = TokenType.EQ;
+                        } else {
+                            // 等価演算子 ==
+                            reader.unread();
+                            tokenType = TokenType.EQL;
+                        }
                     } else {
                         // 代入演算子 =
                         reader.unread();

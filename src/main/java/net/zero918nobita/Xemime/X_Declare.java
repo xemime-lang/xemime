@@ -12,12 +12,14 @@ class X_Declare extends X_BinExpr {
 
     X_Code run() throws Exception {
         X_Symbol sym = (X_Symbol)obj1;
-        X_Code o = obj2.run();
-        if (o instanceof X_Address) {
-            Main.defAddress(sym, (X_Address)o);
+        X_Code code;
+        if (obj2 instanceof X_Symbol) {
+            code = ((X_Symbol) obj2).getAddress();
+            Main.defAddress(sym, (X_Address)code);
         } else {
-            Main.defValue(sym, o);
+            code = obj2.run();
+            Main.defValue(sym, code);
         }
-        return o;
+        return code;
     }
 }
