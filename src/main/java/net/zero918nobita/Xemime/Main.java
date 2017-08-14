@@ -154,12 +154,8 @@ public class Main {
                     stringBuilder.append(line);
                     stringBuilder.append('\n');
                 }
-                X_Code obj;
-                String[] statements = stringBuilder.toString().split(";", 0);
-                for (String statement : statements) {
-                    obj = parser.parse(statement + ";");
-                    if (obj != null) obj.run();
-                }
+                X_Code code = parser.parse("{" + stringBuilder.toString() + "};");
+                code.run();
             }
             in.close();
         } catch(Exception e) {
