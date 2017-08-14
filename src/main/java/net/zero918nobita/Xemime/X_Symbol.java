@@ -41,6 +41,10 @@ class X_Symbol extends X_Code {
         return c;
     }
 
+    X_Address getAddress() throws Exception {
+        return Main.getAddressOfSymbol(this);
+    }
+
     public String toString() {
         return name;
     }
