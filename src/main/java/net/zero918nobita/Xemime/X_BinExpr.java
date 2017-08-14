@@ -6,9 +6,12 @@ package net.zero918nobita.Xemime;
  */
 
 class X_BinExpr extends X_Code {
-    private TokenType op; // 演算子の種類(＋,－,＊,／)
-    X_Code obj1; // 左側の式
-    X_Code obj2; // 右側の式
+    /** 演算子の種類 */
+    private TokenType op;
+    /** 左側の式 */
+    X_Code obj1;
+    /** 右側の式 */
+    X_Code obj2;
 
     X_BinExpr(int n, TokenType operator, X_Code o1, X_Code o2) {
         super(n);
