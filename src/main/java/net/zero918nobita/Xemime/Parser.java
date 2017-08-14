@@ -413,12 +413,36 @@ class Parser {
     private X_Code lambda() throws Exception {
         ArrayList<X_Symbol> list = new ArrayList<>();
         getToken();
-        if (tokenType != TokenType.LP) throw new Exception("文法エラーです");
+        if (tokenType == TokenType.SYMBOL) {
+            list.add((X_Symbol)lex.value());
+            getToken();
+            while (tokenType != TokenType.ARROW) {
+                if (tokenType != TokenType.COMMA) throw new Exception(getLocation() + ": ラムダ式の仮引数が不正です");
+                getToken();
+                if (tokenType != TokenType.SYMBOL) throw new Exception(getLocation() + ": ラムダ式の仮引数が不正です");
+                list.add((X_Symbol)lex.value());
+                getToken();
+            }
+        } else if (tokenType == TokenType.LP) {
+            getToken();
+            if (tokenType == TokenType.SYMBOL) {
+                list.add((X_Symbol)lex.value());
+                getToken();
+                while (tokenType != TokenType.RP) {
+                    if (tokenType != TokenType.COMMA) throw new Exception(getLocation() + ": ラムダ式の仮引数が不正です");
+                    getToken();
+                    if (tokenType != TokenType.SYMBOL) throw new Exception(getLocation() + ": ラムダ式の仮引数が不正です");
+                    list.add((X_Symbol)lex.value());
+                    getToken();
+                }
+            }
+            getToken();
+            if (tokenType != TokenType.ARROW) throw new Exception(getLocation() + ": ラムダ式のアロー演算子がありません");
+        } else if (tokenType != TokenType.ARROW) {
+            throw new Exception(getLocation() + ": ラムダ式の仮引数リストまたはアロー演算子が必要です");
+        }
         getToken();
-        if (tokenType != TokenType.RP) list = symbols();
-        if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
-        getToken();
-        return new X_Lambda(lex.getLocation(), list, factor());
+        return new X_Lambda(getLocation(), list, expr());
     }
 
     /**

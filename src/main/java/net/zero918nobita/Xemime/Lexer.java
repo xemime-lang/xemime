@@ -72,6 +72,9 @@ class Lexer {
                 case '}': // ブロックの左括弧
                     tokenType = TokenType.RB;
                     break;
+                case '#':
+                    tokenType = TokenType.LAMBDA;
+                    break;
                 case '=':
                     c = reader.read();
                     if (c == '=') {
@@ -279,10 +282,6 @@ class Lexer {
         } else if (s.toUpperCase().equals("NIL")) {
             // 偽値
             tokenType = TokenType.NIL;
-            return;
-        } else if (s.toLowerCase().equals("lambda")) {
-            // ラムダ式の開始を示す予約語
-            tokenType = TokenType.LAMBDA;
             return;
         } else if (s.toLowerCase().equals("let")) {
             tokenType = TokenType.DECLARE;
