@@ -411,7 +411,7 @@ class Parser {
      * @throws Exception 関数式中に不正な要素が含まれている場合 ( ここでは正しく括弧が閉じられていない場合 ) に例外を発生させます。
      */
     private X_Code lambda() throws Exception {
-        ArrayList<X_Code> list = new ArrayList<>();
+        ArrayList<X_Symbol> list = new ArrayList<>();
         getToken();
         if (tokenType != TokenType.LP) throw new Exception("文法エラーです");
         getToken();
@@ -426,16 +426,16 @@ class Parser {
      * @return 仮引数リスト
      * @throws Exception シンボル以外の要素が列挙されている、または正しく要素が区切られていない場合に例外を発生させます。
      */
-    private ArrayList<X_Code> symbols() throws Exception {
-        ArrayList<X_Code> list = null;
+    private ArrayList<X_Symbol> symbols() throws Exception {
+        ArrayList<X_Symbol> list = null;
         if (tokenType != TokenType.LP) {
             list = new ArrayList<>();
-            list.add(expr());
+            list.add((X_Symbol)expr());
             while (tokenType != TokenType.RP) {
                 if (tokenType != TokenType.COMMA) throw new Exception("文法エラーです");
                 getToken();
                 if (tokenType != TokenType.SYMBOL) throw new Exception("文法エラーです");
-                list.add(lex.value());
+                list.add((X_Symbol) lex.value());
                 getToken();
             }
         }

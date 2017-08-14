@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 class X_Lambda extends X_Function {
-    private ArrayList<X_Code> params;
+    private ArrayList<X_Symbol> params;
     private X_Code body;
 
-    X_Lambda(int n, ArrayList<X_Code> l, X_Code obj) {
+    X_Lambda(int n, ArrayList<X_Symbol> l, X_Code obj) {
         super(n);
         params = l;
         body = obj;
