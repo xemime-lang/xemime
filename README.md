@@ -24,7 +24,7 @@ println((1 == 1.0) && if(3 > 2, t, nil)); // -> T
 
 let obj = Object.clone();
 obj.property = 2;
-obj.method = lambda(x) { x * 3; };
+obj.method = #x -> x * 3;
 
 println(obj.property); // -> 2
 println(obj.method); // -> <Lambda>
