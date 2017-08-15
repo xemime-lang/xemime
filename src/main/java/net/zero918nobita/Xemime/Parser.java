@@ -30,17 +30,22 @@ class Parser {
      * @param str ソースコード
      * @return 評価結果
      */
-    X_Code parse(String str) {
-        X_Code obj = null;
+    ArrayList<X_Code> parse(String str) {
+        ArrayList<X_Code> result = new ArrayList<>();
         lex = new Lexer(line, str.replaceAll("\r\n|\r", "\n"));
         getToken();
-        try {
-            obj = statement();
-        } catch(Exception e) {
-            e.printStackTrace();
+        X_Code code = null;
+        while (tokenType != TokenType.EOS) {
+            try {
+                code = statement();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (code != null) result.add(code);
+            getToken();
         }
         line = lex.getLocation();
-        return obj;
+        return result;
     }
 
     void goDown(int n) {

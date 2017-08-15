@@ -137,9 +137,8 @@ public class Main {
                 while (true) {
                     line = in.readLine();
                     if (line != null && !line.equals("")) {
-                        X_Code obj = parser.parse(line);
-                        if (obj == null) break;
-                        System.out.println(obj.run().toString());
+                        ArrayList<X_Code> result = parser.parse(line);
+                        for (X_Code c : result) System.out.println(c.run());
                         System.out.print("[" + (parser.getLocation() + 1) + "]> ");
                         parser.goDown(1);
                     } else if (line == null) {
@@ -154,8 +153,8 @@ public class Main {
                     stringBuilder.append(line);
                     stringBuilder.append('\n');
                 }
-                X_Code code = parser.parse("{" + stringBuilder.toString() + "};");
-                code.run();
+                ArrayList<X_Code> result = parser.parse(stringBuilder.toString());
+                for (X_Code c : result) c.run();
             }
             in.close();
         } catch(Exception e) {
