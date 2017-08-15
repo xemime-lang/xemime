@@ -14,7 +14,7 @@ class X_Handler extends X_Code {
         members = new HashMap<>();
     }
 
-    boolean hasMember(X_Symbol symbol) {
+    private boolean hasMember(X_Symbol symbol) {
         return members.containsKey(symbol);
     }
 
