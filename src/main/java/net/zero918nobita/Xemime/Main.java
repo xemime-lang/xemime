@@ -140,7 +140,7 @@ public class Main {
                         X_Code obj = parser.parse(line);
                         if (obj == null) break;
                         System.out.println(obj.run().toString());
-                        System.out.print("[" + (obj.getLocation() + 1) + "]> ");
+                        System.out.print("[" + (parser.getLocation() + 1) + "]> ");
                         parser.goDown(1);
                     } else if (line == null) {
                         break;
