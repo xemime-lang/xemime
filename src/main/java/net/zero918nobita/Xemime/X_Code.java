@@ -68,10 +68,10 @@ class X_Code {
     }
 
     X_Code message(int line, X_Symbol symbol) throws Exception {
-        throw new Exception("このオブジェクトにフィールドは設定されていません");
+        throw new Exception(line + ": このオブジェクトにフィールドは設定できません");
     }
 
     X_Code message(int line, X_Symbol symbol, ArrayList<X_Code> params) throws Exception {
-        throw new Exception("このオブジェクトにメソッドは設定されていません");
+        throw new Exception(line + ": このオブジェクトにメソッドは設定できません");
     }
 }

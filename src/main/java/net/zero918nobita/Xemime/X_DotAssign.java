@@ -24,7 +24,7 @@ class X_DotAssign extends X_Code {
         if (c1 instanceof X_Handler) {
             ((X_Handler) c1).setMember(symbol, c2);
         } else {
-            throw new Exception("メンバを設定することができません");
+            throw new Exception(getLocation() + ": メンバを設定することができません");
         }
         return c2;
     }
