@@ -20,11 +20,9 @@ class X_Block extends X_Code {
 
     @Override
     X_Code run() throws Exception {
-        Main.loadLocalFrame(new HashMap<>());
         X_Code obj = null;
         if (list != null) for (X_Code o : list) obj = o.run();
-        if (obj == null) throw new Exception("ブロックの戻り値が記述されていません");
-        Main.unloadLocalFrame();
+        if (obj == null) throw new Exception(getLocation() + ": ブロックの戻り値が記述されていません");
         return obj;
     }
 }

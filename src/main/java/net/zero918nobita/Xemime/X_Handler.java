@@ -14,7 +14,7 @@ class X_Handler extends X_Code {
         members = new HashMap<>();
     }
 
-    private boolean hasMember(X_Symbol symbol) {
+    boolean hasMember(X_Symbol symbol) {
         return members.containsKey(symbol);
     }
 
@@ -24,7 +24,11 @@ class X_Handler extends X_Code {
      * @param obj メンバの値
      */
     void setMember(X_Symbol key, X_Code obj) {
-        members.put(key, Main.register(obj));
+        if (obj instanceof X_Address) {
+            members.put(key, (X_Address) obj);
+        } else {
+            members.put(key, Main.register(obj));
+        }
     }
 
     /**
@@ -32,7 +36,7 @@ class X_Handler extends X_Code {
      * @param key メンバの名称
      * @return メンバの値
      */
-    private X_Code getMember(X_Symbol key) {
+    X_Code getMember(X_Symbol key) {
         return Main.getValueOfReference(members.get(key));
     }
 
@@ -49,6 +53,6 @@ class X_Handler extends X_Code {
         if (!(o instanceof X_Function)) throw new Exception(line + ": `" + symbol.getName() + "` はメソッドではありません");
         if (params == null) params = new ArrayList<>();
         params.add(0, this);
-        return ((X_Function) o).call(params);
+        return ((X_Function) o).call(params, Main.register(this));
     }
 }

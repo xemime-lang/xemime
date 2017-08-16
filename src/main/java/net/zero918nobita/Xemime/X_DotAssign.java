@@ -22,7 +22,11 @@ class X_DotAssign extends X_Code {
         X_Code c1 = code1.run();
         X_Code c2 = code2.run();
         if (c1 instanceof X_Handler) {
-            ((X_Handler) c1).setMember(symbol, c2);
+            if (c2 instanceof X_Address) {
+                ((X_Handler) c1).setMember(symbol, c2);
+            } else {
+                ((X_Handler) c1).setMember(symbol, Main.register(c2));
+            }
         } else {
             throw new Exception(getLocation() + ": メンバを設定することができません");
         }

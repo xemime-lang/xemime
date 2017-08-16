@@ -20,9 +20,9 @@ class X_Assign extends X_BinExpr {
         } else {
             code = obj2.run();
             if (code instanceof X_Address) {
-                Main.defAddress(sym, (X_Address) code);
+                Main.setAddress(sym, (X_Address) code);
             } else {
-                Main.defValue(sym, code);
+                Main.setValue(sym, code);
             }
         }
         return code;

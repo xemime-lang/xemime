@@ -148,7 +148,7 @@ class X_Int extends X_Numeric {
         }
 
         @Override
-        protected X_String exec(ArrayList<X_Code> params) throws Exception {
+        protected X_String exec(ArrayList<X_Code> params, X_Address self) throws Exception {
             return new X_String(0, params.get(0).toString());
         }
     }
@@ -159,7 +159,7 @@ class X_Int extends X_Numeric {
         }
 
         @Override
-        protected X_Int exec(ArrayList<X_Code> params) throws Exception {
+        protected X_Int exec(ArrayList<X_Code> params, X_Address self) throws Exception {
             return new X_Int(0, ((X_Int)params.get(0)).getValue() + 1);
         }
     }
@@ -170,7 +170,7 @@ class X_Int extends X_Numeric {
         }
 
         @Override
-        protected X_Int exec(ArrayList<X_Code> params) throws Exception {
+        protected X_Int exec(ArrayList<X_Code> params, X_Address self) throws Exception {
             return new X_Int(0, ((X_Int)params.get(0)).getValue() - 1);
         }
     }
@@ -181,13 +181,13 @@ class X_Int extends X_Numeric {
         }
 
         @Override
-        protected X_Code exec(ArrayList<X_Code> params) throws Exception {
+        protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
             X_Code c = params.get(1).run();
             if (c instanceof X_Lambda) {
                 X_Lambda f = (X_Lambda)c;
                 ArrayList<X_Code> list = new ArrayList<X_Code>() {{ add(f); }};
                 for (int i = 0; i < ((X_Int)params.get(0)).getValue(); i++) {
-                    c = f.exec(list);
+                    c = f.exec(list, null);
                 }
             } else {
                 throw new Exception(params.get(1).getLocation() + ": 無名関数を指定してください");

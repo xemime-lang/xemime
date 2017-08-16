@@ -14,13 +14,13 @@ import java.util.TreeMap;
 
 public class Main {
     private static Parser parser;
-    private static HashMap<X_Symbol, X_Address> globalSymbols = new HashMap<>();
+    static X_Default defaultObj = new X_Default();
     private static TreeMap<X_Address, X_Code> entities = new TreeMap<X_Address, X_Code>() {{
         put(new X_Address(0,0), X_Bool.T);
     }};
     static Frame frame = new Frame();
 
-    static void loadLocalFrame(HashMap<X_Symbol, X_Address> table) {
+    static void loadLocalFrame(X_Handler table) {
         frame.loadLocalFrame(table);
     }
 
@@ -29,7 +29,7 @@ public class Main {
     }
 
     static boolean hasSymbol(X_Symbol sym) {
-        return frame.hasSymbol(sym) || globalSymbols.containsKey(sym);
+        return frame.hasSymbol(sym) || defaultObj.hasMember(sym);
     }
 
     /**
@@ -37,10 +37,10 @@ public class Main {
      * @param sym シンボル
      * @return 参照
      */
-    static X_Address getAddressOfSymbol(X_Symbol sym) {
+    static X_Address getAddressOfSymbol(X_Symbol sym) throws Exception {
         return (frame.hasSymbol(sym)) ?
                 frame.getAddressOfSymbol(sym) :
-                globalSymbols.get(sym);
+                (X_Address) defaultObj.getMember(sym);
     }
 
     /**
@@ -48,12 +48,12 @@ public class Main {
      * @param sym シンボル
      * @return 値
      */
-    static X_Code getValueOfSymbol(X_Symbol sym) {
+    static X_Code getValueOfSymbol(X_Symbol sym) throws Exception {
         if (frame.hasSymbol(sym)) {
-            return frame.getValueOfSymbol(sym, entities);
+            return frame.getValueOfSymbol(sym);
         } else {
-            return (globalSymbols.containsKey(sym)) ?
-                    globalSymbols.get(sym).fetch(entities) : null;
+            return (defaultObj.hasMember(sym)) ?
+                    defaultObj.message(0, sym) : null;
         }
     }
 
@@ -73,8 +73,8 @@ public class Main {
      */
     static void setAddress(X_Symbol sym, X_Address ref) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setAddress(sym, ref); return; }
-        if (!globalSymbols.containsKey(sym)) throw new Exception(parser.getLocation() + ": 変数 `" + sym.getName() + "` は宣言されていません");
-        globalSymbols.put(sym, ref);
+        if (!defaultObj.hasMember(sym)) throw new Exception(parser.getLocation() + ": 変数 `" + sym.getName() + "` は宣言されていません");
+        defaultObj.setMember(sym, ref);
     }
 
     /**
@@ -86,8 +86,8 @@ public class Main {
     static void setValue(X_Symbol sym, X_Code obj) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setValue(sym, obj); return; }
         X_Address ref = register(obj);
-        if (!globalSymbols.containsKey(sym)) throw new Exception(parser.getLocation() + ": 変数 `" + sym.getName() + "` は宣言されていません");
-        globalSymbols.put(sym, ref);
+        if (!defaultObj.hasMember(sym)) throw new Exception(parser.getLocation() + ": 変数 `" + sym.getName() + "` は宣言されていません");
+        defaultObj.setMember(sym, ref);
     }
 
     /**
@@ -97,7 +97,7 @@ public class Main {
      */
     static void defAddress(X_Symbol sym, X_Address ref) throws Exception {
         if (frame.numberOfLayers() != 0) { frame.defAddress(sym, ref); return; }
-        globalSymbols.put(sym, ref);
+        defaultObj.setMember(sym, ref);
     }
 
     /**
@@ -108,7 +108,7 @@ public class Main {
     static void defValue(X_Symbol sym, X_Code obj) throws Exception {
         if (frame.numberOfLayers() != 0) { frame.defValue(sym, obj); return; }
         X_Address ref = register(obj);
-        globalSymbols.put(sym, ref);
+        defaultObj.setMember(sym, ref);
     }
 
     static X_Address register(X_Code obj) {
@@ -123,8 +123,11 @@ public class Main {
             return;
         }
 
-        globalSymbols.put(X_Symbol.intern(0, "Core"), register(new X_Core(0)));
-        globalSymbols.put(X_Symbol.intern(0, "Object"), register(new X_Object(0)));
+        defaultObj.setMember(X_Symbol.intern(0, "this"), defaultObj);
+        defaultObj.setMember(X_Symbol.intern(0, "THIS"), defaultObj);
+        defaultObj.setMember(X_Symbol.intern(0, "Default"), defaultObj);
+        defaultObj.setMember(X_Symbol.intern(0, "Core"), register(new X_Core()));
+        defaultObj.setMember(X_Symbol.intern(0, "Object"), register(new X_Object()));
 
         try {
             parser = new Parser();
@@ -172,8 +175,8 @@ public class Main {
     }
 
     private static class X_Object extends X_Handler {
-        X_Object(int n) {
-            super(n);
+        X_Object() {
+            super(0);
             setMember(X_Symbol.intern(0, "clone"), new X_Clone());
         }
 
@@ -183,15 +186,15 @@ public class Main {
             }
 
             @Override
-            protected X_Address exec(ArrayList<X_Code> params) throws Exception {
+            protected X_Address exec(ArrayList<X_Code> params, X_Address self) throws Exception {
                 return Main.register(params.get(0).run());
             }
         }
     }
 
     private static class X_Core extends X_Handler {
-        X_Core(int n) {
-            super(n);
+        X_Core() {
+            super(0);
             setMember(X_Symbol.intern(0, "if"), new X_If());
             setMember(X_Symbol.intern(0, "print"), new X_Print());
             setMember(X_Symbol.intern(0, "println"), new X_Println());
@@ -204,7 +207,7 @@ public class Main {
             }
 
             @Override
-            protected X_Code exec(ArrayList<X_Code> params) throws Exception {
+            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
                 System.exit(0);
                 return new X_Int(0, 0);
             }
@@ -216,7 +219,7 @@ public class Main {
             }
 
             @Override
-            protected X_Code exec(ArrayList<X_Code> params) throws Exception {
+            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
                 X_Code o = params.get(1).run();
                 System.out.print(o);
                 return o;
@@ -229,7 +232,7 @@ public class Main {
             }
 
             @Override
-            protected X_Code exec(ArrayList<X_Code> params) throws Exception {
+            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
                 X_Code o = params.get(1).run();
                 System.out.println(o);
                 return o;
@@ -242,7 +245,7 @@ public class Main {
             }
 
             @Override
-            protected X_Code exec(ArrayList<X_Code> params) throws Exception {
+            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
                 return (params.get(1).run().equals(X_Bool.Nil)) ? params.get(3).run() : params.get(2).run();
             }
         }

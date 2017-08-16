@@ -11,7 +11,7 @@ import java.util.TreeMap;
  */
 
 class Frame {
-    private ArrayList<HashMap<X_Symbol, X_Address>> localFrames = new ArrayList<>();
+    private ArrayList<X_Handler> localFrames = new ArrayList<>();
 
     /** フレームの階層数を取得します。 */
     int numberOfLayers() {
@@ -19,8 +19,9 @@ class Frame {
     }
 
     /** フレームに新しい階層を追加します。 */
-    void loadLocalFrame(HashMap<X_Symbol, X_Address> table) {
+    void loadLocalFrame(X_Handler table) {
         localFrames.add(table);
+        localFrames.get(localFrames.size() - 1).setMember(X_Symbol.intern(0, "this"), Main.register(table));
     }
 
     /** 最後にフレームに追加された階層を破棄します。 */
@@ -32,43 +33,43 @@ class Frame {
     boolean hasSymbol(X_Symbol sym) {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
-                if (localFrames.get(i).containsKey(sym)) return true;
+                if (localFrames.get(i).hasMember(sym)) return true;
         return false;
     }
 
-    X_Address getAddressOfSymbol(X_Symbol sym) {
+    X_Address getAddressOfSymbol(X_Symbol sym) throws Exception {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
-                if (localFrames.get(i).containsKey(sym)) return localFrames.get(i).get(sym);
+                if (localFrames.get(i).hasMember(sym)) return (X_Address) localFrames.get(i).message(0, sym);
         return null;
     }
 
-    X_Code getValueOfSymbol(X_Symbol sym, TreeMap<X_Address, X_Code> entities) {
+    X_Code getValueOfSymbol(X_Symbol sym) throws Exception {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
-                if (localFrames.get(i).containsKey(sym)) return localFrames.get(i).get(sym).fetch(entities);
+                if (localFrames.get(i).hasMember(sym)) return localFrames.get(i).message(0, sym);
         return null;
     }
 
     void setAddress(X_Symbol sym, X_Address ref) {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
-                if (localFrames.get(i).containsKey(sym)) localFrames.get(i).put(sym, ref);
+                if (localFrames.get(i).hasMember(sym)) localFrames.get(i).setMember(sym, ref);
     }
 
     void setValue(X_Symbol sym, X_Code obj) {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
-                if (localFrames.get(i).containsKey(sym)) localFrames.get(i).put(sym, Main.register(obj));
+                if (localFrames.get(i).hasMember(sym)) localFrames.get(i).setMember(sym, Main.register(obj));
     }
 
     void defAddress(X_Symbol sym, X_Address ref) throws Exception {
         if (localFrames.size() == 0) throw new Exception("深刻なエラー: フレームが存在しません");
-        localFrames.get(localFrames.size() - 1).put(sym, ref);
+        localFrames.get(localFrames.size() - 1).setMember(sym, ref);
     }
 
     void defValue(X_Symbol sym, X_Code obj) throws Exception {
         if (localFrames.size() == 0) throw new Exception("深刻なエラー: フレームが存在しません");
-        localFrames.get(localFrames.size() - 1).put(sym, Main.register(obj));
+        localFrames.get(localFrames.size() - 1).setMember(sym, Main.register(obj));
     }
 }

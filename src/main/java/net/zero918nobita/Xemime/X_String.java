@@ -41,7 +41,7 @@ class X_String extends X_Handler {
         }
 
         @Override
-        protected X_Int exec(ArrayList<X_Code> params) throws Exception {
+        protected X_Int exec(ArrayList<X_Code> params, X_Address self) throws Exception {
             return new X_Int(0, (params.get(0)).toString().length());
         }
     }
