@@ -47,3 +47,13 @@ println(obj.method(5)); // -> 15
 | CI サービス | Travis CI ( ``.travis.yml`` ) |
 | カバレッジレポート共有サービス | Coveralls ( ``coveralls-maven-plugin`` ) |
 | ドキュメントジェネレータ | GitBook ( npm : ``package.json`` ) |
+
+## jar ファイル生成
+
+コマンドライン上で、ルートディレクトリをカレントディレクトリに設定し
+
+```
+mvn install
+```
+
+を実行してください。``target`` フォルダ内に ``.jar`` ファイルが生成されます。
