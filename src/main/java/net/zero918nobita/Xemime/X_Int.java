@@ -137,7 +137,7 @@ class X_Int extends X_Numeric {
         X_Abs() {
             super(0, 0);
         }
-        protected X_Int exec(ArrayList<X_Code> params) throws Exception {
+        protected X_Int exec(ArrayList<X_Code> params, X_Address self) throws Exception {
             return new X_Int(0, Math.abs(((X_Int)params.get(0)).getValue()));
         }
     }

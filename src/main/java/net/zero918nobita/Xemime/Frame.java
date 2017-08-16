@@ -40,7 +40,7 @@ class Frame {
     X_Address getAddressOfSymbol(X_Symbol sym) throws Exception {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
-                if (localFrames.get(i).hasMember(sym)) return (X_Address) localFrames.get(i).message(0, sym);
+                if (localFrames.get(i).hasMember(sym)) return localFrames.get(i).getAddressOfMember(sym);
         return null;
     }
 

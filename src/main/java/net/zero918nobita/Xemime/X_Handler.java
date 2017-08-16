@@ -40,6 +40,10 @@ class X_Handler extends X_Code {
         return Main.getValueOfReference(members.get(key));
     }
 
+    X_Address getAddressOfMember(X_Symbol key) {
+        return members.get(key);
+    }
+
     @Override
     X_Code message(int line, X_Symbol symbol) throws Exception {
         if (!hasMember(symbol)) throw new Exception(line + ": `" + symbol.getName() + "` というフィールドはありません");

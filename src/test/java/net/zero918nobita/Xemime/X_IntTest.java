@@ -17,6 +17,7 @@ public class X_IntTest {
     public void testAbs() throws Exception {
         X_Int i = (X_Int) (new X_Minus(0, new X_Int(0, 256))).run();
         X_Int abs = (X_Int) i.message(0, X_Symbol.intern(0, "abs"), new ArrayList<>());
+        System.out.println(i.message(0, X_Symbol.intern(0, "abs"), new ArrayList<>()));
         assertThat(i.getValue(), is(-256));
         assertThat(abs.getValue(), is(256));
     }
