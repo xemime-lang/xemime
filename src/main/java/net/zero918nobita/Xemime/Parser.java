@@ -323,6 +323,16 @@ class Parser {
             default:
                 throw new Exception("文法エラーです");
         }
+
+        while (tokenType == TokenType.LP) {
+            ArrayList<X_Code> list = new ArrayList<>();
+            getToken();
+            if (tokenType != TokenType.RP) list = args();
+            if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
+            getToken();
+            obj = new X_Funcall(getLocation(), obj, list);
+        }
+
         return obj;
     }
 

@@ -8,10 +8,10 @@ class X_Funcall extends X_Code {
 
     X_Funcall(int n, X_Code code, ArrayList<X_Code> l) throws Exception {
         super(n);
-        if (code instanceof X_Symbol || code instanceof X_Native) {
+        if (code instanceof X_Symbol || code instanceof X_Native || code instanceof X_Funcall) {
             func = code;
         } else {
-            throw new Exception("深刻なエラー: 関数呼び出しに失敗しました");
+            throw new Exception(getLocation() + ": 深刻なエラー: 関数呼び出しに失敗しました");
         }
         list = l;
     }
@@ -22,7 +22,16 @@ class X_Funcall extends X_Code {
             ArrayList<X_Code> params = new ArrayList<>();
             for (X_Code o : list) params.add(o.run());
             params.add(0, func);
-            return ((X_Native) func).call(params);
+            return ((X_Native) func).call(params, null);
+        } else if (func instanceof X_Funcall) {
+            X_Code c = func.run();
+            if (c == null) throw new Exception(getLocation() + ": 存在しない関数です");
+            if (!(c instanceof X_Function)) throw new Exception(getLocation() + ": 関数ではありません");
+            X_Function f = (X_Function)c;
+            ArrayList<X_Code> params = new ArrayList<>();
+            for (X_Code o: list) params.add(o.run());
+            params.add(0, f);
+            return f.call(params, null);
         } else {
             X_Symbol symbol = (X_Symbol)func;
             X_Code c = Main.getValueOfSymbol(symbol);
@@ -32,7 +41,7 @@ class X_Funcall extends X_Code {
             ArrayList<X_Code> params = new ArrayList<>();
             for (X_Code o : list) params.add(o.run());
             params.add(0, func);
-            return func.call(params);
+            return func.call(params, null);
         }
     }
 }

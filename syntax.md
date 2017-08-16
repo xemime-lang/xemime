@@ -67,7 +67,7 @@ block = "{" , { program } , "}" ;
 
 declaration = "let" , symbol , "=" , expr ;
 
-function_call = symbol , "(" , [ expr , [ { "," , expr } ] ] , ")" ;
+function_call = first , "(" , [ expr , [ { "," , expr } ] ] , ")" ;
 
 lambda_expr = "#" , "(", [ symbol , [ { "," , symbol } ] ] , ")", "->", expr
     | "#", [ [ { "," , symbol } ] ] , "->" , expr
