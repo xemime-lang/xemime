@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.TreeMap;
 
@@ -13,6 +14,8 @@ import java.util.TreeMap;
  */
 
 public class Main {
+    private static VirtualMemoryMonitor vmm = null;
+    private static Thread vmmThread = null;
     private static Parser parser;
     static X_Default defaultObj = new X_Default();
     private static TreeMap<X_Address, X_Code> entities = new TreeMap<X_Address, X_Code>() {{
@@ -117,10 +120,18 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        if (args.length >= 2) {
+        boolean debug = Arrays.asList(args).contains("-debug");
+
+        if ((debug && args.length >= 3) || (!debug && args.length >= 2)) {
             usage();
             System.out.println(System.lineSeparator() + "Usage: java -jar Xemime.jar [source file name]");
             return;
+        }
+
+        if (debug) {
+            vmm = new VirtualMemoryMonitor();
+            vmmThread = new Thread(vmm);
+            vmmThread.start();
         }
 
         defaultObj.setMember(X_Symbol.intern(0, "this"), defaultObj);
@@ -132,7 +143,7 @@ public class Main {
         try {
             parser = new Parser();
             BufferedReader in;
-            if (args.length == 0) {
+            if ((debug && args.length == 1) || (!debug && args.length == 0)) {
                 usage();
                 in = new BufferedReader(new InputStreamReader(System.in));
                 System.out.print(System.lineSeparator() + "[1]> ");
