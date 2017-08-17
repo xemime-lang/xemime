@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
@@ -14,29 +13,51 @@ import java.util.TreeMap;
  */
 
 public class Main {
-    private static VirtualMemoryMonitor vmm = null;
-    private static Thread vmmThread = null;
+
+    /** 構文解析器 */
     private static Parser parser;
+
+    /** グローバル環境 */
     static X_Default defaultObj = new X_Default();
+
+    /** 実体テーブル */
     private static TreeMap<X_Address, X_Code> entities = new TreeMap<X_Address, X_Code>() {{
         put(new X_Address(0,0), X_Bool.T);
     }};
+
+    /** ローカル変数のフレーム */
     static Frame frame = new Frame();
 
+    /** 仮想メモリモニタ */
+    private static VirtualMemoryMonitor vmm = null;
+
+    /** 仮想メモリモニタ実行用スレッド */
+    private static Thread vmmThread = null;
+
+    /**
+     * ローカル変数のフレームを追加します。
+     * @param table フレーム
+     */
     static void loadLocalFrame(X_Handler table) {
         frame.loadLocalFrame(table);
     }
 
+    /** 最後に追加したフレームを破棄します。 */
     static void unloadLocalFrame() {
         frame.unloadLocalFrame();
     }
 
+    /**
+     * 指定したシンボルがすでに変数テーブルに記録されているかを調べます。
+     * @param sym シンボル
+     * @return 記録されていれば true 、そうでなければ false
+     */
     static boolean hasSymbol(X_Symbol sym) {
         return frame.hasSymbol(sym) || defaultObj.hasMember(sym);
     }
 
     /**
-     * シンボルの参照先アドレスを取得する
+     * シンボルの参照先アドレスを取得します。
      * @param sym シンボル
      * @return 参照
      */
@@ -47,7 +68,7 @@ public class Main {
     }
 
     /**
-     * シンボルの値を取得する
+     * シンボルの値を取得します。
      * @param sym シンボル
      * @return 値
      */
@@ -61,7 +82,7 @@ public class Main {
     }
 
     /**
-     * 参照先の実体を取得する
+     * 参照先の実体を取得します。
      * @param address アドレス
      * @return 実体
      */
@@ -70,7 +91,7 @@ public class Main {
     }
 
     /**
-     * シンボルに参照をセットする
+     * シンボルに参照をセットします。
      * @param sym シンボル
      * @param ref 参照
      */
@@ -114,11 +135,23 @@ public class Main {
         defaultObj.setMember(sym, ref);
     }
 
+    /**
+     * 指定した実体を実体テーブルに追加し、そのテーブル上での位置を記録した X_Address インスタンスを返します。
+     * @param obj 追加する実体
+     * @return 実体テーブル上の、追加された実体の位置を記録した X_Address インスタンス
+     */
     static X_Address register(X_Code obj) {
         entities.put(new X_Address(0,entities.lastKey().getAddress() + 1), obj);
         return new X_Address(0, entities.lastKey().getAddress());
     }
 
+    /**
+     * Xemime インタプリタにおいて最初に呼び出され、
+     * コマンドライン引数によって実行モード(対話的実行 or ソースファイル実行)を設定し、
+     * 実際にパーサも読み込んで解釈と実行を開始します。<br>
+     * -debug オプションが設定されていた場合、仮想メモリモニタを別スレッドで起動します。
+     * @param args コマンドライン引数
+     */
     public static void main(String[] args) {
         boolean debug = Arrays.asList(args).contains("-debug");
 
@@ -176,6 +209,9 @@ public class Main {
         }
     }
 
+    /**
+     * ロゴとバージョン情報を出力します。
+     */
     private static void usage() {
         System.out.println("   _  __               _              \n" +
                 "  | |/ /__  ____ ___  (_)___ ___  ___ \n" +
@@ -185,12 +221,21 @@ public class Main {
                 "Xemime Version 1.0.0 2017-08-07");
     }
 
+    /**
+     * Object 組み込みオブジェクト<br>
+     * オブジェクト生成、クローン処理を担うメソッドを実装した最も基本的なオブジェクトです。<br>
+     * これをクローンして新たなオブジェクトを用意することを推奨しています。
+     */
     private static class X_Object extends X_Handler {
         X_Object() {
             super(0);
             setMember(X_Symbol.intern(0, "clone"), new X_Clone());
         }
 
+        /**
+         * Object.clone メソッド<br>
+         * clone メソッドのみを実装した、最も単純なオブジェクトを生成してその参照を返します。
+         */
         private static class X_Clone extends X_Native {
             X_Clone() {
                 super(0, 0);
@@ -203,6 +248,10 @@ public class Main {
         }
     }
 
+    /**
+     * Core 組み込みオブジェクト<br>
+     * 条件分岐や、繰り返し、入出力、インタプリタの終了処理などを担うメソッドを実装した組み込みオブジェクトです。
+     */
     private static class X_Core extends X_Handler {
         X_Core() {
             super(0);
@@ -212,6 +261,10 @@ public class Main {
             setMember(X_Symbol.intern(0, "exit"), new X_Exit());
         }
 
+        /**
+         * Core.exit メソッド<br>
+         * Xemime インタプリタを終了します。
+         */
         private static class X_Exit extends X_Native {
             X_Exit() {
                 super(0, 0);
@@ -224,6 +277,10 @@ public class Main {
             }
         }
 
+        /**
+         * Core.print メソッド<br>
+         * 1つの引数を受け取り、それを文字列化して標準出力に出力します。
+         */
         private static class X_Print extends X_Native {
             X_Print() {
                 super(0, 1);
@@ -237,6 +294,10 @@ public class Main {
             }
         }
 
+        /**
+         * Core.println メソッド<br>
+         * 1つの引数を受け取り、それを文字列化し末尾に改行コードを付与して標準出力に出力します。
+         */
         private static class X_Println extends X_Native {
             X_Println() {
                 super(0, 1);
@@ -250,6 +311,11 @@ public class Main {
             }
         }
 
+        /**
+         * Core.if メソッド<br>
+         * 条件式と2つの引数を受け取り、条件式を評価してNIL以外となった場合は2つ目の引数を、
+         * NILとなった場合は3つ目の引数を評価して返します。
+         */
         private static class X_If extends X_Native {
             X_If(){
                 super(0, 3);
