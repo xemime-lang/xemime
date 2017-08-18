@@ -12,6 +12,7 @@ class X_Handler extends X_Code {
     X_Handler(int n) {
         super(n);
         members = new HashMap<>();
+        members.put(X_Symbol.intern(0, "proto"), new X_Address(0, 0));
     }
 
     boolean hasMember(X_Symbol symbol) {
@@ -52,6 +53,8 @@ class X_Handler extends X_Code {
 
     @Override
     X_Code message(int line, X_Symbol symbol, ArrayList<X_Code> params) throws Exception {
+        if (symbol.equals(X_Symbol.intern(0, "proto")))
+            throw new Exception(line + ": protoフィールドはメソッドとして呼び出すことはできません");
         if (!hasMember(symbol)) throw new Exception(line + ": `" + symbol.getName() + "` というメソッドはありません");
         X_Code o = getMember(symbol);
         if (!(o instanceof X_Function)) throw new Exception(line + ": `" + symbol.getName() + "` はメソッドではありません");

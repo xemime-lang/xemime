@@ -22,7 +22,8 @@ public class Main {
 
     /** 実体テーブル */
     private static TreeMap<X_Address, X_Code> entities = new TreeMap<X_Address, X_Code>() {{
-        put(new X_Address(0,0), X_Bool.T);
+        put(new X_Address(0, 0), X_Bool.Nil);
+        put(new X_Address(0, 1), X_Bool.T);
     }};
 
     /** ローカル変数のフレーム */
