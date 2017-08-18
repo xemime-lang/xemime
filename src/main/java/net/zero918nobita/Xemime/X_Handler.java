@@ -12,7 +12,6 @@ class X_Handler extends X_Code {
     X_Handler(int n) {
         super(n);
         members = new HashMap<>();
-        members.put(X_Symbol.intern(0, "proto"), new X_Address(0, 0));
     }
 
     boolean hasMember(X_Symbol symbol) {
@@ -39,6 +38,10 @@ class X_Handler extends X_Code {
      */
     X_Code getMember(X_Symbol key) {
         return Main.getValueOfReference(members.get(key));
+    }
+
+    HashMap<X_Symbol, X_Address> getMembers() throws Exception {
+        return members;
     }
 
     X_Address getAddressOfMember(X_Symbol key) {

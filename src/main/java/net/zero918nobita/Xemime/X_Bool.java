@@ -16,7 +16,7 @@ class X_Bool extends X_Handler {
         Nil = new X_Bool(0,false);
     }
 
-    private X_Bool(int n, boolean b) {
+    X_Bool(int n, boolean b) {
         super(n);
         p = b;
     }

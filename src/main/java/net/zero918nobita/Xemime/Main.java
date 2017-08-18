@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -65,7 +66,7 @@ public class Main {
     static X_Address getAddressOfSymbol(X_Symbol sym) throws Exception {
         return (frame.hasSymbol(sym)) ?
                 frame.getAddressOfSymbol(sym) :
-                (X_Address) defaultObj.getMember(sym);
+                defaultObj.getAddressOfMember(sym);
     }
 
     /**
@@ -168,9 +169,10 @@ public class Main {
             vmmThread.start();
         }
 
-        defaultObj.setMember(X_Symbol.intern(0, "this"), defaultObj);
-        defaultObj.setMember(X_Symbol.intern(0, "THIS"), defaultObj);
-        defaultObj.setMember(X_Symbol.intern(0, "Default"), defaultObj);
+        X_Address addressOfDefaultObj = Main.register(defaultObj);
+        defaultObj.setMember(X_Symbol.intern(0, "this"), addressOfDefaultObj);
+        defaultObj.setMember(X_Symbol.intern(0, "THIS"), addressOfDefaultObj);
+        defaultObj.setMember(X_Symbol.intern(0, "Default"), addressOfDefaultObj);
         defaultObj.setMember(X_Symbol.intern(0, "Core"), register(new X_Core()));
         defaultObj.setMember(X_Symbol.intern(0, "Object"), register(new X_Object()));
 
@@ -231,6 +233,8 @@ public class Main {
         X_Object() {
             super(0);
             setMember(X_Symbol.intern(0, "clone"), new X_Clone());
+            setMember(X_Symbol.intern(0, "new"), new X_New());
+            setMember(X_Symbol.intern(0, "proto"), new X_Bool(0, false));
         }
 
         /**
@@ -245,6 +249,26 @@ public class Main {
             @Override
             protected X_Address exec(ArrayList<X_Code> params, X_Address self) throws Exception {
                 return Main.register(params.get(0).run());
+            }
+        }
+
+        private static class X_New extends X_Native {
+            X_New() {
+                super(0, 0);
+            }
+
+            @Override
+            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+                X_Handler obj1 = (X_Handler) params.get(0).run();
+                X_Handler obj2 = new X_Handler(0);
+                obj2.setMember(X_Symbol.intern(0, "proto"), new X_Bool(0, false));
+                if (obj1.hasMember(X_Symbol.intern(0, "proto"))) {
+                    X_Handler proto = (X_Handler) obj1.getMember(X_Symbol.intern(0, "proto"));
+                    for (Map.Entry<X_Symbol, X_Address> entry : proto.getMembers().entrySet()) {
+                        obj2.setMember(entry.getKey(), entry.getValue());
+                    }
+                }
+                return Main.register(obj2);
             }
         }
     }
