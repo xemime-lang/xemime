@@ -6,6 +6,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * 仮想メモリモニタ
+ * インタプリタとは別のスレッドで起動し、インタプリタ側で Xemime コードが実行されている間、
+ * フレーム・実体の管理、変数宣言、関数呼び出しを可視化します。(デバッグ用です)
+ * @author Kodai Matsumoto
+ */
+
 public class VirtualMemoryMonitor extends Application implements Runnable {
 
     public void run() {

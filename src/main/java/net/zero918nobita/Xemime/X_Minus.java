@@ -2,6 +2,7 @@ package net.zero918nobita.Xemime;
 
 /**
  * 単項演算子 `-`
+ * 評価されると、数値(Int, Double)型の値の符号を反転させます。
  * @author Kodai Matsumoto
  */
 

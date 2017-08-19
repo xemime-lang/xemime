@@ -2,6 +2,7 @@ package net.zero918nobita.Xemime;
 
 /**
  * 否定演算子
+ * 評価されると、真偽(Bool)型の T は NIL に、NIL は T に変換します。
  * @author Kodai Matsumoto
  */
 

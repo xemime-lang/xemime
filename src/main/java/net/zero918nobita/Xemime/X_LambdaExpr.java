@@ -2,6 +2,11 @@ package net.zero918nobita.Xemime;
 
 import java.util.ArrayList;
 
+/**
+ * ラムダ式
+ * @author Kodai Matsumoto
+ */
+
 class X_LambdaExpr extends X_Code {
     private int line;
     private ArrayList<X_Symbol> params;

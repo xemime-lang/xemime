@@ -3,6 +3,11 @@ package net.zero918nobita.Xemime;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * クロージャ
+ * @author Kodai Matsumoto
+ */
+
 class X_Closure extends X_Function {
     private ArrayList<X_Symbol> params;
     private X_Address self = null;
@@ -12,7 +17,7 @@ class X_Closure extends X_Function {
      * 捕捉変数テーブル<br>
      * 捕捉変数(ラムダ式が使用する変数)
      */
-    private Frame captured = null;
+    private Frame captured = null; // Main との連携も考えると、HashMap<X_Symbol, X_Address> にするかも…
 
     X_Closure(int n, ArrayList<X_Symbol> l, X_Code obj, Frame frame) {
         super(n);

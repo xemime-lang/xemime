@@ -1,12 +1,11 @@
 package net.zero918nobita.Xemime;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * ブロック
- * Common Lisp の progn のようにブロック自体が戻り値を持つ
- * そのためブロック内に何も記述していない場合例外を投げる
+ * 戻り値を持ちます。
+ * そのためブロック内に何も記述していない場合例外を発生させます。
  * @author Kodai Matsumoto
  */
 

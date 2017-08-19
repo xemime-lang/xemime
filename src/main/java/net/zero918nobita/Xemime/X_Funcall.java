@@ -2,6 +2,11 @@ package net.zero918nobita.Xemime;
 
 import java.util.ArrayList;
 
+/**
+ * 関数呼び出し
+ * @author Kodai Matsumoto
+ */
+
 class X_Funcall extends X_Code {
     private X_Code func;
     private ArrayList<X_Code> list;
