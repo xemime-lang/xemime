@@ -1,8 +1,6 @@
 package net.zero918nobita.Xemime;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.TreeMap;
 
 /**
  * フレーム
@@ -12,6 +10,10 @@ import java.util.TreeMap;
 
 class Frame {
     private ArrayList<X_Handler> localFrames = new ArrayList<>();
+
+    ArrayList<X_Handler> getLocalFrames() {
+        return localFrames;
+    }
 
     /** フレームの階層数を取得します。 */
     int numberOfLayers() {

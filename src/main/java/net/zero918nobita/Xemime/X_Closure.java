@@ -1,16 +1,24 @@
 package net.zero918nobita.Xemime;
 
 import java.util.ArrayList;
+import java.util.Map;
 
-class X_Lambda extends X_Function {
+class X_Closure extends X_Function {
     private ArrayList<X_Symbol> params;
     private X_Address self = null;
     private X_Code body;
 
-    X_Lambda(int n, ArrayList<X_Symbol> l, X_Code obj) {
+    /**
+     * 捕捉変数テーブル<br>
+     * 捕捉変数(ラムダ式が使用する変数)
+     */
+    private Frame captured = null;
+
+    X_Closure(int n, ArrayList<X_Symbol> l, X_Code obj, Frame frame) {
         super(n);
         params = l;
         body = obj;
+        captured = frame;
         if (params != null) numberOfArgs = params.size();
     }
 
@@ -45,6 +53,13 @@ class X_Lambda extends X_Function {
 
         X_Handler table = new X_Handler(getLocation());
         Main.loadLocalFrame(table);
+        if (captured != null)
+            for (X_Handler o : captured.getLocalFrames()) {
+                for (Map.Entry<X_Symbol, X_Address> entry : o.getMembers().entrySet()) {
+                    System.out.println(entry.getKey());
+                    table.setMember(entry.getKey(), entry.getValue());
+                }
+            }
 
         if (self != null) {
             table.setMember(X_Symbol.intern(getLocation(), "THIS"), Main.register(self));

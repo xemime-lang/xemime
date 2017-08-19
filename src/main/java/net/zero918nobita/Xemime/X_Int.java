@@ -183,8 +183,8 @@ class X_Int extends X_Numeric {
         @Override
         protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
             X_Code c = params.get(1).run();
-            if (c instanceof X_Lambda) {
-                X_Lambda f = (X_Lambda)c;
+            if (c instanceof X_Closure) {
+                X_Closure f = (X_Closure)c;
                 ArrayList<X_Code> list = new ArrayList<X_Code>() {{ add(f); }};
                 for (int i = 0; i < ((X_Int)params.get(0)).getValue(); i++) {
                     c = f.exec(list, null);

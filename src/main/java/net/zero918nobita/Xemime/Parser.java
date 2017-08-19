@@ -424,7 +424,7 @@ class Parser {
 
     /**
      * 関数式の構文解析を行います。
-     * @return 関数式の評価結果 ( 演算可能な X_Lambda インスタンスを返します )
+     * @return 関数式の評価結果 ( 演算可能な X_Closure インスタンスを返します )
      * @throws Exception 関数式中に不正な要素が含まれている場合 ( ここでは正しく括弧が閉じられていない場合 ) に例外を発生させます。
      */
     private X_Code lambda() throws Exception {
