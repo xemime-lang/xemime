@@ -459,7 +459,7 @@ class Parser {
             throw new Exception(getLocation() + ": ラムダ式の仮引数リストまたはアロー演算子が必要です");
         }
         getToken();
-        return new X_Lambda(getLocation(), list, expr());
+        return new X_LambdaExpr(getLocation(), list, expr());
     }
 
     /**
