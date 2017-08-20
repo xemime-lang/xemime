@@ -1,6 +1,18 @@
-.idea/
-doc/
-target/
-node_modules/
+# GitBook
 _book/
+
+# Inno Setup
+installer/Output/
+
+# IntelliJ IDEA
+.idea/
 Xemime.iml
+
+# JavaDoc
+doc/
+
+# Maven
+target/
+
+# Node.js
+node_modules/
