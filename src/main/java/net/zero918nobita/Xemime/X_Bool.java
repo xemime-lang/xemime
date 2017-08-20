@@ -57,7 +57,7 @@ class X_Bool extends X_Handler {
 
     @Override
     X_Bool less(int line, X_Code obj) throws Exception {
-        throw new Exception(line + "真偽値に `<` 演算子は使用できません");
+        throw new Exception(line + ": 真偽値に `<` 演算子は使用できません");
     }
 
     @Override
