@@ -30,7 +30,7 @@ class Parser {
      * @param str ソースコード
      * @return 評価結果
      */
-    ArrayList<X_Code> parse(String str) {
+    ArrayList<X_Code> parse(String str) throws Exception {
         ArrayList<X_Code> result = new ArrayList<>();
         lex = new Lexer(line, str.replaceAll("\r\n|\r", "\n"));
         getToken();
