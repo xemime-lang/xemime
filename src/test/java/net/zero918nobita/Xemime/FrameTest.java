@@ -2,9 +2,6 @@ package net.zero918nobita.Xemime;
 
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.TreeMap;
-
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
