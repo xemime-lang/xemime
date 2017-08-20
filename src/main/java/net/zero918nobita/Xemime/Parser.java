@@ -17,7 +17,7 @@ class Parser {
     private TokenType tokenType;
 
     /** 次のトークンをレキサを介して取得し、その種類を記録します。 */
-    private void getToken() {
+    private void getToken() throws Exception {
         if (lex.advance()) {
             tokenType = lex.tokenType();
         } else {

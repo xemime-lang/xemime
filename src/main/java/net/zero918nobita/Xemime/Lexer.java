@@ -31,8 +31,7 @@ class Lexer {
     }
 
     /** 次のトークンを読み込み、種類を記録します。 */
-    boolean advance() {
-        try {
+    boolean advance() throws Exception {
             skipWhiteSpace();
             int c = reader.read();
             if (c < 0) return false;
@@ -188,10 +187,6 @@ class Lexer {
                     }
                     break;
             }
-        } catch(Exception e) {
-            e.printStackTrace();
-            return false;
-        }
         return true;
     }
 
