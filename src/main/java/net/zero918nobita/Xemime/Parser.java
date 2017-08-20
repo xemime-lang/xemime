@@ -34,13 +34,9 @@ class Parser {
         ArrayList<X_Code> result = new ArrayList<>();
         lex = new Lexer(line, str.replaceAll("\r\n|\r", "\n"));
         getToken();
-        X_Code code = null;
+        X_Code code;
         while (tokenType != TokenType.EOS) {
-            try {
-                code = statement();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            code = statement();
             if (code != null) result.add(code);
             getToken();
         }
