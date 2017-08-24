@@ -23,7 +23,7 @@ package net.zero918nobita.Xemime {
         -skipComment()
     }
 
-    Lexer -> LexerReader : -reader
+    Lexer --> LexerReader : -reader
 
     class LexerReader {
     }
@@ -31,13 +31,13 @@ package net.zero918nobita.Xemime {
     +class Main {
     }
 
-    Main -> TokenType : -tokenType
-    Main -> Parser : -parser
+    Main --> TokenType : -tokenType
+    Main --> Parser : -parser
 
     class Parser {
     }
 
-    Parser -> Lexer : -lex
+    Parser --> Lexer : -lex
 
     enum TokenType {
         T
@@ -75,13 +75,130 @@ package net.zero918nobita.Xemime {
         PERIOD
     }
 
-    class X_Code {
+    +class VirtualMemoryMonitor {
     }
+
+    VirtualMemoryMonitor --|> javafx.application.Application
 
     class X_Address {
     }
 
-    X_Address .|> Comparable
+    X_Address --|> X_Code
+    X_Address ..|> Comparable
+
+    class X_Assign {
+    }
+
+    X_Assign --|> X_BinExpr
+
+    class X_BinExpr {
+    }
+
+    X_BinExpr --|> X_Code
+
+    class X_Block {
+    }
+
+    X_Block --|> X_Code
+
+    class X_Bool {
+    }
+
+    X_Bool --|> X_Handler
+
+    class X_Closure {
+    }
+
+    X_Closure --|> X_Function
+
+    class X_Code {
+    }
+
+    class X_Declare {
+    }
+
+    X_Declare --|> X_BinExpr
+
+    class X_Default {
+    }
+
+    X_Default --|> X_Handler
+
+    class X_DotAssign {
+    }
+
+    X_DotAssign --|> X_Code
+
+    class X_DotCall {
+    }
+
+    X_DotCall --|> X_Code
+
+    class X_DotExpr {
+    }
+
+    X_DotExpr --|> X_Code
+
+    class X_Double {
+    }
+
+    X_Double --|> X_Numeric
+
+    class X_Funcall {
+    }
+
+    X_Funcall --|> X_Code
+
+    class X_Function {
+    }
+
+    X_Function --|> X_Code
+
+    class X_Handler {
+    }
+
+    X_Handler --|> X_Code
+
+    class X_Int {
+    }
+
+    X_Int --|> X_Numeric
+
+    class X_LambdaExpr {
+    }
+
+    X_LambdaExpr --|> X_Code
+
+    class X_Minus {
+    }
+
+    X_Minus --|> X_Code
+
+    class X_Native {
+    }
+
+    X_Native --|> X_Function
+
+    class X_Not {
+    }
+
+    X_Not --|> X_Code
+
+    class X_Numeric {
+    }
+
+    X_Numeric --|> X_Handler
+
+    class X_String {
+        -String value
+    }
+
+    X_String --|> X_Handler
+
+    class X_Symbol {
+    }
+
+    X_Symbol --|> X_Code
 
     interface Comparable {
         +int compareTo(Object obj)
