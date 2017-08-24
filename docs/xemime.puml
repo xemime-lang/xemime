@@ -1,0 +1,92 @@
+@startuml{xemime.png}
+
+package net.zero918nobita.Xemime {
+
+    class Frame {
+    }
+
+    class Lexer {
+        -line
+        -tokenType
+        -val
+        -reader
+        Lexer()
+        getLocation()
+        advance()
+        tokenType()
+        value()
+        -lexDigit()
+        -lexString()
+        -lexSymbol()
+        -skipWhiteSpace()
+        -skipLineComment()
+        -skipComment()
+    }
+
+    Lexer -> LexerReader : -reader
+
+    class LexerReader {
+    }
+
+    +class Main {
+    }
+
+    Main -> TokenType : -tokenType
+    Main -> Parser : -parser
+
+    class Parser {
+    }
+
+    Parser -> Lexer : -lex
+
+    enum TokenType {
+        T
+        NIL
+        INT
+        DOUBLE
+        STRING
+        SYMBOL
+        DECLARE
+        ASSIGN
+        SEMICOLON
+        COMMA
+        EOS
+        ADD
+        SUB
+        MUL
+        DIV
+        EQ
+        EQL
+        NE
+        L
+        LE
+        G
+        GE
+        AND
+        OR
+        XOR
+        NOT
+        LP
+        RP
+        LB
+        RB
+        LAMBDA
+        ARROW
+        PERIOD
+    }
+
+    class X_Code {
+    }
+
+    class X_Address {
+    }
+
+    X_Address .|> Comparable
+
+    interface Comparable {
+        +int compareTo(Object obj)
+    }
+
+}
+
+@enduml
