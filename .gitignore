@@ -16,3 +16,6 @@ target/
 
 # Node.js
 node_modules/
+
+# PlantUML Output
+*.png
