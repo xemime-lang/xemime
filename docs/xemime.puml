@@ -84,7 +84,7 @@ package net.zero918nobita.Xemime {
     }
 
     X_Address --|> X_Code
-    X_Address ..|> Comparable
+    X_Address ..|> java.lang.Comparable
 
     class X_Assign {
     }
@@ -199,11 +199,6 @@ package net.zero918nobita.Xemime {
     }
 
     X_Symbol --|> X_Code
-
-    interface Comparable {
-        +int compareTo(Object obj)
-    }
-
 }
 
 @enduml
