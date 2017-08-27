@@ -1,4 +1,4 @@
-# Xemime 2.0
+# Xemime
 
 [![Build Status](https://travis-ci.org/xemime-lang/xemime.svg?branch=master)](https://travis-ci.org/xemime-lang/xemime) [![Coverage Status](https://coveralls.io/repos/github/xemime-lang/xemime/badge.svg?branch=master)](https://coveralls.io/github/xemime-lang/xemime?branch=master) [![codebeat badge](https://codebeat.co/badges/8cc9d722-472d-4463-92bb-9a0c12da0e77)](https://codebeat.co/projects/github-com-xemime-lang-xemime-master)  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
 
