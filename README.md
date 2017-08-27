@@ -1,40 +1,16 @@
 # Xemime 2.0
 
-[![Build Status](https://travis-ci.org/0918nobita/Xemime-2.png)](https://travis-ci.org/0918nobita/Xemime-2)  [![Coverage Status](https://coveralls.io/repos/github/0918nobita/Xemime-2/badge.svg?branch=master)](https://coveralls.io/github/0918nobita/Xemime-2?branch=master)  [![codebeat badge](https://codebeat.co/badges/d82dec15-a4ee-4bf3-a6d2-41022a1812f6)](https://codebeat.co/projects/github-com-0918nobita-xemime-2-master)  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
+[![Build Status](https://travis-ci.org/xemime-lang/xemime.svg?branch=master)](https://travis-ci.org/xemime-lang/xemime) [![Coverage Status](https://coveralls.io/repos/github/xemime-lang/xemime/badge.svg?branch=master)](https://coveralls.io/github/xemime-lang/xemime?branch=master) [![codebeat badge](https://codebeat.co/badges/8cc9d722-472d-4463-92bb-9a0c12da0e77)](https://codebeat.co/projects/github-com-xemime-lang-xemime-master)  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
 
-Xemime は、さまざまな言語から影響を受けたプログラミング言語です。<br>
-純粋なプロトタイプベースオブジェクト指向言語であり、<br>
-小規模なソフトウェア開発を目的としています。
+Xemime は、**連関指向**という新しいパラダイムを採用したプログラミング言語です。<br>
+小規模なソフトウェアの開発を目的としています。
 
 | 項目 | 内容 |
 | --- | --- |
-| パラダイム | プロトタイプベースオブジェクト指向、関数型 |
+| パラダイム | 連関指向 |
 | 型付け | 強い動的型付け |
-| 影響を受けた言語 | Io, JavaScript, Lisp, Ruby, Swift |
 | ライセンス | MIT |
 | 拡張子 | ``.xemime`` |
-
-# サンプル
-
-```
-let x = 2;
-
-println((1 + x) * (3 - 4) + 6 / x);  // -> 0
-println((1 == 1.0) && if(3 > 2, t, nil)); // -> T
-
-let obj = Object.clone();
-obj.property = 2;
-obj.method = #x -> x * 3;
-
-println(obj.property); // -> 2
-println(obj.method); // -> <Lambda>
-println(obj.method(5)); // -> 15
-```
-
-# インストール方法
-
-安定版はまだリリースできていません。<br>
-アルファ版を随時 [Releases](https://github.com/0918nobita/Xemime-2/releases) で公開しています。
 
 # 開発方法
 
@@ -47,13 +23,3 @@ println(obj.method(5)); // -> 15
 | CI サービス | Travis CI ( ``.travis.yml`` ) |
 | カバレッジレポート共有サービス | Coveralls ( ``coveralls-maven-plugin`` ) |
 | ドキュメントジェネレータ | GitBook ( npm : ``package.json`` ) |
-
-## jar ファイル生成
-
-コマンドライン上で、ルートディレクトリをカレントディレクトリに設定し
-
-```
-mvn install
-```
-
-を実行してください。``target`` フォルダ内に ``.jar`` ファイルが生成されます。
