@@ -1,0 +1,23 @@
+options {
+    STATIC = false;
+}
+PARSER_BEGIN(Adder)
+class Adder {
+    static public void main(String[] args) {
+        for (String arg : args) {
+            try {
+                System.out.println(evaluate(arg));
+            } catch(ParseException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+    }
+
+    static public long evaluate(String src) throws ParserException {
+        Reader reader = new StringBuilder();
+        return new Adder(reader).expr();
+    }
+}
+PARSER_END(Adder)
+
+SKIP: { < [" ", "\t", "\r", "\n"] > }
