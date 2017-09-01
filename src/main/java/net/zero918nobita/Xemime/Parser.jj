@@ -1,8 +1,15 @@
 options {
     STATIC = false;
+    MULTI = true;
+    VISITOR = true;
+    UNICODE_INPUT = true;
+    JDK_VERSION = "1.8";
 }
-PARSER_BEGIN(Adder)
-class Adder {
+PARSER_BEGIN(XP_Parser)
+package net.zero918nobita.Xemime;
+import java.io.*;
+
+class XP_Parser {
     static public void main(String[] args) {
         for (String arg : args) {
             try {
@@ -13,11 +20,26 @@ class Adder {
         }
     }
 
-    static public long evaluate(String src) throws ParserException {
-        Reader reader = new StringBuilder();
-        return new Adder(reader).expr();
+    static public long evaluate(String src) throws ParseException {
+        Reader reader = new StringReader(src);
+        return new XP_Parser(reader).expr();
     }
 }
-PARSER_END(Adder)
+PARSER_END(XP_Parser)
 
 SKIP: { < [" ", "\t", "\r", "\n"] > }
+
+TOKEN: {
+    <INTEGER: ["1"-"9"](["0"-"9"])*>
+}
+
+long expr():
+{
+    Token x, y;
+}
+{
+    x=<INTEGER> "+" y=<INTEGER> <EOF>
+    {
+        return Long.parseLong(x.image) + Long.parseLong(y.image);
+    }
+}

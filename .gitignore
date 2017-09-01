@@ -8,6 +8,13 @@ installer/Output/
 .idea/
 Xemime.iml
 
+# JavaCC Output
+src/main/java/net/zero918nobita/Xemime/XP_*
+src/main/java/net/zero918nobita/Xemime/ParseException.java
+src/main/java/net/zero918nobita/Xemime/SimpleCharStream.java
+src/main/java/net/zero918nobita/Xemime/Token.java
+src/main/java/net/zero918nobita/Xemime/TokenMgrError.java
+
 # JavaDoc
 doc/
 
