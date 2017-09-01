@@ -15,67 +15,46 @@ Xemime インタプリタでは、EBNF ( 拡張バッカス・ナウア記法 ) 
 | ( ... ) | グループ化 |
 | " ... " | 文字列 |
 
-※ 1行コメント ( ``// ...`` ) と複数行コメント ( ``/* ... */`` ) に関する定義を省略しています。
-
 ```
-# program: プログラム, expr: 式
+assignment = symbol , "=" , expr ;
 
-program = expr , ";" ;
+block = "{" , { expr } , "}" ;
 
-# simple_expr: 単純式
+declaration = "let" , symbol , "=" , expr ;
 
 expr = simple_expr , [ { ( "==" | "!=" | "<" | "<=" | ">" | ">=" ) , simple_expr } ] ;
 
-# term: 項
-
-simple_expr = term , [ { ( "+" | "-" | "||" ) , term } ] ;
-
-# factor: 因子
-
-term = factor , [ { ( "*" | "/" | "&&" ) , factor } ] ;
-
-# first: 一次子, lambda_expr: ラムダ式, message_expr: メッセージ式,
-# "nil": 偽, string: 文字列定数, "t": 真, symbol: シンボル
-# ※ "t", "nil" ともに大文字・小文字に区別はありません
-
 factor = first
     | lambda_expr
-    | message_expr
-    | "nil"
-    | string
-    | "t"
+    | NIL
+    | STRING
+    | T
     | "!" , factor
-    | factor , "." , symbol , "=" , expr
     ;
-
-# assignment: 代入式, block: ブロック, declaration: 宣言式,
-# function_call: 関数呼び出し, number: 数値定数
 
 first = assignment
     | block
     | declaration
     | function_call
-    | number
-    | symbol
+    | NUMBER
+    | SYMBOL
     | "-" , first
     | "(" , expr , ")"
     ;
 
-assignment = symbol , "=" , expr ;
-
-block = "{" , { program } , "}" ;
-
-declaration = "let" , symbol , "=" , expr ;
-
 function_call = first , "(" , [ expr , [ { "," , expr } ] ] , ")" ;
+
+import_stmt = "import" , STRING , "as" , SYMBOL ;
 
 lambda_expr = "#" , "(", [ symbol , [ { "," , symbol } ] ] , ")", "->", expr
     | "#", [ [ { "," , symbol } ] ] , "->" , expr
     ;
 
-message_expr = factor , symbol
-    | factor , symbol , "(" , [ expr , [ { "," , expr } ] ] , ")"
-    ;
+program = [ { import_stmt } ] , [ { function_stmt } ] ;
 
-type_annotation = "@" , ( symbol | factor , "." , symbol ) ;
+SYMBOL = alphabet , [ { ( alphabet | digit ) } ] ;
+
+simple_expr = term , [ { ( "+" | "-" | "||" ) , term } ] ;
+
+term = factor , [ { ( "*" | "/" | "&&" ) , factor } ] ;
 ```
