@@ -18,7 +18,9 @@ Xemime インタプリタでは、EBNF ( 拡張バッカス・ナウア記法 ) 
 ```
 assignment = symbol , "=" , expr ;
 
-block = "{" , { expr } , "}" ;
+block = "{" , expr , [ ";" ] , "}"
+    | "{" , expr , { ";" , expr } , [ ";" ] , "}"
+    ;
 
 declaration = "let" , symbol , "=" , expr ;
 
