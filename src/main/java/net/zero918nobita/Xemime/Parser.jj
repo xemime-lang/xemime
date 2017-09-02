@@ -1,7 +1,5 @@
 options {
     STATIC = false;
-    MULTI = true;
-    VISITOR = true;
     UNICODE_INPUT = true;
     JDK_VERSION = "1.8";
 }
@@ -10,19 +8,15 @@ package net.zero918nobita.Xemime;
 import java.io.*;
 
 class XP_Parser {
-    static public void main(String[] args) {
-        for (String arg : args) {
-            try {
-                System.out.println(evaluate(arg));
-            } catch(ParseException ex) {
-                System.err.println(ex.getMessage());
-            }
+    public static void main(String[] args) {
+        try {
+            XP_Parser parser =  new XP_Parser(new BufferedReader(new FileReader(args[0])));
+            parser.compilation_unit();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
-
-    static public long evaluate(String src) throws ParseException {
-        Reader reader = new StringReader(src);
-        return new XP_Parser(reader).expr();
     }
 }
 PARSER_END(XP_Parser)
@@ -30,16 +24,55 @@ PARSER_END(XP_Parser)
 SKIP: { < [" ", "\t", "\r", "\n"] > }
 
 TOKEN: {
-    <INTEGER: ["1"-"9"](["0"-"9"])*>
+    <ADD: "+">
+    | <AND: "&&">
+    | <DIV: "/">
+    | <EQ: "==">
+    | <G: ">">
+    | <GE: ">=">
+    | <IMPORT: "import">
+    | <INTEGER: ["1"-"9"](["0"-"9"])*>
+    | <L: "<">
+    | <LE: "<=">
+    | <MUL: "*">
+    | <NE: "!=">
+    | <NIL: "NIL">
+    | <OR: "||">
+    | <STATIC: "static">
+    | <SUB: "-">
+    | <T: "T">
 }
 
-long expr():
-{
-    Token x, y;
+TOKEN: {
+    <IDENTIFIER: ["a"-"z", "A"-"Z", "_"] (["a"-"z", "A"-"Z", "_", "0"-"9"])*>
 }
+
+void compilation_unit() : {}
 {
-    x=<INTEGER> "+" y=<INTEGER> <EOF>
-    {
-        return Long.parseLong(x.image) + Long.parseLong(y.image);
-    }
+    expr() <EOF>
+}
+
+void expr() : {}
+{
+    simple_expr() ( ( <EQ> | <NE> | <L> | <LE> | <G> | <GE>) simple_expr() )*
+}
+
+void simple_expr() : {}
+{
+    term() ( ( <ADD> | <SUB> | <OR> ) term() )*
+}
+
+void term() : {}
+{
+    factor() ( ( <MUL> | <DIV> | <AND> ) factor() )*
+}
+
+void factor() : {}
+{
+    first() | <NIL> | <T> | "!" factor()
+}
+
+void first() : {}
+{
+    <IDENTIFIER> | <INTEGER> | "-" first()
 }
