@@ -4,7 +4,7 @@ options {
     JDK_VERSION = "1.8";
 }
 PARSER_BEGIN(Parser)
-package net.zero918nobita.Xemime.Parser;
+package net.zero918nobita.Xemime.parser;
 import java.io.*;
 
 class Parser {
