@@ -9,11 +9,13 @@ installer/Output/
 Xemime.iml
 
 # JavaCC Output
-src/main/java/net/zero918nobita/Xemime/XP_*
-src/main/java/net/zero918nobita/Xemime/ParseException.java
-src/main/java/net/zero918nobita/Xemime/SimpleCharStream.java
-src/main/java/net/zero918nobita/Xemime/Token.java
-src/main/java/net/zero918nobita/Xemime/TokenMgrError.java
+src/main/java/net/zero918nobita/Xemime/Parser/ParseException.java
+src/main/java/net/zero918nobita/Xemime/Parser/Parser.java
+src/main/java/net/zero918nobita/Xemime/Parser/ParserConstants.java
+src/main/java/net/zero918nobita/Xemime/Parser/ParserTokenManager.java
+src/main/java/net/zero918nobita/Xemime/Parser/SimpleCharStream.java
+src/main/java/net/zero918nobita/Xemime/Parser/Token.java
+src/main/java/net/zero918nobita/Xemime/Parser/TokenMgrError.java
 
 # JavaDoc
 doc/

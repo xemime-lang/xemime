@@ -3,14 +3,14 @@ options {
     UNICODE_INPUT = true;
     JDK_VERSION = "1.8";
 }
-PARSER_BEGIN(XP_Parser)
-package net.zero918nobita.Xemime;
+PARSER_BEGIN(Parser)
+package net.zero918nobita.Xemime.Parser;
 import java.io.*;
 
-class XP_Parser {
+class Parser {
     public static void main(String[] args) {
         try {
-            XP_Parser parser =  new XP_Parser(new BufferedReader(new FileReader(args[0])));
+            Parser parser =  new Parser(new BufferedReader(new FileReader(args[0])));
             parser.compilation_unit();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -19,9 +19,17 @@ class XP_Parser {
         }
     }
 }
-PARSER_END(XP_Parser)
+PARSER_END(Parser)
 
-SKIP: { < [" ", "\t", "\r", "\n"] > }
+SKIP:
+{
+    " "
+    | "\t"
+    | "\n"
+    | "\r"
+    | < "//" (~[ "\n", "\r" ])* ( "\n" | "\r" | "\r\n" ) >
+    | < "/*" (~[ "*" ])* "*" ( ~[ "/" ] (~[ "*" ])* "*" )* "/" >
+}
 
 TOKEN: {
     <ADD: "+">
@@ -49,7 +57,7 @@ TOKEN: {
 
 void compilation_unit() : {}
 {
-    expr() <EOF>
+    (expr() ";")* <EOF>
 }
 
 void expr() : {}
