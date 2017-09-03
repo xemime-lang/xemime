@@ -1,12 +1,14 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.X_Bool;
+import net.zero918nobita.Xemime.ast.X_Not;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * net.zero918nobita.Xemime.X_Not のテストクラスです。
+ * net.zero918nobita.Xemime.ast.X_Not のテストクラスです。
  * @author Kodai Matsumoto
  */
 

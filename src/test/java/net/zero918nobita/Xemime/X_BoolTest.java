@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.X_Bool;
+import net.zero918nobita.Xemime.ast.X_String;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -8,7 +10,7 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * net.zero918nobita.Xemime.X_Bool のテストクラスです。
+ * net.zero918nobita.Xemime.ast.X_Bool のテストクラスです。
  * @author Kodai Matsumoto
  */
 

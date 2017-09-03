@@ -47,7 +47,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>net.zero918nobita.Xemime.Main</mainClass>
+                            <mainClass>net.zero918nobita.Xemime.interpreter.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

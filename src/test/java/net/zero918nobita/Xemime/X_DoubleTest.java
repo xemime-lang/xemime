@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.X_Double;
+import net.zero918nobita.Xemime.ast.X_Int;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -8,7 +10,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
- * net.zero918nobita.Xemime.X_Double のテストクラスです。
+ * net.zero918nobita.Xemime.ast.X_Double のテストクラスです。
  * @author Kodai Matsumoto
  */
 

@@ -1,5 +1,8 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.X_Int;
+import net.zero918nobita.Xemime.ast.X_String;
+import net.zero918nobita.Xemime.ast.X_Symbol;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -10,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * net.zero918nobita.Xemime.X_String のテストクラスです。
+ * net.zero918nobita.Xemime.ast.X_String のテストクラスです。
  * @author Kodai Matsumoto
  */
 

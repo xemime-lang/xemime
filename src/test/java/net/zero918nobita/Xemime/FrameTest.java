@@ -1,5 +1,11 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.X_Address;
+import net.zero918nobita.Xemime.ast.X_Handler;
+import net.zero918nobita.Xemime.ast.X_String;
+import net.zero918nobita.Xemime.ast.X_Symbol;
+import net.zero918nobita.Xemime.interpreter.Frame;
+import net.zero918nobita.Xemime.interpreter.Main;
 import org.junit.Test;
 
 import static org.junit.Assert.assertThat;
@@ -7,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 
 /**
- * net.zero918nobita.Xemime.Frame のテストクラスです。
+ * net.zero918nobita.Xemime.interpreter.Frame のテストクラスです。
  * @author Kodai Matsumoto
  */
 

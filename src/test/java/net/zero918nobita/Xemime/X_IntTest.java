@@ -1,5 +1,9 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.X_Int;
+import net.zero918nobita.Xemime.ast.X_Minus;
+import net.zero918nobita.Xemime.ast.X_String;
+import net.zero918nobita.Xemime.ast.X_Symbol;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -8,7 +12,7 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * net.zero918nobita.Xemime.X_Int のテストクラスです。
+ * net.zero918nobita.Xemime.ast.X_Int のテストクラスです。
  * @author Kodai Matsumoto
  */
 

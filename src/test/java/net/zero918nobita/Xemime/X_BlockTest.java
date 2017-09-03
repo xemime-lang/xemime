@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.*;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -10,7 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * net.zero918nobita.Xemime.X_Block のテストクラスです。
+ * net.zero918nobita.Xemime.ast.X_Block のテストクラスです。
  */
 
 public class X_BlockTest {
