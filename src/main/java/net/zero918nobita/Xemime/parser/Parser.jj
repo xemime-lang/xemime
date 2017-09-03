@@ -1,13 +1,27 @@
 options {
     STATIC = false;
+    MULTI = true;
+    VISITOR = true;
     UNICODE_INPUT = true;
     JDK_VERSION = "1.8";
 }
+
 PARSER_BEGIN(Parser)
+
 package net.zero918nobita.Xemime.parser;
+
+import net.zero918nobita.Xemime.ast.*;
 import java.io.*;
 
 class Parser {
+    private String sourceName; // ソースファイルの名前
+
+    static final public String SOURCE_ENCODING = "UTF-8"; // ソースファイルのエンコーディング
+
+    /**
+     * スタンドアロンで構文解析をテストするためのエントリーポイントです。
+     * @param args コマンドライン引数
+     */
     public static void main(String[] args) {
         try {
             Parser parser =  new Parser(new BufferedReader(new FileReader(args[0])));
@@ -18,7 +32,14 @@ class Parser {
             e.printStackTrace();
         }
     }
+
+    /*
+    protected location(Token t) {
+        return new Location(sourceName, t);
+    }
+    */
 }
+
 PARSER_END(Parser)
 
 SKIP:
@@ -55,32 +76,13 @@ TOKEN: {
     <IDENTIFIER: ["a"-"z", "A"-"Z", "_"] (["a"-"z", "A"-"Z", "_", "0"-"9"])*>
 }
 
-void compilation_unit() : {}
-{
-    (expr() ";")* <EOF>
+ExprNode primary() : {
+    Token t;
+    ExprNode n;
 }
-
-void expr() : {}
 {
-    simple_expr() ( ( <EQ> | <NE> | <L> | <LE> | <G> | <GE>) simple_expr() )*
-}
-
-void simple_expr() : {}
-{
-    term() ( ( <ADD> | <SUB> | <OR> ) term() )*
-}
-
-void term() : {}
-{
-    factor() ( ( <MUL> | <DIV> | <AND> ) factor() )*
-}
-
-void factor() : {}
-{
-    first() | <NIL> | <T> | "!" factor()
-}
-
-void first() : {}
-{
-    <IDENTIFIER> | <INTEGER> | "-" first()
+    t=<INTEGER>
+    {
+        return integerNode(t.image);
+    }
 }
