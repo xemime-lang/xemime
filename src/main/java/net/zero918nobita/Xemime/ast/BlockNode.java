@@ -9,10 +9,10 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class X_Block extends X_Code {
+public class BlockNode extends X_Code {
     private ArrayList<X_Code> list;
 
-    public X_Block(int n, ArrayList<X_Code> l) {
+    public BlockNode(int n, ArrayList<X_Code> l) {
         super(n);
         list = l;
     }

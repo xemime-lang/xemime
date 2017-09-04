@@ -7,8 +7,8 @@ import net.zero918nobita.Xemime.interpreter.Main;
  * @author Kodai Matsumoto
  */
 
-public class X_DeclareNode extends ExprNode {
-    public X_DeclareNode(int n, X_Symbol symbol, X_Code obj) {
+public class DeclareNode extends ExprNode {
+    public DeclareNode(int n, X_Symbol symbol, X_Code obj) {
         super(n, TokenType.DECLARE, symbol, obj);
     }
 

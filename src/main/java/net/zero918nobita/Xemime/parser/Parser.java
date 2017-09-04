@@ -245,11 +245,11 @@ public class Parser {
                 if (tokenType != TokenType.RP) list = args();
                 if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
                 getToken();
-                obj = new X_DotCall(lex.getLocation(), obj, sym, list);
+                obj = new DotCallNode(lex.getLocation(), obj, sym, list);
             } else if (tokenType == TokenType.ASSIGN) {
                 getToken();
                 X_Code c = expr();
-                obj = new X_DotAssign(lex.getLocation(), obj, sym, c);
+                obj = new DotAssignNode(lex.getLocation(), obj, sym, c);
             } else {
                 obj = new DotExprNode(lex.getLocation(), obj, sym);
             }
@@ -295,7 +295,7 @@ public class Parser {
                     getToken();
                     if (tokenType == TokenType.ASSIGN) {
                         getToken();
-                        obj = new X_DeclareNode(lex.getLocation(), sym, expr());
+                        obj = new DeclareNode(lex.getLocation(), sym, expr());
                     } else {
                         throw new Exception("宣言式が不正です");
                     }
@@ -385,7 +385,7 @@ public class Parser {
             getToken();
         }
         getToken();
-        return new X_Block(lex.getLocation(), list);
+        return new BlockNode(lex.getLocation(), list);
     }
 
     /**
@@ -459,7 +459,7 @@ public class Parser {
             throw new Exception(getLocation() + ": ラムダ式の仮引数リストまたはアロー演算子が必要です");
         }
         getToken();
-        return new X_LambdaExpr(getLocation(), list, expr());
+        return new LambdaExprNode(getLocation(), list, expr());
     }
 
     /**

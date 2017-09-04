@@ -11,10 +11,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * net.zero918nobita.Xemime.ast.X_Block のテストクラスです。
+ * net.zero918nobita.Xemime.ast.BlockNode のテストクラスです。
  */
 
-public class X_BlockTest {
+public class _BlockNodeTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
@@ -23,7 +23,7 @@ public class X_BlockTest {
         ArrayList<X_Code> list = new ArrayList<X_Code>(){{
             add(new ExprNode(0, TokenType.ADD, new X_Int(0, 1), new X_Int(0, 2)));
         }};
-        X_Block block = new X_Block(0, list);
+        BlockNode block = new BlockNode(0, list);
         assertThat(block.run(), is(new X_Int(0, 3)));
     }
 
@@ -31,7 +31,7 @@ public class X_BlockTest {
     public void testRun2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: ブロックの戻り値が記述されていません");
-        X_Block block = new X_Block(0, new ArrayList<>());
+        BlockNode block = new BlockNode(0, new ArrayList<>());
         block.run();
     }
 }

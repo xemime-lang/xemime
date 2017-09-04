@@ -7,12 +7,12 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class X_DotCall extends X_Code {
+public class DotCallNode extends X_Code {
     private X_Code obj;
     private X_Symbol symbol;
     private ArrayList<X_Code> list;
 
-    public X_DotCall(int n, X_Code o, X_Symbol sym, ArrayList<X_Code> l) {
+    public DotCallNode(int n, X_Code o, X_Symbol sym, ArrayList<X_Code> l) {
         super(n);
         obj = o;
         symbol = sym;

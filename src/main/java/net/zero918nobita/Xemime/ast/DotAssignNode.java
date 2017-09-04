@@ -7,12 +7,12 @@ import net.zero918nobita.Xemime.interpreter.Main;
  * @author Kodai Matsumoto
  */
 
-public class X_DotAssign extends X_Code {
+public class DotAssignNode extends X_Code {
     private X_Code code1;
     private X_Symbol symbol;
     private X_Code code2;
 
-    public X_DotAssign(int n, X_Code c, X_Symbol sym, X_Code c2) {
+    public DotAssignNode(int n, X_Code c, X_Symbol sym, X_Code c2) {
         super(n);
         code1 = c;
         symbol = sym;
