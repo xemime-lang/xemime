@@ -21,7 +21,7 @@ public class X_BlockTest {
     @Test
     public void testRun() throws Exception {
         ArrayList<X_Code> list = new ArrayList<X_Code>(){{
-            add(new X_BinExpr(0, TokenType.ADD, new X_Int(0, 1), new X_Int(0, 2)));
+            add(new ExprNode(0, TokenType.ADD, new X_Int(0, 1), new X_Int(0, 2)));
         }};
         X_Block block = new X_Block(0, list);
         assertThat(block.run(), is(new X_Int(0, 3)));

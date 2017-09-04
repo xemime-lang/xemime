@@ -76,7 +76,7 @@ public class Parser {
 
     /**
      * 式 ( 単純式同士が ==, !=, &lt;, &lt;=, &gt;, &gt;= で繋がれた式 ) の構文解析を行います。
-     * @return 式の評価結果 ( 演算子を含む場合は、演算可能な X_BinExpr インスタンスを返します )
+     * @return 式の評価結果 ( 演算子を含む場合は、演算可能な ExprNode インスタンスを返します )
      * @throws Exception 式に不正な要素が含まれている場合に例外を発生させます。
      */
     private X_Code expr() throws Exception {
@@ -103,7 +103,7 @@ public class Parser {
      * @throws Exception 式の右辺に不正な要素が含まれている場合に例外を発生させます。
      */
     private X_Code expr2(X_Code obj) throws Exception {
-        X_BinExpr result = null;
+        ExprNode result = null;
         while ((tokenType == TokenType.L) ||
                 (tokenType == TokenType.G) ||
                 (tokenType == TokenType.EQ) ||
@@ -114,15 +114,15 @@ public class Parser {
             TokenType op = tokenType;
             getToken();
             X_Code obj2 = simpleExpr();
-            if (result == null) result = new X_BinExpr(lex.getLocation(), op, obj, obj2);
-            else result = new X_BinExpr(lex.getLocation(), op, result, obj2);
+            if (result == null) result = new ExprNode(lex.getLocation(), op, obj, obj2);
+            else result = new ExprNode(lex.getLocation(), op, result, obj2);
         }
         return result;
     }
 
     /**
      * 単純式 ( 項同士が +, -, || で繋がれた式 ) の構文解析を行います。
-     * @return 単純式の評価結果 ( 演算子を含む場合は、演算可能な X_BinExpr インスタンスを返します )
+     * @return 単純式の評価結果 ( 演算子を含む場合は、演算可能な ExprNode インスタンスを返します )
      * @throws Exception 単純式に不正な要素が含まれている場合に例外を発生させます。
      */
     private X_Code simpleExpr() throws Exception {
@@ -144,7 +144,7 @@ public class Parser {
      * @throws Exception 単純式の右辺に不正な要素が含まれている場合に例外を発生させます。
      */
     private X_Code simpleExpr2(X_Code obj) throws Exception {
-        X_BinExpr result = null;
+        ExprNode result = null;
         while ((tokenType == TokenType.ADD) ||
                 (tokenType == TokenType.SUB) ||
                 (tokenType == TokenType.OR)) {
@@ -152,9 +152,9 @@ public class Parser {
             getToken();
             X_Code obj2 = term();
             if (result == null) {
-                result = new X_BinExpr(lex.getLocation(), op, obj, obj2);
+                result = new ExprNode(lex.getLocation(), op, obj, obj2);
             } else {
-                result = new X_BinExpr(lex.getLocation(), op, result, obj2);
+                result = new ExprNode(lex.getLocation(), op, result, obj2);
             }
         }
         return result;
@@ -162,7 +162,7 @@ public class Parser {
 
     /**
      * 項 ( 因子同士が *, /, && で繋がれた要素 ) の構文解析を行います。
-     * @return 項の評価結果 ( 演算子を含む場合は、演算可能な X_BinExpr インスタンスを返します )
+     * @return 項の評価結果 ( 演算子を含む場合は、演算可能な ExprNode インスタンスを返します )
      * @throws Exception 項に不正な要素が含まれている場合に例外を発生させます。
      */
     private X_Code term() throws Exception {
@@ -185,7 +185,7 @@ public class Parser {
      * @throws Exception 項の右辺に不正な要素が含まれている場合に例外を発生させます。
      */
     private X_Code term2(X_Code obj) throws Exception {
-        X_BinExpr result = null;
+        ExprNode result = null;
         while ((tokenType == TokenType.MUL) ||
                 (tokenType == TokenType.DIV) ||
                 (tokenType == TokenType.AND) ||
@@ -194,9 +194,9 @@ public class Parser {
             getToken();
             X_Code obj2 = term();
             if (result == null) {
-                result = new X_BinExpr(lex.getLocation(), op, obj, obj2);
+                result = new ExprNode(lex.getLocation(), op, obj, obj2);
             } else {
-                result = new X_BinExpr(lex.getLocation(), op, result, obj2);
+                result = new ExprNode(lex.getLocation(), op, result, obj2);
             }
         }
         return result;
@@ -204,7 +204,7 @@ public class Parser {
 
     /**
      * 因子 ( 文字列、真偽値、符号反転、論理否定、関数式、メッセージ式 ) の構文解析を行います。
-     * @return 因子の評価結果 ( 演算子を含む場合は、演算可能な X_BinExpr インスタンスを返します )
+     * @return 因子の評価結果 ( 演算子を含む場合は、演算可能な ExprNode インスタンスを返します )
      * @throws Exception 因子に不正な要素が含まれている場合 (ここではどの種類の因子にも該当しない場合、または閉じられていない括弧がある場合) に例外を発生させます。
      */
     private X_Code factor() throws Exception {
@@ -251,7 +251,7 @@ public class Parser {
                 X_Code c = expr();
                 obj = new X_DotAssign(lex.getLocation(), obj, sym, c);
             } else {
-                obj = new X_DotExpr(lex.getLocation(), obj, sym);
+                obj = new DotExprNode(lex.getLocation(), obj, sym);
             }
         }
         return obj;
@@ -295,7 +295,7 @@ public class Parser {
                     getToken();
                     if (tokenType == TokenType.ASSIGN) {
                         getToken();
-                        obj = new X_Declare(lex.getLocation(), sym, expr());
+                        obj = new X_DeclareNode(lex.getLocation(), sym, expr());
                     } else {
                         throw new Exception("宣言式が不正です");
                     }
@@ -309,7 +309,7 @@ public class Parser {
                 if (tokenType == TokenType.ASSIGN) {
                     // 宣言済みの変数への代入
                     getToken();
-                    obj = new X_Assign(lex.getLocation(), sym, expr());
+                    obj = new AssignNode(lex.getLocation(), sym, expr());
                 } else if (tokenType == TokenType.LP) {
                     // 関数呼び出し
                     obj = methodCall(sym);

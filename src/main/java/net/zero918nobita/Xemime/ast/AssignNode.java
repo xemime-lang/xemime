@@ -3,17 +3,18 @@ package net.zero918nobita.Xemime.ast;
 import net.zero918nobita.Xemime.interpreter.Main;
 
 /**
- * 変数宣言
+ * 代入演算子
  * @author Kodai Matsumoto
  */
 
-public class X_Declare extends X_BinExpr {
-    public X_Declare(int n, X_Symbol symbol, X_Code obj) {
-        super(n, TokenType.DECLARE, symbol, obj);
+public class AssignNode extends ExprNode {
+    public AssignNode(int n, X_Symbol symbol, X_Code obj) {
+        super(n, TokenType.ASSIGN, symbol, obj);
     }
 
     public X_Code run() throws Exception {
         X_Symbol sym = (X_Symbol)obj1;
+        if (!Main.hasSymbol(sym)) throw new Exception(getLocation() + ": `" + sym.getName() + "` 未宣言のシンボルです");
         X_Code code;
         if (obj2 instanceof X_Symbol) {
             code = ((X_Symbol) obj2).getAddress();
@@ -21,9 +22,9 @@ public class X_Declare extends X_BinExpr {
         } else {
             code = obj2.run();
             if (code instanceof X_Address) {
-                Main.defAddress(sym, (X_Address) code);
+                Main.setAddress(sym, (X_Address) code);
             } else {
-                Main.defValue(sym, code);
+                Main.setValue(sym, code);
             }
         }
         return code;

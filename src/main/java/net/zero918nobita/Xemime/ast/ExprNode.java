@@ -5,7 +5,7 @@ package net.zero918nobita.Xemime.ast;
  * @author Kodai Matsumoto
  */
 
-public class X_BinExpr extends X_Code {
+public class ExprNode extends X_Code {
     /** 演算子の種類 */
     private TokenType op;
     /** 左側の式 */
@@ -13,7 +13,7 @@ public class X_BinExpr extends X_Code {
     /** 右側の式 */
     X_Code obj2;
 
-    public X_BinExpr(int n, TokenType operator, X_Code o1, X_Code o2) {
+    public ExprNode(int n, TokenType operator, X_Code o1, X_Code o2) {
         super(n);
         op = operator;
         obj1 = o1;
