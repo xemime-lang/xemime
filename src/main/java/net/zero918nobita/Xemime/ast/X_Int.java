@@ -1,7 +1,5 @@
 package net.zero918nobita.Xemime.ast;
 
-import net.zero918nobita.Xemime.*;
-
 import java.util.ArrayList;
 
 /**
@@ -35,7 +33,7 @@ public class X_Int extends X_Numeric {
         }
     }
 
-    int getValue() {
+    public int getValue() {
         return value.intValue();
     }
 
@@ -44,7 +42,7 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    X_Numeric add(int line, X_Code obj) throws Exception {
+    public X_Numeric add(int line, X_Code obj) throws Exception {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
@@ -60,7 +58,7 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    X_Numeric sub(int line, X_Code obj) throws Exception {
+    public X_Numeric sub(int line, X_Code obj) throws Exception {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
@@ -76,7 +74,7 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    X_Numeric multiply(int line, X_Code obj) throws Exception {
+    public X_Numeric multiply(int line, X_Code obj) throws Exception {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
@@ -92,7 +90,7 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    X_Numeric divide(int line, X_Code obj) throws Exception {
+    public X_Numeric divide(int line, X_Code obj) throws Exception {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
@@ -108,28 +106,28 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    X_Bool less(int line, X_Code obj) throws Exception {
+    public X_Bool less(int line, X_Code obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() < ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() < ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
-    X_Bool le(int line, X_Code obj) throws Exception {
+    public X_Bool le(int line, X_Code obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() <= ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() <= ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
-    X_Bool greater(int line, X_Code obj) throws Exception {
+    public X_Bool greater(int line, X_Code obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() > ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() > ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
-    X_Bool ge(int line, X_Code obj) throws Exception {
+    public X_Bool ge(int line, X_Code obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() >= ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() >= ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");

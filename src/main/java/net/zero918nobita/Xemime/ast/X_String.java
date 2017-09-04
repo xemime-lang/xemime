@@ -27,7 +27,7 @@ public class X_String extends X_Handler {
     }
 
     @Override
-    X_String add(int line, X_Code obj) throws Exception {
+    public X_String add(int line, X_Code obj) throws Exception {
         if (obj instanceof X_String) {
             return new X_String(0, this.value + ((X_String) obj).value);
         } else {

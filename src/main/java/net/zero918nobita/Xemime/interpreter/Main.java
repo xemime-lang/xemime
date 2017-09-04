@@ -37,7 +37,7 @@ public class Main {
      * ブロック式の評価が始まった直後に新たなフレームが追加され、
      * 評価が完了した直後に、最後に追加されたフレームが破棄されます。
      */
-    static Frame frame = new Frame();
+    public static Frame frame = new Frame();
 
     /** 仮想メモリモニタ */
     private static VirtualMemoryMonitor vmm = null;

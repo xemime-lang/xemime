@@ -7,12 +7,12 @@ import net.zero918nobita.Xemime.interpreter.Main;
  * @author Kodai Matsumoto
  */
 
-class X_Assign extends X_BinExpr {
-    X_Assign(int n, X_Symbol symbol, X_Code obj) {
+public class X_Assign extends X_BinExpr {
+    public X_Assign(int n, X_Symbol symbol, X_Code obj) {
         super(n, TokenType.ASSIGN, symbol, obj);
     }
 
-    X_Code run() throws Exception {
+    public X_Code run() throws Exception {
         X_Symbol sym = (X_Symbol)obj1;
         if (!Main.hasSymbol(sym)) throw new Exception(getLocation() + ": `" + sym.getName() + "` 未宣言のシンボルです");
         X_Code code;

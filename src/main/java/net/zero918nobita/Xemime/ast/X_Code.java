@@ -23,55 +23,55 @@ public class X_Code {
         return this;
     }
 
-    X_Code add(int line, X_Code obj) throws Exception {
+    public X_Code add(int line, X_Code obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `+` 演算子は使用できません");
     }
 
-    X_Code sub(int line, X_Code obj) throws Exception {
+    public X_Code sub(int line, X_Code obj) throws Exception {
         throw new Exception(line + "このオブジェクトに `-` 演算子は使用できません");
     }
 
-    X_Code multiply(int line, X_Code obj) throws Exception {
+    public X_Code multiply(int line, X_Code obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `*` 演算子は使用できません");
     }
 
-    X_Code divide(int line, X_Code obj) throws Exception {
+    public X_Code divide(int line, X_Code obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `/` 演算子は使用できません");
     }
 
-    X_Bool less(int line, X_Code obj) throws Exception {
+    public X_Bool less(int line, X_Code obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `<` 演算子は使用できません");
     }
 
-    X_Bool le(int line, X_Code obj) throws Exception {
+    public X_Bool le(int line, X_Code obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `<=` 演算子は使用できません");
     }
 
-    X_Bool greater(int line, X_Code obj) throws Exception {
+    public X_Bool greater(int line, X_Code obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `>` 演算子は使用できません");
     }
 
-    X_Bool ge(int line, X_Code obj) throws Exception {
+    public X_Bool ge(int line, X_Code obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `>=` 演算子は使用できません");
     }
 
-    X_Bool and(int line, X_Code obj) throws Exception {
+    public X_Bool and(int line, X_Code obj) throws Exception {
         throw new Exception(line + "このオブジェクトに `&&` 演算子は使用できません");
     }
 
-    X_Bool or(int line, X_Code obj) throws Exception {
+    public X_Bool or(int line, X_Code obj) throws Exception {
         throw new Exception(line + "このオブジェクトに `||` 演算子は使用できません");
     }
 
-    X_Bool xor(int line, X_Code obj) throws Exception {
+    public X_Bool xor(int line, X_Code obj) throws Exception {
         throw new Exception(line + "このオブジェクトに `^` 演算子は使用できません");
     }
 
-    X_Code message(int line, X_Symbol symbol) throws Exception {
+    public X_Code message(int line, X_Symbol symbol) throws Exception {
         throw new Exception(line + ": このオブジェクトにフィールドは設定できません");
     }
 
-    X_Code message(int line, X_Symbol symbol, ArrayList<X_Code> params) throws Exception {
+    public X_Code message(int line, X_Symbol symbol, ArrayList<X_Code> params) throws Exception {
         throw new Exception(line + ": このオブジェクトにメソッドは設定できません");
     }
 }

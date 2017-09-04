@@ -9,11 +9,11 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-class X_Funcall extends X_Code {
+public class X_Funcall extends X_Code {
     private X_Code func;
     private ArrayList<X_Code> list;
 
-    X_Funcall(int n, X_Code code, ArrayList<X_Code> l) throws Exception {
+    public X_Funcall(int n, X_Code code, ArrayList<X_Code> l) throws Exception {
         super(n);
         if (code instanceof X_Symbol || code instanceof X_Native || code instanceof X_Funcall) {
             func = code;
@@ -24,7 +24,7 @@ class X_Funcall extends X_Code {
     }
 
     @Override
-    X_Code run() throws Exception {
+    public X_Code run() throws Exception {
         if (func instanceof X_Native) {
             ArrayList<X_Code> params = new ArrayList<>();
             for (X_Code o : list) params.add(o.run());
