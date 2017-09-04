@@ -1,7 +1,5 @@
 package net.zero918nobita.Xemime.ast;
 
-import net.zero918nobita.Xemime.ast.X_Handler;
-
 /**
  * 数値オブジェクト
  * @author Kodai Matsumoto
