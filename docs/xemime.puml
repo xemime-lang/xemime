@@ -1,5 +1,63 @@
 @startuml{xemime.png}
 
+package net.zero918nobita.Xemime.ast {
+    class AssignNode {
+    }
+
+    class BlockNode {
+    }
+
+    class DeclareNode {
+    }
+
+    class DotAssignNode {
+    }
+
+    class DotCallNode {
+    }
+
+    class DotExprNode {
+    }
+
+    class ExprNode {
+    }
+
+    class LambdaExprNode {
+    }
+}
+
+package net.zero918nobita.Xemime.interpreter {
+    class Frame {
+    }
+
+    class Main {
+    }
+}
+
+package net.zero918nobita.Xemime.lexer {
+    class Lexer {
+    }
+
+    class LexerReader {
+    }
+}
+
+package net.zero918nobita.Xemime.parser {
+    class Parser {
+    }
+}
+
+package net.zero918nobita.Xemime.resolver {
+    class Resolver {
+    }
+}
+
+package net.zero918nobita.Xemime.utils {
+    class VirtualMemoryMonitor {
+    }
+}
+
+/'
 package net.zero918nobita.Xemime {
 
     class Frame {
@@ -200,5 +258,5 @@ package net.zero918nobita.Xemime {
 
     X_Symbol --|> X_Code
 }
-
+'/
 @enduml
