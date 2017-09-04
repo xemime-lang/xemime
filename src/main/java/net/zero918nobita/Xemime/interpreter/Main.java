@@ -1,6 +1,7 @@
 package net.zero918nobita.Xemime.interpreter;
 
 import net.zero918nobita.Xemime.parser.Parser;
+import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.utils.VirtualMemoryMonitor;
 import net.zero918nobita.Xemime.ast.*;
 
@@ -234,6 +235,8 @@ public class Main {
                     System.out.println(e.getMessage());
                     System.exit(1);
                 }
+                Resolver resolver = new Resolver();
+                resolver.resolve(result);
                 for (X_Code c : result) {
                     try {
                         c.run();
