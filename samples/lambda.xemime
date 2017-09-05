@@ -7,3 +7,6 @@ println(xor(t, nil));   // -> T
 println(xor(nil, t));   // -> T
 println(xor(t, t));     // -> NIL
 println(xor(nil, nil)); // -> NIL
+
+let func = #a -> #x -> a * x;
+println(func(2)(3));
