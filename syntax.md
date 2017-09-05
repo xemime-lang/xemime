@@ -16,16 +16,29 @@ Xemime インタプリタでは、EBNF ( 拡張バッカス・ナウア記法 ) 
 | " ... " | 文字列 |
 
 ```
-assignment = symbol , "=" , expr ;
+#program: プログラム, stmt: 文
+program = { stmt } ;
 
-block = "{" , expr , [ ";" ] , "}"
-    | "{" , expr , { ";" , expr } , [ ";" ] , "}"
+# for_stmt: for文, if_stmt: if文, import_stmt: インポート文, logical_expr: 論理式
+# switch_stmt: switch文, while_stmt: while文
+stmt = for_stmt
+    | if_stmt
+    | import_stmt
+    | logical_expr , ";"
+    | switch_stmt
+    | while_stmt
     ;
 
-declaration = "let" , symbol , "=" , expr ;
+# arithmetic_expr 算術式
+logical_expr = arithmetic_expr , [ { ( "==" | "!=" | "<" | "<=" | ">" | ">=" ) , arithmetic_expr } ] ;
 
-expr = simple_expr , [ { ( "==" | "!=" | "<" | "<=" | ">" | ">=" ) , simple_expr } ] ;
+# term: 項
+arithmetic_expr = term , [ { ( "+" | "-" | "||" ) , term } ] ;
 
+# factor: 因子
+term = factor , [ { ( "*" | "/" | "&&" ) , factor } ] ;
+
+# first: 一次子, lambda_expr: ラムダ式, NIL: 偽値, STRING: 文字列リテラル, T: 真値
 factor = first
     | lambda_expr
     | NIL
@@ -34,9 +47,11 @@ factor = first
     | "!" , factor
     ;
 
-first = assignment
-    | block
-    | declaration
+# assignment_expr: 代入式, block_expr: ブロック式, declaration_expr: 宣言式
+# function_call: 関数呼び出し, NUMBER: 数値リテラル, SYMBOL: シンボル
+first = assignment_expr
+    | block_expr
+    | declaration_expr
     | function_call
     | NUMBER
     | SYMBOL
@@ -44,19 +59,20 @@ first = assignment
     | "(" , expr , ")"
     ;
 
-function_call = first , "(" , [ expr , [ { "," , expr } ] ] , ")" ;
+assignment_expr = SYMBOL , "=" , logical_expr ;
+
+block_expr = "{" , logical_expr , [ ";" ] , "}"
+    | "{" , logical_expr , { ";" , logical_expr } , [ ";" ] , "}"
+    ;
+
+declaration_expr = "let" , SYMBOL , "=" , logical_expr ;
+
+function_call = first , "(" , [ logical_expr , [ { "," , logical_expr } ] ] , ")" ;
 
 import_stmt = "import" , STRING , "as" , SYMBOL ;
 
-lambda_expr = "#" , "(", [ symbol , [ { "," , symbol } ] ] , ")", "->", expr
-    | "#", [ [ { "," , symbol } ] ] , "->" , expr
+lambda_expr = "#" , "(", [ SYMBOL , [ { "," , SYMBOL } ] ] , ")", "->", logical_expr
+    | "#", [ [ { "," , SYMBOL } ] ] , "->" , logical_expr
     ;
 
-program = [ { import_stmt } ] , [ { function_stmt } ] ;
-
-SYMBOL = alphabet , [ { ( alphabet | digit ) } ] ;
-
-simple_expr = term , [ { ( "+" | "-" | "||" ) , term } ] ;
-
-term = factor , [ { ( "*" | "/" | "&&" ) , factor } ] ;
 ```
