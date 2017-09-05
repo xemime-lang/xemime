@@ -22,10 +22,18 @@ public class Parser {
     /** 解析中のシンボルの種類 */
     private TokenType tokenType;
 
+    /** 参照解決を担当する */
     private Resolver resolver;
 
     public Parser() {
         resolver = new Resolver();
+        // 組み込みオブジェクトや省略表記のメソッドのシンボルを resolver に登録することで、
+        // それらのシンボルに対する参照解決の失敗を防ぎます。
+        resolver.declareVar(X_Symbol.intern(0, "Core"));
+        resolver.declareVar(X_Symbol.intern(0, "if"));
+        resolver.declareVar(X_Symbol.intern(0, "print"));
+        resolver.declareVar(X_Symbol.intern(0, "println"));
+        resolver.declareVar(X_Symbol.intern(0, "exit"));
     }
 
     /** 次のトークンをレキサを介して取得し、その種類を記録します。 */
@@ -268,7 +276,7 @@ public class Parser {
     /**
      * 一次子 ( 数値、括弧で包まれた式、シンボル、宣言式、代入式、関数呼び出し、ブロック ) の構文解析を行います。
      * @return 一次子の評価結果
-     * @throws Exception 一次子
+     * @throws Exception 一次子に不正な要素が含まれている場合
      */
     private X_Code first() throws Exception {
         X_Code obj = null;
@@ -315,6 +323,8 @@ public class Parser {
                 break;
             case SYMBOL:
                 X_Symbol sym = (X_Symbol)lex.value();
+                // 変数の参照を解決する
+                resolver.referVar(lex.getLocation(), sym);
                 getToken();
                 if (tokenType == TokenType.ASSIGN) {
                     // 宣言済みの変数への代入
@@ -384,6 +394,7 @@ public class Parser {
     private X_Code block() throws Exception {
         ArrayList<X_Code> list = null;
         getToken();
+        resolver.addScope();
         while (tokenType != TokenType.RB) {
             X_Code o = expr();
             if (tokenType == TokenType.SEMICOLON) {
@@ -394,6 +405,7 @@ public class Parser {
             }
             getToken();
         }
+        resolver.removeScope();
         getToken();
         return new BlockNode(lex.getLocation(), list);
     }
@@ -469,6 +481,10 @@ public class Parser {
             throw new Exception(getLocation() + ": ラムダ式の仮引数リストまたはアロー演算子が必要です");
         }
         getToken();
-        return new LambdaExprNode(getLocation(), list, expr());
+        resolver.addScope();
+        for (X_Symbol sym : list) resolver.declareVar(sym);
+        X_Code expr = expr();
+        resolver.removeScope();
+        return new LambdaExprNode(getLocation(), list, expr);
     }
 }

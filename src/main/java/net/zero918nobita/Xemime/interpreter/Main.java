@@ -1,7 +1,6 @@
 package net.zero918nobita.Xemime.interpreter;
 
 import net.zero918nobita.Xemime.parser.Parser;
-import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.utils.VirtualMemoryMonitor;
 import net.zero918nobita.Xemime.ast.*;
 
@@ -259,7 +258,7 @@ public class Main {
                 "  |   / _ \\/ __ `__ \\/ / __ `__ \\/ _ \\\n" +
                 " /   /  __/ / / / / / / / / / / /  __/\n" +
                 "/_/|_\\___/_/ /_/ /_/_/_/ /_/ /_/\\___/ \n\n" +
-                "Xemime Version 1.0.0 2017-08-07");
+                "Xemime Version 1.0.0 2017-09-05");
     }
 
     /**

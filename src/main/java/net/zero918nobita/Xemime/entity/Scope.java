@@ -5,6 +5,11 @@ import net.zero918nobita.Xemime.ast.X_Symbol;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 意味解析中にインスタンスが生成される、スコープを表すクラスです。
+ * @author Kodai Matsumoto
+ */
+
 public class Scope {
     private static int maxScopeID = 0;
 
@@ -53,5 +58,13 @@ public class Scope {
 
     public void defVar(X_Symbol sym) {
         variables.add(sym);
+    }
+
+    public void referVar(int location, X_Symbol sym) throws Exception {
+        if (variables.contains(sym)) return;
+        Scope s = this;
+        while ((s = s.parent()) != null)
+            if (s.variables.contains(sym)) return;
+        throw new Exception(location + ": シンボル `" + sym + "` を解決できません");
     }
 }
