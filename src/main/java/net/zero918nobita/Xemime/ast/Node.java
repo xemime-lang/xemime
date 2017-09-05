@@ -3,75 +3,119 @@ package net.zero918nobita.Xemime.ast;
 import java.util.ArrayList;
 
 /**
- * オブジェクト
- * メンバを管理する
+ * ノードの原型です。<br>
+ * 派生するノードがデフォルトで実装するフィールドやメソッドを定義しています。<br>
+ * run メソッドで実行とその結果の取得ができ、各演算子に対する挙動も定義しています。
  * @author Kodai Matsumoto
  */
 
 public class Node {
-    private int line;
+    /** 行番号 */
+    private int location;
 
-    Node(int n) {
-        line = n;
+    /**
+     * ノードを生成します。
+     * @param location 行番号
+     */
+    Node(int location) {
+        this.location = location;
     }
 
+    /**
+     * 行番号を取得します。
+     * @return 行番号
+     */
     int getLocation() {
-        return line;
+        return this.location;
     }
 
+    /**
+     * 実行します。
+     * @return ノード自体を返します。
+     * @throws Exception 何らかの理由で実行に失敗した場合に例外を発生させます。
+     */
     public Node run() throws Exception {
         return this;
     }
 
-    public Node add(int line, Node obj) throws Exception {
-        throw new Exception(line + ": このオブジェクトに `+` 演算子は使用できません");
+    /**
+     * 加算を行います。
+     * @param location 演算を行う行の行番号
+     * @param rhs 足す数
+     * @return 和
+     * @throws Exception 常に例外を発生させます。
+     */
+    public Node add(int location, Node rhs) throws Exception {
+        throw new Exception(location + ": このオブジェクトに `+` 演算子は使用できません");
     }
 
-    public Node sub(int line, Node obj) throws Exception {
-        throw new Exception(line + "このオブジェクトに `-` 演算子は使用できません");
+
+    /**
+     * 減算を行います。
+     * @param location 演算を行う行の行番号
+     * @param rhs 引く数
+     * @return 差
+     * @throws Exception 常に例外を発生させます。
+     */
+    public Node sub(int location, Node rhs) throws Exception {
+        throw new Exception(location + "このオブジェクトに `-` 演算子は使用できません");
     }
 
-    public Node multiply(int line, Node obj) throws Exception {
-        throw new Exception(line + ": このオブジェクトに `*` 演算子は使用できません");
+    /**
+     * 乗算を行います。
+     * @param location 演算を行う行の行番号
+     * @param rhs 掛ける数
+     * @return 積
+     * @throws Exception 常に例外を発生させます。
+     */
+    public Node multiply(int location, Node rhs) throws Exception {
+        throw new Exception(location + ": このオブジェクトに `*` 演算子は使用できません");
     }
 
-    public Node divide(int line, Node obj) throws Exception {
-        throw new Exception(line + ": このオブジェクトに `/` 演算子は使用できません");
+    /**
+     * 除算を行います。
+     * @param location 演算を行う行の行番号
+     * @param rhs 割る数
+     * @return 商
+     * @throws Exception 常に例外を発生させます。
+     */
+    public Node divide(int location, Node rhs) throws Exception {
+        throw new Exception(location + ": このオブジェクトに `/` 演算子は使用できません");
     }
 
-    public X_Bool less(int line, Node obj) throws Exception {
-        throw new Exception(line + ": このオブジェクトに `<` 演算子は使用できません");
+    public X_Bool less(int location, Node obj) throws Exception {
+        throw new Exception(location + ": このオブジェクトに `<` 演算子は使用できません");
     }
 
-    public X_Bool le(int line, Node obj) throws Exception {
-        throw new Exception(line + ": このオブジェクトに `<=` 演算子は使用できません");
+    public X_Bool le(int location, Node obj) throws Exception {
+        throw new Exception(location + ": このオブジェクトに `<=` 演算子は使用できません");
     }
 
-    public X_Bool greater(int line, Node obj) throws Exception {
-        throw new Exception(line + ": このオブジェクトに `>` 演算子は使用できません");
+    public X_Bool greater(int location, Node obj) throws Exception {
+        throw new Exception(location + ": このオブジェクトに `>` 演算子は使用できません");
     }
 
-    public X_Bool ge(int line, Node obj) throws Exception {
-        throw new Exception(line + ": このオブジェクトに `>=` 演算子は使用できません");
+    public X_Bool ge(int location, Node obj) throws Exception {
+        throw new Exception(location + ": このオブジェクトに `>=` 演算子は使用できません");
     }
 
-    public X_Bool and(int line, Node obj) throws Exception {
-        throw new Exception(line + "このオブジェクトに `&&` 演算子は使用できません");
+    public X_Bool and(int location, Node obj) throws Exception {
+        throw new Exception(location + "このオブジェクトに `&&` 演算子は使用できません");
     }
 
-    public X_Bool or(int line, Node obj) throws Exception {
-        throw new Exception(line + "このオブジェクトに `||` 演算子は使用できません");
+    public X_Bool or(int location, Node obj) throws Exception {
+        throw new Exception(location + "このオブジェクトに `||` 演算子は使用できません");
     }
 
-    public X_Bool xor(int line, Node obj) throws Exception {
-        throw new Exception(line + "このオブジェクトに `^` 演算子は使用できません");
+    public X_Bool xor(int location, Node obj) throws Exception {
+        throw new Exception(location + "このオブジェクトに `^` 演算子は使用できません");
     }
 
-    public Node message(int line, X_Symbol symbol) throws Exception {
-        throw new Exception(line + ": このオブジェクトにフィールドは設定できません");
+    public Node message(int location, X_Symbol symbol) throws Exception {
+        throw new Exception(location + ": このオブジェクトにフィールドは設定できません");
     }
 
-    public Node message(int line, X_Symbol symbol, ArrayList<Node> params) throws Exception {
-        throw new Exception(line + ": このオブジェクトにメソッドは設定できません");
+    public Node message(int location, X_Symbol symbol, ArrayList<Node> params) throws Exception {
+        throw new Exception(location + ": このオブジェクトにメソッドは設定できません");
     }
 }
