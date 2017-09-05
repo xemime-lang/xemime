@@ -3,7 +3,6 @@ package net.zero918nobita.Xemime.entity;
 import net.zero918nobita.Xemime.ast.X_Symbol;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 意味解析中にインスタンスが生成される、スコープを表すクラスです。
@@ -15,7 +14,6 @@ public class Scope {
 
     private int scopeID;
     private Scope parent;
-    private List<Scope> children;
     private ArrayList<X_Symbol> variables;
 
     public Scope(Scope parent) {
@@ -46,14 +44,6 @@ public class Scope {
 
     public Scope parent() {
         return parent;
-    }
-
-    public void addChild(Scope scope) {
-        children.add(scope);
-    }
-
-    public int getScopeID() {
-        return scopeID;
     }
 
     public void defVar(X_Symbol sym) {
