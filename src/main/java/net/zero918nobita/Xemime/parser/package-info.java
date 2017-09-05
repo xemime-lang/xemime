@@ -1,7 +1,7 @@
 /**
- * (C) 2017 Kodai Matsumoto<br><br>
+ * (C) 2017 Kodai Matsumoto <br><br>
  *
- * Xemime Parser<br><br>
+ * Xemime Parser ( syntax analyzer ) <br><br>
  *
  * JavaCC を用いて、入力として与えられたソースコードに対して構文解析を行い、
  * 抽象構文木を生成します。<br><br>
