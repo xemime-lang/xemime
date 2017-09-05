@@ -4,6 +4,7 @@ import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
+import net.zero918nobita.Xemime.resolver.Resolver;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,12 @@ public class Parser {
 
     /** 解析中のシンボルの種類 */
     private TokenType tokenType;
+
+    private Resolver resolver;
+
+    public Parser() {
+        resolver = new Resolver();
+    }
 
     /** 次のトークンをレキサを介して取得し、その種類を記録します。 */
     private void getToken() throws Exception {
@@ -296,6 +303,8 @@ public class Parser {
                     getToken();
                     if (tokenType == TokenType.ASSIGN) {
                         getToken();
+                        // 現在のスコープに変数を登録する
+                        resolver.declareVar(sym);
                         obj = new DeclareNode(lex.getLocation(), sym, expr());
                     } else {
                         throw new Exception("宣言式が不正です");
