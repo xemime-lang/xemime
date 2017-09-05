@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.lexer.TokenType;
+
 /**
  * 二項演算子
  * @author Kodai Matsumoto
