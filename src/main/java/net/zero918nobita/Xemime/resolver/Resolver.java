@@ -4,7 +4,6 @@ import net.zero918nobita.Xemime.ast.X_Code;
 import net.zero918nobita.Xemime.ast.X_Symbol;
 import net.zero918nobita.Xemime.entity.Scope;
 
-import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -17,13 +16,6 @@ public class Resolver {
 
     public Resolver() {
         scope.add(new Scope(null));
-    }
-
-    public void resolve(ArrayList<X_Code> c) {
-        for (X_Code elm : c) resolve(elm);
-    }
-
-    public void resolve(X_Code c) {
     }
 
     public void declareVar(X_Symbol sym) {
