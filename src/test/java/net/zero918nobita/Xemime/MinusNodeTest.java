@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
  * @author Kodai Matsumoto
  */
 
-public class X_MinusTest {
+public class MinusNodeTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 

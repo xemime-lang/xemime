@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
  * @author Kodai Matsumoto
  */
 
-public class X_DoubleTest {
+public class DoubleTest {
     @Test
     public void testToString() {
         assertThat(new Double(0, 0.2).toString(), is("0.2"));

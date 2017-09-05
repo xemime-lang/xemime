@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
  * @author Kodai Matsumoto
  */
 
-public class X_SymbolTest {
+public class SymbolTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 

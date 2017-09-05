@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.is;
  * @author Kodai Matsumoto
  */
 
-public class X_IntTest {
+public class IntTest {
     @Test
     public void testAbs() throws Exception {
         Int i = (Int) (new MinusNode(0, new Int(0, 256))).run();

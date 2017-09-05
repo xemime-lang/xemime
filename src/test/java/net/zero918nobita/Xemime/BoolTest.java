@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
  * @author Kodai Matsumoto
  */
 
-public class X_BoolTest {
+public class BoolTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 

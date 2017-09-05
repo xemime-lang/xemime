@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
  * @author Kodai Matsumoto
  */
 
-public class X_NotTest {
+public class NotNodeTest {
     @Test
     public void testRun() throws Exception {
         NotNode t = new NotNode(0, Bool.T);

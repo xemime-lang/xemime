@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
  * @author Kodai Matsumoto
  */
 
-public class X_StringTest {
+public class StrTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
