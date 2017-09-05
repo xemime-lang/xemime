@@ -14,14 +14,14 @@ public class AssignNode extends ExprNode {
     }
 
     public X_Code run() throws Exception {
-        X_Symbol sym = (X_Symbol)obj1;
+        X_Symbol sym = (X_Symbol)lhs;
         if (!Main.hasSymbol(sym)) throw new Exception(getLocation() + ": `" + sym.getName() + "` 未宣言のシンボルです");
         X_Code code;
-        if (obj2 instanceof X_Symbol) {
-            code = ((X_Symbol) obj2).getAddress();
+        if (rhs instanceof X_Symbol) {
+            code = ((X_Symbol) rhs).getAddress();
             Main.defAddress(sym, (X_Address)code);
         } else {
-            code = obj2.run();
+            code = rhs.run();
             if (code instanceof X_Address) {
                 Main.setAddress(sym, (X_Address) code);
             } else {
