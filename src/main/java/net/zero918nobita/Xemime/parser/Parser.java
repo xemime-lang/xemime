@@ -3,6 +3,7 @@ package net.zero918nobita.Xemime.parser;
 import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.Lexer;
+import net.zero918nobita.Xemime.lexer.TokenType;
 
 import java.util.ArrayList;
 
@@ -460,26 +461,5 @@ public class Parser {
         }
         getToken();
         return new LambdaExprNode(getLocation(), list, expr());
-    }
-
-    /**
-     * 仮引数リストの構文解析を行います。
-     * @return 仮引数リスト
-     * @throws Exception シンボル以外の要素が列挙されている、または正しく要素が区切られていない場合に例外を発生させます。
-     */
-    private ArrayList<X_Symbol> symbols() throws Exception {
-        ArrayList<X_Symbol> list = null;
-        if (tokenType != TokenType.LP) {
-            list = new ArrayList<>();
-            list.add((X_Symbol)expr());
-            while (tokenType != TokenType.RP) {
-                if (tokenType != TokenType.COMMA) throw new Exception("文法エラーです");
-                getToken();
-                if (tokenType != TokenType.SYMBOL) throw new Exception("文法エラーです");
-                list.add((X_Symbol) lex.value());
-                getToken();
-            }
-        }
-        return list;
     }
 }

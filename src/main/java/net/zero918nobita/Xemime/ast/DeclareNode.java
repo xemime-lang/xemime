@@ -1,6 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
 import net.zero918nobita.Xemime.interpreter.Main;
+import net.zero918nobita.Xemime.lexer.TokenType;
 
 /**
  * 変数宣言

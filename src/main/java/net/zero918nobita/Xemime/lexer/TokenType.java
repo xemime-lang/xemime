@@ -1,4 +1,4 @@
-package net.zero918nobita.Xemime.ast;
+package net.zero918nobita.Xemime.lexer;
 
 /**
  * トークンの種類

@@ -1,6 +1,7 @@
 package net.zero918nobita.Xemime;
 
 import net.zero918nobita.Xemime.ast.*;
+import net.zero918nobita.Xemime.lexer.TokenType;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
