@@ -9,13 +9,13 @@ import net.zero918nobita.Xemime.lexer.TokenType;
  * @author Kodai Matsumoto
  */
 
-public class ExprNode extends X_Code {
+public class ExprNode extends Node {
     /** 演算子の種類 */
     private TokenType op;
     /** 左辺 */
-    X_Code lhs;
+    Node lhs;
     /** 右辺 */
-    X_Code rhs;
+    Node rhs;
 
     /**
      * 二項演算を表すノードを生成します。
@@ -24,7 +24,7 @@ public class ExprNode extends X_Code {
      * @param lhs 左辺
      * @param rhs 右辺
      */
-    public ExprNode(int location, TokenType operator, X_Code lhs, X_Code rhs) {
+    public ExprNode(int location, TokenType operator, Node lhs, Node rhs) {
         super(location);
         op = operator;
         this.lhs = lhs;
@@ -36,47 +36,48 @@ public class ExprNode extends X_Code {
      * @return 演算結果
      * @throws Exception 左辺または右辺が不正である場合に例外を発生させます。
      */
-    public X_Code run() throws Exception {
+    public Node run() throws Exception {
         // 二項演算の結果
-        X_Code result = null;
+        Node result = null;
         // 左辺の評価結果
-        X_Code e_lhs = lhs.run();
+        Node e_lhs = lhs.run();
         // 右辺の評価結果
-        X_Code e_rhs = rhs.run();
+        Node e_rhs = rhs.run();
 
-        if (op == TokenType.AND) {
+        // 演算子の種類によって処理を分岐させます
+        if (op == TokenType.AND) { // `&&`
             result = e_lhs.and(getLocation(), e_rhs);
-        } else if (op == TokenType.OR) {
+        } else if (op == TokenType.OR) { // `||`
             result = e_lhs.or(getLocation(), e_rhs);
-        } else if (op == TokenType.XOR) {
+        } else if (op == TokenType.XOR) { // `^`
             result = e_lhs.xor(getLocation(), e_rhs);
         } else {
-            switch (op) { // 演算子ごとに処理を振り分ける
-                case ADD:
+            switch (op) {
+                case ADD: // `+`
                     result = e_lhs.add(getLocation(), e_rhs);
                     break;
-                case SUB:
+                case SUB: // `-`
                     result = e_lhs.sub(getLocation(), e_rhs);
                     break;
-                case MUL:
+                case MUL: // `*`
                     result = e_lhs.multiply(getLocation(), e_rhs);
                     break;
-                case DIV:
+                case DIV: // `/`
                     result = e_lhs.divide(getLocation(), e_rhs);
                     break;
-                case L:
+                case L: // `<`
                     result = e_lhs.less(getLocation(), e_rhs);
                     break;
-                case LE:
+                case LE: // `<=`
                     result = e_lhs.le(getLocation(), e_rhs);
                     break;
-                case G:
+                case G: // `>`
                     result = e_lhs.greater(getLocation(), e_rhs);
                     break;
-                case GE:
+                case GE: // `>=`
                     result = e_lhs.ge(getLocation(), e_rhs);
                     break;
-                case EQ:
+                case EQ: // `===`
                     if (lhs instanceof X_Symbol && rhs instanceof X_Symbol) {
                         X_Address a1 = ((X_Symbol)lhs).getAddress();
                         X_Address a2 = ((X_Symbol)rhs).getAddress();
@@ -85,11 +86,11 @@ public class ExprNode extends X_Code {
                         result = X_Bool.Nil;
                     }
                     break;
-                case EQL:
+                case EQL: // `==`
                     if (e_lhs.equals(e_rhs)) result = X_Bool.T;
                     else result = X_Bool.Nil;
                     break;
-                case NE:
+                case NE: // `!=`
                     if (e_lhs.equals(e_rhs)) result = X_Bool.Nil;
                     else result = X_Bool.T;
                     break;
