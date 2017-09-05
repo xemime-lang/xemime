@@ -64,7 +64,6 @@ class X_Closure extends X_Function {
         if (captured != null)
             for (X_Handler o : captured.getLocalFrames()) {
                 for (Map.Entry<X_Symbol, X_Address> entry : o.getMembers().entrySet()) {
-                    System.out.println(entry.getKey());
                     table.setMember(entry.getKey(), entry.getValue());
                 }
             }
