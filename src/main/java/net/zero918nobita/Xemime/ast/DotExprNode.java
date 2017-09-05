@@ -2,9 +2,9 @@ package net.zero918nobita.Xemime.ast;
 
 public class DotExprNode extends Node {
     private Node obj;
-    private X_Symbol symbol;
+    private Symbol symbol;
 
-    public DotExprNode(int n, Node o, X_Symbol sym) {
+    public DotExprNode(int n, Node o, Symbol sym) {
         super(n);
         obj = o;
         symbol = sym;

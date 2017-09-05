@@ -1,5 +1,7 @@
-package net.zero918nobita.Xemime.ast;
+package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.ast.Node;
+import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.interpreter.Frame;
 import net.zero918nobita.Xemime.interpreter.Main;
 
@@ -11,26 +13,26 @@ import java.util.Map;
  * @author Kodai Matsumoto
  */
 
-class X_Closure extends X_Function {
-    private ArrayList<X_Symbol> params;
-    private X_Address self = null;
+public class Closure extends Function {
+    private ArrayList<Symbol> params;
+    private Address self = null;
     private Node body;
 
     /**
      * 捕捉変数テーブル<br>
      * 捕捉変数(ラムダ式が使用する変数)
      */
-    private Frame captured = null; // Main との連携も考えると、HashMap<X_Symbol, X_Address> にするかも…
+    private Frame captured = null; // Main との連携も考えると、HashMap<Symbol, Address> にするかも…
 
-    X_Closure(int n, ArrayList<X_Symbol> l, Node obj, Frame frame) {
-        super(n);
+    public Closure(int location, ArrayList<Symbol> l, Node obj, Frame frame) {
+        super(location);
         params = l;
         body = obj;
         captured = frame;
         if (params != null) numberOfArgs = params.size();
     }
 
-    void setSelf(X_Address self) {
+    void setSelf(Address self) {
         this.self = self;
     }
 
@@ -45,7 +47,7 @@ class X_Closure extends X_Function {
     }
 
     @Override
-    protected Node exec(ArrayList<Node> params, X_Address dynamicSelf) throws Exception {
+    protected Node exec(ArrayList<Node> params, Address dynamicSelf) throws Exception {
         Node o = null;
         setArgs(params, dynamicSelf);
         if (body != null) o = body.run();
@@ -53,30 +55,30 @@ class X_Closure extends X_Function {
         return o;
     }
 
-    private void setArgs(ArrayList<Node> args, X_Address dynamicSelf) throws Exception {
+    private void setArgs(ArrayList<Node> args, Address dynamicSelf) throws Exception {
         if ((params == null) && (args == null)) {
-            Main.loadLocalFrame(new X_Handler(0));
+            Main.loadLocalFrame(new Handler(0));
             return;
         }
 
-        X_Handler table = new X_Handler(getLocation());
+        Handler table = new Handler(getLocation());
         Main.loadLocalFrame(table);
         if (captured != null)
-            for (X_Handler o : captured.getLocalFrames()) {
-                for (Map.Entry<X_Symbol, X_Address> entry : o.getMembers().entrySet()) {
+            for (Handler o : captured.getLocalFrames()) {
+                for (Map.Entry<Symbol, Address> entry : o.getMembers().entrySet()) {
                     table.setMember(entry.getKey(), entry.getValue());
                 }
             }
 
         if (self != null) {
-            table.setMember(X_Symbol.intern(getLocation(), "THIS"), Main.register(self));
+            table.setMember(Symbol.intern(getLocation(), "THIS"), Main.register(self));
         } else {
-            table.setMember(X_Symbol.intern(getLocation(), "THIS"), Main.defaultObj);
+            table.setMember(Symbol.intern(getLocation(), "THIS"), Main.defaultObj);
         }
-        if (dynamicSelf != null) table.setMember(X_Symbol.intern(getLocation(), "this"), Main.register(dynamicSelf));
+        if (dynamicSelf != null) table.setMember(Symbol.intern(getLocation(), "this"), Main.register(dynamicSelf));
 
         for (int i = 0; i < args.size() - 1; i++) {
-            X_Symbol sym = (X_Symbol)params.get(i);
+            Symbol sym = (Symbol)params.get(i);
             Node o = args.get(i + 1);
             table.setMember(sym, Main.register(o));
         }

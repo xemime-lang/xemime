@@ -1,6 +1,6 @@
 package net.zero918nobita.Xemime.resolver;
 
-import net.zero918nobita.Xemime.ast.X_Symbol;
+import net.zero918nobita.Xemime.ast.Symbol;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class Scope {
 
     private int scopeID;
     private Scope parent;
-    private ArrayList<X_Symbol> variables;
+    private ArrayList<Symbol> variables;
 
     public Scope(Scope parent) {
         this.parent = parent;
@@ -46,11 +46,11 @@ public class Scope {
         return parent;
     }
 
-    public void defVar(X_Symbol sym) {
+    public void defVar(Symbol sym) {
         variables.add(sym);
     }
 
-    public void referVar(int location, X_Symbol sym) throws Exception {
+    public void referVar(int location, Symbol sym) throws Exception {
         if (variables.contains(sym)) return;
         Scope s = this;
         while ((s = s.parent()) != null)

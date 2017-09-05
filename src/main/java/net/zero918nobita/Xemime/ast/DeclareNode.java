@@ -1,32 +1,33 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.entity.Address;
 import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.TokenType;
 
 /**
- * 変数宣言
+ * 宣言式を表すノードです。
  * @author Kodai Matsumoto
  */
 
 public class DeclareNode extends ExprNode {
-    public DeclareNode(int n, X_Symbol symbol, Node obj) {
-        super(n, TokenType.DECLARE, symbol, obj);
+    public DeclareNode(int location, Symbol symbol, Node node) {
+        super(location, TokenType.DECLARE, symbol, node);
     }
 
     public Node run() throws Exception {
-        X_Symbol sym = (X_Symbol)lhs;
-        Node code;
-        if (rhs instanceof X_Symbol) {
-            code = ((X_Symbol) rhs).getAddress();
-            Main.defAddress(sym, (X_Address)code);
+        Symbol sym = (Symbol)lhs;
+        Node result;
+        if (rhs instanceof Symbol) {
+            result = ((Symbol) rhs).getAddress();
+            Main.defAddress(sym, (Address)result);
         } else {
-            code = rhs.run();
-            if (code instanceof X_Address) {
-                Main.defAddress(sym, (X_Address) code);
+            result = rhs.run();
+            if (result instanceof Address) {
+                Main.defAddress(sym, (Address) result);
             } else {
-                Main.defValue(sym, code);
+                Main.defValue(sym, result);
             }
         }
-        return code;
+        return result;
     }
 }

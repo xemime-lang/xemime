@@ -1,4 +1,6 @@
-package net.zero918nobita.Xemime.ast;
+package net.zero918nobita.Xemime.entity;
+
+import net.zero918nobita.Xemime.ast.Node;
 
 import java.util.ArrayList;
 
@@ -8,16 +10,16 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-abstract class X_Function extends Node {
+public abstract class Function extends Node {
 
-    X_Function(int n) {
-        super(n);
+    public Function(int location) {
+        super(location);
     }
 
     /** 引数の個数 */
     int numberOfArgs = 0;
 
-    Node call(ArrayList<Node> params, X_Address self) throws Exception {
+    public Node call(ArrayList<Node> params, Address self) throws Exception {
         if (params == null) {
             if (numberOfArgs != 0) throw new Exception("引数の個数が違います");
         } else {
@@ -26,5 +28,5 @@ abstract class X_Function extends Node {
         return exec(params, self);
     }
 
-    protected abstract Node exec(ArrayList<Node> params, X_Address self) throws Exception;
+    protected abstract Node exec(ArrayList<Node> params, Address self) throws Exception;
 }

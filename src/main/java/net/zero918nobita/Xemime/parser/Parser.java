@@ -1,6 +1,8 @@
 package net.zero918nobita.Xemime.parser;
 
 import net.zero918nobita.Xemime.ast.*;
+import net.zero918nobita.Xemime.entity.Bool;
+import net.zero918nobita.Xemime.entity.Handler;
 import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
@@ -29,12 +31,12 @@ public class Parser {
         resolver = new Resolver();
         // 組み込みオブジェクトや省略表記のメソッドのシンボルを resolver に登録することで、
         // それらのシンボルに対する参照解決の失敗を防ぎます。
-        resolver.declareVar(X_Symbol.intern(0, "Core"));
-        resolver.declareVar(X_Symbol.intern(0, "Object"));
-        resolver.declareVar(X_Symbol.intern(0, "if"));
-        resolver.declareVar(X_Symbol.intern(0, "print"));
-        resolver.declareVar(X_Symbol.intern(0, "println"));
-        resolver.declareVar(X_Symbol.intern(0, "exit"));
+        resolver.declareVar(Symbol.intern(0, "Core"));
+        resolver.declareVar(Symbol.intern(0, "Object"));
+        resolver.declareVar(Symbol.intern(0, "if"));
+        resolver.declareVar(Symbol.intern(0, "print"));
+        resolver.declareVar(Symbol.intern(0, "println"));
+        resolver.declareVar(Symbol.intern(0, "exit"));
     }
 
     /** 次のトークンをレキサを介して取得し、その種類を記録します。 */
@@ -232,16 +234,16 @@ public class Parser {
                 getToken();
                 break;
             case T:
-                obj = X_Bool.T;
+                obj = Bool.T;
                 getToken();
                 break;
             case NIL:
-                obj = X_Bool.Nil;
+                obj = Bool.Nil;
                 getToken();
                 break;
             case NOT:
                 getToken();
-                obj = new X_Not(lex.getLocation(), factor());
+                obj = new NotNode(lex.getLocation(), factor());
                 break;
             case LAMBDA:
                 obj = lambda();
@@ -254,7 +256,7 @@ public class Parser {
         while (tokenType == TokenType.PERIOD) {
             getToken();
             if (tokenType != TokenType.SYMBOL) throw new Exception("文法エラーです");
-            X_Symbol sym = (X_Symbol)lex.value();
+            Symbol sym = (Symbol)lex.value();
             getToken();
             if (tokenType == TokenType.LP) {
                 ArrayList<Node> list = new ArrayList<>();
@@ -294,7 +296,7 @@ public class Parser {
                 break;
             case SUB:
                 getToken();
-                obj = new X_Minus(lex.getLocation(), first());
+                obj = new MinusNode(lex.getLocation(), first());
                 break;
             case LP:
                 getToken();
@@ -308,7 +310,7 @@ public class Parser {
             case DECLARE:
                 getToken();
                 if (tokenType == TokenType.SYMBOL) {
-                    X_Symbol sym = (X_Symbol)lex.value();
+                    Symbol sym = (Symbol)lex.value();
                     getToken();
                     if (tokenType == TokenType.ASSIGN) {
                         getToken();
@@ -323,7 +325,7 @@ public class Parser {
                 }
                 break;
             case SYMBOL:
-                X_Symbol sym = (X_Symbol)lex.value();
+                Symbol sym = (Symbol)lex.value();
                 // 変数の参照を解決する
                 resolver.referVar(lex.getLocation(), sym);
                 getToken();
@@ -351,35 +353,35 @@ public class Parser {
             if (tokenType != TokenType.RP) list = args();
             if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
             getToken();
-            obj = new X_Funcall(getLocation(), obj, list);
+            obj = new FuncallNode(getLocation(), obj, list);
         }
 
         return obj;
     }
 
-    private Node methodOfCoreObject(X_Symbol symbol) throws Exception {
+    private Node methodOfCoreObject(Symbol symbol) throws Exception {
         Node c;
-        X_Handler core;
+        Handler core;
         switch (symbol.getName()){
             case "if":
-                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern(0, "Core"));
+                core = (Handler) Main.getValueOfSymbol(Symbol.intern(0, "Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(getLocation(), X_Symbol.intern(0, "if"));
+                c = core.message(getLocation(), Symbol.intern(0, "if"));
                 break;
             case "print":
-                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern(0, "Core"));
+                core = (Handler) Main.getValueOfSymbol(Symbol.intern(0, "Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(getLocation(), X_Symbol.intern(0, "print"));
+                c = core.message(getLocation(), Symbol.intern(0, "print"));
                 break;
             case "println":
-                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern(0, "Core"));
+                core = (Handler) Main.getValueOfSymbol(Symbol.intern(0, "Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(getLocation(), X_Symbol.intern(0, "println"));
+                c = core.message(getLocation(), Symbol.intern(0, "println"));
                 break;
             case "exit":
-                core = (X_Handler) Main.getValueOfSymbol(X_Symbol.intern(0, "Core"));
+                core = (Handler) Main.getValueOfSymbol(Symbol.intern(0, "Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                c = core.message(getLocation(), X_Symbol.intern(0, "exit"));
+                c = core.message(getLocation(), Symbol.intern(0, "exit"));
                 break;
             default:
                 c = symbol;
@@ -414,16 +416,16 @@ public class Parser {
     /**
      * 関数呼び出しの構文解析を行います。
      * @param sym 関数名
-     * @return 関数呼び出しの評価結果 ( 演算可能な X_Funcall インスタンスを返します )
+     * @return 関数呼び出しの評価結果 ( 演算可能な FuncallNode インスタンスを返します )
      * @throws Exception 関数呼び出し部分で不正な要素が含まれている場合に例外を発生させます。
      */
-    private Node methodCall(X_Symbol sym) throws Exception {
+    private Node methodCall(Symbol sym) throws Exception {
         ArrayList<Node> list = new ArrayList<>();
         getToken();
         if (tokenType != TokenType.RP) list = args();
         if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
         getToken();
-        return new X_Funcall(lex.getLocation(), methodOfCoreObject(sym), list);
+        return new FuncallNode(lex.getLocation(), methodOfCoreObject(sym), list);
     }
 
     /**
@@ -451,28 +453,28 @@ public class Parser {
      * @throws Exception 関数式中に不正な要素が含まれている場合 ( ここでは正しく括弧が閉じられていない場合 ) に例外を発生させます。
      */
     private Node lambda() throws Exception {
-        ArrayList<X_Symbol> list = new ArrayList<>();
+        ArrayList<Symbol> list = new ArrayList<>();
         getToken();
         if (tokenType == TokenType.SYMBOL) {
-            list.add((X_Symbol)lex.value());
+            list.add((Symbol)lex.value());
             getToken();
             while (tokenType != TokenType.ARROW) {
                 if (tokenType != TokenType.COMMA) throw new Exception(getLocation() + ": ラムダ式の仮引数が不正です");
                 getToken();
                 if (tokenType != TokenType.SYMBOL) throw new Exception(getLocation() + ": ラムダ式の仮引数が不正です");
-                list.add((X_Symbol)lex.value());
+                list.add((Symbol)lex.value());
                 getToken();
             }
         } else if (tokenType == TokenType.LP) {
             getToken();
             if (tokenType == TokenType.SYMBOL) {
-                list.add((X_Symbol)lex.value());
+                list.add((Symbol)lex.value());
                 getToken();
                 while (tokenType != TokenType.RP) {
                     if (tokenType != TokenType.COMMA) throw new Exception(getLocation() + ": ラムダ式の仮引数が不正です");
                     getToken();
                     if (tokenType != TokenType.SYMBOL) throw new Exception(getLocation() + ": ラムダ式の仮引数が不正です");
-                    list.add((X_Symbol)lex.value());
+                    list.add((Symbol)lex.value());
                     getToken();
                 }
             }
@@ -483,7 +485,7 @@ public class Parser {
         }
         getToken();
         resolver.addScope();
-        for (X_Symbol sym : list) resolver.declareVar(sym);
+        for (Symbol sym : list) resolver.declareVar(sym);
         Node expr = expr();
         resolver.removeScope();
         return new LambdaExprNode(getLocation(), list, expr);

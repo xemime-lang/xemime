@@ -1,14 +1,14 @@
-package net.zero918nobita.Xemime.ast;
+package net.zero918nobita.Xemime.entity;
 
 /**
  * 数値オブジェクト
  * @author Kodai Matsumoto
  */
 
-abstract class X_Numeric extends X_Handler {
+abstract class Numeric extends Handler {
     protected Number value;
 
-    X_Numeric(int n) {
+    Numeric(int n) {
         super(n);
     }
 }

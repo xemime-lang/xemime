@@ -1,4 +1,6 @@
-package net.zero918nobita.Xemime.ast;
+package net.zero918nobita.Xemime.entity;
+
+import net.zero918nobita.Xemime.ast.Node;
 
 import java.util.ArrayList;
 
@@ -8,9 +10,9 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public abstract class X_Native extends X_Function {
+public abstract class Native extends Function {
 
-    public X_Native(int n, int args) {
+    public Native(int n, int args) {
         super(n);
         numberOfArgs = args;
     }
@@ -20,7 +22,7 @@ public abstract class X_Native extends X_Function {
     }
 
     @Override
-    protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
+    protected Node exec(ArrayList<Node> params, Address self) throws Exception {
         return null;
     }
 }

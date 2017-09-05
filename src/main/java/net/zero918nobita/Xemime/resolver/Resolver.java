@@ -1,6 +1,6 @@
 package net.zero918nobita.Xemime.resolver;
 
-import net.zero918nobita.Xemime.ast.X_Symbol;
+import net.zero918nobita.Xemime.ast.Symbol;
 
 import java.util.Stack;
 
@@ -16,11 +16,11 @@ public class Resolver {
         scope.add(new Scope(null));
     }
 
-    public void declareVar(X_Symbol sym) {
+    public void declareVar(Symbol sym) {
         scope.peek().defVar(sym);
     }
 
-    public void referVar(int location, X_Symbol sym) throws Exception {
+    public void referVar(int location, Symbol sym) throws Exception {
         scope.peek().referVar(location, sym);
     }
 

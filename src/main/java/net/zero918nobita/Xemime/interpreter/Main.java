@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime.interpreter;
 
+import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.parser.Parser;
 import net.zero918nobita.Xemime.utils.VirtualMemoryMonitor;
 import net.zero918nobita.Xemime.ast.*;
@@ -24,12 +25,12 @@ public class Main {
     private static Parser parser;
 
     /** グローバル環境 */
-    public static X_Default defaultObj = new X_Default();
+    public static Default defaultObj = new Default();
 
     /** 実体テーブル */
-    private static TreeMap<X_Address, Node> entities = new TreeMap<X_Address, Node>() {{
-        put(new X_Address(0, 0), X_Bool.Nil);
-        put(new X_Address(0, 1), X_Bool.T);
+    private static TreeMap<Address, Node> entities = new TreeMap<Address, Node>() {{
+        put(new Address(0, 0), Bool.Nil);
+        put(new Address(0, 1), Bool.T);
     }};
 
     /**
@@ -49,7 +50,7 @@ public class Main {
      * ローカル変数のフレームを追加します。
      * @param table フレーム
      */
-    public static void loadLocalFrame(X_Handler table) {
+    public static void loadLocalFrame(Handler table) {
         frame.loadLocalFrame(table);
     }
 
@@ -63,7 +64,7 @@ public class Main {
      * @param sym シンボル
      * @return 記録されていれば true 、そうでなければ false
      */
-    public static boolean hasSymbol(X_Symbol sym) {
+    public static boolean hasSymbol(Symbol sym) {
         return frame.hasSymbol(sym) || defaultObj.hasMember(sym);
     }
 
@@ -72,7 +73,7 @@ public class Main {
      * @param sym シンボル
      * @return 参照
      */
-    public static X_Address getAddressOfSymbol(X_Symbol sym) throws Exception {
+    public static Address getAddressOfSymbol(Symbol sym) throws Exception {
         return (frame.hasSymbol(sym)) ?
                 frame.getAddressOfSymbol(sym) :
                 defaultObj.getAddressOfMember(sym);
@@ -83,7 +84,7 @@ public class Main {
      * @param sym シンボル
      * @return 値
      */
-    public static Node getValueOfSymbol(X_Symbol sym) throws Exception {
+    public static Node getValueOfSymbol(Symbol sym) throws Exception {
         if (frame.hasSymbol(sym)) {
             return frame.getValueOfSymbol(sym);
         } else {
@@ -97,7 +98,7 @@ public class Main {
      * @param address アドレス
      * @return 実体
      */
-    public static Node getValueOfReference(X_Address address) {
+    public static Node getValueOfReference(Address address) {
         return entities.get(address);
     }
 
@@ -106,7 +107,7 @@ public class Main {
      * @param sym シンボル
      * @param ref 参照
      */
-    public static void setAddress(X_Symbol sym, X_Address ref) throws Exception {
+    public static void setAddress(Symbol sym, Address ref) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setAddress(sym, ref); return; }
         if (!defaultObj.hasMember(sym)) throw new Exception(parser.getLocation() + ": 変数 `" + sym.getName() + "` は宣言されていません");
         defaultObj.setMember(sym, ref);
@@ -118,9 +119,9 @@ public class Main {
      * @param obj 値
      * @throws Exception 変数が宣言されていなかった場合に例外を発生させます。
      */
-    public static void setValue(X_Symbol sym, Node obj) throws Exception {
+    public static void setValue(Symbol sym, Node obj) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setValue(sym, obj); return; }
-        X_Address ref = register(obj);
+        Address ref = register(obj);
         if (!defaultObj.hasMember(sym)) throw new Exception(parser.getLocation() + ": 変数 `" + sym.getName() + "` は宣言されていません");
         defaultObj.setMember(sym, ref);
     }
@@ -130,7 +131,7 @@ public class Main {
      * @param sym 変数
      * @param ref 参照
      */
-    public static void defAddress(X_Symbol sym, X_Address ref) throws Exception {
+    public static void defAddress(Symbol sym, Address ref) throws Exception {
         if (frame.numberOfLayers() != 0) { frame.defAddress(sym, ref); return; }
         defaultObj.setMember(sym, ref);
     }
@@ -140,20 +141,20 @@ public class Main {
      * @param sym 変数
      * @param obj 値
      */
-    public static void defValue(X_Symbol sym, Node obj) throws Exception {
+    public static void defValue(Symbol sym, Node obj) throws Exception {
         if (frame.numberOfLayers() != 0) { frame.defValue(sym, obj); return; }
-        X_Address ref = register(obj);
+        Address ref = register(obj);
         defaultObj.setMember(sym, ref);
     }
 
     /**
-     * 指定した実体を実体テーブルに追加し、そのテーブル上での位置を記録した X_Address インスタンスを返します。
+     * 指定した実体を実体テーブルに追加し、そのテーブル上での位置を記録した Address インスタンスを返します。
      * @param obj 追加する実体
-     * @return 実体テーブル上の、追加された実体の位置を記録した X_Address インスタンス
+     * @return 実体テーブル上の、追加された実体の位置を記録した Address インスタンス
      */
-    public static X_Address register(Node obj) {
-        entities.put(new X_Address(0,entities.lastKey().getAddress() + 1), obj);
-        return new X_Address(0, entities.lastKey().getAddress());
+    public static Address register(Node obj) {
+        entities.put(new Address(0,entities.lastKey().getAddress() + 1), obj);
+        return new Address(0, entities.lastKey().getAddress());
     }
 
     /**
@@ -178,12 +179,12 @@ public class Main {
             vmmThread.start();
         }
 
-        X_Address addressOfDefaultObj = Main.register(defaultObj);
-        defaultObj.setMember(X_Symbol.intern(0, "this"), addressOfDefaultObj);
-        defaultObj.setMember(X_Symbol.intern(0, "THIS"), addressOfDefaultObj);
-        defaultObj.setMember(X_Symbol.intern(0, "Default"), addressOfDefaultObj);
-        defaultObj.setMember(X_Symbol.intern(0, "Core"), register(new X_Core()));
-        defaultObj.setMember(X_Symbol.intern(0, "Object"), register(new X_Object()));
+        Address addressOfDefaultObj = Main.register(defaultObj);
+        defaultObj.setMember(Symbol.intern(0, "this"), addressOfDefaultObj);
+        defaultObj.setMember(Symbol.intern(0, "THIS"), addressOfDefaultObj);
+        defaultObj.setMember(Symbol.intern(0, "Default"), addressOfDefaultObj);
+        defaultObj.setMember(Symbol.intern(0, "Core"), register(new X_Core()));
+        defaultObj.setMember(Symbol.intern(0, "Object"), register(new X_Object()));
 
         try {
             parser = new Parser();
@@ -266,42 +267,42 @@ public class Main {
      * オブジェクト生成、クローン処理を担うメソッドを実装した最も基本的なオブジェクトです。<br>
      * これをクローンして新たなオブジェクトを用意することを推奨しています。
      */
-    private static class X_Object extends X_Handler {
+    private static class X_Object extends Handler {
         X_Object() {
             super(0);
-            setMember(X_Symbol.intern(0, "clone"), new X_Clone());
-            setMember(X_Symbol.intern(0, "new"), new X_New());
-            setMember(X_Symbol.intern(0, "proto"), new X_Bool(0, false));
+            setMember(Symbol.intern(0, "clone"), new X_Clone());
+            setMember(Symbol.intern(0, "new"), new X_New());
+            setMember(Symbol.intern(0, "proto"), new Bool(0, false));
         }
 
         /**
          * Object.clone メソッド<br>
          * clone メソッドのみを実装した、最も単純なオブジェクトを生成してその参照を返します。
          */
-        private static class X_Clone extends X_Native {
+        private static class X_Clone extends Native {
             X_Clone() {
                 super(0, 0);
             }
 
             @Override
-            protected X_Address exec(ArrayList<Node> params, X_Address self) throws Exception {
+            protected Address exec(ArrayList<Node> params, Address self) throws Exception {
                 return Main.register(params.get(0).run());
             }
         }
 
-        private static class X_New extends X_Native {
+        private static class X_New extends Native {
             X_New() {
                 super(0, 0);
             }
 
             @Override
-            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
-                X_Handler obj1 = (X_Handler) params.get(0).run();
-                X_Handler obj2 = new X_Handler(0);
-                obj2.setMember(X_Symbol.intern(0, "proto"), new X_Bool(0, false));
-                if (obj1.hasMember(X_Symbol.intern(0, "proto"))) {
-                    X_Handler proto = (X_Handler) obj1.getMember(X_Symbol.intern(0, "proto"));
-                    for (Map.Entry<X_Symbol, X_Address> entry : proto.getMembers().entrySet()) {
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
+                Handler obj1 = (Handler) params.get(0).run();
+                Handler obj2 = new Handler(0);
+                obj2.setMember(Symbol.intern(0, "proto"), new Bool(0, false));
+                if (obj1.hasMember(Symbol.intern(0, "proto"))) {
+                    Handler proto = (Handler) obj1.getMember(Symbol.intern(0, "proto"));
+                    for (Map.Entry<Symbol, Address> entry : proto.getMembers().entrySet()) {
                         obj2.setMember(entry.getKey(), entry.getValue());
                     }
                 }
@@ -314,28 +315,28 @@ public class Main {
      * Core 組み込みオブジェクト<br>
      * 条件分岐や、繰り返し、入出力、インタプリタの終了処理などを担うメソッドを実装した組み込みオブジェクトです。
      */
-    private static class X_Core extends X_Handler {
+    private static class X_Core extends Handler {
         X_Core() {
             super(0);
-            setMember(X_Symbol.intern(0, "if"), new X_If());
-            setMember(X_Symbol.intern(0, "print"), new X_Print());
-            setMember(X_Symbol.intern(0, "println"), new X_Println());
-            setMember(X_Symbol.intern(0, "exit"), new X_Exit());
+            setMember(Symbol.intern(0, "if"), new X_If());
+            setMember(Symbol.intern(0, "print"), new X_Print());
+            setMember(Symbol.intern(0, "println"), new X_Println());
+            setMember(Symbol.intern(0, "exit"), new X_Exit());
         }
 
         /**
          * Core.exit メソッド<br>
          * Xemime インタプリタを終了します。
          */
-        private static class X_Exit extends X_Native {
+        private static class X_Exit extends Native {
             X_Exit() {
                 super(0, 0);
             }
 
             @Override
-            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
                 System.exit(0);
-                return new X_Int(0, 0);
+                return new Int(0, 0);
             }
         }
 
@@ -343,13 +344,13 @@ public class Main {
          * Core.print メソッド<br>
          * 1つの引数を受け取り、それを文字列化して標準出力に出力します。
          */
-        private static class X_Print extends X_Native {
+        private static class X_Print extends Native {
             X_Print() {
                 super(0, 1);
             }
 
             @Override
-            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
                 Node o = params.get(1).run();
                 System.out.print(o);
                 return o;
@@ -360,13 +361,13 @@ public class Main {
          * Core.println メソッド<br>
          * 1つの引数を受け取り、それを文字列化し末尾に改行コードを付与して標準出力に出力します。
          */
-        private static class X_Println extends X_Native {
+        private static class X_Println extends Native {
             X_Println() {
                 super(0, 1);
             }
 
             @Override
-            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
                 Node o = params.get(1).run();
                 System.out.println(o);
                 return o;
@@ -378,14 +379,14 @@ public class Main {
          * 条件式と2つの引数を受け取り、条件式を評価してNIL以外となった場合は2つ目の引数を、
          * NILとなった場合は3つ目の引数を評価して返します。
          */
-        private static class X_If extends X_Native {
+        private static class X_If extends Native {
             X_If(){
                 super(0, 3);
             }
 
             @Override
-            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
-                return (params.get(1).run().equals(X_Bool.Nil)) ? params.get(3).run() : params.get(2).run();
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
+                return (params.get(1).run().equals(Bool.Nil)) ? params.get(3).run() : params.get(2).run();
             }
         }
     }

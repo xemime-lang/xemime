@@ -1,6 +1,7 @@
 package net.zero918nobita.Xemime;
 
 import net.zero918nobita.Xemime.ast.*;
+import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,10 +23,10 @@ public class BlockNodeTest {
     @Test
     public void testRun() throws Exception {
         ArrayList<Node> list = new ArrayList<Node>(){{
-            add(new ExprNode(0, TokenType.ADD, new X_Int(0, 1), new X_Int(0, 2)));
+            add(new ExprNode(0, TokenType.ADD, new Int(0, 1), new Int(0, 2)));
         }};
         BlockNode block = new BlockNode(0, list);
-        assertThat(block.run(), is(new X_Int(0, 3)));
+        assertThat(block.run(), is(new Int(0, 3)));
     }
 
     @Test

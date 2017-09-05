@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.entity.Bool;
+
 import java.util.ArrayList;
 
 /**
@@ -17,7 +19,7 @@ public class Node {
      * ノードを生成します。
      * @param location 行番号
      */
-    Node(int location) {
+    public Node(int location) {
         this.location = location;
     }
 
@@ -25,7 +27,7 @@ public class Node {
      * 行番号を取得します。
      * @return 行番号
      */
-    int getLocation() {
+    public int getLocation() {
         return this.location;
     }
 
@@ -83,39 +85,39 @@ public class Node {
         throw new Exception(location + ": このオブジェクトに `/` 演算子は使用できません");
     }
 
-    public X_Bool less(int location, Node obj) throws Exception {
+    public Bool less(int location, Node obj) throws Exception {
         throw new Exception(location + ": このオブジェクトに `<` 演算子は使用できません");
     }
 
-    public X_Bool le(int location, Node obj) throws Exception {
+    public Bool le(int location, Node obj) throws Exception {
         throw new Exception(location + ": このオブジェクトに `<=` 演算子は使用できません");
     }
 
-    public X_Bool greater(int location, Node obj) throws Exception {
+    public Bool greater(int location, Node obj) throws Exception {
         throw new Exception(location + ": このオブジェクトに `>` 演算子は使用できません");
     }
 
-    public X_Bool ge(int location, Node obj) throws Exception {
+    public Bool ge(int location, Node obj) throws Exception {
         throw new Exception(location + ": このオブジェクトに `>=` 演算子は使用できません");
     }
 
-    public X_Bool and(int location, Node obj) throws Exception {
+    public Bool and(int location, Node obj) throws Exception {
         throw new Exception(location + "このオブジェクトに `&&` 演算子は使用できません");
     }
 
-    public X_Bool or(int location, Node obj) throws Exception {
+    public Bool or(int location, Node obj) throws Exception {
         throw new Exception(location + "このオブジェクトに `||` 演算子は使用できません");
     }
 
-    public X_Bool xor(int location, Node obj) throws Exception {
+    public Bool xor(int location, Node obj) throws Exception {
         throw new Exception(location + "このオブジェクトに `^` 演算子は使用できません");
     }
 
-    public Node message(int location, X_Symbol symbol) throws Exception {
+    public Node message(int location, Symbol symbol) throws Exception {
         throw new Exception(location + ": このオブジェクトにフィールドは設定できません");
     }
 
-    public Node message(int location, X_Symbol symbol, ArrayList<Node> params) throws Exception {
+    public Node message(int location, Symbol symbol, ArrayList<Node> params) throws Exception {
         throw new Exception(location + ": このオブジェクトにメソッドは設定できません");
     }
 }

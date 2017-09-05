@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.entity.Handler;
 import net.zero918nobita.Xemime.interpreter.Main;
 
 import java.util.ArrayList;
@@ -13,15 +14,15 @@ import java.util.ArrayList;
 public class BlockNode extends Node {
     private ArrayList<Node> list;
 
-    public BlockNode(int n, ArrayList<Node> l) {
-        super(n);
-        list = l;
+    public BlockNode(int location, ArrayList<Node> list) {
+        super(location);
+        this.list = list;
     }
 
     @Override
     public Node run() throws Exception {
         Node obj = null;
-        Main.loadLocalFrame(new X_Handler(0));
+        Main.loadLocalFrame(new Handler(0));
         if (list != null) for (Node o : list) obj = o.run();
         if (obj == null) throw new Exception(getLocation() + ": ブロックの戻り値が記述されていません");
         Main.unloadLocalFrame();

@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.entity.Address;
+import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.lexer.TokenType;
 
 /**
@@ -78,21 +80,21 @@ public class ExprNode extends Node {
                     result = e_lhs.ge(getLocation(), e_rhs);
                     break;
                 case EQ: // `===`
-                    if (lhs instanceof X_Symbol && rhs instanceof X_Symbol) {
-                        X_Address a1 = ((X_Symbol)lhs).getAddress();
-                        X_Address a2 = ((X_Symbol)rhs).getAddress();
-                        result = a1.equals(a2) ? X_Bool.T : X_Bool.Nil;
+                    if (lhs instanceof Symbol && rhs instanceof Symbol) {
+                        Address a1 = ((Symbol)lhs).getAddress();
+                        Address a2 = ((Symbol)rhs).getAddress();
+                        result = a1.equals(a2) ? Bool.T : Bool.Nil;
                     } else {
-                        result = X_Bool.Nil;
+                        result = Bool.Nil;
                     }
                     break;
                 case EQL: // `==`
-                    if (e_lhs.equals(e_rhs)) result = X_Bool.T;
-                    else result = X_Bool.Nil;
+                    if (e_lhs.equals(e_rhs)) result = Bool.T;
+                    else result = Bool.Nil;
                     break;
                 case NE: // `!=`
-                    if (e_lhs.equals(e_rhs)) result = X_Bool.Nil;
-                    else result = X_Bool.T;
+                    if (e_lhs.equals(e_rhs)) result = Bool.Nil;
+                    else result = Bool.T;
                     break;
             }
         }

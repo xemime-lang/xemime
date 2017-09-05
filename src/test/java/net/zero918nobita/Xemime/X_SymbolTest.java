@@ -1,6 +1,6 @@
 package net.zero918nobita.Xemime;
 
-import net.zero918nobita.Xemime.ast.X_Symbol;
+import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.interpreter.Main;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * net.zero918nobita.Xemime.ast.X_Symbol のテストクラスです。
+ * net.zero918nobita.Xemime.ast.Symbol のテストクラスです。
  * @author Kodai Matsumoto
  */
 
@@ -21,8 +21,8 @@ public class X_SymbolTest {
 
     @Test
     public void testEquals() {
-        X_Symbol a = X_Symbol.intern(0, "A");
-        X_Symbol b = X_Symbol.intern(0, "A");
+        Symbol a = Symbol.intern(0, "A");
+        Symbol b = Symbol.intern(0, "A");
         assertTrue(a.equals(b));
         assertTrue(b.equals(a));
     }
@@ -31,26 +31,26 @@ public class X_SymbolTest {
     public void testRun() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("シンボル `unknown` は定義されていません");
-        X_Symbol symbol = X_Symbol.intern(0, "unknown");
+        Symbol symbol = Symbol.intern(0, "unknown");
         symbol.run();
     }
 
     @Test
     public void testRun2() throws Exception {
-        Main.defValue(X_Symbol.intern(0, "variable"), new X_Symbol(0, "value"));
-        X_Symbol symbol = X_Symbol.intern(0, "variable");
+        Main.defValue(Symbol.intern(0, "variable"), new Symbol(0, "value"));
+        Symbol symbol = Symbol.intern(0, "variable");
         assertThat(symbol.run().toString(), is("value"));
     }
 
     @Test
     public void testToString() {
-        X_Symbol symbol = X_Symbol.intern(0, "sample");
+        Symbol symbol = Symbol.intern(0, "sample");
         assertThat(symbol.toString(), is("sample"));
     }
 
     @Test
     public void testGetName() {
-        X_Symbol symbol = X_Symbol.intern(0, "sample2");
+        Symbol symbol = Symbol.intern(0, "sample2");
         assertThat(symbol.getName(), is("sample2"));
     }
 }

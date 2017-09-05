@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.entity.Address;
 import net.zero918nobita.Xemime.interpreter.Main;
 
 import java.util.HashMap;
@@ -9,18 +10,18 @@ import java.util.HashMap;
  * @author Kodai Matsumoto
  */
 
-public class X_Symbol extends Node {
-    private static HashMap<String, X_Symbol> table = new HashMap<>();
+public class Symbol extends Node {
+    private static HashMap<String, Symbol> table = new HashMap<>();
     private String name;
 
-    public X_Symbol(int n, String s) {
+    public Symbol(int n, String s) {
         super(n);
         name = s;
     }
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof X_Symbol && ((X_Symbol)obj).getName().equals(this.getName());
+        return obj instanceof Symbol && ((Symbol)obj).getName().equals(this.getName());
     }
 
     @Override
@@ -32,8 +33,8 @@ public class X_Symbol extends Node {
         return name;
     }
 
-    public static X_Symbol intern(int n, String s) {
-        if (!table.containsKey(s)) table.put(s, new X_Symbol(n, s));
+    public static Symbol intern(int n, String s) {
+        if (!table.containsKey(s)) table.put(s, new Symbol(n, s));
         return table.get(s);
     }
 
@@ -43,7 +44,7 @@ public class X_Symbol extends Node {
         return c;
     }
 
-    X_Address getAddress() throws Exception {
+    Address getAddress() throws Exception {
         return Main.getAddressOfSymbol(this);
     }
 

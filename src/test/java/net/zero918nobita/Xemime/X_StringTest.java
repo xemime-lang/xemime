@@ -1,8 +1,8 @@
 package net.zero918nobita.Xemime;
 
-import net.zero918nobita.Xemime.ast.X_Int;
-import net.zero918nobita.Xemime.ast.X_String;
-import net.zero918nobita.Xemime.ast.X_Symbol;
+import net.zero918nobita.Xemime.entity.Int;
+import net.zero918nobita.Xemime.entity.Str;
+import net.zero918nobita.Xemime.ast.Symbol;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * net.zero918nobita.Xemime.ast.X_String のテストクラスです。
+ * net.zero918nobita.Xemime.entity.Str のテストクラスです。
  * @author Kodai Matsumoto
  */
 
@@ -23,20 +23,20 @@ public class X_StringTest {
 
     @Test
     public void testAdd() throws Exception {
-        assertThat(new X_String(0, "hello, ").add(0, new X_String(0, "world!")),
-                is(new X_String(0, "hello, world!")));
+        assertThat(new Str(0, "hello, ").add(0, new Str(0, "world!")),
+                is(new Str(0, "hello, world!")));
     }
 
     @Test
     public void testAdd2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: String型オブジェクトに他の型のオブジェクトを加算することはできません");
-        new X_String(0, "foo").add(0, new X_Int(0, 2));
+        new Str(0, "foo").add(0, new Int(0, 2));
     }
 
     @Test
     public void testLength() throws Exception {
-        assertThat(new X_String(0, "foo").message(0, X_Symbol.intern(0, "length"), new ArrayList<>()),
-                is(new X_Int(0, 3)));
+        assertThat(new Str(0, "foo").message(0, Symbol.intern(0, "length"), new ArrayList<>()),
+                is(new Int(0, 3)));
     }
 }

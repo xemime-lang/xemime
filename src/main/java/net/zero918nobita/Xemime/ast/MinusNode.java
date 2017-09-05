@@ -1,15 +1,18 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.entity.Double;
+import net.zero918nobita.Xemime.entity.Int;
+
 /**
  * 単項演算子 `-`
  * 評価されると、数値(Int, Double)型の値の符号を反転させます。
  * @author Kodai Matsumoto
  */
 
-public class X_Minus extends Node {
+public class MinusNode extends Node {
     private Node obj;
 
-    public X_Minus(int n, Node o) {
+    public MinusNode(int n, Node o) {
         super(n);
         obj = o;
     }
@@ -17,9 +20,9 @@ public class X_Minus extends Node {
     @Override
     public Node run() throws Exception {
         Node o = obj.run();
-        if (o.getClass() != X_Int.class && o.getClass() != X_Double.class)
+        if (o.getClass() != Int.class && o.getClass() != Double.class)
             throw new Exception(getLocation() + ": 数値以外のものには単項演算子を適用できません");
-        if (o.getClass() == X_Int.class) return new X_Int(getLocation(), -((X_Int)o).getValue());
-        return new X_Double(getLocation(), -((X_Double)o).getValue());
+        if (o.getClass() == Int.class) return new Int(getLocation(), -((Int)o).getValue());
+        return new Double(getLocation(), -((Double)o).getValue());
     }
 }

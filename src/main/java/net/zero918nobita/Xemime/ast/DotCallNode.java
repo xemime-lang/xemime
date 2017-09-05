@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class DotCallNode extends Node {
     private Node obj;
-    private X_Symbol symbol;
+    private Symbol symbol;
     private ArrayList<Node> list;
 
-    public DotCallNode(int n, Node o, X_Symbol sym, ArrayList<Node> l) {
+    public DotCallNode(int n, Node o, Symbol sym, ArrayList<Node> l) {
         super(n);
         obj = o;
         symbol = sym;

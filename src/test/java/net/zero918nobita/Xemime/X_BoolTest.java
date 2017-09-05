@@ -1,7 +1,7 @@
 package net.zero918nobita.Xemime;
 
-import net.zero918nobita.Xemime.ast.X_Bool;
-import net.zero918nobita.Xemime.ast.X_String;
+import net.zero918nobita.Xemime.entity.Bool;
+import net.zero918nobita.Xemime.entity.Str;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * net.zero918nobita.Xemime.ast.X_Bool のテストクラスです。
+ * net.zero918nobita.Xemime.entity.Bool のテストクラスです。
  * @author Kodai Matsumoto
  */
 
@@ -20,116 +20,116 @@ public class X_BoolTest {
 
     @Test
     public void testToString() {
-        assertThat(X_Bool.T.toString(), is("T"));
-        assertThat(X_Bool.Nil.toString(), is("NIL"));
+        assertThat(Bool.T.toString(), is("T"));
+        assertThat(Bool.Nil.toString(), is("NIL"));
     }
 
     @Test
     public void testEquals() {
-        assertThat(X_Bool.T.equals(new X_Bool(0, true)), is(true));
-        assertThat(X_Bool.T.equals(new X_Bool(0, false)), is(false));
-        assertThat(X_Bool.Nil.equals(new X_Bool(0, false)), is(true));
-        assertThat(X_Bool.Nil.equals(new X_Bool(0, true)), is(false));
+        assertThat(Bool.T.equals(new Bool(0, true)), is(true));
+        assertThat(Bool.T.equals(new Bool(0, false)), is(false));
+        assertThat(Bool.Nil.equals(new Bool(0, false)), is(true));
+        assertThat(Bool.Nil.equals(new Bool(0, true)), is(false));
     }
 
     @Test
     public void testAdd() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: 真偽値の加算はできません");
-        X_Bool.T.add(0, X_Bool.T);
+        Bool.T.add(0, Bool.T);
     }
 
     @Test
     public void testSub() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: 真偽値の減算はできません");
-        X_Bool.T.sub(0, X_Bool.T);
+        Bool.T.sub(0, Bool.T);
     }
 
     @Test
     public void testMultiply() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: 真偽値の乗算はできません");
-        X_Bool.T.multiply(0, X_Bool.T);
+        Bool.T.multiply(0, Bool.T);
     }
 
     @Test
     public void testDivide() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: 真偽値の除算はできません");
-        X_Bool.T.divide(0, X_Bool.T);
+        Bool.T.divide(0, Bool.T);
     }
 
     @Test
     public void testLess() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: 真偽値に `<` 演算子は使用できません");
-        X_Bool.T.less(0, X_Bool.Nil);
+        Bool.T.less(0, Bool.Nil);
     }
 
     @Test
     public void testLe() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: 真偽値に `<=` 演算子は使用できません");
-        X_Bool.T.le(0, X_Bool.Nil);
+        Bool.T.le(0, Bool.Nil);
     }
 
     @Test
     public void testGreater() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: 真偽値に `>` 演算子は使用できません");
-        X_Bool.T.greater(0, X_Bool.Nil);
+        Bool.T.greater(0, Bool.Nil);
     }
 
     @Test
     public void testGe() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: 真偽値に `>=` 演算子は使用できません");
-        X_Bool.T.ge(0, X_Bool.Nil);
+        Bool.T.ge(0, Bool.Nil);
     }
 
     @Test
     public void testAnd() throws Exception {
-        assertThat(X_Bool.T.and(0, X_Bool.T), is(X_Bool.T));
-        assertThat(X_Bool.T.and(0, X_Bool.Nil), is(X_Bool.Nil));
-        assertThat(X_Bool.Nil.and(0, X_Bool.Nil), is(X_Bool.Nil));
-        assertThat(X_Bool.Nil.and(0, X_Bool.T), is(X_Bool.Nil));
+        assertThat(Bool.T.and(0, Bool.T), is(Bool.T));
+        assertThat(Bool.T.and(0, Bool.Nil), is(Bool.Nil));
+        assertThat(Bool.Nil.and(0, Bool.Nil), is(Bool.Nil));
+        assertThat(Bool.Nil.and(0, Bool.T), is(Bool.Nil));
     }
 
     @Test
     public void testAnd2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `&&` 演算子の右辺が真偽値ではありません");
-        X_Bool.T.and(0, new X_String(0, "foo"));
+        Bool.T.and(0, new Str(0, "foo"));
     }
 
     @Test
     public void testOr() throws Exception {
-        assertThat(X_Bool.T.or(0, X_Bool.T), is(X_Bool.T));
-        assertThat(X_Bool.T.or(0, X_Bool.Nil), is(X_Bool.T));
-        assertThat(X_Bool.Nil.or(0, X_Bool.T), is(X_Bool.T));
-        assertThat(X_Bool.Nil.or(0, X_Bool.Nil), is(X_Bool.Nil));
+        assertThat(Bool.T.or(0, Bool.T), is(Bool.T));
+        assertThat(Bool.T.or(0, Bool.Nil), is(Bool.T));
+        assertThat(Bool.Nil.or(0, Bool.T), is(Bool.T));
+        assertThat(Bool.Nil.or(0, Bool.Nil), is(Bool.Nil));
     }
 
     @Test
     public void testOr2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `||` 演算子の右辺が真偽値ではありません");
-        X_Bool.T.or(0, new X_String(0, "foo"));
+        Bool.T.or(0, new Str(0, "foo"));
     }
 
     @Test
     public void testXor() throws Exception {
-        assertThat(X_Bool.T.xor(0, X_Bool.T), is(X_Bool.Nil));
-        assertThat(X_Bool.T.xor(0, X_Bool.Nil), is(X_Bool.T));
-        assertThat(X_Bool.Nil.xor(0, X_Bool.T), is(X_Bool.T));
-        assertThat(X_Bool.Nil.xor(0, X_Bool.Nil), is(X_Bool.Nil));
+        assertThat(Bool.T.xor(0, Bool.T), is(Bool.Nil));
+        assertThat(Bool.T.xor(0, Bool.Nil), is(Bool.T));
+        assertThat(Bool.Nil.xor(0, Bool.T), is(Bool.T));
+        assertThat(Bool.Nil.xor(0, Bool.Nil), is(Bool.Nil));
     }
 
     @Test
     public void testXor2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage(": `^` 演算子の右辺が真偽値ではありません");
-        X_Bool.T.xor(0, new X_String(0, "foo"));
+        Bool.T.xor(0, new Str(0, "foo"));
     }
 }

@@ -1,6 +1,9 @@
 package net.zero918nobita.Xemime.lexer;
 
 import net.zero918nobita.Xemime.ast.*;
+import net.zero918nobita.Xemime.entity.Double;
+import net.zero918nobita.Xemime.entity.Str;
+import net.zero918nobita.Xemime.entity.Int;
 
 import java.math.BigDecimal;
 
@@ -23,7 +26,7 @@ public class Lexer {
     private LexerReader reader;
 
     /** Reader を設定します。 */
-    public Lexer(int n, String s) {
+    public Lexer(int n, java.lang.String s) {
         line = n;
         reader = new LexerReader(s);
     }
@@ -175,10 +178,10 @@ public class Lexer {
                     if (Character.isDigit((char) c)) {
                         reader.unread();
                         lexDigit();
-                        if (val.getClass() == X_Int.class) {
+                        if (val.getClass() == Int.class) {
                             tokenType = TokenType.INT;
                         }
-                        if (val.getClass() == X_Double.class) {
+                        if (val.getClass() == Double.class) {
                             tokenType = TokenType.DOUBLE;
                         }
                     } else if (Character.isJavaIdentifierStart((char)c)) {
@@ -235,9 +238,9 @@ public class Lexer {
             }
         }
         if (decimal_place != 0) {
-            val = new X_Double(line, num.doubleValue());
+            val = new Double(line, num.doubleValue());
         } else {
-            val = new X_Int(line, num.intValue()); // 整数だったのでint型にキャストしてから Integer を代入
+            val = new Int(line, num.intValue()); // 整数だったのでint型にキャストしてから Integer を代入
         }
     }
 
@@ -258,7 +261,7 @@ public class Lexer {
             }
             buf.append((char)c);
         }
-        val = new X_String(line, buf.toString());
+        val = new Str(line, buf.toString());
     }
 
     /**
@@ -277,7 +280,7 @@ public class Lexer {
             }
             buf.append((char)c);
         }
-        String s = buf.toString(); // シンボル名
+        java.lang.String s = buf.toString(); // シンボル名
 
         if (s.toUpperCase().equals("T")) {
             // 真値
@@ -292,7 +295,7 @@ public class Lexer {
             return;
         }
 
-        val = X_Symbol.intern(line, s); // 既存のシンボルを返すか、新規に生成したシンボルを返します。
+        val = Symbol.intern(line, s); // 既存のシンボルを返すか、新規に生成したシンボルを返します。
     }
 
     /**

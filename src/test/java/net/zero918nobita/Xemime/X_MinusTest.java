@@ -1,8 +1,8 @@
 package net.zero918nobita.Xemime;
 
-import net.zero918nobita.Xemime.ast.X_Double;
-import net.zero918nobita.Xemime.ast.X_Minus;
-import net.zero918nobita.Xemime.ast.X_String;
+import net.zero918nobita.Xemime.entity.Double;
+import net.zero918nobita.Xemime.ast.MinusNode;
+import net.zero918nobita.Xemime.entity.Str;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -11,7 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * net.zero918nobita.Xemime.ast.X_Minus のテストクラスです。
+ * net.zero918nobita.Xemime.ast.MinusNode のテストクラスです。
  * @author Kodai Matsumoto
  */
 
@@ -21,15 +21,15 @@ public class X_MinusTest {
 
     @Test
     public void testRun() throws Exception {
-        X_Minus minus = new X_Minus(0, new X_Double(0, 0.2));
-        assertThat(minus.run(), is(new X_Double(0, -0.2)));
+        MinusNode minus = new MinusNode(0, new Double(0, 0.2));
+        assertThat(minus.run(), is(new Double(0, -0.2)));
     }
 
     @Test
     public void testRun2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: 数値以外のものには単項演算子を適用できません");
-        X_Minus minus = new X_Minus(0, new X_String(0, "foo"));
+        MinusNode minus = new MinusNode(0, new Str(0, "foo"));
         minus.run();
     }
 }

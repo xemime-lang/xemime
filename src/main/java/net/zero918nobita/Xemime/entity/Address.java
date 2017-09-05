@@ -1,4 +1,6 @@
-package net.zero918nobita.Xemime.ast;
+package net.zero918nobita.Xemime.entity;
+
+import net.zero918nobita.Xemime.ast.Node;
 
 import java.util.TreeMap;
 
@@ -9,12 +11,12 @@ import java.util.TreeMap;
  * @author Kodai Matsumoto
  */
 
-public class X_Address extends Node implements Comparable {
+public class Address extends Node implements Comparable {
     private int address;
 
-    public X_Address(int n, int a) {
-        super(n);
-        address = a;
+    public Address(int location, int address) {
+        super(location);
+        this.address = address;
     }
 
     /** アドレスを取得します。 */
@@ -23,7 +25,7 @@ public class X_Address extends Node implements Comparable {
     }
 
     /** 参照先の値を取得します。 */
-    Node fetch(TreeMap<X_Address, Node> entities) {
+    Node fetch(TreeMap<Address, Node> entities) {
         return entities.get(this);
     }
 
@@ -36,7 +38,7 @@ public class X_Address extends Node implements Comparable {
     /** 参照先が一致していれば true 、そうでなければ false を返します。 */
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof X_Address && address == ((X_Address)obj).getAddress();
+        return obj instanceof Address && address == ((Address)obj).getAddress();
     }
 
     @Override
@@ -46,6 +48,6 @@ public class X_Address extends Node implements Comparable {
 
     @Override
     public int compareTo(Object obj) {
-        return address - ((X_Address)obj).getAddress();
+        return address - ((Address)obj).getAddress();
     }
 }
