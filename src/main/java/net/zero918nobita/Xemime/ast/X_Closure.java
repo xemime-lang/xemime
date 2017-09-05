@@ -14,7 +14,7 @@ import java.util.Map;
 class X_Closure extends X_Function {
     private ArrayList<X_Symbol> params;
     private X_Address self = null;
-    private X_Code body;
+    private Node body;
 
     /**
      * 捕捉変数テーブル<br>
@@ -22,7 +22,7 @@ class X_Closure extends X_Function {
      */
     private Frame captured = null; // Main との連携も考えると、HashMap<X_Symbol, X_Address> にするかも…
 
-    X_Closure(int n, ArrayList<X_Symbol> l, X_Code obj, Frame frame) {
+    X_Closure(int n, ArrayList<X_Symbol> l, Node obj, Frame frame) {
         super(n);
         params = l;
         body = obj;
@@ -40,20 +40,20 @@ class X_Closure extends X_Function {
     }
 
     @Override
-    public X_Code run() throws Exception {
+    public Node run() throws Exception {
         return this;
     }
 
     @Override
-    protected X_Code exec(ArrayList<X_Code> params, X_Address dynamicSelf) throws Exception {
-        X_Code o = null;
+    protected Node exec(ArrayList<Node> params, X_Address dynamicSelf) throws Exception {
+        Node o = null;
         setArgs(params, dynamicSelf);
         if (body != null) o = body.run();
         removeArgs();
         return o;
     }
 
-    private void setArgs(ArrayList<X_Code> args, X_Address dynamicSelf) throws Exception {
+    private void setArgs(ArrayList<Node> args, X_Address dynamicSelf) throws Exception {
         if ((params == null) && (args == null)) {
             Main.loadLocalFrame(new X_Handler(0));
             return;
@@ -78,7 +78,7 @@ class X_Closure extends X_Function {
 
         for (int i = 0; i < args.size() - 1; i++) {
             X_Symbol sym = (X_Symbol)params.get(i);
-            X_Code o = args.get(i + 1);
+            Node o = args.get(i + 1);
             table.setMember(sym, Main.register(o));
         }
     }

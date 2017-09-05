@@ -6,17 +6,17 @@ package net.zero918nobita.Xemime.ast;
  * @author Kodai Matsumoto
  */
 
-public class X_Not extends X_Code {
-    private X_Code obj;
+public class X_Not extends Node {
+    private Node obj;
 
-    public X_Not(int n, X_Code o) {
+    public X_Not(int n, Node o) {
         super(n);
         obj = o;
     }
 
     @Override
-    public X_Code run() throws Exception {
-        X_Code o = obj.run();
+    public Node run() throws Exception {
+        Node o = obj.run();
         if (o.getClass() != X_Bool.class) throw new Exception(getLocation() + ": 真偽値以外のものには論理否定演算子を適用できません");
         X_Bool p = (X_Bool)o;
         if (p.isTrue()) return X_Bool.Nil;

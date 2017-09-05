@@ -1,7 +1,7 @@
 package net.zero918nobita.Xemime.interpreter;
 
 import net.zero918nobita.Xemime.ast.X_Address;
-import net.zero918nobita.Xemime.ast.X_Code;
+import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.X_Handler;
 import net.zero918nobita.Xemime.ast.X_Symbol;
 
@@ -51,7 +51,7 @@ public class Frame {
         return null;
     }
 
-    public X_Code getValueOfSymbol(X_Symbol sym) throws Exception {
+    public Node getValueOfSymbol(X_Symbol sym) throws Exception {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
                 if (localFrames.get(i).hasMember(sym)) return localFrames.get(i).message(0, sym);
@@ -64,7 +64,7 @@ public class Frame {
                 if (localFrames.get(i).hasMember(sym)) localFrames.get(i).setMember(sym, ref);
     }
 
-    void setValue(X_Symbol sym, X_Code obj) {
+    void setValue(X_Symbol sym, Node obj) {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
                 if (localFrames.get(i).hasMember(sym)) localFrames.get(i).setMember(sym, Main.register(obj));
@@ -75,7 +75,7 @@ public class Frame {
         localFrames.get(localFrames.size() - 1).setMember(sym, ref);
     }
 
-    public void defValue(X_Symbol sym, X_Code obj) throws Exception {
+    public void defValue(X_Symbol sym, Node obj) throws Exception {
         if (localFrames.size() == 0) throw new Exception("深刻なエラー: フレームが存在しません");
         localFrames.get(localFrames.size() - 1).setMember(sym, Main.register(obj));
     }

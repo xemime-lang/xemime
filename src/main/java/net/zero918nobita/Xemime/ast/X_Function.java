@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-abstract class X_Function extends X_Code {
+abstract class X_Function extends Node {
 
     X_Function(int n) {
         super(n);
@@ -17,7 +17,7 @@ abstract class X_Function extends X_Code {
     /** 引数の個数 */
     int numberOfArgs = 0;
 
-    X_Code call(ArrayList<X_Code> params, X_Address self) throws Exception {
+    Node call(ArrayList<Node> params, X_Address self) throws Exception {
         if (params == null) {
             if (numberOfArgs != 0) throw new Exception("引数の個数が違います");
         } else {
@@ -26,5 +26,5 @@ abstract class X_Function extends X_Code {
         return exec(params, self);
     }
 
-    protected abstract X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception;
+    protected abstract Node exec(ArrayList<Node> params, X_Address self) throws Exception;
 }

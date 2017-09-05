@@ -50,11 +50,11 @@ public class Parser {
      * @param str ソースコード
      * @return 評価結果
      */
-    public ArrayList<X_Code> parse(String str) throws Exception {
-        ArrayList<X_Code> result = new ArrayList<>();
+    public ArrayList<Node> parse(String str) throws Exception {
+        ArrayList<Node> result = new ArrayList<>();
         lex = new Lexer(line, str.replaceAll("\r\n|\r", "\n"));
         getToken();
-        X_Code code;
+        Node code;
         while (tokenType != TokenType.EOS) {
             code = statement();
             if (code != null) result.add(code);
@@ -77,8 +77,8 @@ public class Parser {
      * @return ステートメントの評価結果
      * @throws Exception ステートメントの記述がセミコロンで終了していない場合に例外を発生させます。
      */
-    private X_Code statement() throws Exception {
-        X_Code obj = expr();
+    private Node statement() throws Exception {
+        Node obj = expr();
         if (obj != null) {
             switch (tokenType) {
                 case SEMICOLON:
@@ -95,8 +95,8 @@ public class Parser {
      * @return 式の評価結果 ( 演算子を含む場合は、演算可能な ExprNode インスタンスを返します )
      * @throws Exception 式に不正な要素が含まれている場合に例外を発生させます。
      */
-    private X_Code expr() throws Exception {
-        X_Code obj = simpleExpr();
+    private Node expr() throws Exception {
+        Node obj = simpleExpr();
         switch (tokenType) {
             case L:
             case G:
@@ -118,7 +118,7 @@ public class Parser {
      * @return 式の評価結果
      * @throws Exception 式の右辺に不正な要素が含まれている場合に例外を発生させます。
      */
-    private X_Code expr2(X_Code obj) throws Exception {
+    private Node expr2(Node obj) throws Exception {
         ExprNode result = null;
         while ((tokenType == TokenType.L) ||
                 (tokenType == TokenType.G) ||
@@ -129,7 +129,7 @@ public class Parser {
                 (tokenType == TokenType.GE)) {
             TokenType op = tokenType;
             getToken();
-            X_Code obj2 = simpleExpr();
+            Node obj2 = simpleExpr();
             if (result == null) result = new ExprNode(lex.getLocation(), op, obj, obj2);
             else result = new ExprNode(lex.getLocation(), op, result, obj2);
         }
@@ -141,8 +141,8 @@ public class Parser {
      * @return 単純式の評価結果 ( 演算子を含む場合は、演算可能な ExprNode インスタンスを返します )
      * @throws Exception 単純式に不正な要素が含まれている場合に例外を発生させます。
      */
-    private X_Code simpleExpr() throws Exception {
-        X_Code obj = term();
+    private Node simpleExpr() throws Exception {
+        Node obj = term();
         switch (tokenType) {
             case ADD:
             case SUB:
@@ -159,14 +159,14 @@ public class Parser {
      * @return 単純式の評価結果
      * @throws Exception 単純式の右辺に不正な要素が含まれている場合に例外を発生させます。
      */
-    private X_Code simpleExpr2(X_Code obj) throws Exception {
+    private Node simpleExpr2(Node obj) throws Exception {
         ExprNode result = null;
         while ((tokenType == TokenType.ADD) ||
                 (tokenType == TokenType.SUB) ||
                 (tokenType == TokenType.OR)) {
             TokenType op = tokenType;
             getToken();
-            X_Code obj2 = term();
+            Node obj2 = term();
             if (result == null) {
                 result = new ExprNode(lex.getLocation(), op, obj, obj2);
             } else {
@@ -181,8 +181,8 @@ public class Parser {
      * @return 項の評価結果 ( 演算子を含む場合は、演算可能な ExprNode インスタンスを返します )
      * @throws Exception 項に不正な要素が含まれている場合に例外を発生させます。
      */
-    private X_Code term() throws Exception {
-        X_Code obj = factor();
+    private Node term() throws Exception {
+        Node obj = factor();
         switch (tokenType) {
             case MUL:
             case DIV:
@@ -200,7 +200,7 @@ public class Parser {
      * @return 項の演算結果
      * @throws Exception 項の右辺に不正な要素が含まれている場合に例外を発生させます。
      */
-    private X_Code term2(X_Code obj) throws Exception {
+    private Node term2(Node obj) throws Exception {
         ExprNode result = null;
         while ((tokenType == TokenType.MUL) ||
                 (tokenType == TokenType.DIV) ||
@@ -208,7 +208,7 @@ public class Parser {
                 (tokenType == TokenType.XOR)) {
             TokenType op = tokenType;
             getToken();
-            X_Code obj2 = term();
+            Node obj2 = term();
             if (result == null) {
                 result = new ExprNode(lex.getLocation(), op, obj, obj2);
             } else {
@@ -223,8 +223,8 @@ public class Parser {
      * @return 因子の評価結果 ( 演算子を含む場合は、演算可能な ExprNode インスタンスを返します )
      * @throws Exception 因子に不正な要素が含まれている場合 (ここではどの種類の因子にも該当しない場合、または閉じられていない括弧がある場合) に例外を発生させます。
      */
-    private X_Code factor() throws Exception {
-        X_Code obj;
+    private Node factor() throws Exception {
+        Node obj;
         switch (tokenType) {
             case STRING:
                 obj = lex.value();
@@ -256,7 +256,7 @@ public class Parser {
             X_Symbol sym = (X_Symbol)lex.value();
             getToken();
             if (tokenType == TokenType.LP) {
-                ArrayList<X_Code> list = new ArrayList<>();
+                ArrayList<Node> list = new ArrayList<>();
                 getToken();
                 if (tokenType != TokenType.RP) list = args();
                 if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
@@ -264,7 +264,7 @@ public class Parser {
                 obj = new DotCallNode(lex.getLocation(), obj, sym, list);
             } else if (tokenType == TokenType.ASSIGN) {
                 getToken();
-                X_Code c = expr();
+                Node c = expr();
                 obj = new DotAssignNode(lex.getLocation(), obj, sym, c);
             } else {
                 obj = new DotExprNode(lex.getLocation(), obj, sym);
@@ -278,8 +278,8 @@ public class Parser {
      * @return 一次子の評価結果
      * @throws Exception 一次子に不正な要素が含まれている場合
      */
-    private X_Code first() throws Exception {
-        X_Code obj = null;
+    private Node first() throws Exception {
+        Node obj = null;
         switch (tokenType) {
             case EOS:
                 break;
@@ -345,7 +345,7 @@ public class Parser {
         }
 
         while (tokenType == TokenType.LP) {
-            ArrayList<X_Code> list = new ArrayList<>();
+            ArrayList<Node> list = new ArrayList<>();
             getToken();
             if (tokenType != TokenType.RP) list = args();
             if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
@@ -356,8 +356,8 @@ public class Parser {
         return obj;
     }
 
-    private X_Code methodOfCoreObject(X_Symbol symbol) throws Exception {
-        X_Code c;
+    private Node methodOfCoreObject(X_Symbol symbol) throws Exception {
+        Node c;
         X_Handler core;
         switch (symbol.getName()){
             case "if":
@@ -391,12 +391,12 @@ public class Parser {
      * @return ブロックの評価結果
      * @throws Exception ブロック中に不正な式が含まれている場合に例外を発生させます。
      */
-    private X_Code block() throws Exception {
-        ArrayList<X_Code> list = null;
+    private Node block() throws Exception {
+        ArrayList<Node> list = null;
         getToken();
         resolver.addScope();
         while (tokenType != TokenType.RB) {
-            X_Code o = expr();
+            Node o = expr();
             if (tokenType == TokenType.SEMICOLON) {
                 if (list == null) list = new ArrayList<>();
                 list.add(o);
@@ -416,8 +416,8 @@ public class Parser {
      * @return 関数呼び出しの評価結果 ( 演算可能な X_Funcall インスタンスを返します )
      * @throws Exception 関数呼び出し部分で不正な要素が含まれている場合に例外を発生させます。
      */
-    private X_Code methodCall(X_Symbol sym) throws Exception {
-        ArrayList<X_Code> list = new ArrayList<>();
+    private Node methodCall(X_Symbol sym) throws Exception {
+        ArrayList<Node> list = new ArrayList<>();
         getToken();
         if (tokenType != TokenType.RP) list = args();
         if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
@@ -430,8 +430,8 @@ public class Parser {
      * @return 評価済みの引数リスト
      * @throws Exception 引数リスト中に不正な要素が含まれている場合に例外を発生させます。
      */
-    private ArrayList<X_Code> args() throws Exception {
-        ArrayList<X_Code> list = null;
+    private ArrayList<Node> args() throws Exception {
+        ArrayList<Node> list = null;
         if (tokenType != TokenType.RP) {
             list = new ArrayList<>();
             list.add(expr());
@@ -449,7 +449,7 @@ public class Parser {
      * @return 関数式の評価結果 ( 演算可能な X_Closure インスタンスを返します )
      * @throws Exception 関数式中に不正な要素が含まれている場合 ( ここでは正しく括弧が閉じられていない場合 ) に例外を発生させます。
      */
-    private X_Code lambda() throws Exception {
+    private Node lambda() throws Exception {
         ArrayList<X_Symbol> list = new ArrayList<>();
         getToken();
         if (tokenType == TokenType.SYMBOL) {
@@ -483,7 +483,7 @@ public class Parser {
         getToken();
         resolver.addScope();
         for (X_Symbol sym : list) resolver.declareVar(sym);
-        X_Code expr = expr();
+        Node expr = expr();
         resolver.removeScope();
         return new LambdaExprNode(getLocation(), list, expr);
     }

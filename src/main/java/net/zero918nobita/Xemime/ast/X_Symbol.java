@@ -9,7 +9,7 @@ import java.util.HashMap;
  * @author Kodai Matsumoto
  */
 
-public class X_Symbol extends X_Code {
+public class X_Symbol extends Node {
     private static HashMap<String, X_Symbol> table = new HashMap<>();
     private String name;
 
@@ -37,8 +37,8 @@ public class X_Symbol extends X_Code {
         return table.get(s);
     }
 
-    public X_Code run() throws Exception {
-        X_Code c = Main.getValueOfSymbol(this);
+    public Node run() throws Exception {
+        Node c = Main.getValueOfSymbol(this);
         if (c == null) throw new Exception(getLocation() + ": シンボル `" + name + "` は定義されていません");
         return c;
     }

@@ -42,7 +42,7 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    public X_Numeric add(int line, X_Code obj) throws Exception {
+    public X_Numeric add(int line, Node obj) throws Exception {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
@@ -58,7 +58,7 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    public X_Numeric sub(int line, X_Code obj) throws Exception {
+    public X_Numeric sub(int line, Node obj) throws Exception {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
@@ -74,7 +74,7 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    public X_Numeric multiply(int line, X_Code obj) throws Exception {
+    public X_Numeric multiply(int line, Node obj) throws Exception {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
@@ -90,7 +90,7 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    public X_Numeric divide(int line, X_Code obj) throws Exception {
+    public X_Numeric divide(int line, Node obj) throws Exception {
         X_Numeric result;
         if (obj.getClass() == X_Int.class) {
             X_Int i = (X_Int)obj;
@@ -106,28 +106,28 @@ public class X_Int extends X_Numeric {
     }
 
     @Override
-    public X_Bool less(int line, X_Code obj) throws Exception {
+    public X_Bool less(int line, Node obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() < ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() < ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
-    public X_Bool le(int line, X_Code obj) throws Exception {
+    public X_Bool le(int line, Node obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() <= ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() <= ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
-    public X_Bool greater(int line, X_Code obj) throws Exception {
+    public X_Bool greater(int line, Node obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() > ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() > ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
-    public X_Bool ge(int line, X_Code obj) throws Exception {
+    public X_Bool ge(int line, Node obj) throws Exception {
         if (obj instanceof X_Int) return (this.getValue() >= ((X_Int) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else if (obj instanceof X_Double) return (this.getValue() >= ((X_Double) obj).getValue()) ? X_Bool.T : X_Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
@@ -137,7 +137,7 @@ public class X_Int extends X_Numeric {
         X_Abs() {
             super(0, 0);
         }
-        protected X_Int exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+        protected X_Int exec(ArrayList<Node> params, X_Address self) throws Exception {
             return new X_Int(0, Math.abs(((X_Int)params.get(0)).getValue()));
         }
     }
@@ -148,7 +148,7 @@ public class X_Int extends X_Numeric {
         }
 
         @Override
-        protected X_String exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+        protected X_String exec(ArrayList<Node> params, X_Address self) throws Exception {
             return new X_String(0, params.get(0).toString());
         }
     }
@@ -159,7 +159,7 @@ public class X_Int extends X_Numeric {
         }
 
         @Override
-        protected X_Int exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+        protected X_Int exec(ArrayList<Node> params, X_Address self) throws Exception {
             return new X_Int(0, ((X_Int)params.get(0)).getValue() + 1);
         }
     }
@@ -170,7 +170,7 @@ public class X_Int extends X_Numeric {
         }
 
         @Override
-        protected X_Int exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+        protected X_Int exec(ArrayList<Node> params, X_Address self) throws Exception {
             return new X_Int(0, ((X_Int)params.get(0)).getValue() - 1);
         }
     }
@@ -181,11 +181,11 @@ public class X_Int extends X_Numeric {
         }
 
         @Override
-        protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
-            X_Code c = params.get(1).run();
+        protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
+            Node c = params.get(1).run();
             if (c instanceof X_Closure) {
                 X_Closure f = (X_Closure)c;
-                ArrayList<X_Code> list = new ArrayList<X_Code>() {{ add(f); }};
+                ArrayList<Node> list = new ArrayList<Node>() {{ add(f); }};
                 for (int i = 0; i < ((X_Int)params.get(0)).getValue(); i++) {
                     c = f.exec(list, null);
                 }

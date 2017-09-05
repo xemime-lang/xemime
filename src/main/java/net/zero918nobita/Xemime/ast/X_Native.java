@@ -20,7 +20,7 @@ public abstract class X_Native extends X_Function {
     }
 
     @Override
-    protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+    protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
         return null;
     }
 }

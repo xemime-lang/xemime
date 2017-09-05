@@ -9,12 +9,12 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class LambdaExprNode extends X_Code {
+public class LambdaExprNode extends Node {
     private int line;
     private ArrayList<X_Symbol> params;
-    private X_Code body;
+    private Node body;
 
-    public LambdaExprNode(int n, ArrayList<X_Symbol> l, X_Code obj) throws Exception {
+    public LambdaExprNode(int n, ArrayList<X_Symbol> l, Node obj) throws Exception {
         super(n);
         line = n;
         params = l;
@@ -22,7 +22,7 @@ public class LambdaExprNode extends X_Code {
     }
 
     @Override
-    public X_Code run() throws Exception {
+    public Node run() throws Exception {
         X_Handler table = new X_Handler(0);
         for (X_Symbol sym : params) table.setMember(sym, Main.register(X_Bool.Nil));
         Main.loadLocalFrame(table);

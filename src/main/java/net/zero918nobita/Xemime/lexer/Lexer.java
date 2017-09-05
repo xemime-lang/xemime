@@ -17,7 +17,7 @@ public class Lexer {
     private TokenType tokenType;
 
     /** 解析中のトークンの値 */
-    private X_Code val;
+    private Node val;
 
     /** ソースコードの読み込みに用いる戻り読み機能付き Reader */
     private LexerReader reader;
@@ -198,7 +198,7 @@ public class Lexer {
     }
 
     /** 現在解析中のトークンの値を返します。 */
-    public X_Code value() {
+    public Node value() {
         return val;
     }
 

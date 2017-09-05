@@ -27,7 +27,7 @@ public class Main {
     public static X_Default defaultObj = new X_Default();
 
     /** 実体テーブル */
-    private static TreeMap<X_Address, X_Code> entities = new TreeMap<X_Address, X_Code>() {{
+    private static TreeMap<X_Address, Node> entities = new TreeMap<X_Address, Node>() {{
         put(new X_Address(0, 0), X_Bool.Nil);
         put(new X_Address(0, 1), X_Bool.T);
     }};
@@ -83,7 +83,7 @@ public class Main {
      * @param sym シンボル
      * @return 値
      */
-    public static X_Code getValueOfSymbol(X_Symbol sym) throws Exception {
+    public static Node getValueOfSymbol(X_Symbol sym) throws Exception {
         if (frame.hasSymbol(sym)) {
             return frame.getValueOfSymbol(sym);
         } else {
@@ -97,7 +97,7 @@ public class Main {
      * @param address アドレス
      * @return 実体
      */
-    public static X_Code getValueOfReference(X_Address address) {
+    public static Node getValueOfReference(X_Address address) {
         return entities.get(address);
     }
 
@@ -118,7 +118,7 @@ public class Main {
      * @param obj 値
      * @throws Exception 変数が宣言されていなかった場合に例外を発生させます。
      */
-    public static void setValue(X_Symbol sym, X_Code obj) throws Exception {
+    public static void setValue(X_Symbol sym, Node obj) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setValue(sym, obj); return; }
         X_Address ref = register(obj);
         if (!defaultObj.hasMember(sym)) throw new Exception(parser.getLocation() + ": 変数 `" + sym.getName() + "` は宣言されていません");
@@ -140,7 +140,7 @@ public class Main {
      * @param sym 変数
      * @param obj 値
      */
-    public static void defValue(X_Symbol sym, X_Code obj) throws Exception {
+    public static void defValue(X_Symbol sym, Node obj) throws Exception {
         if (frame.numberOfLayers() != 0) { frame.defValue(sym, obj); return; }
         X_Address ref = register(obj);
         defaultObj.setMember(sym, ref);
@@ -151,7 +151,7 @@ public class Main {
      * @param obj 追加する実体
      * @return 実体テーブル上の、追加された実体の位置を記録した X_Address インスタンス
      */
-    public static X_Address register(X_Code obj) {
+    public static X_Address register(Node obj) {
         entities.put(new X_Address(0,entities.lastKey().getAddress() + 1), obj);
         return new X_Address(0, entities.lastKey().getAddress());
     }
@@ -196,7 +196,7 @@ public class Main {
                 while (true) {
                     line = in.readLine();
                     if (line != null && !line.equals("")) {
-                        ArrayList<X_Code> result;
+                        ArrayList<Node> result;
                         try {
                             result = parser.parse(line);
                         } catch(Exception e) {
@@ -205,7 +205,7 @@ public class Main {
                             parser.goDown(1);
                             continue;
                         }
-                        for (X_Code c : result) {
+                        for (Node c : result) {
                             try {
                                 System.out.println(c.run());
                             } catch(Exception e) {
@@ -227,14 +227,14 @@ public class Main {
                     stringBuilder.append(line);
                     stringBuilder.append('\n');
                 }
-                ArrayList<X_Code> result = null;
+                ArrayList<Node> result = null;
                 try {
                     result = parser.parse(stringBuilder.toString());
                 } catch(Exception e) {
                     System.out.println(e.getMessage());
                     System.exit(1);
                 }
-                for (X_Code c : result) {
+                for (Node c : result) {
                     try {
                         c.run();
                     } catch(Exception e) {
@@ -284,7 +284,7 @@ public class Main {
             }
 
             @Override
-            protected X_Address exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+            protected X_Address exec(ArrayList<Node> params, X_Address self) throws Exception {
                 return Main.register(params.get(0).run());
             }
         }
@@ -295,7 +295,7 @@ public class Main {
             }
 
             @Override
-            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
                 X_Handler obj1 = (X_Handler) params.get(0).run();
                 X_Handler obj2 = new X_Handler(0);
                 obj2.setMember(X_Symbol.intern(0, "proto"), new X_Bool(0, false));
@@ -333,7 +333,7 @@ public class Main {
             }
 
             @Override
-            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
                 System.exit(0);
                 return new X_Int(0, 0);
             }
@@ -349,8 +349,8 @@ public class Main {
             }
 
             @Override
-            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
-                X_Code o = params.get(1).run();
+            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
+                Node o = params.get(1).run();
                 System.out.print(o);
                 return o;
             }
@@ -366,8 +366,8 @@ public class Main {
             }
 
             @Override
-            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
-                X_Code o = params.get(1).run();
+            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
+                Node o = params.get(1).run();
                 System.out.println(o);
                 return o;
             }
@@ -384,7 +384,7 @@ public class Main {
             }
 
             @Override
-            protected X_Code exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+            protected Node exec(ArrayList<Node> params, X_Address self) throws Exception {
                 return (params.get(1).run().equals(X_Bool.Nil)) ? params.get(3).run() : params.get(2).run();
             }
         }

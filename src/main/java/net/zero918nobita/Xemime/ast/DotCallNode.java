@@ -7,12 +7,12 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class DotCallNode extends X_Code {
-    private X_Code obj;
+public class DotCallNode extends Node {
+    private Node obj;
     private X_Symbol symbol;
-    private ArrayList<X_Code> list;
+    private ArrayList<Node> list;
 
-    public DotCallNode(int n, X_Code o, X_Symbol sym, ArrayList<X_Code> l) {
+    public DotCallNode(int n, Node o, X_Symbol sym, ArrayList<Node> l) {
         super(n);
         obj = o;
         symbol = sym;
@@ -20,12 +20,12 @@ public class DotCallNode extends X_Code {
     }
 
     @Override
-    public X_Code run() throws Exception {
-        X_Code o;
+    public Node run() throws Exception {
+        Node o;
         o = obj.run();
         if (list != null) {
-            ArrayList<X_Code> list2 = new ArrayList<>();
-            for (X_Code arg : list) list2.add(arg.run());
+            ArrayList<Node> list2 = new ArrayList<>();
+            for (Node arg : list) list2.add(arg.run());
             list = list2;
         }
         o = o.message(getLocation(), symbol, list);

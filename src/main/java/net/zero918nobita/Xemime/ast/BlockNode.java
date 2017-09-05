@@ -9,18 +9,18 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class BlockNode extends X_Code {
-    private ArrayList<X_Code> list;
+public class BlockNode extends Node {
+    private ArrayList<Node> list;
 
-    public BlockNode(int n, ArrayList<X_Code> l) {
+    public BlockNode(int n, ArrayList<Node> l) {
         super(n);
         list = l;
     }
 
     @Override
-    public X_Code run() throws Exception {
-        X_Code obj = null;
-        if (list != null) for (X_Code o : list) obj = o.run();
+    public Node run() throws Exception {
+        Node obj = null;
+        if (list != null) for (Node o : list) obj = o.run();
         if (obj == null) throw new Exception(getLocation() + ": ブロックの戻り値が記述されていません");
         return obj;
     }

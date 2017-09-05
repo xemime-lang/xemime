@@ -15,13 +15,13 @@ import static org.junit.Assert.assertThat;
  * net.zero918nobita.Xemime.ast.BlockNode のテストクラスです。
  */
 
-public class _BlockNodeTest {
+public class BlockNodeTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void testRun() throws Exception {
-        ArrayList<X_Code> list = new ArrayList<X_Code>(){{
+        ArrayList<Node> list = new ArrayList<Node>(){{
             add(new ExprNode(0, TokenType.ADD, new X_Int(0, 1), new X_Int(0, 2)));
         }};
         BlockNode block = new BlockNode(0, list);

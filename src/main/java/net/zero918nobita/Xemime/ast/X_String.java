@@ -27,7 +27,7 @@ public class X_String extends X_Handler {
     }
 
     @Override
-    public X_String add(int line, X_Code obj) throws Exception {
+    public X_String add(int line, Node obj) throws Exception {
         if (obj instanceof X_String) {
             return new X_String(0, this.value + ((X_String) obj).value);
         } else {
@@ -41,7 +41,7 @@ public class X_String extends X_Handler {
         }
 
         @Override
-        protected X_Int exec(ArrayList<X_Code> params, X_Address self) throws Exception {
+        protected X_Int exec(ArrayList<Node> params, X_Address self) throws Exception {
             return new X_Int(0, (params.get(0)).toString().length());
         }
     }

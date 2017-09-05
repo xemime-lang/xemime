@@ -8,10 +8,10 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class X_Code {
+public class Node {
     private int line;
 
-    X_Code(int n) {
+    Node(int n) {
         line = n;
     }
 
@@ -19,59 +19,59 @@ public class X_Code {
         return line;
     }
 
-    public X_Code run() throws Exception {
+    public Node run() throws Exception {
         return this;
     }
 
-    public X_Code add(int line, X_Code obj) throws Exception {
+    public Node add(int line, Node obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `+` 演算子は使用できません");
     }
 
-    public X_Code sub(int line, X_Code obj) throws Exception {
+    public Node sub(int line, Node obj) throws Exception {
         throw new Exception(line + "このオブジェクトに `-` 演算子は使用できません");
     }
 
-    public X_Code multiply(int line, X_Code obj) throws Exception {
+    public Node multiply(int line, Node obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `*` 演算子は使用できません");
     }
 
-    public X_Code divide(int line, X_Code obj) throws Exception {
+    public Node divide(int line, Node obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `/` 演算子は使用できません");
     }
 
-    public X_Bool less(int line, X_Code obj) throws Exception {
+    public X_Bool less(int line, Node obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `<` 演算子は使用できません");
     }
 
-    public X_Bool le(int line, X_Code obj) throws Exception {
+    public X_Bool le(int line, Node obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `<=` 演算子は使用できません");
     }
 
-    public X_Bool greater(int line, X_Code obj) throws Exception {
+    public X_Bool greater(int line, Node obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `>` 演算子は使用できません");
     }
 
-    public X_Bool ge(int line, X_Code obj) throws Exception {
+    public X_Bool ge(int line, Node obj) throws Exception {
         throw new Exception(line + ": このオブジェクトに `>=` 演算子は使用できません");
     }
 
-    public X_Bool and(int line, X_Code obj) throws Exception {
+    public X_Bool and(int line, Node obj) throws Exception {
         throw new Exception(line + "このオブジェクトに `&&` 演算子は使用できません");
     }
 
-    public X_Bool or(int line, X_Code obj) throws Exception {
+    public X_Bool or(int line, Node obj) throws Exception {
         throw new Exception(line + "このオブジェクトに `||` 演算子は使用できません");
     }
 
-    public X_Bool xor(int line, X_Code obj) throws Exception {
+    public X_Bool xor(int line, Node obj) throws Exception {
         throw new Exception(line + "このオブジェクトに `^` 演算子は使用できません");
     }
 
-    public X_Code message(int line, X_Symbol symbol) throws Exception {
+    public Node message(int line, X_Symbol symbol) throws Exception {
         throw new Exception(line + ": このオブジェクトにフィールドは設定できません");
     }
 
-    public X_Code message(int line, X_Symbol symbol, ArrayList<X_Code> params) throws Exception {
+    public Node message(int line, X_Symbol symbol, ArrayList<Node> params) throws Exception {
         throw new Exception(line + ": このオブジェクトにメソッドは設定できません");
     }
 }

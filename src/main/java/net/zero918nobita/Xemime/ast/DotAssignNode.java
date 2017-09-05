@@ -7,12 +7,12 @@ import net.zero918nobita.Xemime.interpreter.Main;
  * @author Kodai Matsumoto
  */
 
-public class DotAssignNode extends X_Code {
-    private X_Code code1;
+public class DotAssignNode extends Node {
+    private Node code1;
     private X_Symbol symbol;
-    private X_Code code2;
+    private Node code2;
 
-    public DotAssignNode(int n, X_Code c, X_Symbol sym, X_Code c2) {
+    public DotAssignNode(int n, Node c, X_Symbol sym, Node c2) {
         super(n);
         code1 = c;
         symbol = sym;
@@ -20,9 +20,9 @@ public class DotAssignNode extends X_Code {
     }
 
     @Override
-    public X_Code run() throws Exception {
-        X_Code c1 = code1.run();
-        X_Code c2 = code2.run();
+    public Node run() throws Exception {
+        Node c1 = code1.run();
+        Node c2 = code2.run();
         if (c1 instanceof X_Handler) {
             if (c2 instanceof X_Address) {
                 ((X_Handler) c1).setMember(symbol, c2);

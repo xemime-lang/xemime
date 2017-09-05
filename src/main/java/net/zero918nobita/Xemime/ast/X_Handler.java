@@ -5,7 +5,7 @@ import net.zero918nobita.Xemime.interpreter.Main;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class X_Handler extends X_Code {
+public class X_Handler extends Node {
     /**
      * メンバのリスト
      */
@@ -25,7 +25,7 @@ public class X_Handler extends X_Code {
      * @param key メンバの名称
      * @param obj メンバの値
      */
-    public void setMember(X_Symbol key, X_Code obj) {
+    public void setMember(X_Symbol key, Node obj) {
         if (obj instanceof X_Address) {
             members.put(key, (X_Address) obj);
         } else {
@@ -38,7 +38,7 @@ public class X_Handler extends X_Code {
      * @param key メンバの名称
      * @return メンバの値
      */
-    public X_Code getMember(X_Symbol key) {
+    public Node getMember(X_Symbol key) {
         return Main.getValueOfReference(members.get(key));
     }
 
@@ -51,17 +51,17 @@ public class X_Handler extends X_Code {
     }
 
     @Override
-    public X_Code message(int line, X_Symbol symbol) throws Exception {
+    public Node message(int line, X_Symbol symbol) throws Exception {
         if (!hasMember(symbol)) throw new Exception(line + ": `" + symbol.getName() + "` というフィールドはありません");
         return getMember(symbol);
     }
 
     @Override
-    public X_Code message(int line, X_Symbol symbol, ArrayList<X_Code> params) throws Exception {
+    public Node message(int line, X_Symbol symbol, ArrayList<Node> params) throws Exception {
         if (symbol.equals(X_Symbol.intern(0, "proto")))
             throw new Exception(line + ": protoフィールドはメソッドとして呼び出すことはできません");
         if (!hasMember(symbol)) throw new Exception(line + ": `" + symbol.getName() + "` というメソッドはありません");
-        X_Code o = getMember(symbol);
+        Node o = getMember(symbol);
         if (!(o instanceof X_Function)) throw new Exception(line + ": `" + symbol.getName() + "` はメソッドではありません");
         if (params == null) params = new ArrayList<>();
         params.add(0, this);
