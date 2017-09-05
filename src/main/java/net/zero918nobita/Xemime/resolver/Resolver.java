@@ -1,6 +1,5 @@
 package net.zero918nobita.Xemime.resolver;
 
-import net.zero918nobita.Xemime.ast.X_Code;
 import net.zero918nobita.Xemime.ast.X_Symbol;
 import net.zero918nobita.Xemime.entity.Scope;
 
