@@ -17,7 +17,7 @@ Xemime インタプリタでは、EBNF ( 拡張バッカス・ナウア記法 ) 
 
 ```
 #program: プログラム, stmt: 文
-program = { stmt } ;
+program = [ { stmt } ] ;
 
 # for_stmt: for文, if_stmt: if文, import_stmt: インポート文, logical_expr: 論理式
 # switch_stmt: switch文, while_stmt: while文
