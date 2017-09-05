@@ -1,4 +1,4 @@
-package net.zero918nobita.Xemime.entity;
+package net.zero918nobita.Xemime.resolver;
 
 import net.zero918nobita.Xemime.ast.X_Symbol;
 
