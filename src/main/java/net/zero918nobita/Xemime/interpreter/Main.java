@@ -21,13 +21,20 @@ public class Main {
     /** 構文解析器 */
     private static Parser parser;
 
-    /** グローバル環境 */
-    public static Default defaultObj = new Default();
-
     /** 実体テーブル */
     private static TreeMap<Address, Node> entities = new TreeMap<Address, Node>() {{
         put(new Address(0, 0), Bool.Nil);
         put(new Address(0, 1), Bool.T);
+    }};
+
+    /** グローバル環境 */
+    public static Default defaultObj = new Default() {{
+        Address addressOfDefaultObj = Main.register(defaultObj);
+        setMember(Symbol.intern(0, "this"), addressOfDefaultObj);
+        setMember(Symbol.intern(0, "THIS"), addressOfDefaultObj);
+        setMember(Symbol.intern(0, "Default"), addressOfDefaultObj);
+        setMember(Symbol.intern(0, "Core"), register(new X_Core()));
+        setMember(Symbol.intern(0, "Object"), register(new X_Object()));
     }};
 
     /**
@@ -155,18 +162,6 @@ public class Main {
     }
 
     /**
-     * 組み込みオブジェクトを読み込みます。
-     */
-    public static void init() {
-        Address addressOfDefaultObj = Main.register(defaultObj);
-        defaultObj.setMember(Symbol.intern(0, "this"), addressOfDefaultObj);
-        defaultObj.setMember(Symbol.intern(0, "THIS"), addressOfDefaultObj);
-        defaultObj.setMember(Symbol.intern(0, "Default"), addressOfDefaultObj);
-        defaultObj.setMember(Symbol.intern(0, "Core"), register(new X_Core()));
-        defaultObj.setMember(Symbol.intern(0, "Object"), register(new X_Object()));
-    }
-
-    /**
      * Xemime インタプリタにおいて最初に呼び出され、
      * コマンドライン引数によって実行モード(対話的実行 or ソースファイル実行)を設定し、
      * 実際にパーサも読み込んで解釈と実行を開始します。<br>
@@ -187,8 +182,6 @@ public class Main {
             vmmThread = new Thread(vmm);
             vmmThread.start();
         }
-
-        init();
 
         try {
             parser = new Parser();
@@ -260,7 +253,6 @@ public class Main {
      * @throws Exception ソースコードの解析中または実行中にエラーが発生する場合があります。
      */
     public static void exec(String source) throws Exception {
-        init();
         parser = new Parser();
         ArrayList<Node> result = parser.parse(source);
         for (Node node : result) node.run();
