@@ -21,6 +21,9 @@ import static org.hamcrest.CoreMatchers.nullValue;
  */
 
 public class FrameTest {
+    /** 改行コード */
+    private String br = System.lineSeparator();
+
     @Test
     public void test() throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -33,7 +36,7 @@ public class FrameTest {
                         "};\n" +
                         "println(if(variable == \"global\", T, NIL));"
         );
-        assertThat(out.toString(), is("T" + System.lineSeparator() + "T" + System.lineSeparator()));
+        assertThat(out.toString(), is("T" + br + "T" + br));
     }
 
     @Test
