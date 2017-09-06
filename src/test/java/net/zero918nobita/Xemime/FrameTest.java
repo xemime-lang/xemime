@@ -8,6 +8,9 @@ import net.zero918nobita.Xemime.interpreter.Frame;
 import net.zero918nobita.Xemime.interpreter.Main;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -20,22 +23,17 @@ import static org.hamcrest.CoreMatchers.nullValue;
 public class FrameTest {
     @Test
     public void test() throws Exception {
-        // グローバルの文字列型変数 variable を宣言し、"global" で初期化する
-        Main.defValue(Symbol.intern(0, "variable"), new Str(0, "global"));
-        // ローカル変数のフレームを追加する
-        Main.loadLocalFrame(new Handler(0));
-        // ローカルの文字列型変数 variable を宣言し、"local" で初期化する
-        Main.defValue(Symbol.intern(0, "variable"), new Str(0, "local"));
-        // フレームの階層数が 1 であることを確認する
-        assertThat(Main.frame.numberOfLayers(), is(1));
-        // シンボル variable の参照先がローカル変数であることを確認する
-        assertThat(Main.getValueOfSymbol(Symbol.intern(0, "variable")), is(new Str(0, "local")));
-        // フレームを破棄する
-        Main.unloadLocalFrame();
-        // シンボル variable の参照先がグローバル変数であることを確認する
-        assertThat(Main.getValueOfSymbol(Symbol.intern(0, "variable")), is(new Str(0, "global")));
-        // フレームの階層数が 0 であることを確認する
-        assertThat(Main.frame.numberOfLayers(), is(0));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+        Main.exec(
+                "let variable = \"global\";\n" +
+                        "{\n" +
+                        "    let variable = \"local\";\n" +
+                        "    println(if(variable == \"local\", T, NIL));\n" +
+                        "};\n" +
+                        "println(if(variable == \"global\", T, NIL));"
+        );
+        assertThat(out.toString(), is("T" + System.lineSeparator() + "T" + System.lineSeparator()));
     }
 
     @Test
