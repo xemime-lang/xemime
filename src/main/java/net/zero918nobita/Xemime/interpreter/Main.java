@@ -44,12 +44,6 @@ public class Main {
      */
     public static Frame frame = new Frame();
 
-    /** 仮想メモリモニタ */
-    private static VirtualMemoryMonitor vmm = null;
-
-    /** 仮想メモリモニタ実行用スレッド */
-    private static Thread vmmThread = null;
-
     /**
      * ローカル変数のフレームを追加します。
      * @param table フレーム
@@ -169,6 +163,11 @@ public class Main {
      * @param args コマンドライン引数
      */
     public static void main(String[] args) {
+        // 仮想メモリモニタ
+        VirtualMemoryMonitor vmm;
+        // 仮想メモリモニタ実行用スレッド
+        Thread vmmThread;
+
         boolean debug = Arrays.asList(args).contains("-debug");
 
         if ((debug && args.length >= 3) || (!debug && args.length >= 2)) {
