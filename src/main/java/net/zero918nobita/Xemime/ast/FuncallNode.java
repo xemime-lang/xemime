@@ -15,8 +15,8 @@ public class FuncallNode extends Node {
     private Node func;
     private ArrayList<Node> list;
 
-    public FuncallNode(int n, Node code, ArrayList<Node> l) throws Exception {
-        super(n);
+    public FuncallNode(int location, Node code, ArrayList<Node> l) throws Exception {
+        super(location);
         if (code instanceof Symbol || code instanceof Native || code instanceof FuncallNode) {
             func = code;
         } else {
@@ -31,7 +31,7 @@ public class FuncallNode extends Node {
             ArrayList<Node> params = new ArrayList<>();
             for (Node o : list) params.add(o.run());
             params.add(0, func);
-            return ((Native) func).call(params, null);
+            return ((Native) func).call(getLocation(), params, null);
         } else if (func instanceof FuncallNode) {
             Node c = func.run();
             if (c == null) throw new Exception(getLocation() + ": 存在しない関数です");
@@ -40,7 +40,7 @@ public class FuncallNode extends Node {
             ArrayList<Node> params = new ArrayList<>();
             for (Node o: list) params.add(o.run());
             params.add(0, f);
-            return f.call(params, null);
+            return f.call(getLocation(), params, null);
         } else {
             Symbol symbol = (Symbol)func;
             Node c = Main.getValueOfSymbol(symbol);
@@ -50,7 +50,7 @@ public class FuncallNode extends Node {
             ArrayList<Node> params = new ArrayList<>();
             for (Node o : list) params.add(o.run());
             params.add(0, func);
-            return func.call(params, null);
+            return func.call(getLocation(), params, null);
         }
     }
 }

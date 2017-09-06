@@ -174,6 +174,9 @@ public class Lexer {
                 case '.': // メッセージ式
                     tokenType = TokenType.PERIOD;
                     break;
+                case '$': // 括弧を省略した関数呼び出し
+                    tokenType = TokenType.DOLLAR;
+                    break;
                 default:
                     if (Character.isDigit((char) c)) {
                         reader.unread();

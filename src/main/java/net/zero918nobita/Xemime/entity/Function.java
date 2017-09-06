@@ -19,11 +19,11 @@ public abstract class Function extends Node {
     /** 引数の個数 */
     int numberOfArgs = 0;
 
-    public Node call(ArrayList<Node> params, Address self) throws Exception {
+    public Node call(int location, ArrayList<Node> params, Address self) throws Exception {
         if (params == null) {
-            if (numberOfArgs != 0) throw new Exception("引数の個数が違います");
+            if (numberOfArgs != 0) throw new Exception(location + ": 引数の個数が違います");
         } else {
-            if (params.size() - 1 != numberOfArgs) throw new Exception("引数の個数が違います");
+            if (params.size() - 1 != numberOfArgs) throw new Exception(location + ": 引数の個数が違います");
         }
         return exec(params, self);
     }

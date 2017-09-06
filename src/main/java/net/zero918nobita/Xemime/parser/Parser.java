@@ -336,6 +336,18 @@ public class Parser {
                 } else if (tokenType == TokenType.LP) {
                     // 関数呼び出し
                     obj = methodCall(sym);
+                } else if (tokenType == TokenType.DOLLAR) {
+                    getToken();
+                    ArrayList<Node> list = new ArrayList<>();
+                    Node node = expr();
+                    if (node == null) throw new Exception(lex.getLocation() + ": 文法エラーです");
+                    list.add(node);
+                    while (tokenType != TokenType.SEMICOLON) {
+                        if (tokenType != TokenType.COMMA) throw new Exception(lex.getLocation() + ": 文法エラーです ( 引数の区切りのカンマ、またはセミコロンが見つかりません )");
+                        getToken();
+                        list.add(expr());
+                    }
+                    obj = new FuncallNode(lex.getLocation(), methodOfCoreObject(sym), list);
                 } else {
                     obj = methodOfCoreObject(sym);
                 }

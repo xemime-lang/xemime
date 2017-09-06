@@ -38,5 +38,6 @@ public enum TokenType {
         /** 右波括弧 */ RB,
          /** lambda */ LAMBDA,
           /** -&gt; */ ARROW,
- /** . (メッセージ式) */ PERIOD
+ /** . (メッセージ式) */ PERIOD,
+              /** $ */ DOLLAR
 }

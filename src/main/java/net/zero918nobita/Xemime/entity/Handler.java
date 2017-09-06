@@ -67,6 +67,6 @@ public class Handler extends Node {
         if (!(o instanceof Function)) throw new Exception(line + ": `" + symbol.getName() + "` はメソッドではありません");
         if (params == null) params = new ArrayList<>();
         params.add(0, this);
-        return ((Function) o).call(params, Main.register(this));
+        return ((Function) o).call(getLocation(), params, Main.register(this));
     }
 }
