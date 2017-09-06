@@ -339,6 +339,10 @@ public class Parser {
                 } else if (tokenType == TokenType.DOLLAR) {
                     getToken();
                     ArrayList<Node> list = new ArrayList<>();
+                    if (tokenType == TokenType.SEMICOLON) {
+                        obj = new FuncallNode(lex.getLocation(), methodOfCoreObject(sym), list);
+                        break;
+                    }
                     Node node = expr();
                     if (node == null) throw new Exception(lex.getLocation() + ": 文法エラーです");
                     list.add(node);
