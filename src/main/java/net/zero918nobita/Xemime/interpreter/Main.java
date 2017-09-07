@@ -44,7 +44,8 @@ public class Main {
      */
     public static Frame frame = new Frame();
 
-    public static boolean allowExitMethod = true;
+    /** Core.exit(); の使用を認めるならば true が、そうでなければ false が代入されます。 */
+    private static boolean allowExitMethod = true;
 
     /**
      * ローカル変数のフレームを追加します。
