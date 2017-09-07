@@ -45,7 +45,7 @@ public class Main {
     public static Frame frame = new Frame();
 
     /** Core.exit(); の使用を認めるならば true が、そうでなければ false が代入されます。 */
-    private static boolean allowExitMethod = true;
+    private static boolean allowExitMethod;
 
     /**
      * ローカル変数のフレームを追加します。
@@ -166,6 +166,7 @@ public class Main {
      * @param args コマンドライン引数
      */
     public static void main(String[] args) {
+        allowExitMethod = true;
         // 仮想メモリモニタ
         VirtualMemoryMonitor vmm;
         // 仮想メモリモニタ実行用スレッド
@@ -255,7 +256,7 @@ public class Main {
      * @throws Exception ソースコードの解析中または実行中にエラーが発生する場合があります。
      */
     public static void exec(String source) throws Exception {
-        Main.allowExitMethod = false;
+        allowExitMethod = false;
         parser = new Parser();
         ArrayList<Node> result = parser.parse(source);
         for (Node node : result) node.run();
@@ -347,7 +348,7 @@ public class Main {
             @Override
             protected Node exec(ArrayList<Node> params, Address self) throws Exception {
                 if (Main.allowExitMethod) System.exit(0);
-                throw new Exception("この実行環境でexitメソッドを使用することはできません");
+                throw new Exception("この実行環境で Core.exit メソッドを使用することはできません");
             }
         }
 
