@@ -255,6 +255,7 @@ public class Main {
      * @throws Exception ソースコードの解析中または実行中にエラーが発生する場合があります。
      */
     public static void exec(String source) throws Exception {
+        Main.allowExitMethod = false;
         parser = new Parser();
         ArrayList<Node> result = parser.parse(source);
         for (Node node : result) node.run();
