@@ -44,6 +44,8 @@ public class Main {
      */
     public static Frame frame = new Frame();
 
+    public static boolean allowExitMethod = true;
+
     /**
      * ローカル変数のフレームを追加します。
      * @param table フレーム
@@ -342,8 +344,8 @@ public class Main {
 
             @Override
             protected Node exec(ArrayList<Node> params, Address self) throws Exception {
-                System.exit(0);
-                return new Int(0, 0);
+                if (Main.allowExitMethod) System.exit(0);
+                throw new Exception("この実行環境でexitメソッドを使用することはできません");
             }
         }
 
