@@ -5,6 +5,11 @@ import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 
+/**
+ * 単純式を構文解析します。
+ * @author Kodai Matsumoto
+ */
+
 class SimpleExpr extends ParseUnit {
     SimpleExpr(Lexer lexer) {
         super(lexer);
@@ -18,13 +23,13 @@ class SimpleExpr extends ParseUnit {
             case ADD:
             case SUB:
             case OR:
-                node = arithmeticExpr(node);
+                node = simpleExpr(node);
                 break;
         }
         return node;
     }
 
-    private Node arithmeticExpr(Node node) throws Exception {
+    private Node simpleExpr(Node node) throws Exception {
         ExprNode result = null;
         while ((tokenType == TokenType.ADD) ||
                 (tokenType == TokenType.SUB) ||
