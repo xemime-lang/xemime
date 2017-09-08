@@ -4,16 +4,16 @@ import net.zero918nobita.Xemime.ast.ExprNode;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
+import net.zero918nobita.Xemime.resolver.Resolver;
 
 class Expr extends ParseUnit {
-    Expr(Lexer lexer) {
-        super(lexer);
+    Expr(Lexer lexer, Resolver resolver) {
+        super(lexer, resolver);
     }
 
     @Override
     Node parse() throws Exception {
-        SimpleExpr simpleExpr = new SimpleExpr(lexer);
-        Node node = simpleExpr.parse();
+        Node node = new SimpleExpr(lexer, resolver).parse();
         switch (tokenType) {
             case L:
             case G:
@@ -39,7 +39,7 @@ class Expr extends ParseUnit {
                 (tokenType == TokenType.GE)) {
             TokenType op = tokenType;
             getToken();
-            Node simpleExpr = new SimpleExpr(lexer).parse();
+            Node simpleExpr = new SimpleExpr(lexer, resolver).parse();
             if (result == null) result = new ExprNode(lexer.getLocation(), op, node, simpleExpr);
             else result = new ExprNode(lexer.getLocation(), op, result, simpleExpr);
         }

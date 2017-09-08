@@ -4,6 +4,7 @@ import net.zero918nobita.Xemime.ast.ExprNode;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
+import net.zero918nobita.Xemime.resolver.Resolver;
 
 /**
  * 項を構文解析します。
@@ -11,13 +12,13 @@ import net.zero918nobita.Xemime.lexer.TokenType;
  */
 
 class Term extends ParseUnit {
-    Term(Lexer lexer) {
-        super(lexer);
+    Term(Lexer lexer, Resolver resolver) {
+        super(lexer, resolver);
     }
 
     @Override
     Node parse() throws Exception {
-        Factor factor = new Factor(lexer);
+        Factor factor = new Factor(lexer, resolver);
         Node node = factor.parse();
         switch (tokenType) {
             case MUL:
@@ -37,7 +38,7 @@ class Term extends ParseUnit {
                 (tokenType == TokenType.XOR)) {
             TokenType op = tokenType;
             getToken();
-            Node term = new Term(lexer).parse();
+            Node term = new Term(lexer, resolver).parse();
             if (result == null) {
                 result = new ExprNode(lexer.getLocation(), op, node, term);
             } else {

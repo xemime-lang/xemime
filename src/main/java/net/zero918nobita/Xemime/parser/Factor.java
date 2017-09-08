@@ -4,6 +4,7 @@ import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
+import net.zero918nobita.Xemime.resolver.Resolver;
 
 import java.util.ArrayList;
 
@@ -13,8 +14,8 @@ import java.util.ArrayList;
  */
 
 class Factor extends ParseUnit {
-    Factor(Lexer lexer) {
-        super(lexer);
+    Factor(Lexer lexer, Resolver resolver) {
+        super(lexer, resolver);
     }
 
     @Override
@@ -35,13 +36,13 @@ class Factor extends ParseUnit {
                 break;
             case NOT:
                 getToken();
-                node = new NotNode(lexer.getLocation(), new Factor(lexer).parse());
+                node = new NotNode(lexer.getLocation(), new Factor(lexer, resolver).parse());
                 break;
             case LAMBDA:
-                node = new Lambda(lexer).parse();
+                node = new Lambda(lexer, resolver).parse();
                 break;
             default:
-                node = new First(lexer).parse();
+                node = new First(lexer, resolver).parse();
         }
 
         // メッセージ式
@@ -53,13 +54,13 @@ class Factor extends ParseUnit {
             if (tokenType == TokenType.LP) {
                 ArrayList<Node> list = new ArrayList<>();
                 getToken();
-                if (tokenType != TokenType.RP) list = new Args(lexer).parse();
+                if (tokenType != TokenType.RP) list = new Args(lexer, resolver).arguments();
                 if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
                 getToken();
                 node = new DotCallNode(lexer.getLocation(), node, sym, list);
             } else if (tokenType == TokenType.ASSIGN) {
                 getToken();
-                Node c = new Expr(lexer).parse();
+                Node c = new Expr(lexer, resolver).parse();
                 node = new DotAssignNode(lexer.getLocation(), node, sym, c);
             } else {
                 node = new DotExprNode(lexer.getLocation(), node, sym);
