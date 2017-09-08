@@ -2,9 +2,13 @@ package net.zero918nobita.Xemime;
 
 import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.entity.Str;
+import net.zero918nobita.Xemime.interpreter.Main;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
@@ -15,8 +19,22 @@ import static org.hamcrest.CoreMatchers.is;
  */
 
 public class BoolTest {
+    private String br = System.lineSeparator();
+
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+
+    @Test
+    public void test() throws Exception {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+        Main.exec(
+                "let variable = T;\n" +
+                        "println(variable);\n" +
+                        "println(!variable);\n"
+        );
+        assertThat(out.toString(), is("T" + br + "NIL" + br));
+    }
 
     @Test
     public void testToString() {
