@@ -21,7 +21,7 @@ class Factor extends ParseUnit {
     @Override
     Node parse() throws Exception {
         Node node;
-        switch (tokenType) {
+        switch (lexer.tokenType()) {
             case STRING:
                 node = lexer.value();
                 getToken();
@@ -45,20 +45,22 @@ class Factor extends ParseUnit {
                 node = new First(lexer, resolver).parse();
         }
 
+        System.out.println();
+
         // メッセージ式
-        while (tokenType == TokenType.PERIOD) {
+        while (lexer.tokenType() == TokenType.PERIOD) {
             getToken();
-            if (tokenType != TokenType.SYMBOL) throw new Exception("文法エラーです");
+            if (lexer.tokenType() != TokenType.SYMBOL) throw new Exception("文法エラーです");
             Symbol sym = (Symbol)lexer.value();
             getToken();
-            if (tokenType == TokenType.LP) {
+            if (lexer.tokenType() == TokenType.LP) {
                 ArrayList<Node> list = new ArrayList<>();
                 getToken();
-                if (tokenType != TokenType.RP) list = new Args(lexer, resolver).arguments();
-                if (tokenType != TokenType.RP) throw new Exception("文法エラーです");
+                if (lexer.tokenType() != TokenType.RP) list = new Args(lexer, resolver).arguments();
+                if (lexer.tokenType() != TokenType.RP) throw new Exception("文法エラーです");
                 getToken();
                 node = new DotCallNode(lexer.getLocation(), node, sym, list);
-            } else if (tokenType == TokenType.ASSIGN) {
+            } else if (lexer.tokenType() == TokenType.ASSIGN) {
                 getToken();
                 Node c = new Expr(lexer, resolver).parse();
                 node = new DotAssignNode(lexer.getLocation(), node, sym, c);

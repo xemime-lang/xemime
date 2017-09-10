@@ -23,9 +23,9 @@ class Block extends ParseUnit {
         ArrayList<Node> list = null;
         getToken();
         resolver.addScope();
-        while (tokenType != TokenType.RB) {
+        while (lexer.tokenType() != TokenType.RB) {
             Node node = new Expr(lexer, resolver).parse();
-            if (tokenType == TokenType.SEMICOLON) {
+            if (lexer.tokenType() == TokenType.SEMICOLON) {
                 if (list == null) list = new ArrayList<>();
                 list.add(node);
             } else {

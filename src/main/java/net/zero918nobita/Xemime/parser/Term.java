@@ -20,7 +20,7 @@ class Term extends ParseUnit {
     Node parse() throws Exception {
         Factor factor = new Factor(lexer, resolver);
         Node node = factor.parse();
-        switch (tokenType) {
+        switch (lexer.tokenType()) {
             case MUL:
             case DIV:
             case XOR:
@@ -32,11 +32,11 @@ class Term extends ParseUnit {
 
     private Node term(Node node) throws Exception {
         ExprNode result = null;
-        while ((tokenType == TokenType.MUL) ||
-                (tokenType == TokenType.DIV) ||
-                (tokenType == TokenType.AND) ||
-                (tokenType == TokenType.XOR)) {
-            TokenType op = tokenType;
+        while ((lexer.tokenType() == TokenType.MUL) ||
+                (lexer.tokenType() == TokenType.DIV) ||
+                (lexer.tokenType() == TokenType.AND) ||
+                (lexer.tokenType() == TokenType.XOR)) {
+            TokenType op = lexer.tokenType();
             getToken();
             Node term = new Term(lexer, resolver).parse();
             if (result == null) {

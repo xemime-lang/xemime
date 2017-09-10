@@ -14,7 +14,7 @@ class Expr extends ParseUnit {
     @Override
     Node parse() throws Exception {
         Node node = new SimpleExpr(lexer, resolver).parse();
-        switch (tokenType) {
+        switch (lexer.tokenType()) {
             case L:
             case G:
             case EQ:
@@ -30,14 +30,14 @@ class Expr extends ParseUnit {
 
     private Node logicalExpr(Node node) throws Exception {
         ExprNode result = null;
-        while ((tokenType == TokenType.L) ||
-                (tokenType == TokenType.G) ||
-                (tokenType == TokenType.EQ) ||
-                (tokenType == TokenType.EQL) ||
-                (tokenType == TokenType.NE) ||
-                (tokenType == TokenType.LE) ||
-                (tokenType == TokenType.GE)) {
-            TokenType op = tokenType;
+        while ((lexer.tokenType() == TokenType.L) ||
+                (lexer.tokenType() == TokenType.G) ||
+                (lexer.tokenType() == TokenType.EQ) ||
+                (lexer.tokenType() == TokenType.EQL) ||
+                (lexer.tokenType() == TokenType.NE) ||
+                (lexer.tokenType() == TokenType.LE) ||
+                (lexer.tokenType() == TokenType.GE)) {
+            TokenType op = lexer.tokenType();
             getToken();
             Node simpleExpr = new SimpleExpr(lexer, resolver).parse();
             if (result == null) result = new ExprNode(lexer.getLocation(), op, node, simpleExpr);

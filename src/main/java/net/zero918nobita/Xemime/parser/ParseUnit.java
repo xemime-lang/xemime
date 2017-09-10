@@ -7,7 +7,6 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 
 abstract class ParseUnit {
     protected Lexer lexer;
-    protected TokenType tokenType;
     protected Resolver resolver;
 
     ParseUnit(Lexer lexer, Resolver resolver) {
@@ -17,9 +16,9 @@ abstract class ParseUnit {
 
     void getToken() throws Exception {
         if (lexer.advance()) {
-            tokenType = lexer.tokenType();
+            lexer.setTokenType(lexer.tokenType());
         } else {
-            tokenType = TokenType.EOS;
+            lexer.setTokenType(TokenType.EOS);
         }
     }
 

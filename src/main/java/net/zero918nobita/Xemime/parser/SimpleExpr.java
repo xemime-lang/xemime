@@ -18,9 +18,8 @@ class SimpleExpr extends ParseUnit {
 
     @Override
     Node parse() throws Exception {
-        Term term = new Term(lexer, resolver);
-        Node node = term.parse();
-        switch (tokenType) {
+        Node node = new Term(lexer, resolver).parse();
+        switch (lexer.tokenType()) {
             case ADD:
             case SUB:
             case OR:
@@ -32,10 +31,10 @@ class SimpleExpr extends ParseUnit {
 
     private Node simpleExpr(Node node) throws Exception {
         ExprNode result = null;
-        while ((tokenType == TokenType.ADD) ||
-                (tokenType == TokenType.SUB) ||
-                (tokenType == TokenType.OR)) {
-            TokenType op = tokenType;
+        while ((lexer.tokenType() == TokenType.ADD) ||
+                (lexer.tokenType() == TokenType.SUB) ||
+                (lexer.tokenType() == TokenType.OR)) {
+            TokenType op = lexer.tokenType();
             getToken();
             Node term = new Term(lexer, resolver).parse();
             if (result == null) {

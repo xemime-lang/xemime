@@ -11,10 +11,9 @@ class Statement extends ParseUnit{
 
     @Override
     Node parse() throws Exception {
-        Expr expr = new Expr(lexer, resolver);
-        Node node = expr.parse();
+        Node node = new Expr(lexer, resolver).parse();
         if (node != null)
-            switch (tokenType) {
+            switch (lexer.tokenType()) {
                 case SEMICOLON:
                     break;
                 default:

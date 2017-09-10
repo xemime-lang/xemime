@@ -59,7 +59,8 @@ public class Parser {
         getToken();
         Node code;
         while (tokenType != TokenType.EOS) {
-            code = statement();
+            // code = statement();
+            code = new Statement(lex, resolver).parse();
             if (code != null) result.add(code);
             getToken();
         }

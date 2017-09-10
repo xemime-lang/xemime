@@ -23,32 +23,32 @@ class Lambda extends ParseUnit {
     Node parse() throws Exception {
         ArrayList<Symbol> list = new ArrayList<>();
         getToken();
-        if (tokenType == TokenType.SYMBOL) {
+        if (lexer.tokenType() == TokenType.SYMBOL) {
             list.add((Symbol) lexer.value());
             getToken();
-            while (tokenType != TokenType.ARROW) {
-                if (tokenType != TokenType.COMMA) throw new Exception(lexer.getLocation() + ": ラムダ式の仮引数が不正です");
+            while (lexer.tokenType() != TokenType.ARROW) {
+                if (lexer.tokenType() != TokenType.COMMA) throw new Exception(lexer.getLocation() + ": ラムダ式の仮引数が不正です");
                 getToken();
-                if (tokenType != TokenType.SYMBOL) throw new Exception(lexer.getLocation() + ": ラムダ式の仮引数が不正です");
+                if (lexer.tokenType() != TokenType.SYMBOL) throw new Exception(lexer.getLocation() + ": ラムダ式の仮引数が不正です");
                 list.add((Symbol) lexer.value());
                 getToken();
             }
-        } else if (tokenType == TokenType.LP) {
+        } else if (lexer.tokenType() == TokenType.LP) {
             getToken();
-            if (tokenType == TokenType.SYMBOL) {
+            if (lexer.tokenType() == TokenType.SYMBOL) {
                 list.add((Symbol) lexer.value());
                 getToken();
-                while (tokenType != TokenType.RP) {
-                    if (tokenType != TokenType.COMMA) throw new Exception(lexer.getLocation() + ": ラムダ式の仮引数が不正です");
+                while (lexer.tokenType() != TokenType.RP) {
+                    if (lexer.tokenType() != TokenType.COMMA) throw new Exception(lexer.getLocation() + ": ラムダ式の仮引数が不正です");
                     getToken();
-                    if (tokenType != TokenType.SYMBOL) throw new Exception(lexer.getLocation() + ": ラムダ式の仮引数が不正です");
+                    if (lexer.tokenType() != TokenType.SYMBOL) throw new Exception(lexer.getLocation() + ": ラムダ式の仮引数が不正です");
                     list.add((Symbol) lexer.value());
                     getToken();
                 }
             }
             getToken();
-            if (tokenType != TokenType.ARROW) throw new Exception(lexer.getLocation() + ": ラムダ式のアロー演算子がありません");
-        } else if (tokenType != TokenType.ARROW) {
+            if (lexer.tokenType() != TokenType.ARROW) throw new Exception(lexer.getLocation() + ": ラムダ式のアロー演算子がありません");
+        } else if (lexer.tokenType() != TokenType.ARROW) {
             throw new Exception(lexer.getLocation() + ": ラムダ式の仮引数リストまたはアロー演算子が必要です");
         }
         getToken();

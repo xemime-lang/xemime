@@ -31,6 +31,10 @@ public class Lexer {
         reader = new LexerReader(s);
     }
 
+    public void setTokenType(TokenType tokenType) {
+        this.tokenType = tokenType;
+    }
+
     public int getLocation() {
         return line;
     }

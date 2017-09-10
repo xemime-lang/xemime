@@ -262,6 +262,10 @@ public class Main {
         for (Node node : result) node.run();
     }
 
+    public static boolean allowExitMethod() {
+        return allowExitMethod;
+    }
+
     /**
      * ロゴとバージョン情報を出力します。
      */
