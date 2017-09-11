@@ -14,11 +14,6 @@
             <artifactId>junit</artifactId>
             <version>RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>net.java.dev.javacc</groupId>
-            <artifactId>javacc</artifactId>
-            <version>5.0</version>
-        </dependency>
     </dependencies>
 
     <properties>
