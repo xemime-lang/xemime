@@ -46,7 +46,7 @@ public class Scope {
         return parent;
     }
 
-    public void defVar(Symbol sym) {
+    void defVar(Symbol sym) {
         variables.add(sym);
     }
 
@@ -55,6 +55,6 @@ public class Scope {
         Scope s = this;
         while ((s = s.parent()) != null)
             if (s.variables.contains(sym)) return;
-        throw new Exception(location + ": シンボル `" + sym + "` を解決できません");
+        throw new SemanticException(location, 2);
     }
 }
