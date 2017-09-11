@@ -55,6 +55,8 @@ public class Scope {
         Scope s = this;
         while ((s = s.parent()) != null)
             if (s.variables.contains(sym)) return;
+
+        // SemanticException - シンボルの参照の解決に失敗しました
         throw new SemanticException(location, 2);
     }
 }
