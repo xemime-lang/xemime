@@ -19,7 +19,8 @@ class Args extends ParseUnit {
 
     @Override
     Node parse() throws Exception {
-        throw new Exception("引数リストは単一のノードに変換できません");
+        // FatalException - 呼び出し禁止メソッドの呼び出しが行われた
+        throw new FatalException(lexer.getLocation(), 3);
     }
 
     ArrayList<Node> arguments() throws Exception {
