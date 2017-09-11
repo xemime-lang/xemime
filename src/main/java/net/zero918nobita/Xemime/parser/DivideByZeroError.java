@@ -6,8 +6,8 @@ package net.zero918nobita.Xemime.parser;
  * @author Kodai Matsumoto
  */
 
-class DivideByZeroException extends Exception {
-    DivideByZeroException(int location, int errorCode) {
+class DivideByZeroError extends Exception {
+    DivideByZeroError(int location, int errorCode) {
         super(location + ": ゼロ除算を検出しました [" + errorCode + "]");
     }
 }
