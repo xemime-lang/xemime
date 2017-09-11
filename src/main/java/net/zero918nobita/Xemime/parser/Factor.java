@@ -48,14 +48,20 @@ class Factor extends ParseUnit {
         // メッセージ式
         while (lexer.tokenType() == TokenType.PERIOD) {
             getToken();
-            if (lexer.tokenType() != TokenType.SYMBOL) throw new Exception("文法エラーです");
+
+            // SyntaxException - メッセージ式のピリオドの後ろがシンボルではありません。
+            if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxException(lexer.getLocation(), 4, "メッセージ式のピリオドの後ろがシンボルではありません。");
+
             Symbol sym = (Symbol)lexer.value();
             getToken();
             if (lexer.tokenType() == TokenType.LP) {
                 ArrayList<Node> list = new ArrayList<>();
                 getToken();
                 if (lexer.tokenType() != TokenType.RP) list = new Args(lexer, resolver).arguments();
-                if (lexer.tokenType() != TokenType.RP) throw new Exception("文法エラーです");
+
+                // SyntaxException - メッセージ式の括弧が閉じられていません。
+                if (lexer.tokenType() != TokenType.RP) throw new SyntaxException(lexer.getLocation(), 5, "メッセージ式の括弧が閉じられていません。");
+
                 getToken();
                 node = new DotCallNode(lexer.getLocation(), node, sym, list);
             } else if (lexer.tokenType() == TokenType.ASSIGN) {
