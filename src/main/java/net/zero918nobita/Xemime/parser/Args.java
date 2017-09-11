@@ -19,8 +19,8 @@ class Args extends ParseUnit {
 
     @Override
     Node parse() throws Exception {
-        // FatalException - 呼び出し禁止メソッドの呼び出しが行われた
-        throw new FatalException(lexer.getLocation(), 3);
+        // FatalError - 呼び出し禁止メソッドの呼び出しが行われた
+        throw new FatalError(lexer.getLocation(), 3);
     }
 
     ArrayList<Node> arguments() throws Exception {

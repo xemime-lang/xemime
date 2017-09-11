@@ -41,8 +41,8 @@ class Term extends ParseUnit {
             getToken();
             Node term = new Term(lexer, resolver).parse();
 
-            // DivideByZeroException - 構文解析中にゼロ除算が行われている箇所を発見しました。
-            if (op == TokenType.DIV && term.equals(new Int(0, 0))) throw new DivideByZeroException(lexer.getLocation(), 1);
+            // DivideByZeroError - 構文解析中にゼロ除算が行われている箇所を発見しました。
+            if (op == TokenType.DIV && term.equals(new Int(0, 0))) throw new DivideByZeroError(lexer.getLocation(), 1);
 
             if (result == null) {
                 result = new ExprNode(lexer.getLocation(), op, node, term);
