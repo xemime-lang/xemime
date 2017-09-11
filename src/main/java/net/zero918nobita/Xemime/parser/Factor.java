@@ -45,8 +45,6 @@ class Factor extends ParseUnit {
                 node = new First(lexer, resolver).parse();
         }
 
-        System.out.println();
-
         // メッセージ式
         while (lexer.tokenType() == TokenType.PERIOD) {
             getToken();
