@@ -4,7 +4,7 @@ import net.zero918nobita.Xemime.entity.Double;
 import net.zero918nobita.Xemime.entity.Int;
 
 /**
- * 単項演算子 `-`
+ * 単項演算子 `-` を表すノードです。<br>
  * 評価されると、数値(Int, Double)型の値の符号を反転させます。
  * @author Kodai Matsumoto
  */

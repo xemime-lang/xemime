@@ -3,7 +3,7 @@ package net.zero918nobita.Xemime.ast;
 import net.zero918nobita.Xemime.entity.Bool;
 
 /**
- * 否定演算子
+ * 否定演算子を表すノードです。<br>
  * 評価されると、真偽(Bool)型の T は NIL に、NIL は T に変換します。
  * @author Kodai Matsumoto
  */

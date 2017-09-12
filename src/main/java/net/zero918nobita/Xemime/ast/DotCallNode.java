@@ -3,7 +3,7 @@ package net.zero918nobita.Xemime.ast;
 import java.util.ArrayList;
 
 /**
- * オブジェクトのメソッドの呼び出し
+ * メソッドの呼び出しを表すノードです。
  * @author Kodai Matsumoto
  */
 

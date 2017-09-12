@@ -6,7 +6,7 @@ import net.zero918nobita.Xemime.interpreter.Main;
 import java.util.HashMap;
 
 /**
- * シンボル
+ * シンボルを表すノードです。
  * @author Kodai Matsumoto
  */
 

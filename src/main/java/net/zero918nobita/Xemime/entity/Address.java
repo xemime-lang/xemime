@@ -5,7 +5,7 @@ import net.zero918nobita.Xemime.ast.Node;
 import java.util.TreeMap;
 
 /**
- * アドレス
+ * アドレス<br>
  * グローバルフレーム、ローカルフレームで管理され、シンボルとその値にあたる実体を結びつけます。
  * フレームの値であり、実体テーブルのキーでもあります。
  * @author Kodai Matsumoto

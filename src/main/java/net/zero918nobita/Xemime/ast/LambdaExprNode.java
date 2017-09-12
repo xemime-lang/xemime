@@ -8,7 +8,7 @@ import net.zero918nobita.Xemime.interpreter.Main;
 import java.util.ArrayList;
 
 /**
- * ラムダ式
+ * ラムダ式を表すノードです。
  * @author Kodai Matsumoto
  */
 

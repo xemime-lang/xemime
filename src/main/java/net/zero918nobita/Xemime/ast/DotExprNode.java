@@ -1,5 +1,10 @@
 package net.zero918nobita.Xemime.ast;
 
+/**
+ * フィールド参照を表すノードです。
+ * @author Kodai Matsumoto
+ */
+
 public class DotExprNode extends Node {
     private Node obj;
     private Symbol symbol;

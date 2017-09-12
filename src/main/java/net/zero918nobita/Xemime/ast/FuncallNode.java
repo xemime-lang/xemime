@@ -7,7 +7,7 @@ import net.zero918nobita.Xemime.interpreter.Main;
 import java.util.ArrayList;
 
 /**
- * 関数呼び出し
+ * 関数呼び出しを表すノードです。
  * @author Kodai Matsumoto
  */
 
