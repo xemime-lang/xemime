@@ -4,25 +4,56 @@ package net.zero918nobita.Xemime.ast {
     class AssignNode {
     }
 
+    AssignNode --|> ExprNode
+
     class BlockNode {
     }
+
+    BlockNode --|> Node
 
     class DeclareNode {
     }
 
+    DeclareNode --|> ExprNode
+
     class DotAssignNode {
     }
+
+    DotAssignNode --|> Node
 
     class DotCallNode {
     }
 
+    DotCallNode --|> Node
+
     class DotExprNode {
     }
+
+    DotExprNode --|> Node
 
     class ExprNode {
     }
 
+    ExprNode --|> Node
+
+    class FuncallNode {
+    }
+
+    FuncallNode --|> Node
+
     class LambdaExprNode {
+    }
+
+    class MinusNode {
+    }
+
+    class Node {
+    }
+
+    class NotNode {
+    }
+
+    class Symbol {
     }
 }
 
