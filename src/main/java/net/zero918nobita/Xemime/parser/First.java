@@ -74,7 +74,7 @@ class First extends ParseUnit {
                     node = new AssignNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
                 } else if (lexer.tokenType() == TokenType.LP) {
                     // 関数呼び出し
-                    node = new MethodCall(lexer, resolver).parse();
+                    node = new MethodCall(lexer, resolver).methodCall(sym);
                 } else if (lexer.tokenType() == TokenType.DOLLAR) {
                     // 括弧を省略した関数呼び出し
                     getToken(); // skip "$"
