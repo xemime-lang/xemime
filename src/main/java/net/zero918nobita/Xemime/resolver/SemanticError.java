@@ -5,8 +5,8 @@ package net.zero918nobita.Xemime.resolver;
  * @author Kodai Matsumoto
  */
 
-class SemanticException extends Exception {
-    SemanticException(int location, int errorCode) {
+class SemanticError extends Exception {
+    SemanticError(int location, int errorCode) {
         super(location + ": シンボルの参照先を解決できません [" + errorCode + "]");
     }
 }
