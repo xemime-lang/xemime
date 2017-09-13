@@ -85,31 +85,31 @@ public class Node {
         throw new Exception(location + ": このオブジェクトに `/` 演算子は使用できません");
     }
 
-    public Bool less(int location, Node obj) throws Exception {
+    public Bool less(int location, Node rhs) throws Exception {
         throw new Exception(location + ": このオブジェクトに `<` 演算子は使用できません");
     }
 
-    public Bool le(int location, Node obj) throws Exception {
+    public Bool le(int location, Node rhs) throws Exception {
         throw new Exception(location + ": このオブジェクトに `<=` 演算子は使用できません");
     }
 
-    public Bool greater(int location, Node obj) throws Exception {
+    public Bool greater(int location, Node rhs) throws Exception {
         throw new Exception(location + ": このオブジェクトに `>` 演算子は使用できません");
     }
 
-    public Bool ge(int location, Node obj) throws Exception {
+    public Bool ge(int location, Node rhs) throws Exception {
         throw new Exception(location + ": このオブジェクトに `>=` 演算子は使用できません");
     }
 
-    public Bool and(int location, Node obj) throws Exception {
+    public Bool and(int location, Node rhs) throws Exception {
         throw new Exception(location + "このオブジェクトに `&&` 演算子は使用できません");
     }
 
-    public Bool or(int location, Node obj) throws Exception {
+    public Bool or(int location, Node rhs) throws Exception {
         throw new Exception(location + "このオブジェクトに `||` 演算子は使用できません");
     }
 
-    public Bool xor(int location, Node obj) throws Exception {
+    public Bool xor(int location, Node rhs) throws Exception {
         throw new Exception(location + "このオブジェクトに `^` 演算子は使用できません");
     }
 

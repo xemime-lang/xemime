@@ -14,9 +14,9 @@ public class Symbol extends Node {
     private static HashMap<String, Symbol> table = new HashMap<>();
     private String name;
 
-    public Symbol(int n, String s) {
-        super(n);
-        name = s;
+    public Symbol(int location, String name) {
+        super(location);
+        this.name = name;
     }
 
     @Override

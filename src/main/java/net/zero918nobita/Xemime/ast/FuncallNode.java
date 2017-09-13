@@ -15,14 +15,14 @@ public class FuncallNode extends Node {
     private Node func;
     private ArrayList<Node> list;
 
-    public FuncallNode(int location, Node code, ArrayList<Node> l) throws Exception {
+    public FuncallNode(int location, Node node, ArrayList<Node> list) throws Exception {
         super(location);
-        if (code instanceof Symbol || code instanceof Native || code instanceof FuncallNode) {
-            func = code;
+        if (node instanceof Symbol || node instanceof Native || node instanceof FuncallNode) {
+            func = node;
         } else {
             throw new Exception(getLocation() + ": 深刻なエラー: 関数呼び出しに失敗しました");
         }
-        list = l;
+        this.list = list;
     }
 
     @Override

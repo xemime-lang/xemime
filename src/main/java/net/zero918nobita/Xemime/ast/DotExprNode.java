@@ -9,9 +9,9 @@ public class DotExprNode extends Node {
     private Node obj;
     private Symbol symbol;
 
-    public DotExprNode(int n, Node o, Symbol sym) {
-        super(n);
-        obj = o;
+    public DotExprNode(int location, Node object, Symbol sym) {
+        super(location);
+        obj = object;
         symbol = sym;
     }
 

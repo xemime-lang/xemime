@@ -9,16 +9,16 @@ import net.zero918nobita.Xemime.entity.Bool;
  */
 
 public class NotNode extends Node {
-    private Node obj;
+    private Node node;
 
-    public NotNode(int n, Node o) {
-        super(n);
-        obj = o;
+    public NotNode(int location, Node node) {
+        super(location);
+        this.node = node;
     }
 
     @Override
     public Node run() throws Exception {
-        Node o = obj.run();
+        Node o = node.run();
         if (o.getClass() != Bool.class) throw new Exception(getLocation() + ": 真偽値以外のものには論理否定演算子を適用できません");
         Bool p = (Bool)o;
         if (p.isTrue()) return Bool.Nil;

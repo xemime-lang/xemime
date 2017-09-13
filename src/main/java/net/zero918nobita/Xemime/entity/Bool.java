@@ -33,46 +33,6 @@ public class Bool extends Handler {
     }
 
     @Override
-    public Node add(int location, Node node) throws Exception {
-        throw new Exception(location + ": 真偽値の加算はできません");
-    }
-
-    @Override
-    public Node sub(int location, Node node) throws Exception {
-        throw new Exception(location + ": 真偽値の減算はできません");
-    }
-
-    @Override
-    public Node multiply(int location, Node node) throws Exception {
-        throw new Exception(location + ": 真偽値の乗算はできません");
-    }
-
-    @Override
-    public Node divide(int location, Node node) throws Exception {
-        throw new Exception(location + ": 真偽値の除算はできません");
-    }
-
-    @Override
-    public Bool less(int location, Node node) throws Exception {
-        throw new Exception(location + ": 真偽値に `<` 演算子は使用できません");
-    }
-
-    @Override
-    public Bool le(int location, Node node) throws Exception {
-        throw new Exception(location + ": 真偽値に `<=` 演算子は使用できません");
-    }
-
-    @Override
-    public Bool greater(int location, Node node) throws Exception {
-        throw new Exception(location + ": 真偽値に `>` 演算子は使用できません");
-    }
-
-    @Override
-    public Bool ge(int location, Node node) throws Exception {
-        throw new Exception(location + ": 真偽値に `>=` 演算子は使用できません");
-    }
-
-    @Override
     public Bool and(int location, Node node) throws Exception {
         if (node instanceof Bool) return (bool && (((Bool)node).isTrue())) ? Bool.T : Bool.Nil;
         else throw new Exception(location + ": `&&` 演算子の右辺が真偽値ではありません");

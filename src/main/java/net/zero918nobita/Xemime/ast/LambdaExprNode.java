@@ -17,11 +17,11 @@ public class LambdaExprNode extends Node {
     private ArrayList<Symbol> params;
     private Node body;
 
-    public LambdaExprNode(int n, ArrayList<Symbol> l, Node obj) throws Exception {
-        super(n);
-        line = n;
-        params = l;
-        body = obj;
+    public LambdaExprNode(int location, ArrayList<Symbol> params, Node body) {
+        super(location);
+        line = location;
+        this.params = params;
+        this.body = body;
     }
 
     @Override

@@ -24,11 +24,6 @@ public class Address extends Node implements Comparable {
         return address;
     }
 
-    /** 参照先の値を取得します。 */
-    Node fetch(TreeMap<Address, Node> entities) {
-        return entities.get(this);
-    }
-
     /** アドレスを文字列化します。 */
     @Override
     public String toString() {

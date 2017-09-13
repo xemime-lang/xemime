@@ -12,11 +12,11 @@ public class DotCallNode extends Node {
     private Symbol symbol;
     private ArrayList<Node> list;
 
-    public DotCallNode(int n, Node o, Symbol sym, ArrayList<Node> l) {
-        super(n);
-        obj = o;
+    public DotCallNode(int location, Node object, Symbol sym, ArrayList<Node> list) {
+        super(location);
+        obj = object;
         symbol = sym;
-        list = l;
+        this.list = list;
     }
 
     @Override

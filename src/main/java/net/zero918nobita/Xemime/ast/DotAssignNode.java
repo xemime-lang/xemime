@@ -14,11 +14,11 @@ public class DotAssignNode extends Node {
     private Symbol symbol;
     private Node code2;
 
-    public DotAssignNode(int n, Node c, Symbol sym, Node c2) {
-        super(n);
-        code1 = c;
+    public DotAssignNode(int location, Node object, Symbol sym, Node rhs) {
+        super(location);
+        code1 = object;
         symbol = sym;
-        code2 = c2;
+        code2 = rhs;
     }
 
     @Override

@@ -10,16 +10,16 @@ import net.zero918nobita.Xemime.entity.Int;
  */
 
 public class MinusNode extends Node {
-    private Node obj;
+    private Node node;
 
-    public MinusNode(int n, Node o) {
-        super(n);
-        obj = o;
+    public MinusNode(int location, Node node) {
+        super(location);
+        this.node = node;
     }
 
     @Override
     public Node run() throws Exception {
-        Node o = obj.run();
+        Node o = node.run();
         if (o.getClass() != Int.class && o.getClass() != Double.class)
             throw new Exception(getLocation() + ": 数値以外のものには単項演算子を適用できません");
         if (o.getClass() == Int.class) return new Int(getLocation(), -((Int)o).getValue());
