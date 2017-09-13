@@ -44,8 +44,12 @@ package net.zero918nobita.Xemime.ast {
     class LambdaExprNode {
     }
 
+    LambdaExprNode --|> Node
+
     class MinusNode {
     }
+
+    MinusNode --|> Node
 
     class Node {
     }
@@ -53,8 +57,70 @@ package net.zero918nobita.Xemime.ast {
     class NotNode {
     }
 
+    NotNode --|> Node
+
     class Symbol {
     }
+
+    Symbol --|> Node
+}
+
+package net.zero918nobita.Xemime.entity {
+    class Address {
+    }
+
+    Address --|> Node
+    Address ..|> java.lang.Comparable
+
+    class Bool {
+    }
+
+    Bool --|> Handler
+
+    class Closure {
+    }
+
+    Closure --|> Function
+
+    class Default {
+    }
+
+    Default --|> Handler
+
+    class Double {
+    }
+
+    Double --|> Handler
+
+    class Function {
+    }
+
+    Function --|> Node
+
+    class Handler {
+    }
+
+    Handler --|> Node
+
+    class Int {
+    }
+
+    Int --|> Handler
+
+    class Native {
+    }
+
+    Native --|> Function
+
+    class Numeric {
+    }
+
+    Numeric --|> Handler
+
+    class Str {
+    }
+
+    Str --|> Handler
 }
 
 package net.zero918nobita.Xemime.interpreter {
@@ -71,62 +137,6 @@ package net.zero918nobita.Xemime.lexer {
 
     class LexerReader {
     }
-}
-
-package net.zero918nobita.Xemime.parser {
-    class Parser {
-    }
-}
-
-package net.zero918nobita.Xemime.resolver {
-    class Resolver {
-    }
-}
-
-package net.zero918nobita.Xemime.utils {
-    class VirtualMemoryMonitor {
-    }
-}
-
-/'
-package net.zero918nobita.Xemime {
-
-    class Frame {
-    }
-
-    class Lexer {
-        -line
-        -tokenType
-        -val
-        -reader
-        Lexer()
-        getLocation()
-        advance()
-        tokenType()
-        value()
-        -lexDigit()
-        -lexString()
-        -lexSymbol()
-        -skipWhiteSpace()
-        -skipLineComment()
-        -skipComment()
-    }
-
-    Lexer --> LexerReader : -reader
-
-    class LexerReader {
-    }
-
-    +class Main {
-    }
-
-    Main --> TokenType : -tokenType
-    Main --> Parser : -parser
-
-    class Parser {
-    }
-
-    Parser --> Lexer : -lex
 
     enum TokenType {
         T
@@ -163,131 +173,97 @@ package net.zero918nobita.Xemime {
         ARROW
         PERIOD
     }
-
-    +class VirtualMemoryMonitor {
-    }
-
-    VirtualMemoryMonitor --|> javafx.application.Application
-
-    class X_Address {
-    }
-
-    X_Address --|> X_Code
-    X_Address ..|> java.lang.Comparable
-
-    class X_Assign {
-    }
-
-    X_Assign --|> X_BinExpr
-
-    class X_BinExpr {
-    }
-
-    X_BinExpr --|> X_Code
-
-    class X_Block {
-    }
-
-    X_Block --|> X_Code
-
-    class X_Bool {
-    }
-
-    X_Bool --|> X_Handler
-
-    class X_Closure {
-    }
-
-    X_Closure --|> X_Function
-
-    class X_Code {
-    }
-
-    class X_Declare {
-    }
-
-    X_Declare --|> X_BinExpr
-
-    class X_Default {
-    }
-
-    X_Default --|> X_Handler
-
-    class X_DotAssign {
-    }
-
-    X_DotAssign --|> X_Code
-
-    class X_DotCall {
-    }
-
-    X_DotCall --|> X_Code
-
-    class X_DotExpr {
-    }
-
-    X_DotExpr --|> X_Code
-
-    class X_Double {
-    }
-
-    X_Double --|> X_Numeric
-
-    class X_Funcall {
-    }
-
-    X_Funcall --|> X_Code
-
-    class X_Function {
-    }
-
-    X_Function --|> X_Code
-
-    class X_Handler {
-    }
-
-    X_Handler --|> X_Code
-
-    class X_Int {
-    }
-
-    X_Int --|> X_Numeric
-
-    class X_LambdaExpr {
-    }
-
-    X_LambdaExpr --|> X_Code
-
-    class X_Minus {
-    }
-
-    X_Minus --|> X_Code
-
-    class X_Native {
-    }
-
-    X_Native --|> X_Function
-
-    class X_Not {
-    }
-
-    X_Not --|> X_Code
-
-    class X_Numeric {
-    }
-
-    X_Numeric --|> X_Handler
-
-    class X_String {
-        -String value
-    }
-
-    X_String --|> X_Handler
-
-    class X_Symbol {
-    }
-
-    X_Symbol --|> X_Code
 }
-'/
+
+package net.zero918nobita.Xemime.parser {
+    class Args {
+    }
+
+    Args --|> ParseUnit
+
+    class Block {
+    }
+
+    Block --|> ParseUnit
+
+    class DivideByZeroError {
+    }
+
+    DivideByZeroError --|> Exception
+
+    class Expr {
+    }
+
+    Expr --|> ParseUnit
+
+    class Factor {
+    }
+
+    Factor --|> ParseUnit
+
+    class FatalError {
+    }
+
+    FatalError --|> Exception
+
+    class First {
+    }
+
+    First --|> ParseUnit
+
+    class Lambda {
+    }
+
+    Lambda --|> ParseUnit
+
+    class MethodCall {
+    }
+
+    MethodCall --|> ParseUnit
+
+    class Parser {
+    }
+
+    class ParseUnit {
+    }
+
+    class SimpleExpr {
+    }
+
+    SimpleExpr --|> ParseUnit
+
+    class Statement {
+    }
+
+    Statement --|> ParseUnit
+
+    class SyntaxError {
+    }
+
+    SyntaxError --|> Exception
+
+    class Term {
+    }
+
+    Term --|> ParseUnit
+}
+
+package net.zero918nobita.Xemime.resolver {
+    class Resolver {
+    }
+
+    class Scope {
+    }
+
+    class SemanticError {
+    }
+
+    SemanticError --|> Exception
+}
+
+package net.zero918nobita.Xemime.utils {
+    class VirtualMemoryMonitor {
+    }
+}
+
 @enduml
