@@ -1,72 +1,131 @@
 @startuml{xemime.png}
 
 package net.zero918nobita.Xemime.ast {
-    class AssignNode {
+    +class AssignNode {
+        +AssignNode(int location, Symbol symbol, Node node)
+        +Node run() throws Exception
     }
 
     AssignNode --|> ExprNode
 
-    class BlockNode {
+    +class BlockNode {
+        +BlockNode(int location, ArrayList<Node> list)
+        +Node run() throws Exception
     }
 
     BlockNode --|> Node
 
-    class DeclareNode {
+    +class DeclareNode {
+        +DeclareNode(int location, Symbol symbol, Node node)
+        +Node run() throws Exception
     }
 
     DeclareNode --|> ExprNode
 
-    class DotAssignNode {
+    +class DotAssignNode {
+        +DotAssignNode(int location, Node object, Symbol sym, Node rhs)
+        +Node run() throws Exception
     }
 
     DotAssignNode --|> Node
 
-    class DotCallNode {
+    +class DotCallNode {
+        +DotCallNode(int location, Node object, Symbol sym, ArrayList<Node> list)
+        +Node run() throws Exception
     }
 
     DotCallNode --|> Node
 
-    class DotExprNode {
+    +class DotExprNode {
+        +DotExprNode(int location, Node object, Symbol sym)
+        +Node run() throws Exception
     }
 
     DotExprNode --|> Node
 
-    class ExprNode {
+    +class ExprNode {
+        -TokenType op
+        ~Node lhs
+        ~Node rhs
+        +ExprNode(int location, TokenType operator, Node lhs, Node rhs)
+        +Node run() throws Exception
     }
 
     ExprNode --|> Node
 
-    class FuncallNode {
+    +class FuncallNode {
+        -Node func
+        -ArrayList<Node> list
+        +FuncallNode(int location, Node node, ArrayList<Node> list) throws Exception
     }
 
     FuncallNode --|> Node
 
     class LambdaExprNode {
+        -int line
+        -ArrayList<Symbol> params
+        -Node body
+        +LambdaExprNode(int location, ArrayList<Symbol> params, Node body)
+        +Node run() throws Exception
     }
 
     LambdaExprNode --|> Node
 
-    class MinusNode {
+    +class MinusNode {
+        -Node node
+        +MinusNode(int location, Node node)
+        +Node run() throws Exception
     }
 
     MinusNode --|> Node
 
     class Node {
+        -int location
+        +Node(int location)
+        +int getLocation()
+        +Node run() throws Exception
+        +Node add(Node rhs) throws Exception
+        +Node sub(Node rhs) throws Exception
+        +Node multiply(Node rhs) throws Exception
+        +Node divide(Node rhs) throws Exception
+        +Bool less(int location, Node rhs) throws Exception
+        +Bool le(int location, Node rhs) throws Exception
+        +Bool greater(int location, Node rhs) throws Exception
+        +Bool ge(int location, Node rhs) throws Exception
+        +Bool and(int location, Node rhs) throws Exception
+        +Bool or(int location, Node rhs) throws Exception
+        +Bool xor(int location, Node rhs) throws Exception
+        +Node message(int location, Symbol symbol) throws Exception
     }
 
-    class NotNode {
+    +class NotNode {
+        -Node node
+        +NotNode(int location, Node node)
+        +Node run() throws Exception
     }
 
     NotNode --|> Node
 
-    class Symbol {
+    +class Symbol {
+        +Symbol(int location, String name)
+        +boolean equals(Object obj)
+        +int hashCode()
+        +String getName()
+        +{static}Symbol intern(int n, String s)
     }
 
     Symbol --|> Node
 }
 
 package net.zero918nobita.Xemime.entity {
-    class Address {
+    +class Address {
+        -int address
+        +Address(int location, int address)
+        +getAddress()
+        +toString()
+        +boolean equals(Object obj)
+        +int hashCode()
+        +compareTo(Object obj)
     }
 
     Address --|> Node
