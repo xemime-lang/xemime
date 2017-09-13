@@ -189,7 +189,7 @@ package net.zero918nobita.Xemime.parser {
     class DivideByZeroError {
     }
 
-    DivideByZeroError --|> Exception
+    DivideByZeroError --|> java.lang.Exception
 
     class Expr {
     }
@@ -204,7 +204,7 @@ package net.zero918nobita.Xemime.parser {
     class FatalError {
     }
 
-    FatalError --|> Exception
+    FatalError --|> java.lang.Exception
 
     class First {
     }
@@ -240,7 +240,7 @@ package net.zero918nobita.Xemime.parser {
     class SyntaxError {
     }
 
-    SyntaxError --|> Exception
+    SyntaxError --|> java.lang.Exception
 
     class Term {
     }
@@ -258,7 +258,7 @@ package net.zero918nobita.Xemime.resolver {
     class SemanticError {
     }
 
-    SemanticError --|> Exception
+    SemanticError --|> java.lang.Exception
 }
 
 package net.zero918nobita.Xemime.utils {
