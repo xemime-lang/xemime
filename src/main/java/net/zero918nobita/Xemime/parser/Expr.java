@@ -6,6 +6,11 @@ import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
+/**
+ * 式の構文解析を行います。
+ * @author Kodai Matsumoto
+ */
+
 class Expr extends ParseUnit {
     Expr(Lexer lexer, Resolver resolver) {
         super(lexer, resolver);

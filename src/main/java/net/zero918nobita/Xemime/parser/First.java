@@ -10,7 +10,7 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import java.util.ArrayList;
 
 /**
- * 一次子を構文解析します。
+ * 一次子の構文解析を行います。
  * @author Kodai Matsumoto
  */
 

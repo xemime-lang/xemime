@@ -7,7 +7,7 @@ import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
 /**
- * 単純式を構文解析します。
+ * 単純式の構文解析を行います。
  * @author Kodai Matsumoto
  */
 

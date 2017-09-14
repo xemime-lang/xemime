@@ -10,7 +10,7 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import java.util.ArrayList;
 
 /**
- * ラムダ式を構文解析します。
+ * ラムダ式の構文解析を行います。
  * @author Kodai Matsumoto
  */
 
