@@ -2,8 +2,6 @@ package net.zero918nobita.Xemime.entity;
 
 import net.zero918nobita.Xemime.ast.*;
 
-import java.util.ArrayList;
-
 /**
  * 整数オブジェクト
  * @author Kodai Matsumoto
@@ -12,12 +10,6 @@ import java.util.ArrayList;
 public class Int extends Numeric {
     public Int(int location, int num) {
         super(location);
-        setMember(Symbol.intern(0, "abs"), new X_Abs());
-        setMember(Symbol.intern(0, "to_s"), new X_ToS());
-        setMember(Symbol.intern(0, "next"), new X_Succ());
-        setMember(Symbol.intern(0, "succ"), new X_Succ());
-        setMember(Symbol.intern(0, "pred"), new X_Pred());
-        setMember(Symbol.intern(0, "times"), new X_Times());
         value = num;
     }
 
@@ -133,68 +125,5 @@ public class Int extends Numeric {
         if (obj instanceof Int) return (this.getValue() >= ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
         else if (obj instanceof Double) return (this.getValue() >= ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
-    }
-
-    private class X_Abs extends Native {
-        X_Abs() {
-            super(0, 0);
-        }
-        protected Int exec(ArrayList<Node> params, Address self) throws Exception {
-            return new Int(0, Math.abs(((Int)params.get(0)).getValue()));
-        }
-    }
-
-    private class X_ToS extends Native {
-        X_ToS() {
-            super(0, 0);
-        }
-
-        @Override
-        protected Str exec(ArrayList<Node> params, Address self) throws Exception {
-            return new Str(0, params.get(0).toString());
-        }
-    }
-
-    private class X_Succ extends Native {
-        X_Succ() {
-            super(0, 0);
-        }
-
-        @Override
-        protected Int exec(ArrayList<Node> params, Address self) throws Exception {
-            return new Int(0, ((Int)params.get(0)).getValue() + 1);
-        }
-    }
-
-    private class X_Pred extends Native {
-        X_Pred() {
-            super(0, 0);
-        }
-
-        @Override
-        protected Int exec(ArrayList<Node> params, Address self) throws Exception {
-            return new Int(0, ((Int)params.get(0)).getValue() - 1);
-        }
-    }
-
-    private class X_Times extends Native {
-        X_Times() {
-            super(0, 1);
-        }
-
-        @Override
-        protected Node exec(ArrayList<Node> params, Address self) throws Exception {
-            Node c = params.get(1).run();
-            if (c instanceof Closure) {
-                Closure f = (Closure)c;
-                ArrayList<Node> list = new ArrayList<Node>() {{ add(f); }};
-                for (int i = 0; i < ((Int)params.get(0)).getValue(); i++) {
-                    c = f.exec(list, null);
-                }
-            } else {
-                throw new Exception(params.get(1).getLocation() + ": 無名関数を指定してください");
-            }
-            return c;
-        }
     }
 }

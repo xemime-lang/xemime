@@ -1,9 +1,6 @@
 package net.zero918nobita.Xemime.entity;
 
 import net.zero918nobita.Xemime.ast.Node;
-import net.zero918nobita.Xemime.ast.Symbol;
-
-import java.util.ArrayList;
 
 /**
  * 小数オブジェクト
@@ -14,7 +11,6 @@ public class Double extends Numeric {
 
     public Double(int location, double num) {
         super(location);
-        setMember(Symbol.intern(0, "abs"), new X_Abs());
         value = num;
     }
 
@@ -126,14 +122,5 @@ public class Double extends Numeric {
         if (obj instanceof Int) return (this.getValue() >= ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
         else if (obj instanceof Double) return (this.getValue() >= ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
         else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
-    }
-
-    class X_Abs extends Native {
-        X_Abs() {
-            super(0, 0);
-        }
-        protected Double exec(ArrayList<Node> params) throws Exception {
-            return new Double(0, Math.abs(((Double)params.get(0)).getValue()));
-        }
     }
 }
