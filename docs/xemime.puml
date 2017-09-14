@@ -137,22 +137,22 @@ package net.zero918nobita.Xemime.entity {
 
     Bool --|> Node
 
-    class Closure {
+    +class Closure {
     }
 
     Closure --|> Function
 
-    class Default {
+    +class Default {
     }
 
     Default --|> Handler
 
-    class Double {
+    +class Double {
     }
 
-    Double --|> Handler
+    Double --|> Node
 
-    class Function {
+    +abstract class Function {
     }
 
     Function --|> Node
@@ -165,7 +165,7 @@ package net.zero918nobita.Xemime.entity {
     class Int {
     }
 
-    Int --|> Handler
+    Int --|> Node
 
     class Native {
     }
@@ -323,6 +323,11 @@ package net.zero918nobita.Xemime.resolver {
 
 package net.zero918nobita.Xemime.utils {
     class VirtualMemoryMonitor {
+    }
+}
+
+package java.lang {
+    interface Comparable {
     }
 }
 
