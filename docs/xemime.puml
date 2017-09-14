@@ -157,37 +157,57 @@ package net.zero918nobita.Xemime.entity {
 
     Function --|> Node
 
-    class Handler {
+    +class Handler {
     }
 
     Handler --|> Node
 
-    class Int {
+    +class Int {
     }
 
     Int --|> Node
 
-    class Native {
+    +class Native {
     }
 
     Native --|> Function
 
-    class Numeric {
+    ~class Numeric {
     }
 
     Numeric --|> Node
 
-    class Str {
+    +class Str {
     }
 
     Str --|> Node
 }
 
 package net.zero918nobita.Xemime.interpreter {
-    class Frame {
+    +class Frame {
     }
 
-    class Main {
+    +class Main {
+        -{static} Parser parser
+        -{static} TreeMap<Address, Node> entities
+        -{static} boolean allowExitMethod
+        +{static} Default defaultObj
+        +{static} Frame frame
+        +{static} void main(String[] args)
+        +{static} void loadLocalFrame(Handler table)
+        +{static} void unloadLocalFrame()
+        +{static} boolean hasSymbol(Symbol sym)
+        +{static} Address getAddressOfSymbol(Symbol sym) throws Exception
+        +{static} Node getValueOfSymbol(Symbol sym) throws Exception
+        +{static} Node getValueOfReference(Address address)
+        +{static} void setAddress(Symbol sym, Address ref) throws Exception
+        +{static} void setValue(Symbol sym, Node obj) throws Exception
+        +{static} void defAddress(Symbol sym, Address ref) throws Exception
+        +{static} void defValue(Symbol sym, Node obj) throws Exception
+        +{static} Address register(Node node)
+        +{static} void exec(String source) throws Exception
+        +{static} boolean allowExitMethod()
+        -{static} void usage()
     }
 }
 
