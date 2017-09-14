@@ -175,12 +175,12 @@ package net.zero918nobita.Xemime.entity {
     class Numeric {
     }
 
-    Numeric --|> Handler
+    Numeric --|> Node
 
     class Str {
     }
 
-    Str --|> Handler
+    Str --|> Node
 }
 
 package net.zero918nobita.Xemime.interpreter {
