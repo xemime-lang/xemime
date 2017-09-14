@@ -61,7 +61,7 @@ package net.zero918nobita.Xemime.ast {
 
     FuncallNode --|> Node
 
-    class LambdaExprNode {
+    +class LambdaExprNode {
         -int line
         -ArrayList<Symbol> params
         -Node body
@@ -79,7 +79,7 @@ package net.zero918nobita.Xemime.ast {
 
     MinusNode --|> Node
 
-    class Node {
+    +class Node {
         -int location
         +Node(int location)
         +int getLocation()
@@ -131,10 +131,11 @@ package net.zero918nobita.Xemime.entity {
     Address --|> Node
     Address ..|> java.lang.Comparable
 
-    class Bool {
+    +class Bool {
+
     }
 
-    Bool --|> Handler
+    Bool --|> Node
 
     class Closure {
     }

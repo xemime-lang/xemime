@@ -7,7 +7,7 @@ import net.zero918nobita.Xemime.ast.Node;
  * @author Kodai Matsumoto
  */
 
-public class Bool extends Handler {
+public class Bool extends Node {
     private boolean bool;
 
     public static Bool T = new Bool(0,true);
