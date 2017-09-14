@@ -5,15 +5,16 @@ import net.zero918nobita.Xemime.ast.Node;
 import java.util.ArrayList;
 
 /**
- * 組み込みメソッド
- * 初めから用意されており、その挙動も Java コードで記述されているメソッドです。
+ * 組み込みメソッドを表すノードです。<br>
+ * 組み込みメソッドとは、Xemime インタプリタ側で初めから用意している、
+ * 挙動が Java コードで記述されたメソッドです。
  * @author Kodai Matsumoto
  */
 
 public abstract class Native extends Function {
 
-    public Native(int n, int args) {
-        super(n);
+    public Native(int location, int args) {
+        super(location);
         numberOfArgs = args;
     }
 

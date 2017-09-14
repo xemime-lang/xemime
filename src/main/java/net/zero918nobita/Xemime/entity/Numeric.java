@@ -3,7 +3,7 @@ package net.zero918nobita.Xemime.entity;
 import net.zero918nobita.Xemime.ast.Node;
 
 /**
- * 数値オブジェクト
+ * 数値を表すノードです。
  * @author Kodai Matsumoto
  */
 
