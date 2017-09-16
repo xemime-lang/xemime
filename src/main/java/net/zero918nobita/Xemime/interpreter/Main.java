@@ -150,11 +150,11 @@ public class Main {
 
     /**
      * 指定した実体を実体テーブルに追加し、そのテーブル上での位置を記録した Address インスタンスを返します。
-     * @param obj 追加する実体
+     * @param node 追加する実体
      * @return 実体テーブル上の、追加された実体の位置を記録した Address インスタンス
      */
-    public static Address register(Node obj) {
-        entities.put(new Address(0,entities.lastKey().getAddress() + 1), obj);
+    public static Address register(Node node) {
+        entities.put(new Address(0,entities.lastKey().getAddress() + 1), node);
         return new Address(0, entities.lastKey().getAddress());
     }
 
