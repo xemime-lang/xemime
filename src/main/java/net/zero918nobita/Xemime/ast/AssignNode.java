@@ -16,7 +16,10 @@ public class AssignNode extends ExprNode {
 
     public Node run() throws Exception {
         Symbol sym = (Symbol)lhs;
-        if (!Main.hasSymbol(sym)) throw new Exception(getLocation() + ": `" + sym.getName() + "` 未宣言のシンボルです");
+
+        // Fatal Exception - シンボルが宣言されていません
+        if (!Main.hasSymbol(sym)) throw new FatalException(getLocation(), 6);
+
         Node code;
         if (rhs instanceof Symbol) {
             code = ((Symbol) rhs).getAddress();

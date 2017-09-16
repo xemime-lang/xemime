@@ -5,3 +5,4 @@
 | 3 | FatalError | 呼び出しが禁止されているメソッドが呼び出されました。 | ``parser.Args#parse`` |
 | 4 | SyntaxError | メッセージ式のピリオドの後ろがシンボルではありません。 | ``parser.Factor#parse`` |
 | 5 | SyntaxError | メッセージ式の括弧が閉じられていません。 | ``parser.Factor#parse`` |
+| 6 | FatalException | シンボルが宣言されていません。 | ``ast.AssignNode#run`` |
