@@ -14,3 +14,4 @@
 | 12 | FatalException | 指定された関数は存在しません。 | ``ast.FuncallNode`` |
 | 13 | FatalException | 呼び出し対象が関数ではありません。 | ``ast.FuncallNode`` | 
 | 14 | FatalException | 数値以外のデータには単項演算子 ``-`` を適用できません。 | ``ast.MinusNode`` |
+| 15 | FatalException | 真偽値以外のデータには単項演算子 ``!`` を適用できません。 | ``ast.NotNode`` |

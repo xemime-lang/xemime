@@ -19,7 +19,10 @@ public class NotNode extends Node {
     @Override
     public Node run() throws Exception {
         Node o = node.run();
-        if (o.getClass() != Bool.class) throw new Exception(getLocation() + ": 真偽値以外のものには論理否定演算子を適用できません");
+
+        // Fatal Exception - 真偽値以外のデータには単項演算子 `!` を適用できません
+        if (o.getClass() != Bool.class) throw new FatalException(getLocation(), 15);
+
         Bool p = (Bool)o;
         if (p.isTrue()) return Bool.Nil;
         else return Bool.T;
