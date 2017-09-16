@@ -57,12 +57,26 @@ class First extends ParseUnit {
                         resolver.declareVar(sym);
                         node = new DeclareNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
                     } else {
-                        throw new Exception(lexer.getLocation() + ": 宣言式が不正です");
+                        throw new Exception(lexer.getLocation() + ": 変数宣言式が不正です");
                     }
                 } else {
-                    throw new Exception(lexer.getLocation() + ": 宣言式が不正です");
+                    throw new Exception(lexer.getLocation() + ": 変数宣言式が不正です");
                 }
                 break;
+            case SUBST:
+                getToken(); // skip "subst"
+                if (lexer.tokenType() == TokenType.SYMBOL) {
+                    Symbol sym = (Symbol) lexer.value();
+                    getToken(); // skip symbol
+                    if (lexer.tokenType() == TokenType.ATTACH) {
+                        getToken(); // skip "<-"
+                        node = new SubstanceDeclarationNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
+                    } else {
+                        throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
+                    }
+                } else {
+                    throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
+                }
             case SYMBOL:
                 Symbol sym = (Symbol) lexer.value();
                 // 変数の参照を解決する
