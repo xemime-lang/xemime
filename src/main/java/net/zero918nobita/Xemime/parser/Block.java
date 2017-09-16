@@ -29,7 +29,7 @@ class Block extends ParseUnit {
                 if (list == null) list = new ArrayList<>();
                 list.add(node);
             } else {
-                throw new Exception("文法エラーです");
+                throw new SyntaxError(lexer.getLocation(), 7, "ブロック式内のステートメントにセミコロンが付いていません。");
             }
             getToken();
         }
