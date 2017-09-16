@@ -53,56 +53,56 @@ public class BoolTest {
     @Test
     public void testAdd() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: 真偽値の加算はできません");
+        expectedException.expectMessage("0: `T` に `+` 演算子は使用できません");
         Bool.T.add(0, Bool.T);
     }
 
     @Test
     public void testSub() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: 真偽値の減算はできません");
+        expectedException.expectMessage("0: `T` に `-` 演算子は使用できません");
         Bool.T.sub(0, Bool.T);
     }
 
     @Test
     public void testMultiply() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: 真偽値の乗算はできません");
+        expectedException.expectMessage("0: `T` に `*` 演算子は使用できません");
         Bool.T.multiply(0, Bool.T);
     }
 
     @Test
     public void testDivide() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: 真偽値の除算はできません");
+        expectedException.expectMessage("0: `T` に `/` 演算子は使用できません");
         Bool.T.divide(0, Bool.T);
     }
 
     @Test
     public void testLess() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: 真偽値に `<` 演算子は使用できません");
+        expectedException.expectMessage("0: `T` に `<` 演算子は使用できません");
         Bool.T.less(0, Bool.Nil);
     }
 
     @Test
     public void testLe() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: 真偽値に `<=` 演算子は使用できません");
+        expectedException.expectMessage("0: `T` に `<=` 演算子は使用できません");
         Bool.T.le(0, Bool.Nil);
     }
 
     @Test
     public void testGreater() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: 真偽値に `>` 演算子は使用できません");
+        expectedException.expectMessage("0: `T` に `>` 演算子は使用できません");
         Bool.T.greater(0, Bool.Nil);
     }
 
     @Test
     public void testGe() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: 真偽値に `>=` 演算子は使用できません");
+        expectedException.expectMessage("0: `T` に `>=` 演算子は使用できません");
         Bool.T.ge(0, Bool.Nil);
     }
 
