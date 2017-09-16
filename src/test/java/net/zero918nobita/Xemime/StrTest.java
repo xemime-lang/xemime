@@ -2,12 +2,9 @@ package net.zero918nobita.Xemime;
 
 import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.entity.Str;
-import net.zero918nobita.Xemime.ast.Symbol;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -32,11 +29,5 @@ public class StrTest {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: String型オブジェクトに他の型のオブジェクトを加算することはできません");
         new Str(0, "foo").add(0, new Int(0, 2));
-    }
-
-    @Test
-    public void testLength() throws Exception {
-        assertThat(new Str(0, "foo").message(0, Symbol.intern(0, "length"), new ArrayList<>()),
-                is(new Int(0, 3)));
     }
 }
