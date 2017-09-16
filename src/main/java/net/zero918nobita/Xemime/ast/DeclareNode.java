@@ -5,7 +5,7 @@ import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.TokenType;
 
 /**
- * 宣言式を表すノードです。
+ * 変数宣言式を表すノードです。
  * @author Kodai Matsumoto
  */
 
