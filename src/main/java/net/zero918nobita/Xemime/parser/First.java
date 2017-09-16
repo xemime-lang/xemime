@@ -35,7 +35,7 @@ class First extends ParseUnit {
                 break;
             case SUB:
                 getToken(); // skip "-"
-                node = new MinusNode(lexer.getLocation(), node);
+                node = new MinusNode(lexer.getLocation(), new First(lexer, resolver).parse());
                 break;
             case LP:
                 getToken(); // skip "("
