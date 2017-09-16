@@ -40,7 +40,10 @@ class First extends ParseUnit {
             case LP:
                 getToken(); // skip "("
                 node = new Expr(lexer, resolver).parse();
-                if (lexer.tokenType() != TokenType.RP) throw new Exception(lexer.getLocation() + ": 文法エラー ( 対応する括弧がありません )");
+
+                // Syntax Error - 対応する括弧がありません。
+                if (lexer.tokenType() != TokenType.RP) throw new SyntaxError(lexer.getLocation(), 8, "対応する括弧がありません。");
+
                 getToken(); // skip ")"
                 break;
             case LB:
