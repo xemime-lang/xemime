@@ -1,0 +1,7 @@
+subst person <- String("John") + Int(18);
+
+// println $ String::show<person>();  // "John"
+// println $ Int::show<person>();     // "18"
+
+// println $ String implement Show;  // "T"
+// println $ Int implement Show;     // "T"
