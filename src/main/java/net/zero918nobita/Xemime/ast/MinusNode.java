@@ -21,7 +21,8 @@ public class MinusNode extends Node {
     public Node run() throws Exception {
         Node o = node.run();
         if (o.getClass() != Int.class && o.getClass() != Double.class)
-            throw new Exception(getLocation() + ": 数値以外のものには単項演算子を適用できません");
+            // Fatal Exception - 数値以外のデータには単項演算子 `-` を適用できません
+            throw new FatalException(getLocation(), 14);
         if (o.getClass() == Int.class) return new Int(getLocation(), -((Int)o).getValue());
         return new Double(getLocation(), -((Double)o).getValue());
     }
