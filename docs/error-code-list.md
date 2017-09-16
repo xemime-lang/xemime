@@ -8,3 +8,8 @@
 | 6 | FatalException | シンボルが宣言されていません。 | ``ast.AssignNode#run`` |
 | 7 | SyntaxError | ブロック式内のステートメントにセミコロンが付いていません。 | ``parser.Block#parse`` |
 | 8 | SyntaxError | 対応する括弧がありません。 | ``parser.First#parse`` |
+| 9 | FatalException | 関数呼び出しに失敗しました。 | ``ast.FuncallNode`` |
+| 10 | FatalException | 指定された関数は存在しません。 | ``ast.FuncallNode`` |
+| 11 | FatalException | 呼び出し対象が関数ではありません。 | ``ast.FuncallNode`` |
+| 12 | FatalException | 指定された関数は存在しません。 | ``ast.FuncallNode`` |
+| 13 | FatalException | 呼び出し対象が関数ではありません。 | ``ast.FuncallNode`` | 

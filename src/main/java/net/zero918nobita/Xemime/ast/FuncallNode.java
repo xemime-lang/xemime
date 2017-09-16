@@ -20,7 +20,8 @@ public class FuncallNode extends Node {
         if (node instanceof Symbol || node instanceof Native || node instanceof FuncallNode) {
             func = node;
         } else {
-            throw new Exception(getLocation() + ": 深刻なエラー: 関数呼び出しに失敗しました");
+            // Fatal Exception - 関数呼び出しに失敗しました。
+            throw new FatalException(getLocation(), 9);
         }
         this.list = list;
     }
@@ -34,8 +35,13 @@ public class FuncallNode extends Node {
             return ((Native) func).call(getLocation(), params, null);
         } else if (func instanceof FuncallNode) {
             Node c = func.run();
-            if (c == null) throw new Exception(getLocation() + ": 存在しない関数です");
-            if (!(c instanceof Function)) throw new Exception(getLocation() + ": 関数ではありません");
+
+            // Fatal Exception - 指定された関数は存在しません。
+            if (c == null) throw new FatalException(getLocation(), 10);
+
+            // Fatal Exception - 呼び出し対象が関数ではありません。
+            if (!(c instanceof Function)) throw new FatalException(getLocation(), 11);
+
             Function f = (Function)c;
             ArrayList<Node> params = new ArrayList<>();
             for (Node o: list) params.add(o.run());
@@ -44,8 +50,13 @@ public class FuncallNode extends Node {
         } else {
             Symbol symbol = (Symbol)func;
             Node c = Main.getValueOfSymbol(symbol);
-            if (c == null) throw new Exception(getLocation() + ": 関数 `" + symbol.getName() + "` は存在しません");
-            if (!(c instanceof Function)) throw new Exception(getLocation() + ": 変数 `" + symbol.getName() + "` には関数オブジェクトが代入されていません");
+
+            // Fatal Exception - 指定された関数は存在しません。
+            if (c == null) throw new FatalException(getLocation(), 12);
+
+            // Fatal Exception - 呼び出し対象が関数ではありません。
+            if (!(c instanceof Function)) throw new FatalException(getLocation(), 13);
+
             Function func = (Function) c;
             ArrayList<Node> params = new ArrayList<>();
             for (Node o : list) params.add(o.run());
