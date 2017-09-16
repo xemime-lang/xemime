@@ -14,15 +14,15 @@ import java.util.Map;
  */
 
 public class Closure extends Function {
-    private ArrayList<Symbol> params;
-    private Address self = null;
-    private Node body;
+    protected ArrayList<Symbol> params;
+    protected Address self = null;
+    protected Node body;
 
     /**
      * 捕捉変数テーブル<br>
      * 捕捉変数(ラムダ式が使用する変数)
      */
-    private Frame captured = null; // Main との連携も考えると、HashMap<Symbol, Address> にするかも…
+    protected Frame captured = null; // Main との連携も考えると、HashMap<Symbol, Address> にするかも…
 
     public Closure(int location, ArrayList<Symbol> l, Node obj, Frame frame) {
         super(location);
@@ -55,7 +55,7 @@ public class Closure extends Function {
         return o;
     }
 
-    private void setArgs(ArrayList<Node> args, Address dynamicSelf) throws Exception {
+    protected void setArgs(ArrayList<Node> args, Address dynamicSelf) throws Exception {
         if ((params == null) && (args == null)) {
             Main.loadLocalFrame(new Handler(0));
             return;
@@ -84,7 +84,7 @@ public class Closure extends Function {
         }
     }
 
-    private void removeArgs() throws Exception {
+    protected void removeArgs() throws Exception {
         Main.unloadLocalFrame();
     }
 }
