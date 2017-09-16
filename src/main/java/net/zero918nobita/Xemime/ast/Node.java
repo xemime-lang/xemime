@@ -48,7 +48,7 @@ public class Node {
      * @throws Exception 常に例外を発生させます。
      */
     public Node add(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": このオブジェクトに `+` 演算子は使用できません");
+        throw new Exception(location + ": `" + toString() + "` に `+` 演算子は使用できません");
     }
 
 
@@ -60,7 +60,7 @@ public class Node {
      * @throws Exception 常に例外を発生させます。
      */
     public Node sub(int location, Node rhs) throws Exception {
-        throw new Exception(location + "このオブジェクトに `-` 演算子は使用できません");
+        throw new Exception(location + ": `" + toString() + "` に `-` 演算子は使用できません");
     }
 
     /**
@@ -71,7 +71,7 @@ public class Node {
      * @throws Exception 常に例外を発生させます。
      */
     public Node multiply(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": このオブジェクトに `*` 演算子は使用できません");
+        throw new Exception(location + ": `" + toString() + "` に `*` 演算子は使用できません");
     }
 
     /**
@@ -82,42 +82,42 @@ public class Node {
      * @throws Exception 常に例外を発生させます。
      */
     public Node divide(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": このオブジェクトに `/` 演算子は使用できません");
+        throw new Exception(location + ": `" + toString() + "` に `/` 演算子は使用できません");
     }
 
     public Bool less(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": このオブジェクトに `<` 演算子は使用できません");
+        throw new Exception(location + ": `" + toString() + "` に `<` 演算子は使用できません");
     }
 
     public Bool le(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": このオブジェクトに `<=` 演算子は使用できません");
+        throw new Exception(location + ": `" + toString() + "` に `<=` 演算子は使用できません");
     }
 
     public Bool greater(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": このオブジェクトに `>` 演算子は使用できません");
+        throw new Exception(location + ": `" + toString() + "` に `>` 演算子は使用できません");
     }
 
     public Bool ge(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": このオブジェクトに `>=` 演算子は使用できません");
+        throw new Exception(location + ": `" + toString() + "` に `>=` 演算子は使用できません");
     }
 
     public Bool and(int location, Node rhs) throws Exception {
-        throw new Exception(location + "このオブジェクトに `&&` 演算子は使用できません");
+        throw new Exception(location + "`" + toString() + "` に `&&` 演算子は使用できません");
     }
 
     public Bool or(int location, Node rhs) throws Exception {
-        throw new Exception(location + "このオブジェクトに `||` 演算子は使用できません");
+        throw new Exception(location + "`" + toString() + "` に `||` 演算子は使用できません");
     }
 
     public Bool xor(int location, Node rhs) throws Exception {
-        throw new Exception(location + "このオブジェクトに `^` 演算子は使用できません");
+        throw new Exception(location + "`" + toString() + "` に `^` 演算子は使用できません");
     }
 
     public Node message(int location, Symbol symbol) throws Exception {
-        throw new Exception(location + ": このオブジェクトにフィールドは設定できません");
+        throw new Exception(location + ": `" + toString() + "` にフィールドは設定できません");
     }
 
     public Node message(int location, Symbol symbol, ArrayList<Node> params) throws Exception {
-        throw new Exception(location + ": このオブジェクトにメソッドは設定できません");
+        throw new Exception(location + ": `" + toString() + "` にメソッドは設定できません");
     }
 }
