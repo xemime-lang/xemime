@@ -36,6 +36,8 @@ public enum TokenType {
     ATTR,
     /** 実体宣言 */
     SUBST,
+    /** &lt;= ( 属性追加演算子 ) */
+    ATTACH,
 
     /** 加算演算子 */
     ADD,
