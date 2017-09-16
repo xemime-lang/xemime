@@ -28,7 +28,7 @@ public class MinusNodeTest {
     @Test
     public void testRun2() throws Exception {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: 数値以外のものには単項演算子を適用できません");
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [14]");
         MinusNode minus = new MinusNode(0, new Str(0, "foo"));
         minus.run();
     }
