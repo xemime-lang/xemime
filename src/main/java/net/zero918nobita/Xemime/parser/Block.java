@@ -29,6 +29,7 @@ class Block extends ParseUnit {
                 if (list == null) list = new ArrayList<>();
                 list.add(node);
             } else {
+                // Syntax Error - ブロック式内のステートメントにセミコロンが付いていません。
                 throw new SyntaxError(lexer.getLocation(), 7, "ブロック式内のステートメントにセミコロンが付いていません。");
             }
             getToken();
