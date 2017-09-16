@@ -115,6 +115,11 @@ package net.zero918nobita.Xemime.ast {
     }
 
     Symbol --|> Node
+
+    +class SubstanceDeclarationNode {
+    }
+
+    SubstanceDeclarationNode --|> ExprNode
 }
 
 package net.zero918nobita.Xemime.entity {
@@ -130,6 +135,11 @@ package net.zero918nobita.Xemime.entity {
 
     Address --|> Node
     Address ..|> java.lang.Comparable
+
+    +class Attr {
+    }
+
+    Attr --|> Closure
 
     +class Bool {
 
@@ -181,6 +191,11 @@ package net.zero918nobita.Xemime.entity {
     }
 
     Str --|> Node
+
+    +class Substance {
+    }
+
+    Substance --|> Node
 }
 
 package net.zero918nobita.Xemime.interpreter {
@@ -219,6 +234,9 @@ package net.zero918nobita.Xemime.lexer {
     }
 
     enum TokenType {
+        SEMICOLON
+        COMMA
+        EOS
         T
         NIL
         INT
@@ -227,9 +245,9 @@ package net.zero918nobita.Xemime.lexer {
         SYMBOL
         DECLARE
         ASSIGN
-        SEMICOLON
-        COMMA
-        EOS
+        ATTR
+        SUBST
+        ATTACH
         ADD
         SUB
         MUL
@@ -252,6 +270,7 @@ package net.zero918nobita.Xemime.lexer {
         LAMBDA
         ARROW
         PERIOD
+        DOLLAR
     }
 }
 
