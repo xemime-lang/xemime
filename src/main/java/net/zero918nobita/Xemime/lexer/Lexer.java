@@ -298,7 +298,16 @@ public class Lexer {
             tokenType = TokenType.NIL;
             return;
         } else if (s.toLowerCase().equals("let")) {
+            // 変数宣言
             tokenType = TokenType.DECLARE;
+            return;
+        } else if (s.toLowerCase().equals("attr")) {
+            // 属性定義
+            tokenType = TokenType.ATTR;
+            return;
+        } else if (s.toLowerCase().equals("subst")) {
+            // 実体宣言
+            tokenType = TokenType.SUBST;
             return;
         }
 
