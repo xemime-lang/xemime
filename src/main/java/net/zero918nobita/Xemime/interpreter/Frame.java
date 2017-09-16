@@ -21,7 +21,7 @@ public class Frame {
     }
 
     /** フレームの階層数を取得します。 */
-    public int numberOfLayers() {
+    int numberOfLayers() {
         return localFrames.size();
     }
 
