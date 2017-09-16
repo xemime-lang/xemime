@@ -117,6 +117,9 @@ public class Lexer {
                     if (c == '=') {
                         // 比較演算子 <=
                         tokenType = TokenType.LE;
+                    } else if (c == '-') {
+                        // 属性追加演算子 <-
+                        tokenType = TokenType.ATTACH;
                     } else {
                         // 比較演算子 <
                         reader.unread();
