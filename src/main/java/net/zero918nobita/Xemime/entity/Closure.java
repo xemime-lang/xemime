@@ -55,7 +55,7 @@ public class Closure extends Function {
         return o;
     }
 
-    protected void setArgs(ArrayList<Node> args, Address dynamicSelf) throws Exception {
+    private void setArgs(ArrayList<Node> args, Address dynamicSelf) throws Exception {
         if ((params == null) && (args == null)) {
             Main.loadLocalFrame(new Handler(0));
             return;
@@ -84,7 +84,7 @@ public class Closure extends Function {
         }
     }
 
-    protected void removeArgs() throws Exception {
+    private void removeArgs() throws Exception {
         Main.unloadLocalFrame();
     }
 }
