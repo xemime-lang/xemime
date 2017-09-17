@@ -9,8 +9,8 @@ import net.zero918nobita.Xemime.lexer.TokenType;
  * @author Kodai Matsumoto
  */
 
-public class DeclareNode extends ExprNode {
-    public DeclareNode(int location, Symbol symbol, Node node) {
+public class DeclarationNode extends ExprNode {
+    public DeclarationNode(int location, Symbol symbol, Node node) {
         super(location, TokenType.DECLARE, symbol, node);
     }
 

@@ -58,7 +58,7 @@ class First extends ParseUnit {
                         getToken(); // skip "="
                         // 現在のスコープに変数を登録する
                         resolver.declareVar(sym);
-                        node = new DeclareNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
+                        node = new DeclarationNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
                     } else {
                         throw new Exception(lexer.getLocation() + ": 変数宣言式が不正です");
                     }
