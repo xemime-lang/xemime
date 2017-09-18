@@ -25,18 +25,22 @@ class First extends ParseUnit {
         switch (lexer.tokenType()) {
             case EOS:
                 break;
+
             case INT:
                 node = lexer.value();
                 getToken(); // skip int literal
                 break;
+
             case DOUBLE:
                 node = lexer.value();
                 getToken(); // skip double literal
                 break;
+
             case SUB:
                 getToken(); // skip "-"
                 node = new MinusNode(lexer.getLocation(), new First(lexer, resolver).parse());
                 break;
+
             case LP:
                 getToken(); // skip "("
                 node = new Expr(lexer, resolver).parse();
@@ -46,9 +50,11 @@ class First extends ParseUnit {
 
                 getToken(); // skip ")"
                 break;
+
             case LB:
                 node = new Block(lexer, resolver).parse();
                 break;
+
             case DECLARE:
                 getToken(); // skip "let"
                 if (lexer.tokenType() == TokenType.SYMBOL) {
@@ -66,6 +72,7 @@ class First extends ParseUnit {
                     throw new Exception(lexer.getLocation() + ": 変数宣言式が不正です");
                 }
                 break;
+
             case SUBST:
                 getToken(); // skip "subst"
                 if (lexer.tokenType() == TokenType.SYMBOL) {
@@ -80,6 +87,7 @@ class First extends ParseUnit {
                 } else {
                     throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
                 }
+
             case SYMBOL:
                 Symbol sym = (Symbol) lexer.value();
                 // 変数の参照を解決する
@@ -113,9 +121,11 @@ class First extends ParseUnit {
                     node = method(sym);
                 }
                 break;
+
             case SEMICOLON:
                 node = null;
                 break;
+
             default:
                 throw new Exception(lexer.getLocation() + ": 文法エラーです");
         }
