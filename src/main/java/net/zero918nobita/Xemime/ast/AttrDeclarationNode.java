@@ -23,7 +23,6 @@ public class AttrDeclarationNode extends Node {
 
     @Override
     public Node run() throws Exception {
-        ArrayList<Symbol> params = new ArrayList<>();
         if (member.containsKey(Symbol.intern(0, "attach"))) {
             Node attach = member.get(Symbol.intern(0, "attach")).run();
             if (attach instanceof Closure) {

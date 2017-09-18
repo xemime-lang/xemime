@@ -113,6 +113,7 @@ class First extends ParseUnit {
                     getToken(); // skip symbol
                     if (lexer.tokenType() == TokenType.ATTACH) {
                         getToken(); // skip "<-"
+                        resolver.declareVar(sym);
                         node = new SubstanceDeclarationNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
                     } else {
                         throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
