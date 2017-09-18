@@ -184,6 +184,9 @@ public class Lexer {
                 case '$': // 括弧を省略した関数呼び出し
                     tokenType = TokenType.DOLLAR;
                     break;
+                case ':': // 属性定義式のメンバ名と値の区切りとなるコロン
+                    tokenType = TokenType.COLON;
+                    break;
                 default:
                     if (Character.isDigit((char) c)) {
                         reader.unread();

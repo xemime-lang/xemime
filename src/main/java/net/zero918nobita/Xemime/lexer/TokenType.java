@@ -8,6 +8,8 @@ package net.zero918nobita.Xemime.lexer;
 public enum TokenType {
     /** セミコロン */
     SEMICOLON,
+    /** コロン */
+    COLON,
     /** コンマ */
     COMMA,
     /** ソースコードの末端 */
