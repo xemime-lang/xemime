@@ -3,7 +3,6 @@ package net.zero918nobita.Xemime.ast;
 import net.zero918nobita.Xemime.entity.Closure;
 import net.zero918nobita.Xemime.interpreter.Main;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
