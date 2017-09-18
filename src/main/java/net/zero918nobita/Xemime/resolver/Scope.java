@@ -57,6 +57,6 @@ public class Scope {
             if (s.variables.contains(sym)) return;
 
         // SemanticError - シンボルの参照の解決に失敗しました
-        throw new SemanticError(location, 2);
+        throw new SemanticError(location, 2, sym);
     }
 }
