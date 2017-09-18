@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.resolver.SemanticError;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,6 +20,6 @@ public class SemanticErrorTest {
         expectedException.expect(SemanticError.class);
         expectedException.expectMessage("1: シンボルの参照先を解決できません [2]");
 
-        throw new SemanticError(1, 2);
+        throw new SemanticError(1, 2, Symbol.intern(0, "a"));
     }
 }
