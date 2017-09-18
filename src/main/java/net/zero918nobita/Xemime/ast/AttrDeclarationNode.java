@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.entity.Attr;
 import net.zero918nobita.Xemime.entity.Closure;
 import net.zero918nobita.Xemime.interpreter.Main;
 
@@ -25,7 +26,7 @@ public class AttrDeclarationNode extends Node {
         if (member.containsKey(Symbol.intern(0, "attach"))) {
             Node attach = member.get(Symbol.intern(0, "attach")).run();
             if (attach instanceof Closure) {
-                Main.defValue(name, attach);
+                Main.defValue(name, new Attr(attach.getLocation(), (Closure) attach));
             } else {
                 throw new FatalException(attach.getLocation(), 21);
             }

@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.entity.Attr;
 import net.zero918nobita.Xemime.entity.Function;
 import net.zero918nobita.Xemime.entity.Native;
 import net.zero918nobita.Xemime.interpreter.Main;
