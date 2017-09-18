@@ -87,6 +87,7 @@ class First extends ParseUnit {
                 } else {
                     throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
                 }
+                break;
 
             case SYMBOL:
                 Symbol sym = (Symbol) lexer.value();
