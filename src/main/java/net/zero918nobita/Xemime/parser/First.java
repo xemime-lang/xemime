@@ -8,6 +8,7 @@ import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 一次子の構文解析を行います。
