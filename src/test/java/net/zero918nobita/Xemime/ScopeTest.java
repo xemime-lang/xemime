@@ -21,7 +21,7 @@ public class ScopeTest {
     @Test
     public void test() throws Exception {
         expectedException.expect(SemanticError.class);
-        expectedException.expectMessage("4: シンボルの参照先を解決できません [2]");
+        expectedException.expectMessage("4: シンボル `a` の参照先を解決できません [2]");
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));

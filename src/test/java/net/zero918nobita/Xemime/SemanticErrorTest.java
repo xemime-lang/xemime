@@ -18,7 +18,7 @@ public class SemanticErrorTest {
     @Test
     public void test() throws Exception {
         expectedException.expect(SemanticError.class);
-        expectedException.expectMessage("1: シンボルの参照先を解決できません [2]");
+        expectedException.expectMessage("1: シンボル `a` の参照先を解決できません [2]");
 
         throw new SemanticError(1, 2, Symbol.intern(0, "a"));
     }
