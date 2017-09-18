@@ -2,8 +2,6 @@ package net.zero918nobita.Xemime.entity;
 
 import net.zero918nobita.Xemime.ast.Node;
 
-import java.util.TreeMap;
-
 /**
  * アドレス<br>
  * グローバルフレーム、ローカルフレームで管理され、シンボルとその値にあたる実体を結びつけます。
