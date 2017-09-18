@@ -73,6 +73,38 @@ class First extends ParseUnit {
                 }
                 break;
 
+            case ATTR:
+                getToken(); // skip "attr"
+                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 16, "属性定義式では attr の後ろに属性名の記述が必要です。");
+                Symbol attr = (Symbol) lexer.value();
+                getToken(); // skip symbol
+                if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 17, "属性定義式ではシンボルの後ろに波括弧が必要です。");
+                HashMap<Symbol, Node> member = new HashMap<>();
+                getToken(); // skip "{"
+
+                Symbol name = (Symbol) lexer.value();
+                getToken(); // skip name
+                if (lexer.tokenType() != TokenType.COLON) throw new SyntaxError(lexer.getLocation(), 18, "属性定義式ではメンバ名と値の区切りとなるコロンが必要です。");
+                getToken(); // skip colon
+                Node value = new Expr(lexer, resolver).parse();
+                member.put(name, value);
+
+                while (lexer.tokenType() != TokenType.RB) {
+                    if (lexer.tokenType() != TokenType.COMMA) throw new SyntaxError(lexer.getLocation(), 19, "");
+                    getToken(); // skip comma
+                    name = (Symbol) lexer.value();
+                    getToken(); // skip name
+                    if (lexer.tokenType() != TokenType.COLON) throw new SyntaxError(lexer.getLocation(), 20, "属性定義式ではメンバ名と値の区切りとなるコロンが必要です。");
+                    getToken(); // skip colon
+                    value = new Expr(lexer, resolver).parse();
+                    member.put(name, value);
+                }
+
+                getToken(); // skip "}"
+                resolver.declareVar(attr);
+                node = new AttrDeclarationNode(lexer.getLocation(), attr, member);
+                break;
+
             case SUBST:
                 getToken(); // skip "subst"
                 if (lexer.tokenType() == TokenType.SYMBOL) {
