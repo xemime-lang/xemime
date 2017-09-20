@@ -1,6 +1,5 @@
 package net.zero918nobita.Xemime.parser;
 
-import net.zero918nobita.Xemime.ast.IfStmtNode;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
