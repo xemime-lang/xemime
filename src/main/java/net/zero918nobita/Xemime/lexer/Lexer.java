@@ -26,9 +26,10 @@ public class Lexer {
     private LexerReader reader;
 
     /** Reader を設定します。 */
-    public Lexer(int n, java.lang.String s) {
+    public Lexer(int n, java.lang.String s) throws Exception {
         line = n;
         reader = new LexerReader(s);
+        advance();
     }
 
     public void setTokenType(TokenType tokenType) {
@@ -295,23 +296,41 @@ public class Lexer {
         }
         java.lang.String s = buf.toString(); // シンボル名
 
-        if (s.toUpperCase().equals("T")) {
+        String S = s.toUpperCase();
+
+        if (S.equals("T")) {
             // 真値
             tokenType = TokenType.T;
             return;
-        } else if (s.toUpperCase().equals("NIL")) {
+        } else if (S.equals("NIL")) {
             // 偽値
             tokenType = TokenType.NIL;
             return;
-        } else if (s.toLowerCase().equals("let")) {
+        } else if (S.equals("LET")) {
             // 変数宣言
             tokenType = TokenType.DECLARE;
             return;
-        } else if (s.toLowerCase().equals("attr")) {
+        } else if (S.equals("IF")) {
+            // if 文
+            tokenType = TokenType.IF;
+            return;
+        } else if (S.equals("SWITCH")) {
+            // switch 文
+            tokenType = TokenType.SWITCH;
+            return;
+        } else if (S.equals("FOR")) {
+            // for 文
+            tokenType = TokenType.FOR;
+            return;
+        } else if (S.equals("WHILE")) {
+            // while 文
+            tokenType = TokenType.WHILE;
+            return;
+        } else if (S.equals("ATTR")) {
             // 属性定義
             tokenType = TokenType.ATTR;
             return;
-        } else if (s.toLowerCase().equals("subst")) {
+        } else if (S.equals("SUBST")) {
             // 実体宣言
             tokenType = TokenType.SUBST;
             return;

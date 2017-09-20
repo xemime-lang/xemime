@@ -53,7 +53,6 @@ public class Parser {
     public ArrayList<Node> parse(String str) throws Exception {
         ArrayList<Node> result = new ArrayList<>();
         lex = new Lexer(line, str.replaceAll("\r\n|\r", "\n"));
-        getToken();
         Node code;
         while (tokenType != TokenType.EOS) {
             code = new Statement(lex, resolver).parse();

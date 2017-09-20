@@ -15,6 +15,11 @@ public enum TokenType {
     /** ソースコードの末端 */
     EOS,
 
+    IF,
+    SWITCH,
+    FOR,
+    WHILE,
+
     /** 真値 */
     T,
     /** 偽値 */

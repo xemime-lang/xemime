@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime.parser;
 
+import net.zero918nobita.Xemime.ast.IfStmtNode;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
@@ -16,7 +17,25 @@ class Statement extends ParseUnit{
 
     @Override
     Node parse() throws Exception {
-        Node node = new Expr(lexer, resolver).parse();
+        Node node;
+
+        switch (lexer.tokenType()) {
+            case IF:
+                node = new IfStmt(lexer, resolver).parse();
+                break;
+            case SWITCH:
+                node = new SwitchStmt(lexer, resolver).parse();
+                break;
+            case FOR:
+                node = new ForStmt(lexer, resolver).parse();
+                break;
+            case WHILE:
+                node = new WhileStmt(lexer, resolver).parse();
+                break;
+            default:
+                node = new Expr(lexer, resolver).parse();
+        }
+
         if (node != null)
             switch (lexer.tokenType()) {
                 case SEMICOLON:
