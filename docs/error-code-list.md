@@ -22,3 +22,11 @@
 | 20 | SyntaxError |  | ``parser.First#parse`` |
 | 21 | FatalException |  | ``ast.AttrDeclarationNode#run`` |
 | 22 | SemanticError |  | ``resolver.Scope#getTypeOfVariable`` |
+| 23 | SyntaxError | 式の末尾にはセミコロンが必要です。 | ``parser.Statement#parse`` |
+| 24 | SyntaxError | if 文の条件式を囲む括弧がありません。 | ``parser.IfStmt#parse`` |
+| 25 | SyntaxError | if 文の条件式のとじ括弧がありません。 | ``parser.IfStmt#parse`` |
+| 26 | SyntaxError |  | ``parser.Statement#parse`` |
+| 27 | SyntaxError |  | ``parser.Statement#parse`` |
+| 28 | SyntaxError |  | ``parser.Statement#parse`` |
+| 29 | SyntaxError |  | ``parser.Statement#parse`` |
+| 30 | SyntaxError |  | ``parser.IfStmt#parse`` |
