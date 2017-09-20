@@ -15,3 +15,10 @@
 | 13 | FatalException | 呼び出し対象が関数ではありません。 | ``ast.FuncallNode`` | 
 | 14 | FatalException | 数値以外のデータには単項演算子 ``-`` を適用できません。 | ``ast.MinusNode`` |
 | 15 | FatalException | 真偽値以外のデータには単項演算子 ``!`` を適用できません。 | ``ast.NotNode`` |
+| 16 | SyntaxError |  | ``parser.First#parse`` |
+| 17 | SyntaxError |  | ``parser.First#parse`` |
+| 18 | SyntaxError |  | ``parser.First#parse`` |
+| 19 | SyntaxError |  | ``parser.First#parse`` |
+| 20 | SyntaxError |  | ``parser.First#parse`` |
+| 21 | FatalException |  | ``ast.AttrDeclarationNode#run`` |
+| 22 | SemanticError |  | ``resolver.Scope#getTypeOfVariable`` |
