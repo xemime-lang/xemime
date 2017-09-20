@@ -2,7 +2,7 @@ package net.zero918nobita.Xemime.resolver;
 
 import net.zero918nobita.Xemime.ast.Symbol;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 意味解析中にインスタンスが生成される、スコープを表すクラスです。
@@ -14,11 +14,11 @@ public class Scope {
 
     private int scopeID;
     private Scope parent;
-    private ArrayList<Symbol> variables;
+    private HashMap<Symbol, Variable> variables;
 
     public Scope(Scope parent) {
         this.parent = parent;
-        variables = new ArrayList<>();
+        variables = new HashMap<>();
         scopeID = maxScopeID;
         maxScopeID ++;
     }
@@ -34,10 +34,18 @@ public class Scope {
         output.append("Scope<#");
         output.append(scopeID);
         output.append("> {");
-        if (variables.size() >= 1) output.append(variables.get(0));
-        for (int i = 1; i < variables.size(); i++) {
+        for (int i = 0; i < variables.size(); i++) {
             output.append(", ");
             output.append(variables.get(i));
+        }
+        int i = 0;
+        for (Symbol sym : variables.keySet()) {
+            output.append("[");
+            output.append(variables.get(sym).getType());
+            output.append("]");
+            output.append(sym);
+            i ++;
+            if (i < variables.size()) output.append(", ");
         }
         return output.append("}").toString();
     }
@@ -47,16 +55,28 @@ public class Scope {
     }
 
     void defVar(Symbol sym) {
-        variables.add(sym);
+        variables.put(sym, new Variable(Type.ANY));
+    }
+
+    void defVar(Type type, Symbol sym) {
+        variables.put(sym, new Variable(type));
     }
 
     public void referVar(int location, Symbol sym) throws Exception {
-        if (variables.contains(sym)) return;
+        if (variables.containsKey(sym)) return;
         Scope s = this;
         while ((s = s.parent()) != null)
-            if (s.variables.contains(sym)) return;
+            if (s.variables.containsKey(sym)) return;
 
         // SemanticError - シンボルの参照の解決に失敗しました
         throw new SemanticError(location, 2, sym);
+    }
+
+    Type getTypeOfVariable(Symbol sym) throws SemanticError {
+        if (variables.containsKey(sym)) return variables.get(sym).getType();
+        Scope s = this;
+        while ((s = s.parent()) != null)
+            if (s.variables.containsKey(sym)) return s.variables.get(sym).getType();
+        throw new SemanticError(sym.getLocation(), 22, sym);
     }
 }

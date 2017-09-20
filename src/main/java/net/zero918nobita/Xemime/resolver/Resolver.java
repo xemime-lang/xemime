@@ -16,12 +16,20 @@ public class Resolver {
         scope.add(new Scope(null));
     }
 
-    public void declareVar(Symbol sym) {
-        scope.peek().defVar(sym);
+    public void declareVar(Symbol symbol) {
+        scope.peek().defVar(symbol);
+    }
+
+    public void declareVar(Type type, Symbol symbol) {
+        scope.peek().defVar(type, symbol);
     }
 
     public void referVar(int location, Symbol sym) throws Exception {
         scope.peek().referVar(location, sym);
+    }
+
+    public Type getTypeOfVariable(Symbol sym) throws SemanticError {
+        return scope.peek().getTypeOfVariable(sym);
     }
 
     public void addScope() {
