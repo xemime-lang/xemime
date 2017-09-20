@@ -20,6 +20,7 @@ class Expr extends ParseUnit {
     Node parse() throws Exception {
         Node node = new SimpleExpr(lexer, resolver).parse();
         switch (lexer.tokenType()) {
+            case AND:
             case L:
             case G:
             case EQ:
@@ -35,7 +36,8 @@ class Expr extends ParseUnit {
 
     private Node logicalExpr(Node node) throws Exception {
         ExprNode result = null;
-        while ((lexer.tokenType() == TokenType.L) ||
+        while ((lexer.tokenType() == TokenType.AND) ||
+                (lexer.tokenType() == TokenType.L) ||
                 (lexer.tokenType() == TokenType.G) ||
                 (lexer.tokenType() == TokenType.EQ) ||
                 (lexer.tokenType() == TokenType.EQL) ||

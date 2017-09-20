@@ -35,7 +35,6 @@ class Term extends ParseUnit {
         ExprNode result = null;
         while ((lexer.tokenType() == TokenType.MUL) ||
                 (lexer.tokenType() == TokenType.DIV) ||
-                (lexer.tokenType() == TokenType.AND) ||
                 (lexer.tokenType() == TokenType.XOR)) {
             TokenType op = lexer.tokenType();
             getToken();
