@@ -1,4 +1,11 @@
-subst person <- String("John") + Int(18);
+attr Attribute {
+    attach: #a, b -> a * b,
+    func: # -> 2
+};
+
+subst Substance <- Attribute(2, 4);
+
+println $ Substance ;
 
 // println $ String::show<person>();  // "John"
 // println $ Int::show<person>();     // "18"
