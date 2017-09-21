@@ -44,8 +44,8 @@ class If extends ParseUnit {
                     els.add(new Statement(lexer, resolver).parse());
                     getToken();
                 }
+                getToken();
             }
-            getToken();
         } else {
             throw new SyntaxError(lexer.getLocation(), 27, "");
         }
