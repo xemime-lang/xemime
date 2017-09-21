@@ -246,9 +246,9 @@ public class Lexer {
             if (c == '.') point = true; // はじめて小数点が登場したので val に Double を代入するように設定
             if (point && c != '.') {
                 decimal_place++;
-                num = num.add(new BigDecimal(c-'0').multiply(new BigDecimal("0.1").pow(decimal_place)));
+                num = num.add(new BigDecimal(c - '0').multiply(new BigDecimal("0.1").pow(decimal_place)));
             } else if (c != '.') {
-                num = num.multiply(new BigDecimal("10")).add(new BigDecimal(c-'0'));
+                num = num.multiply(new BigDecimal("10")).add(new BigDecimal(c - '0'));
             }
         }
         if (decimal_place != 0) {
@@ -296,47 +296,25 @@ public class Lexer {
         }
         java.lang.String s = buf.toString(); // シンボル名
 
-        String S = s.toUpperCase();
-
-        if (S.equals("T")) {
-            // 真値
-            tokenType = TokenType.T;
-            return;
-        } else if (S.equals("NIL")) {
-            // 偽値
-            tokenType = TokenType.NIL;
-            return;
-        } else if (S.equals("LET")) {
-            // 変数宣言
-            tokenType = TokenType.DECLARE;
-            return;
-        } else if (S.equals("IF")) {
-            // if 文
-            tokenType = TokenType.IF;
-            return;
-        } else if (S.equals("SWITCH")) {
-            // switch 文
-            tokenType = TokenType.SWITCH;
-            return;
-        } else if (S.equals("FOR")) {
-            // for 文
-            tokenType = TokenType.FOR;
-            return;
-        } else if (S.equals("WHILE")) {
-            // while 文
-            tokenType = TokenType.WHILE;
-            return;
-        } else if (S.equals("ATTR")) {
-            // 属性定義
-            tokenType = TokenType.ATTR;
-            return;
-        } else if (S.equals("SUBST")) {
-            // 実体宣言
-            tokenType = TokenType.SUBST;
-            return;
+        switch (s.toUpperCase()) {
+            case "T": // 真値
+                tokenType = TokenType.T;
+                break;
+            case "NIL": // 偽値
+                tokenType = TokenType.NIL;
+                break;
+            case "LET": // 変数宣言
+                tokenType = TokenType.DECLARE;
+                break;
+            case "ATTR": // 属性定義
+                tokenType = TokenType.ATTR;
+                break;
+            case "SUBST": // 実体宣言
+                tokenType = TokenType.SUBST;
+                break;
+            default:
+                val = Symbol.intern(line, s); // 既存のシンボルを返すか、新規に生成したシンボルを返します。
         }
-
-        val = Symbol.intern(line, s); // 既存のシンボルを返すか、新規に生成したシンボルを返します。
     }
 
     /**
