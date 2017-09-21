@@ -2,6 +2,7 @@ package net.zero918nobita.Xemime.parser;
 
 import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.entity.Handler;
+import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
@@ -25,6 +26,11 @@ class First extends ParseUnit {
         Node node = null;
         switch (lexer.tokenType()) {
             case EOS:
+                break;
+
+            case UNIT:
+                node = new Unit(lexer.getLocation());
+                getToken();
                 break;
 
             case INT:
@@ -181,11 +187,6 @@ class First extends ParseUnit {
         Node node;
         Handler core;
         switch (sym.getName()) {
-            case "if":
-                core = (Handler) Main.getValueOfSymbol(Symbol.intern(0, "Core"));
-                if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                node = core.message(lexer.getLocation(), Symbol.intern(0, "if"));
-                break;
             case "print":
                 core = (Handler) Main.getValueOfSymbol(Symbol.intern(0, "Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");

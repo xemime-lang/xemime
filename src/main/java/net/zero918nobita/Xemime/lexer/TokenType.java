@@ -26,6 +26,9 @@ public enum TokenType {
     BREAK,
     CONTINUE,
 
+    /** unit (無効な値) */
+    UNIT,
+
     /** 真値 */
     T,
     /** 偽値 */

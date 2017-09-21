@@ -297,6 +297,9 @@ public class Lexer {
         java.lang.String s = buf.toString(); // シンボル名
 
         switch (s.toUpperCase()) {
+            case "UNIT":
+                tokenType = TokenType.UNIT;
+                break;
             case "T": // 真値
                 tokenType = TokenType.T;
                 break;
