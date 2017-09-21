@@ -30,7 +30,6 @@ public class Parser {
         // それらのシンボルに対する参照解決の失敗を防ぎます。
         resolver.declareVar(Symbol.intern(0, "Core"));
         resolver.declareVar(Symbol.intern(0, "Object"));
-        resolver.declareVar(Symbol.intern(0, "if"));
         resolver.declareVar(Symbol.intern(0, "print"));
         resolver.declareVar(Symbol.intern(0, "println"));
         resolver.declareVar(Symbol.intern(0, "exit"));

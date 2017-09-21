@@ -334,7 +334,6 @@ public class Main {
     private static class X_Core extends Handler {
         X_Core() {
             super(0);
-            setMember(Symbol.intern(0, "if"), new X_If());
             setMember(Symbol.intern(0, "print"), new X_Print());
             setMember(Symbol.intern(0, "println"), new X_Println());
             setMember(Symbol.intern(0, "exit"), new X_Exit());
@@ -387,22 +386,6 @@ public class Main {
                 Node o = params.get(1).run();
                 System.out.println(o);
                 return o;
-            }
-        }
-
-        /**
-         * Core.if メソッド<br>
-         * 条件式と2つの引数を受け取り、条件式を評価してNIL以外となった場合は2つ目の引数を、
-         * NILとなった場合は3つ目の引数を評価して返します。
-         */
-        private static class X_If extends Native {
-            X_If(){
-                super(0, 3);
-            }
-
-            @Override
-            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
-                return (params.get(1).run().equals(Bool.Nil)) ? params.get(3).run() : params.get(2).run();
             }
         }
     }
