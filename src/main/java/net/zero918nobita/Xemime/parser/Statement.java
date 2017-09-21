@@ -21,13 +21,13 @@ class Statement extends ParseUnit{
 
         switch (lexer.tokenType()) {
             case SWITCH:
-                node = new SwitchStmt(lexer, resolver).parse();
+                node = new Switch(lexer, resolver).parse();
                 break;
             case FOR:
-                node = new ForStmt(lexer, resolver).parse();
+                node = new For(lexer, resolver).parse();
                 break;
             case WHILE:
-                node = new WhileStmt(lexer, resolver).parse();
+                node = new While(lexer, resolver).parse();
                 break;
             default:
                 node = new Expr(lexer, resolver).parse();

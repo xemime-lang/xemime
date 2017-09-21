@@ -5,12 +5,12 @@ import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
 /**
- * switch 文の構文解析を行います。
+ * for 文の構文解析を行います。
  * @author Kodai Matsumoto
  */
 
-class SwitchStmt extends ParseUnit {
-    SwitchStmt(Lexer lexer, Resolver resolver) {
+public class For extends ParseUnit {
+    For(Lexer lexer, Resolver resolver) {
         super(lexer, resolver);
     }
 

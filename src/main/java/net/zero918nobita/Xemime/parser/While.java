@@ -5,12 +5,12 @@ import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
 /**
- * for 文の構文解析を行います。
+ * while 文の構文解析を行います。
  * @author Kodai Matsumoto
  */
 
-public class ForStmt extends ParseUnit {
-    ForStmt(Lexer lexer, Resolver resolver) {
+public class While extends ParseUnit {
+    While(Lexer lexer, Resolver resolver) {
         super(lexer, resolver);
     }
 

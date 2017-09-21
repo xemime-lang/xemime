@@ -1,7 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
-public class ForStmtNode extends Node {
-    ForStmtNode(int location) {
+public class WhileNode extends Node {
+    WhileNode(int location) {
         super(location);
     }
 }
