@@ -30,13 +30,13 @@ stmt = for_stmt
     ;
 
 # arithmetic_expr 算術式
-logical_expr = arithmetic_expr , [ { ( "==" | "!=" | "<" | "<=" | ">" | ">=" ) , arithmetic_expr } ] ;
+logical_expr = arithmetic_expr , [ { ( "&&" |  "==" | "!=" | "<" | "<=" | ">" | ">=" ) , arithmetic_expr } ] ;
 
 # term: 項
 arithmetic_expr = term , [ { ( "+" | "-" | "||" ) , term } ] ;
 
 # factor: 因子
-term = factor , [ { ( "*" | "/" | "&&" ) , factor } ] ;
+term = factor , [ { ( "*" | "/" ) , factor } ] ;
 
 # first: 一次子, lambda_expr: ラムダ式, NIL: 偽値, STRING: 文字列リテラル, T: 真値
 factor = first
@@ -65,7 +65,7 @@ block_expr = "{" , logical_expr , [ ";" ] , "}"
     | "{" , logical_expr , { ";" , logical_expr } , [ ";" ] , "}"
     ;
 
-declaration_expr = "let" , SYMBOL , "=" , logical_expr ;
+declaration_expr = "let" , SYMBOL , type ,  "=" , logical_expr ;
 
 function_call = first , "(" , [ logical_expr , [ { "," , logical_expr } ] ] , ")" ;
 
@@ -73,6 +73,18 @@ import_stmt = "import" , STRING , "as" , SYMBOL ;
 
 lambda_expr = "#" , "(", [ SYMBOL , [ { "," , SYMBOL } ] ] , ")", "->", logical_expr
     | "#", [ [ { "," , SYMBOL } ] ] , "->" , logical_expr
+    ;
+
+type = "int"
+    | "char"
+    | "float"
+    | "double"
+    | "long"
+    | "subst"
+    | "attr"
+    | "proc"
+    | "enum"
+    | "tuple"
     ;
 
 ```
