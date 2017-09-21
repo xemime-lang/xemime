@@ -306,6 +306,21 @@ public class Lexer {
             case "LET": // 変数宣言
                 tokenType = TokenType.DECLARE;
                 break;
+            case "IF":
+                tokenType = TokenType.IF;
+                break;
+            case "ELSE":
+                tokenType = TokenType.ELSE;
+                break;
+            case "SWITCH":
+                tokenType = TokenType.SWITCH;
+                break;
+            case "FOR":
+                tokenType = TokenType.FOR;
+                break;
+            case "WHILE":
+                tokenType = TokenType.WHILE;
+                break;
             case "ATTR": // 属性定義
                 tokenType = TokenType.ATTR;
                 break;

@@ -20,26 +20,21 @@ class Statement extends ParseUnit{
         Node node;
 
         switch (lexer.tokenType()) {
-            case IF:
-                node = new IfStmt(lexer, resolver).parse();
-                if (lexer.tokenType() != TokenType.SEMICOLON) throw new SyntaxError(lexer.getLocation(), 26, "");
-                break;
             case SWITCH:
                 node = new SwitchStmt(lexer, resolver).parse();
-                if (lexer.tokenType() != TokenType.SEMICOLON) throw new SyntaxError(lexer.getLocation(), 27, "");
                 break;
             case FOR:
                 node = new ForStmt(lexer, resolver).parse();
-                if (lexer.tokenType() != TokenType.SEMICOLON) throw new SyntaxError(lexer.getLocation(), 28, "");
                 break;
             case WHILE:
                 node = new WhileStmt(lexer, resolver).parse();
-                if (lexer.tokenType() != TokenType.SEMICOLON) throw new SyntaxError(lexer.getLocation(), 29, "");
                 break;
             default:
                 node = new Expr(lexer, resolver).parse();
-                if (lexer.tokenType() != TokenType.SEMICOLON) throw new SyntaxError(lexer.getLocation(), 23, "式の末尾にはセミコロンが必要です。");
         }
+
+        // Syntax Error - ステートメントの末尾にはセミコロンが必要です。
+        if (lexer.tokenType() != TokenType.SEMICOLON) throw new SyntaxError(lexer.getLocation(), 23, "ステートメントの末尾にはセミコロンが必要です。");
 
         return node;
     }

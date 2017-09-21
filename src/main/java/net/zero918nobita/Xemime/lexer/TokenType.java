@@ -16,9 +16,15 @@ public enum TokenType {
     EOS,
 
     IF,
+    ELSE_IF,
+    ELSE,
     SWITCH,
+    CASE,
+    DEFAULT,
     FOR,
     WHILE,
+    BREAK,
+    CONTINUE,
 
     /** 真値 */
     T,

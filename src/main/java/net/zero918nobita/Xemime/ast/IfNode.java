@@ -9,12 +9,12 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class IfStmtNode extends Node {
+public class IfNode extends Node {
     private Node condition;
     private ArrayList<Node> then;
     private ArrayList<Node> els;
 
-    public IfStmtNode(int location, Node condition, ArrayList<Node> then, ArrayList<Node> els) {
+    public IfNode(int location, Node condition, ArrayList<Node> then, ArrayList<Node> els) {
         super(location);
         this.condition = condition;
         this.then = then;
@@ -26,6 +26,7 @@ public class IfStmtNode extends Node {
         boolean cond = !condition.run().equals(Bool.Nil);
         Node result = null;
         if (cond && then != null) for (Node node : then) result = node.run();
+        if (!cond && els != null) for (Node node : els) result = node.run();
         return result;
     }
 }

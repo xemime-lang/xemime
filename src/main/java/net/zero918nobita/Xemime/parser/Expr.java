@@ -18,6 +18,9 @@ class Expr extends ParseUnit {
 
     @Override
     Node parse() throws Exception {
+        if (lexer.tokenType() == TokenType.IF) {
+            return new If(lexer, resolver).parse();
+        }
         Node node = new SimpleExpr(lexer, resolver).parse();
         switch (lexer.tokenType()) {
             case AND:
