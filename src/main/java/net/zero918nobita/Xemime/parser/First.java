@@ -43,6 +43,11 @@ class First extends ParseUnit {
                 getToken(); // skip double literal
                 break;
 
+            case ADD:
+                getToken(); // skip "+"
+                node = new First(lexer, resolver).parse();
+                break;
+
             case SUB:
                 getToken(); // skip "-"
                 node = new MinusNode(lexer.getLocation(), new First(lexer, resolver).parse());
@@ -152,7 +157,7 @@ class First extends ParseUnit {
                     Node expr = new Expr(lexer, resolver).parse();
                     if (expr == null) throw new Exception(lexer.getLocation() + ": 文法エラーです");
                     list.add(expr);
-                    while (lexer.tokenType() != TokenType.SEMICOLON) {
+                    while (lexer.tokenType() != TokenType.BR && lexer.tokenType() != TokenType.EOS) {
                         if (lexer.tokenType() != TokenType.COMMA) throw new Exception(lexer.getLocation() + ": 文法エラーです");
                         getToken();
                         list.add(new Expr(lexer, resolver).parse());

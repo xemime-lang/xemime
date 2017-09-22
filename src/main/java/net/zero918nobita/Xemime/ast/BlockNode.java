@@ -24,7 +24,10 @@ public class BlockNode extends Node {
         Node obj = null;
         Main.loadLocalFrame(new Handler(0));
         if (list != null) for (Node o : list) obj = o.run();
-        if (obj == null) throw new Exception(getLocation() + ": ブロックの戻り値が記述されていません");
+
+        // Fatal Exception - ブロック式の戻り値が設定されていません。
+        if (obj == null) throw new FatalException(getLocation(), 24);
+
         Main.unloadLocalFrame();
         return obj;
     }

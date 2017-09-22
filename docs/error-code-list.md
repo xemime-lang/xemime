@@ -30,3 +30,4 @@
 | 28 | SyntaxError |  | ``parser.If#parse`` |
 | 29 | SyntaxError |  | ``parser.If#parse`` |
 | 30 | SyntaxError |  | ``parser.If#parse`` |
+| 31 | SyntaxError |  | ``parser.Block#parse`` |

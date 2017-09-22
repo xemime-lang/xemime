@@ -22,9 +22,9 @@ public class DotAssignNodeTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         Main.exec(
-                "let obj = Object.clone();\n" +
-                        "obj.a = 2;\n" +
-                        "println $ obj.a;\n"
+                "let obj = Object.clone()\n" +
+                        "obj.a = 2\n" +
+                        "println $ obj.a\n"
         );
         assertThat(out.toString(), is("2" + br));
     }

@@ -22,10 +22,10 @@ public class AssignNodeTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         Main.exec(
-                "let num = 1;\n" +
-                        "println $ num;\n" +
-                        "num = 2;\n" +
-                        "println $ num;\n"
+                "let num = 1\n" +
+                        "println $ num\n" +
+                        "num = 2\n" +
+                        "println $ num\n"
         );
         assertThat(out.toString(), is("1" + br + "2" + br));
     }

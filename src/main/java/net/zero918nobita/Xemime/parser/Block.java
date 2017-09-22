@@ -23,10 +23,18 @@ class Block extends ParseUnit {
         ArrayList<Node> list = null;
         getToken();
         resolver.addScope();
+        while (lexer.tokenType() == TokenType.BR) getToken();
+        Node node = new Statement(lexer, resolver).parse();
+        if (lexer.tokenType() == TokenType.BR) {
+            list = new ArrayList<>();
+            list.add(node);
+        } else {
+            throw new SyntaxError(lexer.getLocation(), 31, "");
+        }
         while (lexer.tokenType() != TokenType.RB) {
-            Node node = new Statement(lexer, resolver).parse();
-            if (lexer.tokenType() == TokenType.SEMICOLON) {
-                if (list == null) list = new ArrayList<>();
+            while (lexer.tokenType() == TokenType.BR) getToken();
+            node = new Statement(lexer, resolver).parse();
+            if (lexer.tokenType() == TokenType.BR) {
                 list.add(node);
             } else {
                 // Syntax Error - ブロック式内のステートメントにセミコロンが付いていません。

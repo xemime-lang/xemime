@@ -84,6 +84,10 @@ public class Lexer {
                 case '#':
                     tokenType = TokenType.LAMBDA;
                     break;
+                case '\n':
+                    line ++;
+                    tokenType = TokenType.BR;
+                    break;
                 case '=':
                     c = reader.read();
                     if (c == '=') {
@@ -341,10 +345,7 @@ public class Lexer {
      */
     private void skipWhiteSpace() throws Exception {
         int c = reader.read();
-        while ((c != -1) && Character.isWhitespace((char)c)) {
-            if (c == '\n') line ++;
-            c = reader.read();
-        }
+        while (c == ' ' || c == '\t') c = reader.read();
         reader.unread();
     }
 

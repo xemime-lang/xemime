@@ -56,6 +56,7 @@ public class Parser {
         Node code;
         while (tokenType != TokenType.EOS) {
             code = new Statement(lex, resolver).parse();
+            if (lex.tokenType() != TokenType.BR && lex.tokenType() != TokenType.EOS) throw new SyntaxError(lex.getLocation(), 25, "不明なトークンが発見されました");
             if (code != null) result.add(code);
             getToken();
         }

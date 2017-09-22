@@ -27,9 +27,9 @@ public class ScopeTest {
         System.setOut(new PrintStream(out));
         Main.exec(
                 "{\n" +
-                        "  let a = 2;\n" +
-                        "};\n" +
-                        "println $ a;\n"
+                        "  let a = 2\n" +
+                        "}\n" +
+                        "println $ a\n"
         );
     }
 }

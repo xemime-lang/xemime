@@ -26,9 +26,11 @@ class If extends ParseUnit {
         ArrayList<Node> els = null;
         if (lexer.tokenType() == TokenType.LB) {
             getToken(); // skip "{"
+            boolean unit = false; // 戻り値を unit にすべきかどうか
             then.add(new Statement(lexer, resolver).parse());
+            if (lexer.tokenType() != TokenType.SEMICOLON) unit = true;
             getToken();
-            while (lexer.tokenType() != TokenType.RB) {
+            if (!unit) while (lexer.tokenType() != TokenType.RB) {
                 then.add(new Statement(lexer, resolver).parse());
                 getToken();
             }

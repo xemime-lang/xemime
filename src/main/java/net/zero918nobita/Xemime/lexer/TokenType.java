@@ -12,6 +12,8 @@ public enum TokenType {
     COLON,
     /** コンマ */
     COMMA,
+    /** 改行 */
+    BR,
     /** ソースコードの末端 */
     EOS,
 

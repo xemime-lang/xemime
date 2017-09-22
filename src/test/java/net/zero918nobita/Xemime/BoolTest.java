@@ -29,9 +29,9 @@ public class BoolTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         Main.exec(
-                "let variable = T;\n" +
-                        "println(variable);\n" +
-                        "println(!variable);\n"
+                "let variable = T\n" +
+                        "println(variable)\n" +
+                        "println(!variable)\n"
         );
         assertThat(out.toString(), is("T" + br + "NIL" + br));
     }

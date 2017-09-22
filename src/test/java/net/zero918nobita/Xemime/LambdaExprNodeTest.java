@@ -30,9 +30,9 @@ public class LambdaExprNodeTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         Main.exec(
-                "let f = #x -> x + 2;\n" +
-                        "println $ f $ 2;\n" +
-                        "println $ f $ 3;\n"
+                "let f = #x -> x + 2\n" +
+                        "println $ f $ 2\n" +
+                        "println $ f $ 3\n"
         );
         assertThat(out.toString(), is("4" + br + "5" + br));
     }

@@ -33,9 +33,6 @@ class Statement extends ParseUnit{
                 node = new Expr(lexer, resolver).parse();
         }
 
-        // Syntax Error - ステートメントの末尾にはセミコロンが必要です。
-        if (lexer.tokenType() != TokenType.SEMICOLON) throw new SyntaxError(lexer.getLocation(), 23, "ステートメントの末尾にはセミコロンが必要です。");
-
         return node;
     }
 }
