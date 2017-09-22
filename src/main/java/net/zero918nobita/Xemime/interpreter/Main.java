@@ -2,7 +2,6 @@ package net.zero918nobita.Xemime.interpreter;
 
 import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.parser.Parser;
-import net.zero918nobita.Xemime.utils.VirtualMemoryMonitor;
 import net.zero918nobita.Xemime.ast.*;
 
 import java.io.*;
@@ -167,29 +166,17 @@ public class Main {
      */
     public static void main(String[] args) {
         allowExitMethod = true;
-        // 仮想メモリモニタ
-        VirtualMemoryMonitor vmm;
-        // 仮想メモリモニタ実行用スレッド
-        Thread vmmThread;
 
-        boolean debug = Arrays.asList(args).contains("-debug");
-
-        if ((debug && args.length >= 3) || (!debug && args.length >= 2)) {
+        if (args.length >= 2) {
             usage();
             System.out.println(System.lineSeparator() + "Usage: java -jar Xemime.jar [source file name]");
             return;
         }
 
-        if (debug) {
-            vmm = new VirtualMemoryMonitor();
-            vmmThread = new Thread(vmm);
-            vmmThread.start();
-        }
-
         try {
             parser = new Parser();
             BufferedReader in;
-            if ((debug && args.length == 1) || (!debug && args.length == 0)) {
+            if (args.length == 0) {
                 usage();
                 in = new BufferedReader(new InputStreamReader(System.in));
                 System.out.print(System.lineSeparator() + "[1]> ");
