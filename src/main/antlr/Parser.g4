@@ -4,8 +4,9 @@ grammar Parser;
     package net.zero918nobita.Xemime;
 }
 
-prog: (expr '\n')*;
-expr: WS? 'let' WS SYMBOL WS? '=' WS? expr WS?
+prog: (expr? '\n')*;
+expr: WS? 'if' WS expr WS '{' WS? expr WS? (expr WS? '\n' WS?)* '}' WS? ('else' WS? '{' WS? expr WS? (expr WS? '\n' WS?)* '}')?
+    | WS? 'let' WS SYMBOL WS? '=' WS? expr WS?
     | WS? expr1 WS? ';'
     | WS? expr1 WS?
     ;
