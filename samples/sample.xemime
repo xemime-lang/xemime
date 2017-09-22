@@ -1,1 +1,6 @@
-Core.println("Hello");
+let a = 3
+let b = 4
+{
+    println $ a + b
+    println $ 1
+}
