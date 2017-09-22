@@ -23,6 +23,8 @@
 | 21 | FatalException |  | ``ast.AttrDeclarationNode#run`` |
 | 22 | SemanticError |  | ``resolver.Scope#getTypeOfVariable`` |
 | 23 | SyntaxError | ステートメントの末尾にはセミコロンが必要です。 | ``parser.Statement#parse`` |
+| 24 | FatalException | ブロック式の戻り値が設定されていません。 | ``ast.BlockNode#run`` |
+| 25 | SyntaxError |  | ``parser.Parser`` |
 | 26 | SyntaxError |  | ``parser.If#parse`` |
 | 27 | SyntaxError |  | ``parser.If#parse`` |
 | 28 | SyntaxError |  | ``parser.If#parse`` |
