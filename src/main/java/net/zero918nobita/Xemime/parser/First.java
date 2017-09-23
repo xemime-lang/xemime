@@ -29,7 +29,7 @@ class First extends ParseUnit {
                 break;
 
             case UNIT:
-                node = new Unit(lexer.getLocation());
+                node = new Unit(lexer.getLocation(), null);
                 getToken();
                 break;
 
@@ -74,15 +74,19 @@ class First extends ParseUnit {
                     getToken(); // skip symbol
                     if (lexer.tokenType() == TokenType.ASSIGN) {
                         getToken(); // skip "="
+                        node = new DeclarationNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
                         // 現在のスコープに変数を登録する
                         resolver.declareVar(sym);
-                        node = new DeclarationNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
                     } else {
                         throw new Exception(lexer.getLocation() + ": 変数宣言式が不正です");
                     }
                 } else {
                     throw new Exception(lexer.getLocation() + ": 変数宣言式が不正です");
                 }
+                break;
+
+            case IF:
+                node = new If(lexer, resolver).parse();
                 break;
 
             case ATTR:
@@ -157,7 +161,9 @@ class First extends ParseUnit {
                     Node expr = new Expr(lexer, resolver).parse();
                     if (expr == null) throw new Exception(lexer.getLocation() + ": 文法エラーです");
                     list.add(expr);
-                    while (lexer.tokenType() != TokenType.BR && lexer.tokenType() != TokenType.EOS) {
+                    while (lexer.tokenType() != TokenType.BR &&
+                            lexer.tokenType() != TokenType.EOS &&
+                            lexer.tokenType() != TokenType.SEMICOLON) {
                         if (lexer.tokenType() != TokenType.COMMA) throw new Exception(lexer.getLocation() + ": 文法エラーです");
                         getToken();
                         list.add(new Expr(lexer, resolver).parse());

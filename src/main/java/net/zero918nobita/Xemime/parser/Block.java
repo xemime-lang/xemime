@@ -20,12 +20,12 @@ class Block extends ParseUnit {
 
     @Override
     Node parse() throws Exception {
-        ArrayList<Node> list = null;
+        ArrayList<Node> list;
         getToken();
         resolver.addScope();
         while (lexer.tokenType() == TokenType.BR) getToken();
         Node node = new Statement(lexer, resolver).parse();
-        if (lexer.tokenType() == TokenType.BR) {
+        if (lexer.tokenType() == TokenType.BR || lexer.tokenType() == TokenType.RB) {
             list = new ArrayList<>();
             list.add(node);
         } else {
@@ -33,8 +33,9 @@ class Block extends ParseUnit {
         }
         while (lexer.tokenType() != TokenType.RB) {
             while (lexer.tokenType() == TokenType.BR) getToken();
+            if (lexer.tokenType() == TokenType.RB) break;
             node = new Statement(lexer, resolver).parse();
-            if (lexer.tokenType() == TokenType.BR) {
+            if (lexer.tokenType() == TokenType.BR || lexer.tokenType() == TokenType.RB) {
                 list.add(node);
             } else {
                 // Syntax Error - ブロック式内のステートメントにセミコロンが付いていません。

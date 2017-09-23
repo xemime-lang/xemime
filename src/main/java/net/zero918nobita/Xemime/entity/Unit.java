@@ -8,8 +8,17 @@ import net.zero918nobita.Xemime.ast.Node;
  */
 
 public class Unit extends Node {
-    public Unit(int location) {
+    private Node body;
+
+    public Unit(int location, Node body) {
         super(location);
+        this.body = body;
+    }
+
+    @Override
+    public Node run() throws Exception {
+        if (body != null) body.run();
+        return this;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.zero918nobita.Xemime.parser;
 
 import net.zero918nobita.Xemime.ast.Node;
+import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
@@ -19,6 +20,8 @@ class Statement extends ParseUnit{
     Node parse() throws Exception {
         Node node;
 
+        while (lexer.tokenType() == TokenType.BR) getToken();
+
         switch (lexer.tokenType()) {
             case SWITCH:
                 node = new Switch(lexer, resolver).parse();
@@ -31,6 +34,10 @@ class Statement extends ParseUnit{
                 break;
             default:
                 node = new Expr(lexer, resolver).parse();
+                if (lexer.tokenType() == TokenType.SEMICOLON) {
+                    getToken();
+                    node = new Unit(lexer.getLocation(), node);
+                }
         }
 
         return node;
