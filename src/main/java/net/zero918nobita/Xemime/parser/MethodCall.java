@@ -22,7 +22,7 @@ class MethodCall extends ParseUnit {
     }
 
     @Override
-    Node parse() throws Exception {
+    protected Node parse() throws Exception {
         throw new FatalError(lexer.getLocation(), 6);
     }
 

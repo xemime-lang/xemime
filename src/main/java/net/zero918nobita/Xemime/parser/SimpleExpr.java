@@ -17,7 +17,7 @@ class SimpleExpr extends ParseUnit {
     }
 
     @Override
-    Node parse() throws Exception {
+    protected Node parse() throws Exception {
         Node node = new Term(lexer, resolver).parse();
         switch (lexer.tokenType()) {
             case ADD:

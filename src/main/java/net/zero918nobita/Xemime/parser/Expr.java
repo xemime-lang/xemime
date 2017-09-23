@@ -17,7 +17,7 @@ class Expr extends ParseUnit {
     }
 
     @Override
-    Node parse() throws Exception {
+    protected Node parse() throws Exception {
         if (lexer.tokenType() == TokenType.IF) {
             return new If(lexer, resolver).parse();
         }

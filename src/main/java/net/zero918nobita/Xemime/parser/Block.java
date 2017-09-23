@@ -19,7 +19,7 @@ class Block extends ParseUnit {
     }
 
     @Override
-    Node parse() throws Exception {
+    protected Node parse() throws Exception {
         ArrayList<Node> list;
         getToken();
         resolver.addScope();

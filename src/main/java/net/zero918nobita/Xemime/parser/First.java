@@ -22,7 +22,7 @@ class First extends ParseUnit {
     }
 
     @Override
-    Node parse() throws Exception {
+    protected Node parse() throws Exception {
         Node node = null;
         switch (lexer.tokenType()) {
             case EOS:

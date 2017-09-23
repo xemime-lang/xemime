@@ -18,7 +18,7 @@ class Term extends ParseUnit {
     }
 
     @Override
-    Node parse() throws Exception {
+    protected Node parse() throws Exception {
         Factor factor = new Factor(lexer, resolver);
         Node node = factor.parse();
         switch (lexer.tokenType()) {

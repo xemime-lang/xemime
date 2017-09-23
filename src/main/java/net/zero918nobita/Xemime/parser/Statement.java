@@ -17,7 +17,7 @@ class Statement extends ParseUnit{
     }
 
     @Override
-    Node parse() throws Exception {
+    protected Node parse() throws Exception {
         Node node;
 
         while (lexer.tokenType() == TokenType.BR) getToken();

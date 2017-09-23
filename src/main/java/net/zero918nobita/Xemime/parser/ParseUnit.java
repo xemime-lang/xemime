@@ -10,16 +10,16 @@ import net.zero918nobita.Xemime.resolver.Resolver;
  * @author Kodai Matsumoto
  */
 
-abstract class ParseUnit {
+public abstract class ParseUnit {
     protected Lexer lexer;
     protected Resolver resolver;
 
-    ParseUnit(Lexer lexer, Resolver resolver) {
+    public ParseUnit(Lexer lexer, Resolver resolver) {
         this.lexer = lexer;
         this.resolver = resolver;
     }
 
-    void getToken() throws Exception {
+    public void getToken() throws Exception {
         if (lexer.advance()) {
             lexer.setTokenType(lexer.tokenType());
         } else {
@@ -27,5 +27,5 @@ abstract class ParseUnit {
         }
     }
 
-    abstract Node parse() throws Exception;
+    protected abstract Node parse() throws Exception;
 }

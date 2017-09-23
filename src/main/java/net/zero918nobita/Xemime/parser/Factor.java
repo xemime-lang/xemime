@@ -19,7 +19,7 @@ class Factor extends ParseUnit {
     }
 
     @Override
-    Node parse() throws Exception {
+    protected Node parse() throws Exception {
         Node node;
         switch (lexer.tokenType()) {
             case STRING:

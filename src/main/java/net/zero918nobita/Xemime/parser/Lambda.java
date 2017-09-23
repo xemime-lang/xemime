@@ -20,7 +20,7 @@ class Lambda extends ParseUnit {
     }
 
     @Override
-    Node parse() throws Exception {
+    protected Node parse() throws Exception {
         ArrayList<Symbol> list = new ArrayList<>();
         getToken();
         if (lexer.tokenType() == TokenType.SYMBOL) {
