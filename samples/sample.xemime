@@ -1,6 +1,12 @@
-let a = 3
-let b = 4
-{
-    println $ a + b
-    println $ 1
+let a = 2
+let b = 3
+
+let c = if a < b {
+    3;
+} else {
+    4
 }
+
+println $ a
+println $ b
+println $ c
