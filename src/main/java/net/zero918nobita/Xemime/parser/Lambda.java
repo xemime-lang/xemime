@@ -54,7 +54,7 @@ class Lambda extends ParseUnit {
         getToken();
         resolver.addScope();
         for (Symbol sym : list) resolver.declareVar(sym);
-        Node expr = new Expr(lexer, resolver).parse();
+        Node expr = new LogicalExpr(lexer, resolver).parse();
         resolver.removeScope();
         return new LambdaExprNode(lexer.getLocation(), list, expr);
     }

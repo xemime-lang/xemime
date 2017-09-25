@@ -31,3 +31,7 @@
 | 29 | SyntaxError |  | ``parser.If#parse`` |
 | 30 | SyntaxError |  | ``parser.If#parse`` |
 | 31 | SyntaxError |  | ``parser.Block#parse`` |
+| 34 | FatalException |  | ``ast.PrefixDecrementNode#run`` |
+| 35 | FatalException |  | ``ast.PrefixDecrementNode#run`` |
+| 36 | FatalException |  | ``ast.PrefixIncrementNode#run`` |
+| 37 | FatalException |  | ``ast.PrefixIncrementNode#run`` |

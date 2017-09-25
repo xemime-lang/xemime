@@ -27,5 +27,9 @@ public abstract class ParseUnit {
         }
     }
 
+    void skipLineBreaks() throws Exception {
+        while (lexer.tokenType() == TokenType.BR) getToken();
+    }
+
     protected abstract Node parse() throws Exception;
 }

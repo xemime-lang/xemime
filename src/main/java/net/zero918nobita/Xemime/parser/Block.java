@@ -24,7 +24,7 @@ class Block extends ParseUnit {
         getToken();
         resolver.addScope();
         while (lexer.tokenType() == TokenType.BR) getToken();
-        Node node = new Statement(lexer, resolver).parse();
+        Node node = new Expr(lexer, resolver).parse();
         if (lexer.tokenType() == TokenType.BR || lexer.tokenType() == TokenType.RB) {
             list = new ArrayList<>();
             list.add(node);
@@ -34,7 +34,7 @@ class Block extends ParseUnit {
         while (lexer.tokenType() != TokenType.RB) {
             while (lexer.tokenType() == TokenType.BR) getToken();
             if (lexer.tokenType() == TokenType.RB) break;
-            node = new Statement(lexer, resolver).parse();
+            node = new Expr(lexer, resolver).parse();
             if (lexer.tokenType() == TokenType.BR || lexer.tokenType() == TokenType.RB) {
                 list.add(node);
             } else {

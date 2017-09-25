@@ -21,17 +21,17 @@ class If extends ParseUnit {
     @Override
     protected Node parse() throws Exception {
         getToken(); // skip IF
-        Node condition = new Expr(lexer, resolver).parse();
+        Node condition = new LogicalExpr(lexer, resolver).parse();
         ArrayList<Node> then = new ArrayList<>();
         ArrayList<Node> els = null;
         if (lexer.tokenType() == TokenType.LB) {
             getToken(); // skip "{"
             boolean unit = false; // 戻り値を unit にすべきかどうか
-            then.add(new Statement(lexer, resolver).parse());
+            then.add(new Expr(lexer, resolver).parse());
             if (lexer.tokenType() != TokenType.SEMICOLON) unit = true;
             getToken();
             if (!unit) while (lexer.tokenType() != TokenType.RB) {
-                then.add(new Statement(lexer, resolver).parse());
+                then.add(new Expr(lexer, resolver).parse());
                 getToken();
             }
             getToken();
@@ -40,10 +40,10 @@ class If extends ParseUnit {
                 if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 29, "");
                 getToken(); // skip "{"
                 els = new ArrayList<>();
-                els.add(new Statement(lexer, resolver).parse());
+                els.add(new Expr(lexer, resolver).parse());
                 getToken();
                 while (lexer.tokenType() != TokenType.RB) {
-                    els.add(new Statement(lexer, resolver).parse());
+                    els.add(new Expr(lexer, resolver).parse());
                     getToken();
                 }
                 getToken();

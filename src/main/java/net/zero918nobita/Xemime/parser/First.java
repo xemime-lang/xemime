@@ -34,13 +34,9 @@ class First extends ParseUnit {
                 break;
 
             case INT:
-                node = lexer.value();
-                getToken(); // skip int literal
-                break;
-
             case DOUBLE:
                 node = lexer.value();
-                getToken(); // skip double literal
+                getToken(); // skip int literal
                 break;
 
             case ADD:
@@ -55,7 +51,7 @@ class First extends ParseUnit {
 
             case LP:
                 getToken(); // skip "("
-                node = new Expr(lexer, resolver).parse();
+                node = new LogicalExpr(lexer, resolver).parse();
 
                 // Syntax Error - 対応する括弧がありません。
                 if (lexer.tokenType() != TokenType.RP) throw new SyntaxError(lexer.getLocation(), 8, "対応する括弧がありません。");
@@ -74,7 +70,7 @@ class First extends ParseUnit {
                     getToken(); // skip symbol
                     if (lexer.tokenType() == TokenType.ASSIGN) {
                         getToken(); // skip "="
-                        node = new DeclarationNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
+                        node = new DeclarationNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
                         // 現在のスコープに変数を登録する
                         resolver.declareVar(sym);
                     } else {
@@ -102,7 +98,7 @@ class First extends ParseUnit {
                 getToken(); // skip name
                 if (lexer.tokenType() != TokenType.COLON) throw new SyntaxError(lexer.getLocation(), 18, "属性定義式ではメンバ名と値の区切りとなるコロンが必要です。");
                 getToken(); // skip colon
-                Node value = new Expr(lexer, resolver).parse();
+                Node value = new LogicalExpr(lexer, resolver).parse();
                 member.put(name, value);
 
                 while (lexer.tokenType() != TokenType.RB) {
@@ -112,7 +108,7 @@ class First extends ParseUnit {
                     getToken(); // skip name
                     if (lexer.tokenType() != TokenType.COLON) throw new SyntaxError(lexer.getLocation(), 20, "属性定義式ではメンバ名と値の区切りとなるコロンが必要です。");
                     getToken(); // skip colon
-                    value = new Expr(lexer, resolver).parse();
+                    value = new LogicalExpr(lexer, resolver).parse();
                     member.put(name, value);
                 }
 
@@ -129,7 +125,7 @@ class First extends ParseUnit {
                     if (lexer.tokenType() == TokenType.ATTACH) {
                         getToken(); // skip "<-"
                         resolver.declareVar(sym);
-                        node = new SubstanceDeclarationNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
+                        node = new SubstanceDeclarationNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
                     } else {
                         throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
                     }
@@ -146,29 +142,7 @@ class First extends ParseUnit {
                 if (lexer.tokenType() == TokenType.ASSIGN) {
                     // 宣言済みの変数への代入
                     getToken();
-                    node = new AssignNode(lexer.getLocation(), sym, new Expr(lexer, resolver).parse());
-                } else if (lexer.tokenType() == TokenType.LP) {
-                    // 関数呼び出し
-                    node = new MethodCall(lexer, resolver).methodCall(sym);
-                } else if (lexer.tokenType() == TokenType.DOLLAR) {
-                    // 括弧を省略した関数呼び出し
-                    getToken(); // skip "$"
-                    ArrayList<Node> list = new ArrayList<>();
-                    if (lexer.tokenType() == TokenType.SEMICOLON) {
-                        node = new FuncallNode(lexer.getLocation(), method(sym), list);
-                        break;
-                    }
-                    Node expr = new Expr(lexer, resolver).parse();
-                    if (expr == null) throw new Exception(lexer.getLocation() + ": 文法エラーです");
-                    list.add(expr);
-                    while (lexer.tokenType() != TokenType.BR &&
-                            lexer.tokenType() != TokenType.EOS &&
-                            lexer.tokenType() != TokenType.SEMICOLON) {
-                        if (lexer.tokenType() != TokenType.COMMA) throw new Exception(lexer.getLocation() + ": 文法エラーです");
-                        getToken();
-                        list.add(new Expr(lexer, resolver).parse());
-                    }
-                    node = new FuncallNode(lexer.getLocation(), method(sym), list);
+                    node = new AssignNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
                 } else {
                     node = method(sym);
                 }

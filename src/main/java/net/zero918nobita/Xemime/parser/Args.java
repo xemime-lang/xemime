@@ -27,11 +27,11 @@ class Args extends ParseUnit {
         ArrayList<Node> list = null;
         if (lexer.tokenType() != TokenType.RP) {
             list = new ArrayList<>();
-            list.add(new Expr(lexer, resolver).parse());
+            list.add(new LogicalExpr(lexer, resolver).parse());
             while (lexer.tokenType() != TokenType.RP) {
                 if (lexer.tokenType() != TokenType.COMMA) throw new Exception("文法エラーです");
                 getToken();
-                list.add(new Expr(lexer, resolver).parse());
+                list.add(new LogicalExpr(lexer, resolver).parse());
             }
         }
         return list;
