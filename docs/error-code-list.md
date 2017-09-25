@@ -22,7 +22,7 @@
 | 20 | SyntaxError |  | ``parser.First#parse`` |
 | 21 | FatalException |  | ``ast.AttrDeclarationNode#run`` |
 | 22 | SemanticError |  | ``resolver.Scope#getTypeOfVariable`` |
-| 23 | SyntaxError | ステートメントの末尾にはセミコロンが必要です。 | ``parser.Statement#parse`` |
+| 23 | SyntaxError | ステートメントの末尾にはセミコロンが必要です。 | ``parser.Expr#parse`` |
 | 24 | FatalException | ブロック式の戻り値が設定されていません。 | ``ast.BlockNode#run`` |
 | 25 | SyntaxError |  | ``parser.Parser`` |
 | 26 | SyntaxError |  | ``parser.If#parse`` |
@@ -35,3 +35,4 @@
 | 35 | FatalException |  | ``ast.PrefixDecrementNode#run`` |
 | 36 | FatalException |  | ``ast.PrefixIncrementNode#run`` |
 | 37 | FatalException |  | ``ast.PrefixIncrementNode#run`` |
+| 38 | SyntaxError |  | ``parse.First#parse`` |

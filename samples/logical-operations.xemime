@@ -1,8 +1,8 @@
-println $ (1 != 1) || (2 > 1);   // -> T
+println $ (1 != 1) || (2 > 1)   // -> T
 
-println $ (2 > 3) && (1 == 1.0); // -> NIL
+println $ (2 > 3) && (1 == 1.0) // -> NIL
 
-println $ (4 > 2) ^ (5 > 3);     // -> NIL
-println $ (4 < 2) ^ (5 < 3);     // -> NIL
-println $ (4 > 2) ^ (5 < 3);     // -> T
-println $ (4 < 2) ^ (5 > 2);     // -> T
+println $ (4 > 2) ^ (5 > 3)     // -> NIL
+println $ (4 < 2) ^ (5 < 3)     // -> NIL
+println $ (4 > 2) ^ (5 < 3)     // -> T
+println $ (4 < 2) ^ (5 > 2)     // -> T

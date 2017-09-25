@@ -1,14 +1,14 @@
 attr Attribute {
     attach: #a, b -> a * b,
     func: # -> 2
-};
+}
 
-subst Substance <- Attribute(2, 4);
+subst Substance <- Attribute(2, 4)
 
-println $ Substance ;
+println $ Substance
 
-// println $ String::show<person>();  // "John"
-// println $ Int::show<person>();     // "18"
+// println $ String::show<person>()  // "John"
+// println $ Int::show<person>()     // "18"
 
-// println $ String implement Show;  // "T"
-// println $ Int implement Show;     // "T"
+// println $ String implement Show  // "T"
+// println $ Int implement Show     // "T"

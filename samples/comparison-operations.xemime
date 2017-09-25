@@ -1,9 +1,9 @@
-println(T == T);             // -> T
-println(T == NIL);           // -> NIL
-println(1.0 == 1);           // -> T
-println(1.1 == 1);           // -> NIL
-println("hello" == "hello"); // -> T
+println(T == T)             // -> T
+println(T == NIL)           // -> NIL
+println(1.0 == 1)           // -> T
+println(1.1 == 1)           // -> NIL
+println("hello" == "hello") // -> T
 
-println(2 < 3);   // -> T
-println(2.0 > 2); // -> NIL
-println(1 >= 1);  // -> T
+println(2 < 3)   // -> T
+println(2.0 > 2) // -> NIL
+println(1 >= 1)  // -> T
