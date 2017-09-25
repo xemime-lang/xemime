@@ -26,7 +26,7 @@ public class SuffixIncrementNode extends Node {
             throw new FatalException(getLocation(), 34);
         }
         if (node instanceof Int) {
-            node.add(getLocation(), one);
+            Main.setValue(symbol, node.add(getLocation(), one));
         } else {
             throw new FatalException(getLocation(), 35);
         }

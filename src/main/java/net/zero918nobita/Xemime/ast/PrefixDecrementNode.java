@@ -26,10 +26,10 @@ public class PrefixDecrementNode extends Node {
             throw new FatalException(getLocation(), 34);
         }
         if (node instanceof Int) {
-            node.sub(getLocation(), one);
+            Main.setValue(symbol, node.sub(getLocation(), one));
         } else {
             throw new FatalException(getLocation(), 35);
         }
-        return node;
+        return Main.getValueOfSymbol(symbol);
     }
 }

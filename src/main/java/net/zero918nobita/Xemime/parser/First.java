@@ -47,6 +47,21 @@ class First extends ParseUnit {
             case SUB:
                 getToken(); // skip "-"
                 node = new MinusNode(lexer.getLocation(), new First(lexer, resolver).parse());
+                getToken();
+                break;
+
+            case INCREMENT:
+                getToken();
+                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメントを付与することはできません。");
+                node = new PrefixIncrementNode(lexer.getLocation(), (Symbol) lexer.value());
+                getToken();
+                break;
+
+            case DECREMENT:
+                getToken();
+                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメントを付与することはできません");
+                node = new PrefixDecrementNode(lexer.getLocation(), (Symbol) lexer.value());
+                getToken();
                 break;
 
             case LP:
@@ -143,6 +158,12 @@ class First extends ParseUnit {
                     // 宣言済みの変数への代入
                     getToken();
                     node = new AssignNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
+                } else if (lexer.tokenType() == TokenType.INCREMENT) {
+                    getToken();
+                    node = new SuffixIncrementNode(lexer.getLocation(), sym);
+                } else if (lexer.tokenType() == TokenType.DECREMENT) {
+                    getToken();
+                    node = new SuffixDecrementNode(lexer.getLocation(), sym);
                 } else {
                     node = method(sym);
                 }

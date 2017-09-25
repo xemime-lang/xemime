@@ -7,6 +7,12 @@ let c = if a < b {
     4
 }
 
-println $ a
-println $ b
+println $ a    // 2
+println $ ++a  // 3
+println $ a    // 3
+
+println $ b    // 3
+println $ b--  // 3
+println $ b    // 2
+
 println $ c

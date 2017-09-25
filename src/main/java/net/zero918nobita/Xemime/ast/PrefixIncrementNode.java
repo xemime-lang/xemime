@@ -26,10 +26,10 @@ public class PrefixIncrementNode extends Node {
             throw new FatalException(getLocation(), 36);
         }
         if (node instanceof Int) {
-            node.add(getLocation(), one);
+            Main.setValue(symbol, node.add(getLocation(), one));
         } else {
             throw new FatalException(getLocation(), 37);
         }
-        return node;
+        return Main.getValueOfSymbol(symbol);
     }
 }
