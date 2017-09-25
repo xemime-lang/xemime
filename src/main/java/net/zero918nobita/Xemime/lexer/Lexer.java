@@ -53,13 +53,21 @@ public class Lexer {
                     tokenType = TokenType.COMMA;
                     break;
                 case '+': // 加算演算子
-                    tokenType = TokenType.ADD;
+                    c = reader.read();
+                    if (c == '+') {
+                        tokenType = TokenType.INCREMENT;
+                    } else {
+                        reader.unread();
+                        tokenType = TokenType.ADD;
+                    }
                     break;
                 case '-':
                     c = reader.read();
                     if (c == '>') {
                         // アロー演算子 ->
                         tokenType = TokenType.ARROW;
+                    } else if (c == '-') {
+                        tokenType = TokenType.DECREMENT;
                     } else {
                         // 減算演算子 -
                         reader.unread();

@@ -99,6 +99,9 @@ public enum TokenType {
     /** 右波括弧 */
     RB,
 
+    INCREMENT,
+    DECREMENT,
+
     /** lambda */
     LAMBDA,
     /** -&gt; */
