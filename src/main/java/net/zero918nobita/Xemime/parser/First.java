@@ -47,7 +47,6 @@ class First extends ParseUnit {
             case SUB:
                 getToken(); // skip "-"
                 node = new MinusNode(lexer.getLocation(), new First(lexer, resolver).parse());
-                getToken();
                 break;
 
             case INCREMENT:
@@ -94,10 +93,6 @@ class First extends ParseUnit {
                 } else {
                     throw new Exception(lexer.getLocation() + ": 変数宣言式が不正です");
                 }
-                break;
-
-            case IF:
-                node = new If(lexer, resolver).parse();
                 break;
 
             case ATTR:

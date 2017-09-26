@@ -23,6 +23,9 @@ class Expr extends ParseUnit{
         while (lexer.tokenType() == TokenType.BR) getToken();
 
         switch (lexer.tokenType()) {
+            case IF:
+                node = new If(lexer, resolver).parse();
+                break;
             case SWITCH:
                 node = new Switch(lexer, resolver).parse();
                 break;
