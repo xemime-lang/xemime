@@ -42,3 +42,4 @@
 | 42 | FatalException |  | ``ast.RangeExprNode#run`` |
 | 43 | FatalException |  | ``ast.RangeExprNode#run`` |
 | 44 | SyntaxError |  | ``parser.For#parse`` |
+| 45 | SyntaxError |  | ``parser.While#parse`` |

@@ -37,18 +37,16 @@ public class For extends ParseUnit {
         Node range = new LogicalExpr(lexer, resolver).parse();
         skipLineBreaks();
 
-        if (lexer.tokenType() == TokenType.LB) {
-            getToken(); // skip `{`
-            resolver.declareVar(counter);
-            while (lexer.tokenType() != TokenType.RB) {
-                body.add(new Expr(lexer, resolver).parse());
-                skipLineBreaks();
-            }
-            getToken(); // skip `}`
-        } else {
-            throw new SyntaxError(lexer.getLocation(), 44, "");
-        }
+        // Syntax Error - `{` が必要です。
+        if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 44, "");
 
+        getToken(); // skip `{`
+        resolver.declareVar(counter);
+        while (lexer.tokenType() != TokenType.RB) {
+            body.add(new Expr(lexer, resolver).parse());
+            skipLineBreaks();
+        }
+        getToken(); // skip `}`
         return new ForNode(lexer.getLocation(), counter, range, body);
     }
 }

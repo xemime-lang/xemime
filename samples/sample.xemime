@@ -1,3 +1,5 @@
-for i in 1 .. 10 {
-    println $ i
+let a = 1
+while a < 5 {
+    println $ a
+    a = a + 1
 }
