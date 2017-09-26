@@ -6,7 +6,6 @@ import net.zero918nobita.Xemime.ast.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
