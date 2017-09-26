@@ -56,16 +56,20 @@ class Factor extends ParseUnit {
                         node = new FuncallNode(lexer.getLocation(), node, list);
                         break;
                     }
-                    Node expr = new LogicalExpr(lexer, resolver).parse();
-                    if (expr == null) throw new Exception(lexer.getLocation() + ": 文法エラーです");
-                    list.add(expr);
-                    while (lexer.tokenType() != TokenType.BR &&
+                    if (lexer.tokenType() != TokenType.BR &&
                             lexer.tokenType() != TokenType.EOS &&
                             lexer.tokenType() != TokenType.SEMICOLON) {
-                        if (lexer.tokenType() != TokenType.COMMA)
-                            throw new Exception(lexer.getLocation() + ": 文法エラーです");
-                        getToken();
-                        list.add(new LogicalExpr(lexer, resolver).parse());
+                        Node expr = new LogicalExpr(lexer, resolver).parse();
+                        if (expr == null) throw new Exception(lexer.getLocation() + ": 文法エラーです");
+                        list.add(expr);
+                        while (lexer.tokenType() != TokenType.BR &&
+                                lexer.tokenType() != TokenType.EOS &&
+                                lexer.tokenType() != TokenType.SEMICOLON) {
+                            if (lexer.tokenType() != TokenType.COMMA)
+                                throw new Exception(lexer.getLocation() + ": 文法エラーです");
+                            getToken();
+                            list.add(new LogicalExpr(lexer, resolver).parse());
+                        }
                     }
                     node = new FuncallNode(lexer.getLocation(), node, list);
                     break;

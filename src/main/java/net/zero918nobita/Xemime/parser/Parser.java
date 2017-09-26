@@ -54,6 +54,7 @@ public class Parser {
         lex = new Lexer(line, str.replaceAll("\r\n|\r", "\n"));
         if (str.replaceAll("\\s", "").equals("")) return result;
         Node code;
+        tokenType = null;
         while (tokenType != TokenType.EOS) {
             code = new Expr(lex, resolver).parse();
             if (lex.tokenType() != TokenType.BR && lex.tokenType() != TokenType.EOS) throw new SyntaxError(lex.getLocation(), 25, "不明なトークンが発見されました");
