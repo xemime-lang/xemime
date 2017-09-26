@@ -16,7 +16,7 @@ public class Parser {
     private int line = 1;
 
     /** 字句解析器 */
-    private Lexer lex;
+    private Lexer lexer;
 
     /** 解析中のシンボルの種類 */
     private TokenType tokenType;
@@ -37,8 +37,8 @@ public class Parser {
 
     /** 次のトークンをレキサを介して取得し、その種類を記録します。 */
     private void getToken() throws Exception {
-        if (lex.advance()) {
-            tokenType = lex.tokenType();
+        if (lexer.advance()) {
+            tokenType = lexer.tokenType();
         } else {
             tokenType = TokenType.EOS;
         }
@@ -51,17 +51,17 @@ public class Parser {
      */
     public ArrayList<Node> parse(String str) throws Exception {
         ArrayList<Node> result = new ArrayList<>();
-        lex = new Lexer(line, str.replaceAll("\r\n|\r", "\n"));
+        lexer = new Lexer(line, str.replaceAll("\r\n|\r", "\n"));
         if (str.replaceAll("\\s", "").equals("")) return result;
         Node code;
         tokenType = null;
         while (tokenType != TokenType.EOS) {
-            code = new Expr(lex, resolver).parse();
-            if (lex.tokenType() != TokenType.BR && lex.tokenType() != TokenType.EOS) throw new SyntaxError(lex.getLocation(), 25, "不明なトークンが発見されました");
+            code = new Expr(lexer, resolver).parse();
+            if (lexer.tokenType() != TokenType.BR && lexer.tokenType() != TokenType.EOS) throw new SyntaxError(lexer.getLocation(), 25, "不明なトークンが発見されました");
             if (code != null) result.add(code);
             getToken();
         }
-        line = lex.getLocation();
+        line = lexer.getLocation();
         return result;
     }
 
