@@ -28,6 +28,7 @@ class If extends ParseUnit {
             getToken(); // skip "{"
             while (lexer.tokenType() != TokenType.RB) {
                 then.add(new Expr(lexer, resolver).parse());
+                skipLineBreaks();
             }
             getToken();
             if (lexer.tokenType() == TokenType.ELSE) {
@@ -37,6 +38,7 @@ class If extends ParseUnit {
                 els = new ArrayList<>();
                 while (lexer.tokenType() != TokenType.RB) {
                     els.add(new Expr(lexer, resolver).parse());
+                    skipLineBreaks();
                 }
                 getToken();
             }
