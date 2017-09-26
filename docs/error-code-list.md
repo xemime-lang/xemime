@@ -35,8 +35,8 @@
 | 35 | FatalException |  | ``ast.PrefixDecrementNode#run`` |
 | 36 | FatalException |  | ``ast.PrefixIncrementNode#run`` |
 | 37 | FatalException |  | ``ast.PrefixIncrementNode#run`` |
-| 38 | SyntaxError |  | ``parser.First#parse`` |
-| 39 | SyntaxError | ``for`` キーワードの後ろにはカウンタ変数を指定してください。 | ``parser.For#parse`` |
+| 38 | SyntaxError | シンボルではない要素に前置インクリメント演算子を付与することはできません。 | ``parser.First#parse`` |
+| 39 | SyntaxError | シンボルではない要素に後置インクリメント演算子を付与することはできません。 | ``parser.First#parse`` |
 | 40 | SyntaxError | カウンタ変数の後ろには ``in`` キーワードを記述してください。 | ``parser.For#parse`` |
 | 41 | FatalException |  | ``ast.ForNode#run`` |
 | 42 | FatalException |  | ``ast.RangeExprNode#run`` |
@@ -45,3 +45,4 @@
 | 45 | SyntaxError |  | ``parser.While#parse`` |
 | 46 | SyntaxError | 変数宣言式が不正です。宣言する変数の名称を記述してください。 | ``parser.First#parse`` |
 | 47 | SyntaxError | 変数宣言式が不正です。代入演算子を使用してください。 | ``parser.First#parse`` |
+| 48 | SyntaxError | ``for`` キーワードの後ろにはカウンタ変数を指定してください。 | ``parser.For#parse`` |

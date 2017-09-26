@@ -51,14 +51,20 @@ class First extends ParseUnit {
 
             case INCREMENT:
                 getToken();
-                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメントを付与することはできません。");
+
+                // Syntax Error - [value] はシンボルではないので、前置インクリメント演算子を付与することはできません。
+                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメント演算子を付与することはできません。");
+
                 node = new PrefixIncrementNode(lexer.getLocation(), (Symbol) lexer.value());
                 getToken();
                 break;
 
             case DECREMENT:
                 getToken();
-                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメントを付与することはできません");
+
+                // Syntax Error - [value] はシンボルではないので、後置インクリメント演算子を付与することはできません。
+                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメント演算子を付与することはできません");
+
                 node = new PrefixDecrementNode(lexer.getLocation(), (Symbol) lexer.value());
                 getToken();
                 break;

@@ -25,7 +25,7 @@ public class For extends ParseUnit {
         ArrayList<Node> body = new ArrayList<>();
 
         // Syntax Error - for キーワードの後ろにはカウンタ変数を指定してください。
-        if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "for キーワードの後ろにはカウンタ変数を指定してください。");
+        if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 48, "for キーワードの後ろにはカウンタ変数を指定してください。");
 
         Symbol counter = (Symbol) lexer.value();
         getToken(); // skip symbol
