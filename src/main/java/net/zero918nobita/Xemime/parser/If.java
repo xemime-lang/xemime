@@ -26,13 +26,8 @@ class If extends ParseUnit {
         ArrayList<Node> els = null;
         if (lexer.tokenType() == TokenType.LB) {
             getToken(); // skip "{"
-            boolean unit = false; // 戻り値を unit にすべきかどうか
-            then.add(new Expr(lexer, resolver).parse());
-            if (lexer.tokenType() != TokenType.SEMICOLON) unit = true;
-            getToken();
-            if (!unit) while (lexer.tokenType() != TokenType.RB) {
+            while (lexer.tokenType() != TokenType.RB) {
                 then.add(new Expr(lexer, resolver).parse());
-                getToken();
             }
             getToken();
             if (lexer.tokenType() == TokenType.ELSE) {
@@ -40,14 +35,12 @@ class If extends ParseUnit {
                 if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 29, "");
                 getToken(); // skip "{"
                 els = new ArrayList<>();
-                els.add(new Expr(lexer, resolver).parse());
-                getToken();
                 while (lexer.tokenType() != TokenType.RB) {
                     els.add(new Expr(lexer, resolver).parse());
-                    getToken();
                 }
                 getToken();
             }
+            getToken();
         } else {
             throw new SyntaxError(lexer.getLocation(), 27, "");
         }
