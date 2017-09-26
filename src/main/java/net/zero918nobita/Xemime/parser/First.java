@@ -77,23 +77,26 @@ class First extends ParseUnit {
                 node = new Block(lexer, resolver).parse();
                 break;
 
-            case DECLARE:
+            case DECLARE: {
                 getToken(); // skip "let"
-                if (lexer.tokenType() == TokenType.SYMBOL) {
-                    Symbol sym = (Symbol) lexer.value();
-                    getToken(); // skip symbol
-                    if (lexer.tokenType() == TokenType.ASSIGN) {
-                        getToken(); // skip "="
-                        node = new DeclarationNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
-                        // 現在のスコープに変数を登録する
-                        resolver.declareVar(sym);
-                    } else {
-                        throw new Exception(lexer.getLocation() + ": 変数宣言式が不正です");
-                    }
-                } else {
-                    throw new Exception(lexer.getLocation() + ": 変数宣言式が不正です");
-                }
+
+                // Syntax Error - 変数宣言式が不正です。宣言する変数の名称を記述してください。
+                if (lexer.tokenType() != TokenType.SYMBOL)
+                    throw new SyntaxError(lexer.getLocation(), 46, "変数宣言式が不正です。宣言する変数の名称を記述してください。");
+                Symbol sym = (Symbol) lexer.value();
+                getToken(); // skip symbol
+
+                // Syntax Error - 変数宣言式が不正です。代入演算子を使用してください。
+                if (lexer.tokenType() != TokenType.ASSIGN)
+                    throw new SyntaxError(lexer.getLocation(), 47, "変数宣言式が不正です。代入演算子を使用してください。");
+
+                getToken(); // skip "="
+                node = new DeclarationNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
+
+                // 現在のスコープに変数を登録する
+                resolver.declareVar(sym);
                 break;
+            }
 
             case ATTR:
                 getToken(); // skip "attr"
@@ -127,7 +130,7 @@ class First extends ParseUnit {
                 node = new AttrDeclarationNode(lexer.getLocation(), attr, member);
                 break;
 
-            case SUBST:
+            case SUBST: {
                 getToken(); // skip "subst"
                 if (lexer.tokenType() == TokenType.SYMBOL) {
                     Symbol sym = (Symbol) lexer.value();
@@ -143,8 +146,9 @@ class First extends ParseUnit {
                     throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
                 }
                 break;
+            }
 
-            case SYMBOL:
+            case SYMBOL: {
                 Symbol sym = (Symbol) lexer.value();
                 // 変数の参照を解決する
                 resolver.referVar(lexer.getLocation(), sym);
@@ -163,6 +167,7 @@ class First extends ParseUnit {
                     node = method(sym);
                 }
                 break;
+            }
 
             case SEMICOLON:
                 node = null;

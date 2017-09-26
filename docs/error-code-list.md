@@ -43,3 +43,5 @@
 | 43 | FatalException |  | ``ast.RangeExprNode#run`` |
 | 44 | SyntaxError |  | ``parser.For#parse`` |
 | 45 | SyntaxError |  | ``parser.While#parse`` |
+| 46 | SyntaxError | 変数宣言式が不正です。宣言する変数の名称を記述してください。 | ``parser.First#parse`` |
+| 47 | SyntaxError | 変数宣言式が不正です。代入演算子を使用してください。 | ``parser.First#parse`` |
