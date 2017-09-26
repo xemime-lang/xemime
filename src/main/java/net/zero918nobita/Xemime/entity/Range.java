@@ -3,28 +3,32 @@ package net.zero918nobita.Xemime.entity;
 import net.zero918nobita.Xemime.ast.Node;
 
 /**
- * 範囲式を表すノードです。
+ * 範囲リテラルを表すノードです。
  * @author Kodai Matsumoto
  */
 
 public class Range extends Node {
+    private int left;
     private boolean hasMaxElement;
-    private Node left;
-    private boolean hasMinElement;
-    private Node right;
+    private int right;
 
-    public Range(int location, Node left, boolean isMinElement, Node right, boolean isMaxElement) {
+    public Range(int location, Int left, Int right, boolean isMaxElement) throws Exception {
         super(location);
         this.hasMaxElement = isMaxElement;
-        this.hasMinElement = isMinElement;
-
+        this.left = left.getValue();
+        this.right = right.getValue();
     }
 
-    Node getMaxElement() {
-        return (hasMaxElement) ? right : null;
+    public int getRight() {
+        return hasMaxElement ? right : right - 1;
     }
 
-    Node getMinElement() {
-        return (hasMinElement) ? left : null;
+    public int getLeft() {
+        return left;
+    }
+
+    @Override
+    public String toString() {
+        return hasMaxElement ? left + ".." + right : left + "..." + right;
     }
 }

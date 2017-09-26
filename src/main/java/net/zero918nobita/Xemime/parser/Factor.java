@@ -113,6 +113,25 @@ class Factor extends ParseUnit {
                     break;
             }
         }
+
+        switch (lexer.tokenType()) {
+            case RANGE2: {
+                Node left = node;
+                getToken();
+                Node right = new Expr(lexer, resolver).parse();
+                node = new RangeExprNode(lexer.getLocation(), left, right, true);
+                break;
+            }
+
+            case RANGE3: {
+                Node left = node;
+                getToken();
+                Node right = new Expr(lexer, resolver).parse();
+                node = new RangeExprNode(lexer.getLocation(), left, right, false);
+                break;
+            }
+        }
+
         return node;
     }
 }

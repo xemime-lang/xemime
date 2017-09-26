@@ -35,4 +35,10 @@
 | 35 | FatalException |  | ``ast.PrefixDecrementNode#run`` |
 | 36 | FatalException |  | ``ast.PrefixIncrementNode#run`` |
 | 37 | FatalException |  | ``ast.PrefixIncrementNode#run`` |
-| 38 | SyntaxError |  | ``parse.First#parse`` |
+| 38 | SyntaxError |  | ``parser.First#parse`` |
+| 39 | SyntaxError | ``for`` キーワードの後ろにはカウンタ変数を指定してください。 | ``parser.For#parse`` |
+| 40 | SyntaxError | カウンタ変数の後ろには ``in`` キーワードを記述してください。 | ``parser.For#parse`` |
+| 41 | FatalException |  | ``ast.ForNode#run`` |
+| 42 | FatalException |  | ``ast.RangeExprNode#run`` |
+| 43 | FatalException |  | ``ast.RangeExprNode#run`` |
+| 44 | SyntaxError |  | ``parser.For#parse`` |

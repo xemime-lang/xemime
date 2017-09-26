@@ -192,7 +192,19 @@ public class Lexer {
                     tokenType = TokenType.STRING;
                     break;
                 case '.': // メッセージ式
-                    tokenType = TokenType.PERIOD;
+                    c = reader.read();
+                    if (c == '.') {
+                        c = reader.read();
+                        if (c == '.') {
+                            tokenType = TokenType.RANGE3;
+                        } else {
+                            reader.unread();
+                            tokenType = TokenType.RANGE2;
+                        }
+                    } else {
+                        reader.unread();
+                        tokenType = TokenType.PERIOD;
+                    }
                     break;
                 case '$': // 括弧を省略した関数呼び出し
                     tokenType = TokenType.DOLLAR;
@@ -332,6 +344,9 @@ public class Lexer {
                 break;
             case "FOR":
                 tokenType = TokenType.FOR;
+                break;
+            case "IN":
+                tokenType = TokenType.IN;
                 break;
             case "WHILE":
                 tokenType = TokenType.WHILE;

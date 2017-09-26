@@ -24,6 +24,7 @@ public enum TokenType {
     CASE,
     DEFAULT,
     FOR,
+    IN,
     WHILE,
     BREAK,
     CONTINUE,
@@ -101,6 +102,11 @@ public enum TokenType {
 
     INCREMENT,
     DECREMENT,
+
+    /** .. */
+    RANGE2,
+    /** ... */
+    RANGE3,
 
     /** lambda */
     LAMBDA,
