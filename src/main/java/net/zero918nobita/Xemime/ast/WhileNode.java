@@ -22,9 +22,8 @@ public class WhileNode extends Node {
 
     @Override
     public Node run() throws Exception {
-        while (!condition.run().equals(Bool.Nil)) {
+        while (!condition.run().equals(Bool.Nil))
             for (Node node : body) node.run();
-        }
         return new Unit(getLocation(), null);
     }
 }
