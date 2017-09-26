@@ -299,7 +299,7 @@ public class Lexer {
         StringBuilder buf = new StringBuilder();
         while (true) {
             int c = reader.read();
-            if (c < 0) throw new Exception(getLocation() + ": ソースコードの末端に到達しました");
+            if (c < 0) break;
             if (!Character.isJavaIdentifierPart((char)c)) {
                 reader.unread();
                 break;
