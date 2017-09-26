@@ -31,8 +31,10 @@ class If extends ParseUnit {
                 skipLineBreaks();
             }
             getToken();
+            skipLineBreaks();
             if (lexer.tokenType() == TokenType.ELSE) {
-                getToken(); // skip ELSE
+                getToken();
+                skipLineBreaks();
                 if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 29, "");
                 getToken(); // skip "{"
                 els = new ArrayList<>();
