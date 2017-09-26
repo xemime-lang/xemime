@@ -15,11 +15,11 @@
 | 13 | FatalException | 呼び出し対象が関数ではありません。 | ``ast.FuncallNode`` | 
 | 14 | FatalException | 数値以外のデータには単項演算子 ``-`` を適用できません。 | ``ast.MinusNode`` |
 | 15 | FatalException | 真偽値以外のデータには単項演算子 ``!`` を適用できません。 | ``ast.NotNode`` |
-| 16 | SyntaxError |  | ``parser.First#parse`` |
-| 17 | SyntaxError |  | ``parser.First#parse`` |
-| 18 | SyntaxError |  | ``parser.First#parse`` |
-| 19 | SyntaxError |  | ``parser.First#parse`` |
-| 20 | SyntaxError |  | ``parser.First#parse`` |
+| 16 | SyntaxError | ``attr`` の後ろに属性名を記述してください。 | ``parser.First#parse`` |
+| 17 | SyntaxError | シンボルの後ろに波括弧 ``{`` を記述してください。 | ``parser.First#parse`` |
+| 18 | SyntaxError | メンバ名と値の区切りのコロン ``:`` が必要です。 | ``parser.First#parse`` |
+| 19 | SyntaxError | 区切りのカンマ ``,`` が必要です。 | ``parser.First#parse`` |
+| 20 | SyntaxError | メンバ名と値の区切りのコロン ``:`` が必要です。 | ``parser.First#parse`` |
 | 21 | FatalException |  | ``ast.AttrDeclarationNode#run`` |
 | 22 | SemanticError |  | ``resolver.Scope#getTypeOfVariable`` |
 | 23 | SyntaxError | ステートメントの末尾にはセミコロンが必要です。 | ``parser.Expr#parse`` |
