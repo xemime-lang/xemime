@@ -27,7 +27,10 @@ public class ForNode extends Node {
     @Override
     public Node run() throws Exception {
         Node r = range.run();
+
+        // Fatal Exception - for 文の範囲式として指定されたデータの型が不正です。
         if (!(r instanceof Range)) throw new FatalException(getLocation(), 41);
+
         int first = ((Range) r).getLeft();
         int second = ((Range) r).getRight();
         if (Main.hasSymbol(counter)) {

@@ -39,7 +39,7 @@
 | 38 | SyntaxError | シンボルではない要素に前置インクリメント演算子を付与することはできません。 | ``parser.First#parse`` |
 | 39 | SyntaxError | シンボルではない要素に後置インクリメント演算子を付与することはできません。 | ``parser.First#parse`` |
 | 40 | SyntaxError | カウンタ変数の後ろには ``in`` キーワードを記述してください。 | ``parser.For#parse`` |
-| 41 | FatalException |  | ``ast.ForNode#run`` |
+| 41 | FatalException | ``for`` 文の範囲式として指定されたデータの型が不正です。 | ``ast.ForNode#run`` |
 | 42 | FatalException |  | ``ast.RangeExprNode#run`` |
 | 43 | FatalException |  | ``ast.RangeExprNode#run`` |
 | 44 | SyntaxError |  | ``parser.For#parse`` |
