@@ -24,17 +24,18 @@
 | 22 | SemanticError |  | ``resolver.Scope#getTypeOfVariable`` |
 | 23 | SyntaxError | ステートメントの末尾にはセミコロンが必要です。 | ``parser.Expr#parse`` |
 | 24 | FatalException | ブロック式の戻り値が設定されていません。 | ``ast.BlockNode#run`` |
-| 25 | SyntaxError |  | ``parser.Parser`` |
-| 26 | SyntaxError |  | ``parser.If#parse`` |
-| 27 | SyntaxError |  | ``parser.If#parse`` |
-| 28 | SyntaxError |  | ``parser.If#parse`` |
-| 29 | SyntaxError |  | ``parser.If#parse`` |
-| 30 | SyntaxError |  | ``parser.If#parse`` |
+| 25 | SyntaxError | 不明なトークンが発見されました。 | ``parser.Parser`` |
+| 26 | FatalException | 後置デクリメントの評価に失敗しました。 | ``ast.SuffixDecrementNode#run`` |
+| 27 | SyntaxError | 条件式の後ろに波括弧 ``{`` を記述してください。 | ``parser.If#parse`` |
+| 28 | FatalException | 後置デクリメントの評価に失敗しました。 | ``ast.SuffixDecrementNode#run`` |
+| 29 | SyntaxError | ``else`` の後ろに波括弧 ``{`` を記述してください。 | ``parser.If#parse`` |
 | 31 | SyntaxError |  | ``parser.Block#parse`` |
-| 34 | FatalException |  | ``ast.PrefixDecrementNode#run`` |
-| 35 | FatalException |  | ``ast.PrefixDecrementNode#run`` |
-| 36 | FatalException |  | ``ast.PrefixIncrementNode#run`` |
-| 37 | FatalException |  | ``ast.PrefixIncrementNode#run`` |
+| 32 | FatalException | 後置インクリメントの評価に失敗しました。 | ``ast.SuffixIncrementNode#run`` |
+| 33 | FatalException | 後置インクリメントの評価に失敗しました。 | ``ast.SuffixIncrementNode#run`` |
+| 34 | FatalException | 前置デクリメントの評価に失敗しました。 | ``ast.PrefixDecrementNode#run`` |
+| 35 | FatalException | 前置デクリメントの評価に失敗しました。 | ``ast.PrefixDecrementNode#run`` |
+| 36 | FatalException | 前置インクリメントの評価に失敗しました。 | ``ast.PrefixIncrementNode#run`` |
+| 37 | FatalException | 前置インクリメントの評価に失敗しました。 | ``ast.PrefixIncrementNode#run`` |
 | 38 | SyntaxError | シンボルではない要素に前置インクリメント演算子を付与することはできません。 | ``parser.First#parse`` |
 | 39 | SyntaxError | シンボルではない要素に後置インクリメント演算子を付与することはできません。 | ``parser.First#parse`` |
 | 40 | SyntaxError | カウンタ変数の後ろには ``in`` キーワードを記述してください。 | ``parser.For#parse`` |

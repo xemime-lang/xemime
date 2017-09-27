@@ -57,7 +57,7 @@ public class Parser {
         tokenType = null;
         while (tokenType != TokenType.EOS) {
             code = new Expr(lexer, resolver).parse();
-            if (lexer.tokenType() != TokenType.BR && lexer.tokenType() != TokenType.EOS) throw new SyntaxError(lexer.getLocation(), 25, "不明なトークンが発見されました");
+            if (lexer.tokenType() != TokenType.BR && lexer.tokenType() != TokenType.EOS) throw new SyntaxError(lexer.getLocation(), 25, "不明なトークン `" + lexer.value() + "` が発見されました");
             if (code != null) result.add(code);
             getToken();
         }

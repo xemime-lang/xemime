@@ -20,16 +20,16 @@ public class PrefixIncrementNode extends Node {
     @Override
     public Node run() throws Exception {
         Node node = Main.getValueOfSymbol(symbol);
-        if (node != null) {
-            node = node.run();
-        } else {
-            throw new FatalException(getLocation(), 36);
-        }
-        if (node instanceof Int) {
-            Main.setValue(symbol, node.add(getLocation(), one));
-        } else {
-            throw new FatalException(getLocation(), 37);
-        }
+
+        // Fatal Exception - 前置インクリメントの評価に失敗しました。
+        if (node == null) throw new FatalException(getLocation(), 36);
+
+        node = node.run();
+
+        // Fatal Exception - 前置インクリメントの評価に失敗しました。
+        if (!(node instanceof Int)) throw new FatalException(getLocation(), 37);
+
+        Main.setValue(symbol, node.add(getLocation(), one));
         return Main.getValueOfSymbol(symbol);
     }
 }

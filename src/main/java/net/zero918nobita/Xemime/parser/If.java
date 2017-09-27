@@ -24,30 +24,33 @@ class If extends ParseUnit {
         Node condition = new LogicalExpr(lexer, resolver).parse();
         ArrayList<Node> then = new ArrayList<>();
         ArrayList<Node> els = null;
-        if (lexer.tokenType() == TokenType.LB) {
-            getToken(); // skip "{"
-            while (lexer.tokenType() != TokenType.RB) {
-                then.add(new Expr(lexer, resolver).parse());
-                skipLineBreaks();
-            }
+
+        // Syntax Error - 条件式の後ろに波括弧 `{` を記述してください。
+        if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 27, "");
+
+        getToken(); // skip "{"
+        while (lexer.tokenType() != TokenType.RB) {
+            then.add(new Expr(lexer, resolver).parse());
+            skipLineBreaks();
+        }
+        getToken();
+        skipLineBreaks();
+        if (lexer.tokenType() == TokenType.ELSE) {
             getToken();
             skipLineBreaks();
-            if (lexer.tokenType() == TokenType.ELSE) {
-                getToken();
+
+            // Syntax Error - `else` の後ろに波括弧 `{` を記述してください。
+            if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 29, "");
+
+            getToken(); // skip "{"
+            els = new ArrayList<>();
+            while (lexer.tokenType() != TokenType.RB) {
+                els.add(new Expr(lexer, resolver).parse());
                 skipLineBreaks();
-                if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 29, "");
-                getToken(); // skip "{"
-                els = new ArrayList<>();
-                while (lexer.tokenType() != TokenType.RB) {
-                    els.add(new Expr(lexer, resolver).parse());
-                    skipLineBreaks();
-                }
-                getToken();
             }
             getToken();
-        } else {
-            throw new SyntaxError(lexer.getLocation(), 27, "");
         }
+        getToken();
         return new IfNode(lexer.getLocation(), condition, then, els);
     }
 }

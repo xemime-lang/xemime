@@ -20,16 +20,16 @@ public class PrefixDecrementNode extends Node {
     @Override
     public Node run() throws Exception {
         Node node = Main.getValueOfSymbol(symbol);
-        if (node != null) {
-            node = node.run();
-        } else {
-            throw new FatalException(getLocation(), 34);
-        }
-        if (node instanceof Int) {
-            Main.setValue(symbol, node.sub(getLocation(), one));
-        } else {
-            throw new FatalException(getLocation(), 35);
-        }
+
+        // Fatal Exception - 前置デクリメントの評価に失敗しました。
+        if (node == null) throw new FatalException(getLocation(), 34);
+
+        node = node.run();
+
+        // Fatal Exception - 前置デクリメントの評価に失敗しました。
+        if (!(node instanceof Int)) throw new FatalException(getLocation(), 35);
+
+        Main.setValue(symbol, node.sub(getLocation(), one));
         return Main.getValueOfSymbol(symbol);
     }
 }

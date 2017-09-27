@@ -20,16 +20,16 @@ public class SuffixIncrementNode extends Node {
     @Override
     public Node run() throws Exception {
         Node node = Main.getValueOfSymbol(symbol);
-        if (node != null) {
-            node = node.run();
-        } else {
-            throw new FatalException(getLocation(), 34);
-        }
-        if (node instanceof Int) {
-            Main.setValue(symbol, node.add(getLocation(), one));
-        } else {
-            throw new FatalException(getLocation(), 35);
-        }
+
+        // FatalException - 後置インクリメントの評価に失敗しました。
+        if (node == null) throw new FatalException(getLocation(), 32);
+
+        node = node.run();
+
+        // FatalException - 後置インクリメントの評価に失敗しました。
+        if (!(node instanceof Int)) throw new FatalException(getLocation(), 33);
+
+        Main.setValue(symbol, node.add(getLocation(), one));
         return node;
     }
 }
