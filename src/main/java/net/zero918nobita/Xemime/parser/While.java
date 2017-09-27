@@ -23,7 +23,10 @@ public class While extends ParseUnit {
         getToken(); // skip `while``
         ArrayList<Node> body = new ArrayList<>();
         Node condition = new LogicalExpr(lexer, resolver).parse();
-        if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 45, "");
+
+        // Syntax Error - 条件式の後ろに波括弧 `{` を記述してください。
+        if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 45, "条件式の後ろに波括弧 `{` を記述してください。");
+
         getToken(); // skip `{`
         while (lexer.tokenType() != TokenType.RB) {
             body.add(new Expr(lexer, resolver).parse());

@@ -25,12 +25,12 @@ class Block extends ParseUnit {
         resolver.addScope();
         while (lexer.tokenType() == TokenType.BR) getToken();
         Node node = new Expr(lexer, resolver).parse();
-        if (lexer.tokenType() == TokenType.BR || lexer.tokenType() == TokenType.RB) {
-            list = new ArrayList<>();
-            list.add(node);
-        } else {
-            throw new SyntaxError(lexer.getLocation(), 31, "");
-        }
+
+        // Syntax Error - 不明なトークン [value] が発見されました。
+        if (lexer.tokenType() != TokenType.BR && lexer.tokenType() != TokenType.RB) throw new SyntaxError(lexer.getLocation(), 31, "不明なトークン `" + lexer.value() + "` が発見されました。");
+
+        list = new ArrayList<>();
+        list.add(node);
         while (lexer.tokenType() != TokenType.RB) {
             while (lexer.tokenType() == TokenType.BR) getToken();
             if (lexer.tokenType() == TokenType.RB) break;

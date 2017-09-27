@@ -37,8 +37,8 @@ public class For extends ParseUnit {
         Node range = new LogicalExpr(lexer, resolver).parse();
         skipLineBreaks();
 
-        // Syntax Error - `{` が必要です。
-        if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 44, "");
+        // Syntax Error - 範囲式の後ろに波括弧 `{` を記述してください。
+        if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 44, "範囲式の後ろに `{` を記述してください。");
 
         getToken(); // skip `{`
         resolver.declareVar(counter);

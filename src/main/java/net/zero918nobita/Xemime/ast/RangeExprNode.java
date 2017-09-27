@@ -24,8 +24,13 @@ public class RangeExprNode extends Node {
     public Node run() throws Exception {
         Node l = left.run();
         Node r = right.run();
+
+        // Fatal Exception - 範囲式の左辺が整数値ではありません。
         if (!(l instanceof Int)) throw new FatalException(left.getLocation(), 42);
+
+        // Fatal Exception - 範囲式の右辺が整数値ではありません。
         if (!(r instanceof Int)) throw new FatalException(right.getLocation(), 43);
+
         return new Range(getLocation(), (Int) l, (Int) r, hasMaxElement);
     }
 }

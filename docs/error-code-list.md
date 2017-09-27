@@ -29,7 +29,7 @@
 | 27 | SyntaxError | 条件式の後ろに波括弧 ``{`` を記述してください。 | ``parser.If#parse`` |
 | 28 | FatalException | 後置デクリメントの評価に失敗しました。 | ``ast.SuffixDecrementNode#run`` |
 | 29 | SyntaxError | ``else`` の後ろに波括弧 ``{`` を記述してください。 | ``parser.If#parse`` |
-| 31 | SyntaxError |  | ``parser.Block#parse`` |
+| 31 | SyntaxError | 不明なトークンが発見されました。 | ``parser.Block#parse`` |
 | 32 | FatalException | 後置インクリメントの評価に失敗しました。 | ``ast.SuffixIncrementNode#run`` |
 | 33 | FatalException | 後置インクリメントの評価に失敗しました。 | ``ast.SuffixIncrementNode#run`` |
 | 34 | FatalException | 前置デクリメントの評価に失敗しました。 | ``ast.PrefixDecrementNode#run`` |
@@ -40,10 +40,10 @@
 | 39 | SyntaxError | シンボルではない要素に後置インクリメント演算子を付与することはできません。 | ``parser.First#parse`` |
 | 40 | SyntaxError | カウンタ変数の後ろには ``in`` キーワードを記述してください。 | ``parser.For#parse`` |
 | 41 | FatalException | ``for`` 文の範囲式として指定されたデータの型が不正です。 | ``ast.ForNode#run`` |
-| 42 | FatalException |  | ``ast.RangeExprNode#run`` |
-| 43 | FatalException |  | ``ast.RangeExprNode#run`` |
-| 44 | SyntaxError |  | ``parser.For#parse`` |
-| 45 | SyntaxError |  | ``parser.While#parse`` |
+| 42 | FatalException | 範囲式の左辺が整数値ではありません。 | ``ast.RangeExprNode#run`` |
+| 43 | FatalException | 範囲式の右辺が整数値ではありません。 | ``ast.RangeExprNode#run`` |
+| 44 | SyntaxError | 範囲式の後ろに波括弧 ``{`` を記述してください。 | ``parser.For#parse`` |
+| 45 | SyntaxError | 条件式の後ろに波括弧 ``{`` を記述してください。 | ``parser.While#parse`` |
 | 46 | SyntaxError | 変数宣言式が不正です。宣言する変数の名称を記述してください。 | ``parser.First#parse`` |
 | 47 | SyntaxError | 変数宣言式が不正です。代入演算子を使用してください。 | ``parser.First#parse`` |
 | 48 | SyntaxError | ``for`` キーワードの後ろにはカウンタ変数を指定してください。 | ``parser.For#parse`` |
