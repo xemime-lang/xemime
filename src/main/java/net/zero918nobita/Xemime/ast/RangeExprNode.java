@@ -22,10 +22,10 @@ public class RangeExprNode extends Node {
 
     @Override
     public Node run() throws Exception {
-        if (!(left instanceof Int)) throw new FatalException(left.getLocation(), 42);
-        if (!(right instanceof Int)) throw new FatalException(right.getLocation(), 43);
-        Int l = (Int) left.run();
-        Int r = (Int) right.run();
-        return new Range(getLocation(), l, r, hasMaxElement);
+        Node l = left.run();
+        Node r = right.run();
+        if (!(l instanceof Int)) throw new FatalException(left.getLocation(), 42);
+        if (!(r instanceof Int)) throw new FatalException(right.getLocation(), 43);
+        return new Range(getLocation(), (Int) l, (Int) r, hasMaxElement);
     }
 }
