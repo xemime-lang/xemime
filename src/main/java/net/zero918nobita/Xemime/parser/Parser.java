@@ -4,6 +4,7 @@ import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
+import net.zero918nobita.Xemime.resolver.Type;
 
 import java.util.ArrayList;
 
@@ -24,15 +25,15 @@ public class Parser {
     /** 参照解決を担当する */
     private Resolver resolver;
 
-    public Parser() {
+    public Parser() throws Exception {
         resolver = new Resolver();
         // 組み込みオブジェクトや省略表記のメソッドのシンボルを resolver に登録することで、
         // それらのシンボルに対する参照解決の失敗を防ぎます。
-        resolver.declareVar(Symbol.intern(0, "Core"));
-        resolver.declareVar(Symbol.intern(0, "Object"));
-        resolver.declareVar(Symbol.intern(0, "print"));
-        resolver.declareVar(Symbol.intern(0, "println"));
-        resolver.declareVar(Symbol.intern(0, "exit"));
+        resolver.declareVar(Type.ANY, Symbol.intern(0, "Core"));
+        resolver.declareVar(Type.ANY, Symbol.intern(0, "Object"));
+        resolver.declareVar(Type.ANY, Symbol.intern(0, "print"));
+        resolver.declareVar(Type.ANY, Symbol.intern(0, "println"));
+        resolver.declareVar(Type.ANY, Symbol.intern(0, "exit"));
     }
 
     /** 次のトークンをレキサを介して取得し、その種類を記録します。 */

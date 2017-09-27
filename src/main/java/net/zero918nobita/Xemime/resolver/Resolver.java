@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime.resolver;
 
+import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 
 import java.util.Stack;
@@ -11,16 +12,18 @@ import java.util.Stack;
 
 public class Resolver {
     private Stack<Scope> scope = new Stack<>();
+    private StaticTypeChecker stc = new StaticTypeChecker();
 
     public Resolver() {
         scope.add(new Scope(null));
     }
 
-    public void declareVar(Symbol symbol) {
-        scope.peek().defVar(symbol);
+    public void declareVar(Symbol symbol, Node node) throws Exception {
+        scope.peek().defVar(stc.check(this, node), symbol);
     }
 
-    public void declareVar(Type type, Symbol symbol) {
+    public void declareVar(Type type, Symbol symbol) throws Exception {
+        if (type != stc.check(this, symbol)) throw new Exception("型が一致しません。");
         scope.peek().defVar(type, symbol);
     }
 
@@ -28,7 +31,7 @@ public class Resolver {
         scope.peek().referVar(location, sym);
     }
 
-    public Type getTypeOfVariable(Symbol sym) throws SemanticError {
+    Type getTypeOfVariable(Symbol sym) throws SemanticError {
         return scope.peek().getTypeOfVariable(sym);
     }
 

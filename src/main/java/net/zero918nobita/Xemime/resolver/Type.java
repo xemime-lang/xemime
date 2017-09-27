@@ -1,6 +1,6 @@
 package net.zero918nobita.Xemime.resolver;
 
-enum Type {
+public enum Type {
     ANY,
     BOOL,
     INT,

@@ -6,6 +6,7 @@ import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
+import net.zero918nobita.Xemime.resolver.Type;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ public class For extends ParseUnit {
         if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 44, "範囲式の後ろに `{` を記述してください。");
 
         getToken(); // skip `{`
-        resolver.declareVar(counter);
+        resolver.declareVar(Type.INT, counter);
         while (lexer.tokenType() != TokenType.RB) {
             body.add(new Expr(lexer, resolver).parse());
             skipLineBreaks();

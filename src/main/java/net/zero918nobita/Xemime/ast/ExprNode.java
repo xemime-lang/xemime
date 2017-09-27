@@ -100,4 +100,16 @@ public class ExprNode extends Node {
         }
         return result;
     }
+
+    public TokenType getOperator() {
+        return op;
+    }
+
+    public Node getLhs() {
+        return lhs;
+    }
+
+    public Node getRhs() {
+        return rhs;
+    }
 }

@@ -7,6 +7,7 @@ import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
+import net.zero918nobita.Xemime.resolver.Type;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,10 +98,12 @@ class First extends ParseUnit {
                     throw new SyntaxError(lexer.getLocation(), 47, "変数宣言式が不正です。代入演算子を使用してください。");
 
                 getToken(); // skip "="
-                node = new DeclarationNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
+                Node value = new LogicalExpr(lexer, resolver).parse();
 
                 // 現在のスコープに変数を登録する
-                resolver.declareVar(sym);
+                resolver.declareVar(sym, value);
+
+                node = new DeclarationNode(lexer.getLocation(), sym, value);
                 break;
             }
 
@@ -147,8 +150,8 @@ class First extends ParseUnit {
                 }
 
                 getToken(); // skip "}"
-                resolver.declareVar(attr);
                 node = new AttrDeclarationNode(lexer.getLocation(), attr, member);
+                resolver.declareVar(attr, node);
                 break;
 
             case SUBST: {
@@ -158,7 +161,7 @@ class First extends ParseUnit {
                 getToken(); // skip symbol
                 if (lexer.tokenType() == TokenType.ATTACH) {
                     getToken(); // skip "<-"
-                    resolver.declareVar(sym);
+                    resolver.declareVar(Type.ANY, sym);
                     node = new SubstanceDeclarationNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
                 } else {
                     throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
