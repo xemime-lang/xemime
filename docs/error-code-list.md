@@ -50,5 +50,7 @@
 | 49 | SyntaxError |  | `resolver.StaticTypeChecker`` |
 | 50 | SyntaxError | コロンの `:` の後ろでデータ型を指定してください。 | ``parser.First#run`` |
 | 51 | TypeError | 代入されるデータの型が変数の型と一致しません。 | ``parser.First#parse`` |
-| 52 | TypeError | 後置インクリメントを付与された変数が整数型ではありません。 | ``parser.First#parse`` |
-| 53 | TypeError | 後置デクリメントを付与された変数が整数型ではありません。 | ``parser.First#parse`` |
+| 52 | TypeError | 後置インクリメント演算子を付与された変数が整数型ではありません。 | ``parser.First#parse`` |
+| 53 | TypeError | 後置デクリメント演算子を付与された変数が整数型ではありません。 | ``parser.First#parse`` |
+| 54 | TypeError | 前置インクリメント演算子を付与された変数が整数型ではありません。　| ``parser.First#prefixIncrement`` |
+| 55 | TypeError | 前置デクリメント演算子を付与された変数が整数型ではありません。 | ``parser.First#prefixDecrement`` |

@@ -8,6 +8,11 @@ import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.entity.Double;
 import net.zero918nobita.Xemime.entity.Str;
 
+/**
+ * 意味解析中に、静的型チェックを行います。
+ * @author Kodai Matsumoto
+ */
+
 class StaticTypeChecker {
     Type check(Resolver resolver, Node node) throws Exception {
         if (node instanceof Bool) {

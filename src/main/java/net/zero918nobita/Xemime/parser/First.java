@@ -158,23 +158,33 @@ class First extends ParseUnit {
     }
 
     private Node prefixIncrement() throws Exception {
+        int line = lexer.getLocation();
         getToken();
 
         // Syntax Error - [value] はシンボルではないので、前置インクリメント演算子を付与することはできません。
         if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメント演算子を付与することはできません。");
 
         Symbol symbol = (Symbol) lexer.value();
+
+        // Type Error - [value] は整数型変数ではないので、前置インクリメント演算子を付与することはできません。
+        if (resolver.getTypeOfVariable(symbol) != Type.INT) throw new TypeError(line, 53, "`" + symbol + "` は整数型変数ではないので、前置インクリメント演算子を付与することはできません。");
+
         getToken();
         return new PrefixIncrementNode(lexer.getLocation(), symbol);
     }
 
     private Node prefixDecrement() throws Exception {
+        int line = lexer.getLocation();
         getToken();
 
-        // Syntax Error - [value] はシンボルではないので、前置インクリメント演算子を付与することはできません。
+        // Syntax Error - [value] はシンボルではないので、前置デクリメント演算子を付与することはできません。
         if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメント演算子を付与することはできません");
 
         Symbol symbol = (Symbol) lexer.value();
+
+        // Type Error - [value] は整数型変数ではないので、前置デクリメント演算を付与することはできません。
+        if (resolver.getTypeOfVariable(symbol) != Type.INT) throw new TypeError(line, 55, "`" + symbol + "` は整数型変数ではないので、前置デクリメント演算子を付与することはできません。");
+
         getToken();
         return new PrefixDecrementNode(lexer.getLocation(), symbol);
     }
