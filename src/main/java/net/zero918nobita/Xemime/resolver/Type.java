@@ -4,7 +4,8 @@ public enum Type {
     ANY,
     BOOL,
     INT,
-    FLOAT,
     DOUBLE,
-    CHAR
+    CHAR,
+    STRING,
+    FUNC
 }

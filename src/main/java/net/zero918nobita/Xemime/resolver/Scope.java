@@ -79,4 +79,12 @@ public class Scope {
             if (s.variables.containsKey(sym)) return s.variables.get(sym).getType();
         throw new SemanticError(sym.getLocation(), 22, sym);
     }
+
+    boolean hasVariable(Symbol sym) {
+        if (variables.containsKey(sym)) return true;
+        Scope s = this;
+        while ((s = s.parent()) != null)
+            if (s.variables.containsKey(sym)) return true;
+        return false;
+    }
 }

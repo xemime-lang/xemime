@@ -48,3 +48,7 @@
 | 47 | SyntaxError | 変数宣言式が不正です。代入演算子を使用してください。 | ``parser.First#parse`` |
 | 48 | SyntaxError | ``for`` キーワードの後ろにはカウンタ変数を指定してください。 | ``parser.For#parse`` |
 | 49 | SyntaxError |  | `resolver.StaticTypeChecker`` |
+| 50 | SyntaxError | コロンの `:` の後ろでデータ型を指定してください。 | ``parser.First#run`` |
+| 51 | TypeError | 代入されるデータの型が変数の型と一致しません。 | ``parser.First#parse`` |
+| 52 | TypeError | 後置インクリメントを付与された変数が整数型ではありません。 | ``parser.First#parse`` |
+| 53 | TypeError | 後置デクリメントを付与された変数が整数型ではありません。 | ``parser.First#parse`` |

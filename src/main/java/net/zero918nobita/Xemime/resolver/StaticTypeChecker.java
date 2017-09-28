@@ -6,6 +6,7 @@ import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.entity.Double;
+import net.zero918nobita.Xemime.entity.Str;
 
 class StaticTypeChecker {
     Type check(Resolver resolver, Node node) throws Exception {
@@ -15,6 +16,8 @@ class StaticTypeChecker {
             return check(resolver, (Int) node);
         } else if (node instanceof Double) {
             return check(resolver, (Double) node);
+        } else if (node instanceof Str) {
+            return check(resolver, (Str) node);
         } else if (node instanceof Symbol) {
             return check(resolver, (Symbol) node);
         } else if (node instanceof ExprNode) {
@@ -34,6 +37,10 @@ class StaticTypeChecker {
 
     Type check(Resolver resolver, Double num) {
         return  Type.DOUBLE;
+    }
+
+    Type check(Resolver resolver, Str str) {
+        return Type.STRING;
     }
 
     Type check(Resolver resolver, Symbol symbol) throws SemanticError {

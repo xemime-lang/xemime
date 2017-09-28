@@ -29,11 +29,11 @@ public class Parser {
         resolver = new Resolver();
         // 組み込みオブジェクトや省略表記のメソッドのシンボルを resolver に登録することで、
         // それらのシンボルに対する参照解決の失敗を防ぎます。
-        resolver.declareVar(Type.ANY, Symbol.intern(0, "Core"));
-        resolver.declareVar(Type.ANY, Symbol.intern(0, "Object"));
-        resolver.declareVar(Type.ANY, Symbol.intern(0, "print"));
-        resolver.declareVar(Type.ANY, Symbol.intern(0, "println"));
-        resolver.declareVar(Type.ANY, Symbol.intern(0, "exit"));
+        resolver.declareVar(Type.FUNC, Symbol.intern(0, "Core"));
+        resolver.declareVar(Type.FUNC, Symbol.intern(0, "Object"));
+        resolver.declareVar(Type.FUNC, Symbol.intern(0, "print"));
+        resolver.declareVar(Type.FUNC, Symbol.intern(0, "println"));
+        resolver.declareVar(Type.FUNC, Symbol.intern(0, "exit"));
     }
 
     /** 次のトークンをレキサを介して取得し、その種類を記録します。 */

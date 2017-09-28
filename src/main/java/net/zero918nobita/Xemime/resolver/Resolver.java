@@ -23,15 +23,22 @@ public class Resolver {
     }
 
     public void declareVar(Type type, Symbol symbol) throws Exception {
-        if (type != stc.check(this, symbol)) throw new Exception("型が一致しません。");
+        //if (type != stc.check(this, symbol)) throw new Exception("型が一致しません。");
         scope.peek().defVar(type, symbol);
+    }
+
+    public boolean assignVar(Symbol symbol, Node node) throws Exception {
+        if (!scope.peek().hasVariable(symbol)) throw new Exception("未宣言の変数名です。");
+        Type type_of_variable = getTypeOfVariable(symbol);
+        Type type_of_value = stc.check(this, node);
+        return type_of_variable == type_of_value;
     }
 
     public void referVar(int location, Symbol sym) throws Exception {
         scope.peek().referVar(location, sym);
     }
 
-    Type getTypeOfVariable(Symbol sym) throws SemanticError {
+    public Type getTypeOfVariable(Symbol sym) throws SemanticError {
         return scope.peek().getTypeOfVariable(sym);
     }
 

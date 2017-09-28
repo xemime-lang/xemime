@@ -8,6 +8,7 @@ import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.resolver.Type;
+import net.zero918nobita.Xemime.resolver.TypeError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,6 +86,8 @@ class First extends ParseUnit {
                 break;
 
             case DECLARE: {
+                // 型推論がデフォルトで有効になります。
+                boolean inference = true;
                 getToken(); // skip "let"
 
                 // Syntax Error - 変数宣言式が不正です。宣言する変数の名称を記述してください。
@@ -93,6 +96,21 @@ class First extends ParseUnit {
                 Symbol sym = (Symbol) lexer.value();
                 getToken(); // skip symbol
 
+                if (lexer.tokenType() == TokenType.COLON) {
+                    inference = false;
+                    getToken(); // skip `:`
+                    if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
+                    getToken();
+                    Symbol type_name = (Symbol) lexer.value();
+                    if (type_name.equals(Symbol.intern(0, "Int"))) {
+                        resolver.declareVar(Type.INT, sym);
+                    } else if (type_name.equals(Symbol.intern(0, "Double"))) {
+                        resolver.declareVar(Type.DOUBLE, sym);
+                    } else if (type_name.equals(Symbol.intern(0, "Bool"))) {
+                        resolver.declareVar(Type.BOOL, sym);
+                    }
+                }
+
                 // Syntax Error - 変数宣言式が不正です。代入演算子を使用してください。
                 if (lexer.tokenType() != TokenType.ASSIGN)
                     throw new SyntaxError(lexer.getLocation(), 47, "変数宣言式が不正です。代入演算子を使用してください。");
@@ -100,8 +118,12 @@ class First extends ParseUnit {
                 getToken(); // skip "="
                 Node value = new LogicalExpr(lexer, resolver).parse();
 
-                // 現在のスコープに変数を登録する
-                resolver.declareVar(sym, value);
+                if (inference) {
+                    // 現在のスコープに変数を登録する
+                    resolver.declareVar(sym, value);
+                } else {
+                    if (!resolver.assignVar(sym, value)) throw new TypeError(value.getLocation(), 51, "代入されるデータの型が変数の型と一致しません。");
+                }
 
                 node = new DeclarationNode(lexer.getLocation(), sym, value);
                 break;
@@ -177,12 +199,18 @@ class First extends ParseUnit {
                 if (lexer.tokenType() == TokenType.ASSIGN) {
                     // 宣言済みの変数への代入
                     getToken();
-                    node = new AssignNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
+                    Node assignedValue = new LogicalExpr(lexer, resolver).parse();
+                    resolver.assignVar(sym, assignedValue);
+                    node = new AssignNode(lexer.getLocation(), sym, assignedValue);
                 } else if (lexer.tokenType() == TokenType.INCREMENT) {
+                    int line = lexer.getLocation();
                     getToken();
+                    if (resolver.getTypeOfVariable(sym) != Type.INT) throw new TypeError(line, 52, "`" + sym + "` は整数型ではないので、後置インクリメント演算子を付与することはできません。");
                     node = new SuffixIncrementNode(lexer.getLocation(), sym);
                 } else if (lexer.tokenType() == TokenType.DECREMENT) {
+                    int line = lexer.getLocation();
                     getToken();
+                    if (resolver.getTypeOfVariable(sym) != Type.INT) throw new TypeError(line, 53, "`" + sym + "` は整数型ではないので、後置デクリメント演算子を付与することはできません。");
                     node = new SuffixDecrementNode(lexer.getLocation(), sym);
                 } else {
                     node = method(sym);
