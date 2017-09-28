@@ -52,82 +52,24 @@ class First extends ParseUnit {
                 break;
 
             case INCREMENT:
-                getToken();
-
-                // Syntax Error - [value] はシンボルではないので、前置インクリメント演算子を付与することはできません。
-                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメント演算子を付与することはできません。");
-
-                node = new PrefixIncrementNode(lexer.getLocation(), (Symbol) lexer.value());
-                getToken();
+                node = increment();
                 break;
 
             case DECREMENT:
-                getToken();
-
-                // Syntax Error - [value] はシンボルではないので、後置インクリメント演算子を付与することはできません。
-                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメント演算子を付与することはできません");
-
-                node = new PrefixDecrementNode(lexer.getLocation(), (Symbol) lexer.value());
-                getToken();
+                node = decrement();
                 break;
 
             case LP:
-                getToken(); // skip "("
-                node = new LogicalExpr(lexer, resolver).parse();
-
-                // Syntax Error - 対応する括弧がありません。
-                if (lexer.tokenType() != TokenType.RP) throw new SyntaxError(lexer.getLocation(), 8, "対応する括弧がありません。");
-
-                getToken(); // skip ")"
+                node = bracket();
                 break;
 
             case LB:
                 node = new Block(lexer, resolver).parse();
                 break;
 
-            case DECLARE: {
-                // 型推論がデフォルトで有効になります。
-                boolean inference = true;
-                getToken(); // skip "let"
-
-                // Syntax Error - 変数宣言式が不正です。宣言する変数の名称を記述してください。
-                if (lexer.tokenType() != TokenType.SYMBOL)
-                    throw new SyntaxError(lexer.getLocation(), 46, "変数宣言式が不正です。宣言する変数の名称を記述してください。");
-                Symbol sym = (Symbol) lexer.value();
-                getToken(); // skip symbol
-
-                if (lexer.tokenType() == TokenType.COLON) {
-                    inference = false;
-                    getToken(); // skip `:`
-                    if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
-                    getToken();
-                    Symbol type_name = (Symbol) lexer.value();
-                    if (type_name.equals(Symbol.intern(0, "Int"))) {
-                        resolver.declareVar(Type.INT, sym);
-                    } else if (type_name.equals(Symbol.intern(0, "Double"))) {
-                        resolver.declareVar(Type.DOUBLE, sym);
-                    } else if (type_name.equals(Symbol.intern(0, "Bool"))) {
-                        resolver.declareVar(Type.BOOL, sym);
-                    }
-                }
-
-                // Syntax Error - 変数宣言式が不正です。代入演算子を使用してください。
-                if (lexer.tokenType() != TokenType.ASSIGN)
-                    throw new SyntaxError(lexer.getLocation(), 47, "変数宣言式が不正です。代入演算子を使用してください。");
-
-                getToken(); // skip "="
-                Node value = new LogicalExpr(lexer, resolver).parse();
-
-                if (inference) {
-                    // 現在のスコープに変数を登録する
-                    resolver.declareVar(sym, value);
-                } else {
-                    if (!resolver.assignVar(sym, value)) throw new TypeError(value.getLocation(), 51, "代入されるデータの型が変数の型と一致しません。");
-                }
-
-                node = new DeclarationNode(lexer.getLocation(), sym, value);
+            case DECLARE:
+                node = declare();
                 break;
-            }
 
             case ATTR:
                 getToken(); // skip "attr"
@@ -191,32 +133,9 @@ class First extends ParseUnit {
                 break;
             }
 
-            case SYMBOL: {
-                Symbol sym = (Symbol) lexer.value();
-                // 変数の参照を解決する
-                resolver.referVar(lexer.getLocation(), sym);
-                getToken(); // skip symbol
-                if (lexer.tokenType() == TokenType.ASSIGN) {
-                    // 宣言済みの変数への代入
-                    getToken();
-                    Node assignedValue = new LogicalExpr(lexer, resolver).parse();
-                    resolver.assignVar(sym, assignedValue);
-                    node = new AssignNode(lexer.getLocation(), sym, assignedValue);
-                } else if (lexer.tokenType() == TokenType.INCREMENT) {
-                    int line = lexer.getLocation();
-                    getToken();
-                    if (resolver.getTypeOfVariable(sym) != Type.INT) throw new TypeError(line, 52, "`" + sym + "` は整数型ではないので、後置インクリメント演算子を付与することはできません。");
-                    node = new SuffixIncrementNode(lexer.getLocation(), sym);
-                } else if (lexer.tokenType() == TokenType.DECREMENT) {
-                    int line = lexer.getLocation();
-                    getToken();
-                    if (resolver.getTypeOfVariable(sym) != Type.INT) throw new TypeError(line, 53, "`" + sym + "` は整数型ではないので、後置デクリメント演算子を付与することはできません。");
-                    node = new SuffixDecrementNode(lexer.getLocation(), sym);
-                } else {
-                    node = method(sym);
-                }
+            case SYMBOL:
+                node = symbol();
                 break;
-            }
 
             case SEMICOLON:
                 node = null;
@@ -235,6 +154,110 @@ class First extends ParseUnit {
             node = new FuncallNode(lexer.getLocation(), node, list);
         }
 
+        return node;
+    }
+
+    private Node increment() throws Exception {
+        getToken();
+
+        // Syntax Error - [value] はシンボルではないので、前置インクリメント演算子を付与することはできません。
+        if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメント演算子を付与することはできません。");
+
+        Symbol symbol = (Symbol) lexer.value();
+        getToken();
+        return new PrefixIncrementNode(lexer.getLocation(), symbol);
+    }
+
+    private Node decrement() throws Exception {
+        getToken();
+
+        // Syntax Error - [value] はシンボルではないので、後置インクリメント演算子を付与することはできません。
+        if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメント演算子を付与することはできません");
+
+        Symbol symbol = (Symbol) lexer.value();
+        getToken();
+        return new PrefixDecrementNode(lexer.getLocation(), symbol);
+    }
+
+    private Node bracket() throws Exception {
+        getToken(); // skip "("
+        Node node = new LogicalExpr(lexer, resolver).parse();
+
+        // Syntax Error - 対応する括弧がありません。
+        if (lexer.tokenType() != TokenType.RP) throw new SyntaxError(lexer.getLocation(), 8, "対応する括弧がありません。");
+
+        getToken(); // skip ")"
+        return node;
+    }
+
+    private Node declare() throws Exception {
+        // 型推論がデフォルトで有効になります。
+        boolean inference = true;
+        getToken(); // skip "let"
+
+        // Syntax Error - 変数宣言式が不正です。宣言する変数の名称を記述してください。
+        if (lexer.tokenType() != TokenType.SYMBOL)
+            throw new SyntaxError(lexer.getLocation(), 46, "変数宣言式が不正です。宣言する変数の名称を記述してください。");
+        Symbol sym = (Symbol) lexer.value();
+        getToken(); // skip symbol
+
+        if (lexer.tokenType() == TokenType.COLON) {
+            inference = false;
+            getToken(); // skip `:`
+            if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
+            getToken();
+            Symbol type_name = (Symbol) lexer.value();
+            if (type_name.equals(Symbol.intern(0, "Int"))) {
+                resolver.declareVar(Type.INT, sym);
+            } else if (type_name.equals(Symbol.intern(0, "Double"))) {
+                resolver.declareVar(Type.DOUBLE, sym);
+            } else if (type_name.equals(Symbol.intern(0, "Bool"))) {
+                resolver.declareVar(Type.BOOL, sym);
+            }
+        }
+
+        // Syntax Error - 変数宣言式が不正です。代入演算子を使用してください。
+        if (lexer.tokenType() != TokenType.ASSIGN)
+            throw new SyntaxError(lexer.getLocation(), 47, "変数宣言式が不正です。代入演算子を使用してください。");
+
+        getToken(); // skip "="
+        Node value = new LogicalExpr(lexer, resolver).parse();
+
+        if (inference) {
+            // 現在のスコープに変数を登録する
+            resolver.declareVar(sym, value);
+        } else {
+            if (!resolver.assignVar(sym, value)) throw new TypeError(value.getLocation(), 51, "代入されるデータの型が変数の型と一致しません。");
+        }
+
+        return new DeclarationNode(lexer.getLocation(), sym, value);
+    }
+
+    private Node symbol() throws Exception {
+        Node node;
+        Symbol sym = (Symbol) lexer.value();
+        // 変数の参照を解決する
+        resolver.referVar(lexer.getLocation(), sym);
+        getToken(); // skip symbol
+        if (lexer.tokenType() == TokenType.ASSIGN) {
+            // 宣言済みの変数への代入
+            getToken();
+            Node assignedValue = new LogicalExpr(lexer, resolver).parse();
+            resolver.assignVar(sym, assignedValue);
+            node = new AssignNode(lexer.getLocation(), sym, assignedValue);
+        } else if (lexer.tokenType() == TokenType.INCREMENT) {
+            int line = lexer.getLocation();
+            getToken();
+            if (resolver.getTypeOfVariable(sym) != Type.INT) throw new TypeError(line, 52, "`" + sym + "` は整数型ではないので、後置インクリメント演算子を付与することはできません。");
+            node = new SuffixIncrementNode(lexer.getLocation(), sym);
+        } else if (lexer.tokenType() == TokenType.DECREMENT) {
+            int line = lexer.getLocation();
+            getToken();
+            if (resolver.getTypeOfVariable(sym) != Type.INT) throw new TypeError(line, 53, "`" + sym + "` は整数型ではないので、後置デクリメント演算子を付与することはできません。");
+            node = new SuffixDecrementNode(lexer.getLocation(), sym);
+        } else {
+            node = method(sym);
+        }
         return node;
     }
 
