@@ -103,27 +103,27 @@ public class Int extends Numeric {
     public Bool less(int line, Node obj) throws Exception {
         if (obj instanceof Int) return (this.getValue() < ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
         else if (obj instanceof Double) return (this.getValue() < ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
-        else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
+        else throw new Exception(line + ": IntType, DoubleType 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
     public Bool le(int line, Node obj) throws Exception {
         if (obj instanceof Int) return (this.getValue() <= ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
         else if (obj instanceof Double) return (this.getValue() <= ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
-        else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
+        else throw new Exception(line + ": IntType, DoubleType 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
     public Bool greater(int line, Node obj) throws Exception {
         if (obj instanceof Int) return (this.getValue() > ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
         else if (obj instanceof Double) return (this.getValue() > ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
-        else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
+        else throw new Exception(line + ": IntType, DoubleType 以外のデータ型と大小を比較することはできません");
     }
 
     @Override
     public Bool ge(int line, Node obj) throws Exception {
         if (obj instanceof Int) return (this.getValue() >= ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
         else if (obj instanceof Double) return (this.getValue() >= ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
-        else throw new Exception(line + ": Int, Double 以外のデータ型と大小を比較することはできません");
+        else throw new Exception(line + ": IntType, DoubleType 以外のデータ型と大小を比較することはできません");
     }
 }

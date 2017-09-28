@@ -7,6 +7,7 @@ import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.entity.Double;
 import net.zero918nobita.Xemime.entity.Str;
+import net.zero918nobita.Xemime.type.*;
 
 /**
  * 意味解析中に、静的型チェックを行います。
@@ -33,19 +34,19 @@ class StaticTypeChecker {
     }
 
     Type check(Resolver resolver, Bool bool) {
-        return Type.BOOL;
+        return new BoolType();
     }
 
     Type check(Resolver resolver, Int num) {
-        return Type.INT;
+        return new IntType();
     }
 
     Type check(Resolver resolver, Double num) {
-        return  Type.DOUBLE;
+        return new DoubleType();
     }
 
     Type check(Resolver resolver, Str str) {
-        return Type.STRING;
+        return new StrType();
     }
 
     Type check(Resolver resolver, Symbol symbol) throws SemanticError {
@@ -60,17 +61,17 @@ class StaticTypeChecker {
             case SUB:
             case MUL:
             case DIV:
-                if (lhs == Type.INT) {
-                    if (rhs == Type.INT) {
-                        return Type.INT;
-                    } else if (rhs == Type.DOUBLE) {
-                        return Type.DOUBLE;
+                if (lhs instanceof IntType) {
+                    if (rhs instanceof IntType) {
+                        return new IntType();
+                    } else if (rhs instanceof DoubleType) {
+                        return new DoubleType();
                     } else {
                         throw new Exception("型を特定できませんでした。");
                     }
-                } else if (lhs == Type.DOUBLE) {
-                    if (rhs == Type.INT || rhs == Type.DOUBLE) {
-                        return Type.DOUBLE;
+                } else if (lhs instanceof DoubleType) {
+                    if (rhs instanceof IntType || rhs instanceof DoubleType) {
+                        return new DoubleType();
                     } else {
                         throw new Exception("型を特定できませんでした。");
                     }

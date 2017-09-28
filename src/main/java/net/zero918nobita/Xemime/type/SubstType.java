@@ -1,9 +1,9 @@
 package net.zero918nobita.Xemime.type;
 
 /**
- * 小数型
+ * 実体型
  * @author Kodai Matsumoto
  */
 
-public class Double implements Type {
+public class SubstType implements Type {
 }

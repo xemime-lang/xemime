@@ -2,13 +2,14 @@ package net.zero918nobita.Xemime.parser;
 
 import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.entity.Handler;
+import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
-import net.zero918nobita.Xemime.resolver.Type;
 import net.zero918nobita.Xemime.resolver.TypeError;
+import net.zero918nobita.Xemime.type.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,7 +126,7 @@ class First extends ParseUnit {
                 getToken(); // skip symbol
                 if (lexer.tokenType() == TokenType.ATTACH) {
                     getToken(); // skip "<-"
-                    resolver.declareVar(Type.ANY, sym);
+                    resolver.declareVar(new AnyType(), sym);
                     node = new SubstanceDeclarationNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
                 } else {
                     throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
@@ -167,7 +168,7 @@ class First extends ParseUnit {
         Symbol symbol = (Symbol) lexer.value();
 
         // Type Error - [value] は整数型変数ではないので、前置インクリメント演算子を付与することはできません。
-        if (resolver.getTypeOfVariable(symbol) != Type.INT) throw new TypeError(line, 53, "`" + symbol + "` は整数型変数ではないので、前置インクリメント演算子を付与することはできません。");
+        if (!(resolver.getTypeOfVariable(symbol) instanceof IntType)) throw new TypeError(line, 53, "`" + symbol + "` は整数型変数ではないので、前置インクリメント演算子を付与することはできません。");
 
         getToken();
         return new PrefixIncrementNode(lexer.getLocation(), symbol);
@@ -183,7 +184,7 @@ class First extends ParseUnit {
         Symbol symbol = (Symbol) lexer.value();
 
         // Type Error - [value] は整数型変数ではないので、前置デクリメント演算を付与することはできません。
-        if (resolver.getTypeOfVariable(symbol) != Type.INT) throw new TypeError(line, 55, "`" + symbol + "` は整数型変数ではないので、前置デクリメント演算子を付与することはできません。");
+        if (!(resolver.getTypeOfVariable(symbol) instanceof IntType)) throw new TypeError(line, 55, "`" + symbol + "` は整数型変数ではないので、前置デクリメント演算子を付与することはできません。");
 
         getToken();
         return new PrefixDecrementNode(lexer.getLocation(), symbol);
@@ -217,12 +218,12 @@ class First extends ParseUnit {
             if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
             getToken();
             Symbol type_name = (Symbol) lexer.value();
-            if (type_name.equals(Symbol.intern(0, "Int"))) {
-                resolver.declareVar(Type.INT, sym);
-            } else if (type_name.equals(Symbol.intern(0, "Double"))) {
-                resolver.declareVar(Type.DOUBLE, sym);
+            if (type_name.equals(Symbol.intern(0, "IntType"))) {
+                resolver.declareVar(new IntType(), sym);
+            } else if (type_name.equals(Symbol.intern(0, "DoubleType"))) {
+                resolver.declareVar(new DoubleType(), sym);
             } else if (type_name.equals(Symbol.intern(0, "Bool"))) {
-                resolver.declareVar(Type.BOOL, sym);
+                resolver.declareVar(new BoolType(), sym);
             }
         }
 
@@ -258,12 +259,12 @@ class First extends ParseUnit {
         } else if (lexer.tokenType() == TokenType.INCREMENT) {
             int line = lexer.getLocation();
             getToken();
-            if (resolver.getTypeOfVariable(sym) != Type.INT) throw new TypeError(line, 52, "`" + sym + "` は整数型ではないので、後置インクリメント演算子を付与することはできません。");
+            if (!(resolver.getTypeOfVariable(sym) instanceof IntType)) throw new TypeError(line, 52, "`" + sym + "` は整数型ではないので、後置インクリメント演算子を付与することはできません。");
             node = new SuffixIncrementNode(lexer.getLocation(), sym);
         } else if (lexer.tokenType() == TokenType.DECREMENT) {
             int line = lexer.getLocation();
             getToken();
-            if (resolver.getTypeOfVariable(sym) != Type.INT) throw new TypeError(line, 53, "`" + sym + "` は整数型ではないので、後置デクリメント演算子を付与することはできません。");
+            if (!(resolver.getTypeOfVariable(sym) instanceof IntType)) throw new TypeError(line, 53, "`" + sym + "` は整数型ではないので、後置デクリメント演算子を付与することはできません。");
             node = new SuffixDecrementNode(lexer.getLocation(), sym);
         } else {
             node = method(sym);

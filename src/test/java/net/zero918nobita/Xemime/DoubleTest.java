@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
- * net.zero918nobita.Xemime.entity.Double のテストクラスです。
+ * net.zero918nobita.Xemime.entity.DoubleType のテストクラスです。
  * @author Kodai Matsumoto
  */
 

@@ -1,9 +1,9 @@
 package net.zero918nobita.Xemime.type;
 
 /**
- * オプショナル型
+ * 属性型
  * @author Kodai Matsumoto
  */
 
-public class Optional implements Type {
+public class AttrType implements Type {
 }

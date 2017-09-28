@@ -1,4 +1,4 @@
 package net.zero918nobita.Xemime.type;
 
-public class Nix implements Type {
+public class FuncType implements Type {
 }

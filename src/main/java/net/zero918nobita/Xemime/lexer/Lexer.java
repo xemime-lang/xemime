@@ -267,7 +267,7 @@ public class Lexer {
                 tokenType = TokenType.DOUBLE;
                 break;
             }
-            if (c == '.') point = true; // はじめて小数点が登場したので val に Double を代入するように設定
+            if (c == '.') point = true; // はじめて小数点が登場したので val に DoubleType を代入するように設定
             if (point && c != '.') {
                 decimal_place++;
                 num = num.add(new BigDecimal(c - '0').multiply(new BigDecimal("0.1").pow(decimal_place)));

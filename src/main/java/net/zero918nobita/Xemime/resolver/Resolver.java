@@ -2,6 +2,7 @@ package net.zero918nobita.Xemime.resolver;
 
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
+import net.zero918nobita.Xemime.type.Type;
 
 import java.util.Stack;
 
@@ -31,7 +32,7 @@ public class Resolver {
         if (!scope.peek().hasVariable(symbol)) throw new Exception("未宣言の変数名です。");
         Type type_of_variable = getTypeOfVariable(symbol);
         Type type_of_value = stc.check(this, node);
-        return type_of_variable == type_of_value;
+        return type_of_variable.equals(type_of_value);
     }
 
     public void referVar(int location, Symbol sym) throws Exception {

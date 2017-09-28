@@ -1,6 +1,7 @@
 package net.zero918nobita.Xemime.resolver;
 
 import net.zero918nobita.Xemime.ast.Symbol;
+import net.zero918nobita.Xemime.type.Type;
 
 import java.util.HashMap;
 
@@ -52,10 +53,6 @@ public class Scope {
 
     public Scope parent() {
         return parent;
-    }
-
-    void defVar(Symbol sym) {
-        variables.put(sym, new Variable(Type.ANY));
     }
 
     void defVar(Type type, Symbol sym) {

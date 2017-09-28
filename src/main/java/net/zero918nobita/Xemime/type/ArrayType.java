@@ -1,9 +1,9 @@
 package net.zero918nobita.Xemime.type;
 
 /**
- * 整数型
+ * 配列型
  * @author Kodai Matsumoto
  */
 
-public class Int implements Type {
+public class ArrayType implements Type {
 }

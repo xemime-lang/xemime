@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.resolver;
 
+import net.zero918nobita.Xemime.type.Type;
+
 /**
  * 意味解析中に使用する、名前と型を格納するものです。
  * @author Kodai Matsumoto
