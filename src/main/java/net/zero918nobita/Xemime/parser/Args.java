@@ -17,8 +17,12 @@ class Args extends ParseUnit {
         super(lexer, resolver);
     }
 
+    /**
+     * 結果が ArrayList&lt;Node&gt; となる構文解析を行うので、 Node を返すこのメソッドの使用を禁止しています。
+     * @throws FatalError 常に発生させます。
+     */
     @Override
-    protected Node parse() throws Exception {
+    protected Node parse() throws FatalError {
         // Fatal Error - 呼び出し禁止メソッドの呼び出しが行われた
         throw new FatalError(lexer.getLocation(), 3);
     }
