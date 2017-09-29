@@ -24,21 +24,25 @@ class Factor extends ParseUnit {
     protected Node parse() throws Exception {
         Node node;
         switch (lexer.tokenType()) {
+            // 文字列定数
             case STRING:
                 node = lexer.value();
                 getToken();
                 break;
 
+            // 真値
             case T:
                 node = Bool.T;
                 getToken();
                 break;
 
+            // 偽値
             case NIL:
                 node = Bool.Nil;
                 getToken();
                 break;
 
+            // 論理否定
             case NOT:
                 getToken();
                 Node modified = new Factor(lexer, resolver).parse();
@@ -49,10 +53,12 @@ class Factor extends ParseUnit {
                 node = new NotNode(lexer.getLocation(), modified);
                 break;
 
+            // ラムダ式
             case LAMBDA:
                 node = new Lambda(lexer, resolver).parse();
                 break;
 
+            // 一次子
             default:
                 node = new First(lexer, resolver).parse();
         }
@@ -61,6 +67,7 @@ class Factor extends ParseUnit {
                 lexer.tokenType() == TokenType.PERIOD ||
                 lexer.tokenType() == TokenType.LP) {
             switch (lexer.tokenType()) {
+                // ドルマークを使用し括弧を省略した関数呼び出し
                 case DOLLAR: {
                     getToken();
                     ArrayList<Node> list = new ArrayList<>();
@@ -87,6 +94,7 @@ class Factor extends ParseUnit {
                     break;
                 }
 
+                // 関数呼び出し
                 case LP: {
                     ArrayList<Node> list = new ArrayList<>();
                     getToken();
@@ -97,6 +105,7 @@ class Factor extends ParseUnit {
                     break;
                 }
 
+                // メッセージ式
                 case PERIOD:
                     getToken();
 
@@ -129,6 +138,7 @@ class Factor extends ParseUnit {
         }
 
         switch (lexer.tokenType()) {
+            // 範囲式 ( 最大値を持つ )
             case RANGE2: {
                 Node left = node;
                 getToken();
@@ -137,6 +147,7 @@ class Factor extends ParseUnit {
                 break;
             }
 
+            // 範囲式 ( 最大値を持たない )
             case RANGE3: {
                 Node left = node;
                 getToken();
