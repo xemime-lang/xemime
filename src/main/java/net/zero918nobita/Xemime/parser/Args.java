@@ -8,11 +8,15 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import java.util.ArrayList;
 
 /**
- * 引数リストの構文解析を行います。
+ * 引数リストの構文解析器
  * @author Kodai Matsumoto
  */
 
 class Args extends ParseUnit {
+    /**
+     * @param lexer 字句解析器
+     * @param resolver 意味解析器
+     */
     Args(Lexer lexer, Resolver resolver) {
         super(lexer, resolver);
     }
@@ -27,6 +31,10 @@ class Args extends ParseUnit {
         throw new FatalError(lexer.getLocation(), 3);
     }
 
+    /**
+     * 引数リストの構文解析と意味解析を行い AST を生成します。
+     * @return 生成された AST
+     */
     ArrayList<Node> arguments() throws Exception {
         ArrayList<Node> list = null;
         if (lexer.tokenType() != TokenType.RP) {

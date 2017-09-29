@@ -14,10 +14,18 @@ import java.util.ArrayList;
  */
 
 class Block extends ParseUnit {
+    /**
+     * @param lexer 字句解析器
+     * @param resolver 意味解析器
+     */
     Block(Lexer lexer, Resolver resolver) {
         super(lexer, resolver);
     }
 
+    /**
+     * 構文解析と意味解析を行い AST を生成します。
+     * @return 生成された AST
+     */
     @Override
     protected Node parse() throws Exception {
         ArrayList<Node> list;
