@@ -2,7 +2,6 @@ package net.zero918nobita.Xemime.parser;
 
 import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.entity.Handler;
-import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.Lexer;
@@ -158,6 +157,10 @@ class First extends ParseUnit {
         return node;
     }
 
+    /**
+     * 前置インクリメントから始まる文法要素の構文解析を行います。
+     * @return AST
+     */
     private Node prefixIncrement() throws Exception {
         int line = lexer.getLocation();
         getToken();
@@ -174,6 +177,10 @@ class First extends ParseUnit {
         return new PrefixIncrementNode(lexer.getLocation(), symbol);
     }
 
+    /**
+     * 前置デクリメントから始まる文法要素の構文解析を行います、
+     * @return AST
+     */
     private Node prefixDecrement() throws Exception {
         int line = lexer.getLocation();
         getToken();
@@ -201,6 +208,10 @@ class First extends ParseUnit {
         return node;
     }
 
+    /**
+     * 変数宣言式の構文解析を行います。
+     * @return AST
+     */
     private Node declare() throws Exception {
         // 型推論がデフォルトで有効になります。
         boolean inference = true;
@@ -244,6 +255,10 @@ class First extends ParseUnit {
         return new DeclarationNode(lexer.getLocation(), sym, value);
     }
 
+    /**
+     * シンボルから始まる文法要素の構文解析を行います。
+     * @return AST
+     */
     private Node symbol() throws Exception {
         Node node;
         Symbol sym = (Symbol) lexer.value();
@@ -272,6 +287,13 @@ class First extends ParseUnit {
         return node;
     }
 
+    /**
+     * 組み込みメソッドの読み込みを行います。<br>
+     * 渡されたシンボルが組み込みメソッドの名称と一致していれば、
+     * 対応する組み込みメソッドへの参照で値を上書きします。
+     * @param sym 対象のシンボル
+     * @return AST
+     */
     private Node method(Symbol sym) throws Exception {
         Node node;
         Handler core;
