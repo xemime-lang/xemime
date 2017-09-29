@@ -5,6 +5,8 @@ import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
+import net.zero918nobita.Xemime.resolver.TypeError;
+import net.zero918nobita.Xemime.type.BoolType;
 
 import java.util.ArrayList;
 
@@ -26,21 +28,31 @@ class Factor extends ParseUnit {
                 node = lexer.value();
                 getToken();
                 break;
+
             case T:
                 node = Bool.T;
                 getToken();
                 break;
+
             case NIL:
                 node = Bool.Nil;
                 getToken();
                 break;
+
             case NOT:
                 getToken();
-                node = new NotNode(lexer.getLocation(), new Factor(lexer, resolver).parse());
+                Node modified = new Factor(lexer, resolver).parse();
+
+                // Type Error - 論理否定演算子を真偽型以外の型のデータに適用することはできません。
+                if (!(resolver.getTypeOfNode(modified) instanceof BoolType)) throw new TypeError(modified.getLocation(), 56, "論理否定演算子を真偽型以外の型のデータに適用することはできません。");
+
+                node = new NotNode(lexer.getLocation(), modified);
                 break;
+
             case LAMBDA:
                 node = new Lambda(lexer, resolver).parse();
                 break;
+
             default:
                 node = new First(lexer, resolver).parse();
         }
@@ -74,6 +86,7 @@ class Factor extends ParseUnit {
                     node = new FuncallNode(lexer.getLocation(), node, list);
                     break;
                 }
+
                 case LP: {
                     ArrayList<Node> list = new ArrayList<>();
                     getToken();
@@ -83,6 +96,7 @@ class Factor extends ParseUnit {
                     node = new FuncallNode(lexer.getLocation(), node, list);
                     break;
                 }
+
                 case PERIOD:
                     getToken();
 

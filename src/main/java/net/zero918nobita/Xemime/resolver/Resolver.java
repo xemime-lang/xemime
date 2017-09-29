@@ -39,6 +39,10 @@ public class Resolver {
         scope.peek().referVar(location, sym);
     }
 
+    public Type getTypeOfNode(Node node) throws Exception {
+        return stc.check(this, node);
+    }
+
     public Type getTypeOfVariable(Symbol sym) throws SemanticError {
         return scope.peek().getTypeOfVariable(sym);
     }

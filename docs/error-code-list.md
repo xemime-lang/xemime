@@ -54,3 +54,4 @@
 | 53 | TypeError | 後置デクリメント演算子を付与された変数が整数型ではありません。 | ``parser.First#parse`` |
 | 54 | TypeError | 前置インクリメント演算子を付与された変数が整数型ではありません。　| ``parser.First#prefixIncrement`` |
 | 55 | TypeError | 前置デクリメント演算子を付与された変数が整数型ではありません。 | ``parser.First#prefixDecrement`` |
+| 56 | TypeError | 論理否定演算子を真偽型以外の型のデータに適用することはできません。 | ``parser.Factor#parse`` |
