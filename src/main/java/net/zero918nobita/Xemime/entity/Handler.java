@@ -64,9 +64,9 @@ public class Handler extends Node {
             throw new Exception(line + ": protoフィールドはメソッドとして呼び出すことはできません");
         if (!hasMember(symbol)) throw new Exception(line + ": `" + symbol.getName() + "` というメソッドはありません");
         Node o = getMember(symbol);
-        if (!(o instanceof Function)) throw new Exception(line + ": `" + symbol.getName() + "` はメソッドではありません");
+        if (!(o instanceof Func)) throw new Exception(line + ": `" + symbol.getName() + "` はメソッドではありません");
         if (params == null) params = new ArrayList<>();
         params.add(0, this);
-        return ((Function) o).call(getLocation(), params, Main.register(this));
+        return ((Func) o).call(getLocation(), params, Main.register(this));
     }
 }

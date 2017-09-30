@@ -87,7 +87,7 @@ class StaticTypeChecker {
             case ADD:
                 if (tLhs instanceof StrType && tRhs instanceof StrType) {
                     return new StrType();
-                } else {
+                } else if (tLhs instanceof StrType || tRhs instanceof StrType) {
                     throw new TypeError(exprNode.getLocation(), 61, "");
                 }
             case SUB:

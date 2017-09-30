@@ -351,6 +351,9 @@ public class Lexer {
             case "WHILE":
                 tokenType = TokenType.WHILE;
                 break;
+            case "FN":
+                tokenType = TokenType.FN;
+                break;
             case "ATTR": // 属性定義
                 tokenType = TokenType.ATTR;
                 break;

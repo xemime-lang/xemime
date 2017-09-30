@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public abstract class Native extends Function {
+public abstract class Native extends Func {
 
     public Native(int location, int args) {
         super(location);

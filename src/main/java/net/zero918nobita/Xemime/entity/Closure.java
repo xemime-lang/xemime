@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Kodai Matsumoto
  */
 
-public class Closure extends Function {
+public class Closure extends Func {
     protected ArrayList<Symbol> params;
     protected Address self = null;
     protected Node body;

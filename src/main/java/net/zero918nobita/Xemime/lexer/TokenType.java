@@ -28,6 +28,7 @@ public enum TokenType {
     WHILE,
     BREAK,
     CONTINUE,
+    FN,
 
     /** unit (無効な値) */
     UNIT,

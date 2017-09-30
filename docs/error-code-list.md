@@ -63,3 +63,4 @@
 | 62 | TypeError |  | ``parser.First#parse`` |
 | 63 | TypeError |  | ``parser.First#parse`` |
 | 64 | TypeError |  | ``resolver.StaticTypeChecker`` |
+| 65 | FatalException |  | ``parser.ReturnNode`` |

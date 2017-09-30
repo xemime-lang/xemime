@@ -1,32 +1,44 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.ast.FatalException;
 import net.zero918nobita.Xemime.ast.Node;
+import net.zero918nobita.Xemime.ast.ReturnNode;
+import net.zero918nobita.Xemime.ast.Symbol;
+import net.zero918nobita.Xemime.interpreter.Main;
+import net.zero918nobita.Xemime.type.Type;
+import net.zero918nobita.Xemime.type.UnitType;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
-/**
- * 関数オブジェクト
- * 仮引数のリストと、呼び出されたときの評価される式を管理する
- * @author Kodai Matsumoto
- */
+public class Function extends Node {
+    private Type type;
+    private TreeMap<Symbol, Type> params;
+    private ArrayList<Node> body;
 
-public abstract class Function extends Node {
-
-    public Function(int location) {
+    public Function(int location, Type type, TreeMap<Symbol, Type> params, ArrayList<Node> body) {
         super(location);
+        this.type = type;
+        this.params = params;
+        this.body = body;
     }
 
-    /** 引数の個数 */
-    int numberOfArgs = 0;
+    @Override
+    public Node run() throws Exception {
+        return this;
+    }
 
-    public Node call(int location, ArrayList<Node> params, Address self) throws Exception {
-        if (params == null) {
-            if (numberOfArgs != 0) throw new Exception(location + ": 引数の個数が違います");
-        } else {
-            if (params.size() - 1 != numberOfArgs) throw new Exception(location + ": 引数の個数が違います");
+    protected Node exec(TreeMap<Symbol, Node> args, Address self) throws Exception {
+        Main.loadLocalFrame(new Handler(0));
+        for (Map.Entry<Symbol, Node> entry : args.entrySet()) Main.defValue(entry.getKey(), entry.getValue());
+        Node result;
+        for (Node node : body) {
+            result = node.run();
+            if (result instanceof ReturnNode) return result;
         }
-        return exec(params, self);
+        if (!(type instanceof UnitType)) throw new FatalException(getLocation(), 65);
+        Main.unloadLocalFrame();
+        return new Unit(0, null);
     }
-
-    protected abstract Node exec(ArrayList<Node> params, Address self) throws Exception;
 }

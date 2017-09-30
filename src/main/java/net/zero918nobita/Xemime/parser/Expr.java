@@ -50,6 +50,11 @@ class Expr extends ParseUnit{
                 node = new While(lexer, resolver).parse();
                 break;
 
+            // fn (関数定義)
+            case FN:
+                node = new Fn(lexer, resolver).parse();
+                break;
+
             // 論理式
             default:
                 node = new LogicalExpr(lexer, resolver).parse();

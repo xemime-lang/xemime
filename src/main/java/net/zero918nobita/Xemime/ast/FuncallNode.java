@@ -1,6 +1,6 @@
 package net.zero918nobita.Xemime.ast;
 
-import net.zero918nobita.Xemime.entity.Function;
+import net.zero918nobita.Xemime.entity.Func;
 import net.zero918nobita.Xemime.entity.Native;
 import net.zero918nobita.Xemime.interpreter.Main;
 
@@ -17,7 +17,7 @@ public class FuncallNode extends Node {
 
     public FuncallNode(int location, Node node, ArrayList<Node> list) throws Exception {
         super(location);
-        if (node instanceof Symbol || node instanceof Native || node instanceof FuncallNode) {
+        if (node instanceof Symbol || node instanceof Native) {
             func = node;
         } else {
             // Fatal Exception - 関数呼び出しに失敗しました。
@@ -33,20 +33,6 @@ public class FuncallNode extends Node {
             for (Node o : list) params.add(o.run());
             params.add(0, func);
             return ((Native) func).call(getLocation(), params, null);
-        } else if (func instanceof FuncallNode) {
-            Node c = func.run();
-
-            // Fatal Exception - 指定された関数は存在しません。
-            if (c == null) throw new FatalException(getLocation(), 10);
-
-            // Fatal Exception - 呼び出し対象が関数ではありません。
-            if (!(c instanceof Function)) throw new FatalException(getLocation(), 11);
-
-            Function f = (Function)c;
-            ArrayList<Node> params = new ArrayList<>();
-            for (Node o: list) params.add(o.run());
-            params.add(0, f);
-            return f.call(getLocation(), params, null);
         } else {
             Symbol symbol = (Symbol)func;
             Node c = Main.getValueOfSymbol(symbol);
@@ -55,9 +41,9 @@ public class FuncallNode extends Node {
             if (c == null) throw new FatalException(getLocation(), 12);
 
             // Fatal Exception - 呼び出し対象が関数ではありません。
-            if (!(c instanceof Function)) throw new FatalException(getLocation(), 13);
+            if (!(c instanceof Func)) throw new FatalException(getLocation(), 13);
 
-            Function func = (Function) c;
+            Func func = (Func) c;
             ArrayList<Node> params = new ArrayList<>();
             for (Node o : list) params.add(o.run());
             params.add(0, func);
