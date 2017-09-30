@@ -9,7 +9,7 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import java.util.ArrayList;
 
 /**
- * if 文の構文解析を行います。
+ * if 文の構文解析器
  * @author Kodai Matsumoto
  */
 

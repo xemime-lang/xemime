@@ -11,7 +11,7 @@ import net.zero918nobita.Xemime.type.IntType;
 import java.util.ArrayList;
 
 /**
- * for 文の構文解析を行います。
+ * for 文の構文解析器
  * @author Kodai Matsumoto
  */
 

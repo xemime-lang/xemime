@@ -11,7 +11,7 @@ import net.zero918nobita.Xemime.type.BoolType;
 import java.util.ArrayList;
 
 /**
- * 因子を構文解析します。
+ * 因子を構文解析器
  * @author Kodai Matsumoto
  */
 

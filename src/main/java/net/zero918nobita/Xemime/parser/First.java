@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * 一次子の構文解析を行います。
+ * 一次子の構文解析器
  * @author Kodai Matsumoto
  */
 

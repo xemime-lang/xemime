@@ -9,7 +9,7 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import java.util.ArrayList;
 
 /**
- * while 文の構文解析を行います。
+ * while 文の構文解析器
  * @author Kodai Matsumoto
  */
 

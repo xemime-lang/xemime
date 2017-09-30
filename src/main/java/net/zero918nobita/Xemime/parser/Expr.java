@@ -50,6 +50,7 @@ class Expr extends ParseUnit{
                 node = new While(lexer, resolver).parse();
                 break;
 
+            // 論理式
             default:
                 node = new LogicalExpr(lexer, resolver).parse();
                 if (lexer.tokenType() == TokenType.SEMICOLON) {

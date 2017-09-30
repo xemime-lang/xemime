@@ -9,7 +9,7 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import java.util.ArrayList;
 
 /**
- * ブロック式を構文解析します。
+ * ブロック式の構文解析器
  * @author Kodai Matsumoto
  */
 

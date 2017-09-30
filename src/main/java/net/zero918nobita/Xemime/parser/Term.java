@@ -8,7 +8,7 @@ import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
 /**
- * 項の構文解析を行います。
+ * 項の構文解析器
  * @author Kodai Matsumoto
  */
 

@@ -12,7 +12,7 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import java.util.ArrayList;
 
 /**
- * メソッド呼び出し部分を構文解析します。
+ * メソッド呼び出し式の構文解析器
  * @author Kodai Matsumoto
  */
 

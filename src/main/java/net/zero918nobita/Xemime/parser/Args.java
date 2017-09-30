@@ -22,7 +22,7 @@ class Args extends ParseUnit {
     }
 
     /**
-     * 結果が ArrayList&lt;Node&gt; となる構文解析を行うので、 Node を返すこのメソッドの使用を禁止しています。
+     * この構文解析器は結果が ArrayList&lt;Node&gt; を生成するため、 Node を返すこのメソッドの使用を禁止しています。
      * @throws FatalError 常に発生させます。
      */
     @Override

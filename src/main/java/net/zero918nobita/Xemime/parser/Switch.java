@@ -5,7 +5,7 @@ import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
 /**
- * switch 文の構文解析を行います。
+ * switch 文の構文解析器
  * @author Kodai Matsumoto
  */
 
