@@ -52,11 +52,14 @@ class First extends ParseUnit {
             case ADD:
                 getToken(); // skip "+"
                 node = new First(lexer, resolver).parse();
+                if (!(resolver.getTypeOfNode(node) instanceof IntType) &&
+                        !(resolver.getTypeOfNode(node) instanceof DoubleType)) throw new TypeError(node.getLocation(), 62, "");
                 break;
 
             case SUB:
                 getToken(); // skip "-"
                 node = new MinusNode(lexer.getLocation(), new First(lexer, resolver).parse());
+                resolver.getTypeOfNode(node);
                 break;
 
             case INCREMENT:

@@ -48,8 +48,10 @@ class SimpleExpr extends ParseUnit {
             Node term = new Term(lexer, resolver).parse();
             if (result == null) {
                 result = new ExprNode(lexer.getLocation(), op, node, term);
+                resolver.getTypeOfNode(result);
             } else {
                 result = new ExprNode(lexer.getLocation(), op, result, term);
+                resolver.getTypeOfNode(result);
             }
         }
         return result;

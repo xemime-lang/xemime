@@ -46,7 +46,7 @@ class Term extends ParseUnit {
                 (lexer.tokenType() == TokenType.XOR)) {
             TokenType op = lexer.tokenType();
             getToken();
-            while (lexer.tokenType() == TokenType.BR) getToken();
+            skipLineBreaks();
             Node term = new Term(lexer, resolver).parse();
 
             // DivideByZeroError - 構文解析中にゼロ除算が行われている箇所を発見しました。
@@ -54,8 +54,10 @@ class Term extends ParseUnit {
 
             if (result == null) {
                 result = new ExprNode(lexer.getLocation(), op, node, term);
+                resolver.getTypeOfNode(result);
             } else {
                 result = new ExprNode(lexer.getLocation(), op, result, term);
+                resolver.getTypeOfNode(result);
             }
         }
         return result;

@@ -55,3 +55,11 @@
 | 54 | TypeError | 前置インクリメント演算子を付与された変数が整数型ではありません。　| ``parser.First#prefixIncrement`` |
 | 55 | TypeError | 前置デクリメント演算子を付与された変数が整数型ではありません。 | ``parser.First#prefixDecrement`` |
 | 56 | TypeError | 論理否定演算子を真偽型以外の型のデータに適用することはできません。 | ``parser.Factor#parse`` |
+| 57 | TypeError |  | ``resolver.StaticTypeChecker`` |
+| 58 | TypeError |  | ``resolver.StaticTypeChecker`` |
+| 59 | TypeError |  | ``resolver.StaticTypeChecker`` |
+| 60 | FatalError |  | ``resolver.StaticTypeChecker`` |
+| 61 | TypeError |  | ``resolver.StaticTypeChecker`` |
+| 62 | TypeError |  | ``parser.First#parse`` |
+| 63 | TypeError |  | ``parser.First#parse`` |
+| 64 | TypeError |  | ``resolver.StaticTypeChecker`` |

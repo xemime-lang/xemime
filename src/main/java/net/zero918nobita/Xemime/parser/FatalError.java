@@ -7,8 +7,8 @@ package net.zero918nobita.Xemime.parser;
  * @author Kodai Matsumoto
  */
 
-class FatalError extends Exception {
-    FatalError(int location, int errorCode) {
+public class FatalError extends Exception {
+    public FatalError(int location, int errorCode) {
         super(location + ": インタプリタ内部の深刻な不具合が発生しました。 [" + errorCode + "]");
     }
 }

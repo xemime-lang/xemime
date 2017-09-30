@@ -26,4 +26,8 @@ public class MinusNode extends Node {
         if (o.getClass() == Int.class) return new Int(getLocation(), -((Int)o).getValue());
         return new Double(getLocation(), -((Double)o).getValue());
     }
+
+    public Node getAbs() {
+        return node;
+    }
 }
