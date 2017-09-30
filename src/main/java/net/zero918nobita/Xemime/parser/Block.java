@@ -23,7 +23,7 @@ class Block extends ParseUnit {
     }
 
     /**
-     * 構文解析と意味解析を行い AST を生成します。
+     * ブロック式の構文解析と意味解析を行います。
      * @return 生成された AST
      */
     @Override

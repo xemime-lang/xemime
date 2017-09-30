@@ -22,7 +22,7 @@ class Args extends ParseUnit {
     }
 
     /**
-     * この構文解析器は結果が ArrayList&lt;Node&gt; を生成するため、 Node を返すこのメソッドの使用を禁止しています。
+     * この構文解析器は Node ではなく ArrayList&lt;Node&gt; を生成するため、このメソッドの使用を禁止しています。
      * @throws FatalError 常に発生させます。
      */
     @Override
@@ -32,7 +32,7 @@ class Args extends ParseUnit {
     }
 
     /**
-     * 引数リストの構文解析と意味解析を行い AST を生成します。
+     * 引数リストの構文解析と意味解析を行います。
      * @return 生成された AST
      */
     ArrayList<Node> arguments() throws Exception {

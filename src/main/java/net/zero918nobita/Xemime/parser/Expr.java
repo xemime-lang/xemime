@@ -21,7 +21,7 @@ class Expr extends ParseUnit{
     }
 
     /**
-     * 式の構文解析と意味解析を行い AST を生成します。
+     * 式の構文解析と意味解析と意味解析を行います。
      * @return 生成された AST
      */
     @Override

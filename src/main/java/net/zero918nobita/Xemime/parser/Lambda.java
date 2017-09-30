@@ -17,10 +17,18 @@ import java.util.ArrayList;
  */
 
 class Lambda extends ParseUnit {
+    /**
+     * @param lexer 字句解析器
+     * @param resolver 意味解析器
+     */
     Lambda(Lexer lexer, Resolver resolver) {
         super(lexer, resolver);
     }
 
+    /**
+     * ラムダ式の構文解析と意味解析を行います。
+     * @return 生成された AST
+     */
     @Override
     protected Node parse() throws Exception {
         ArrayList<Symbol> list = new ArrayList<>();

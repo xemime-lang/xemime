@@ -12,10 +12,18 @@ import net.zero918nobita.Xemime.resolver.Resolver;
  */
 
 class SimpleExpr extends ParseUnit {
+    /**
+     * @param lexer 字句解析器
+     * @param resolver 意味解析器
+     */
     SimpleExpr(Lexer lexer, Resolver resolver) {
         super(lexer, resolver);
     }
 
+    /**
+     * 単純式の構文解析と意味解析を行います。
+     * @return 生成された AST
+     */
     @Override
     protected Node parse() throws Exception {
         Node node = new Term(lexer, resolver).parse();
