@@ -44,7 +44,7 @@ class SimpleExpr extends ParseUnit {
                 (lexer.tokenType() == TokenType.OR)) {
             TokenType op = lexer.tokenType();
             getToken();
-            while (lexer.tokenType() == TokenType.BR) getToken();
+            skipLineBreaks();
             Node term = new Term(lexer, resolver).parse();
             if (result == null) {
                 result = new ExprNode(lexer.getLocation(), op, node, term);
