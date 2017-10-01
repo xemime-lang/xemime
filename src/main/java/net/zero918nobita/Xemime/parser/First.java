@@ -241,9 +241,9 @@ class First extends ParseUnit {
             if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
             getToken();
             Symbol type_name = (Symbol) lexer.value();
-            if (type_name.equals(Symbol.intern(0, "IntType"))) {
+            if (type_name.equals(Symbol.intern(0, "Int"))) {
                 resolver.declareVar(new IntType(), sym);
-            } else if (type_name.equals(Symbol.intern(0, "DoubleType"))) {
+            } else if (type_name.equals(Symbol.intern(0, "Double"))) {
                 resolver.declareVar(new DoubleType(), sym);
             } else if (type_name.equals(Symbol.intern(0, "Bool"))) {
                 resolver.declareVar(new BoolType(), sym);
