@@ -5,7 +5,6 @@ import net.zero918nobita.Xemime.entity.Handler;
 import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.Lexer;
-import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.resolver.TypeError;
 import net.zero918nobita.Xemime.type.*;
@@ -112,14 +111,14 @@ class First extends ParseUnit {
                 while (!current(RB)) {
 
                     // Syntax Error - 区切りのカンマ `,` が必要です。
-                    if (lexer.tokenType() != TokenType.COMMA) throw new SyntaxError(lexer.getLocation(), 19, "区切りのカンマ `,` が必要です。");
+                    if (!current(COMMA)) throw new SyntaxError(lexer.getLocation(), 19, "区切りのカンマ `,` が必要です。");
 
                     getToken(); // skip comma
                     name = (Symbol) lexer.value();
                     getToken(); // skip name
 
                     // Syntax Error - メンバ名と値の区切りのコロン `:` が必要です。
-                    if (lexer.tokenType() != COLON) throw new SyntaxError(lexer.getLocation(), 20, "メンバ名と値の区切りのコロン `:` が必要です。");
+                    if (!current(COLON)) throw new SyntaxError(lexer.getLocation(), 20, "メンバ名と値の区切りのコロン `:` が必要です。");
 
                     getToken(); // skip colon
                     value = new LogicalExpr(lexer, resolver).parse();
@@ -136,7 +135,7 @@ class First extends ParseUnit {
                 if (lexer.tokenType() != SYMBOL) throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
                 Symbol sym = (Symbol) lexer.value();
                 getToken(); // skip symbol
-                if (lexer.tokenType() == TokenType.ATTACH) {
+                if (current(ATTACH)) {
                     getToken(); // skip "<-"
                     resolver.declareVar(new AnyType(), sym);
                     node = new SubstanceDeclarationNode(lexer.getLocation(), sym, new LogicalExpr(lexer, resolver).parse());
@@ -155,14 +154,14 @@ class First extends ParseUnit {
                 break;
 
             default:
-                throw new Exception(lexer.getLocation() + ": 文法エラーです");
+                throw new SyntaxError(lexer.getLocation(), 72, "不明なトークン `" + lexer.value() + "` が検出されました。");
         }
 
-        while (lexer.tokenType() == TokenType.LP) {
+        while (current(LP)) {
             ArrayList<Node> list = new ArrayList<>();
             getToken();
-            if (lexer.tokenType() != TokenType.RP) list = new Args(lexer, resolver).arguments();
-            if (lexer.tokenType() != TokenType.RP) throw new Exception(lexer.getLocation() + ": 文法エラー");
+            if (!current(RP)) list = new Args(lexer, resolver).arguments();
+            if (!current(RP)) throw new SyntaxError(lexer.getLocation(), 71, "引数リストが正しく ( ) 括弧で括られていません。");
             getToken();
             node = new FuncallNode(lexer.getLocation(), node, list);
         }
@@ -179,7 +178,7 @@ class First extends ParseUnit {
         getToken();
 
         // Syntax Error - [value] はシンボルではないので、前置インクリメント演算子を付与することはできません。
-        if (lexer.tokenType() != SYMBOL) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメント演算子を付与することはできません。");
+        if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメント演算子を付与することはできません。");
 
         Symbol symbol = (Symbol) lexer.value();
 
@@ -199,7 +198,7 @@ class First extends ParseUnit {
         getToken();
 
         // Syntax Error - [value] はシンボルではないので、前置デクリメント演算子を付与することはできません。
-        if (lexer.tokenType() != SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメント演算子を付与することはできません");
+        if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメント演算子を付与することはできません");
 
         Symbol symbol = (Symbol) lexer.value();
 
@@ -215,7 +214,7 @@ class First extends ParseUnit {
         Node node = new LogicalExpr(lexer, resolver).parse();
 
         // Syntax Error - 対応する括弧がありません。
-        if (lexer.tokenType() != TokenType.RP) throw new SyntaxError(lexer.getLocation(), 8, "対応する括弧がありません。");
+        if (!current(RP)) throw new SyntaxError(lexer.getLocation(), 8, "対応する括弧がありません。");
 
         getToken(); // skip ")"
         return node;
@@ -231,16 +230,15 @@ class First extends ParseUnit {
         getToken(); // skip `let`
 
         // Syntax Error - 変数宣言式が不正です。宣言する変数の名称を記述してください。
-        if (lexer.tokenType() != SYMBOL)
-            throw new SyntaxError(lexer.getLocation(), 46, "変数宣言式が不正です。宣言する変数の名称を記述してください。");
+        if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 46, "変数宣言式が不正です。宣言する変数の名称を記述してください。");
 
         Symbol sym = (Symbol) lexer.value();
         getToken(); // skip symbol
 
-        if (lexer.tokenType() == COLON) {
+        if (current(COLON)) {
             inference = false;
             getToken(); // skip `:`
-            if (lexer.tokenType() != SYMBOL) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
+            if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
             getToken();
             Symbol type_name = (Symbol) lexer.value();
             if (type_name.equals(Symbol.intern(0, "IntType"))) {
@@ -253,8 +251,7 @@ class First extends ParseUnit {
         }
 
         // Syntax Error - 変数宣言式が不正です。代入演算子を使用してください。
-        if (lexer.tokenType() != TokenType.ASSIGN)
-            throw new SyntaxError(lexer.getLocation(), 47, "変数宣言式が不正です。代入演算子を使用してください。");
+        if (!current(ASSIGN)) throw new SyntaxError(lexer.getLocation(), 47, "変数宣言式が不正です。代入演算子を使用してください。");
 
         getToken(); // skip `=`
         Node value = new LogicalExpr(lexer, resolver).parse();
@@ -279,18 +276,18 @@ class First extends ParseUnit {
         // 変数の参照を解決する
         resolver.referVar(lexer.getLocation(), sym);
         getToken(); // skip symbol
-        if (lexer.tokenType() == TokenType.ASSIGN) {
+        if (current(ASSIGN)) {
             // 宣言済みの変数への代入
             getToken();
             Node assignedValue = new LogicalExpr(lexer, resolver).parse();
             resolver.assignVar(sym, assignedValue);
             node = new AssignNode(lexer.getLocation(), sym, assignedValue);
-        } else if (lexer.tokenType() == TokenType.INCREMENT) {
+        } else if (current(INCREMENT)) {
             int line = lexer.getLocation();
             getToken();
             if (!(resolver.getTypeOfVariable(sym) instanceof IntType)) throw new TypeError(line, 52, "`" + sym + "` は整数型ではないので、後置インクリメント演算子を付与することはできません。");
             node = new SuffixIncrementNode(lexer.getLocation(), sym);
-        } else if (lexer.tokenType() == TokenType.DECREMENT) {
+        } else if (current(DECREMENT)) {
             int line = lexer.getLocation();
             getToken();
             if (!(resolver.getTypeOfVariable(sym) instanceof IntType)) throw new TypeError(line, 53, "`" + sym + "` は整数型ではないので、後置デクリメント演算子を付与することはできません。");

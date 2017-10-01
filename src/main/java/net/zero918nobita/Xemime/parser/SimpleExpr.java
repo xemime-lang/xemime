@@ -6,6 +6,10 @@ import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
+import static net.zero918nobita.Xemime.lexer.TokenType.ADD;
+import static net.zero918nobita.Xemime.lexer.TokenType.OR;
+import static net.zero918nobita.Xemime.lexer.TokenType.SUB;
+
 /**
  * 単純式の構文解析器
  * @author Kodai Matsumoto
@@ -39,9 +43,9 @@ class SimpleExpr extends ParseUnit {
 
     private Node simpleExpr(Node node) throws Exception {
         ExprNode result = null;
-        while ((lexer.tokenType() == TokenType.ADD) ||
-                (lexer.tokenType() == TokenType.SUB) ||
-                (lexer.tokenType() == TokenType.OR)) {
+        while ((current(ADD)) ||
+                (current(SUB)) ||
+                (current(OR))) {
             TokenType op = lexer.tokenType();
             getToken();
             skipLineBreaks();

@@ -3,12 +3,13 @@ package net.zero918nobita.Xemime.parser;
 import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.lexer.Lexer;
-import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.resolver.TypeError;
 import net.zero918nobita.Xemime.type.BoolType;
 
 import java.util.ArrayList;
+
+import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
 /**
  * 因子の構文解析器
@@ -71,28 +72,28 @@ class Factor extends ParseUnit {
                 node = new First(lexer, resolver).parse();
         }
 
-        while (lexer.tokenType() == TokenType.DOLLAR ||
-                lexer.tokenType() == TokenType.PERIOD ||
-                lexer.tokenType() == TokenType.LP) {
+        while (current(DOLLAR) ||
+                current(PERIOD) ||
+                current(LP)) {
             switch (lexer.tokenType()) {
                 // ドルマークを使用し括弧を省略した関数呼び出し
                 case DOLLAR: {
                     getToken(); // skip `$`
                     ArrayList<Node> list = new ArrayList<>();
-                    if (lexer.tokenType() == TokenType.SEMICOLON) {
+                    if (current(SEMICOLON)) {
                         node = new FuncallNode(lexer.getLocation(), node, list);
                         break;
                     }
-                    if (lexer.tokenType() != TokenType.BR &&
-                            lexer.tokenType() != TokenType.EOS &&
-                            lexer.tokenType() != TokenType.SEMICOLON) {
+                    if (!current(BR) &&
+                            !current(EOS) &&
+                            !current(SEMICOLON)) {
                         Node expr = new LogicalExpr(lexer, resolver).parse();
                         if (expr == null) throw new SyntaxError(lexer.getLocation(), 68, "引数リストが不正です。");
                         list.add(expr);
-                        while (lexer.tokenType() != TokenType.BR &&
-                                lexer.tokenType() != TokenType.EOS &&
-                                lexer.tokenType() != TokenType.SEMICOLON) {
-                            if (lexer.tokenType() != TokenType.COMMA)
+                        while (!current(BR) &&
+                                !current(EOS) &&
+                                lexer.tokenType() != SEMICOLON) {
+                            if (!current(COMMA))
                                 throw new SyntaxError(lexer.getLocation(), 69, "引数をコンマ `,` で区切ってください。");
                             getToken();
                             list.add(new LogicalExpr(lexer, resolver).parse());
@@ -106,8 +107,8 @@ class Factor extends ParseUnit {
                 case LP: {
                     ArrayList<Node> list = new ArrayList<>();
                     getToken();
-                    if (lexer.tokenType() != TokenType.RP) list = new Args(lexer, resolver).arguments();
-                    if (lexer.tokenType() != TokenType.RP) throw new Exception(lexer.getLocation() + ": 文法エラー");
+                    if (!current(RP)) list = new Args(lexer, resolver).arguments();
+                    if (!current(RP)) throw new Exception(lexer.getLocation() + ": 文法エラー");
                     getToken();
                     node = new FuncallNode(lexer.getLocation(), node, list);
                     break;
@@ -118,23 +119,23 @@ class Factor extends ParseUnit {
                     getToken();
 
                     // SyntaxError - メッセージ式のピリオドの後ろがシンボルではありません。
-                    if (lexer.tokenType() != TokenType.SYMBOL)
+                    if (!current(SYMBOL))
                         throw new SyntaxError(lexer.getLocation(), 4, "メッセージ式のピリオドの後ろがシンボルではありません。");
 
                     Symbol sym = (Symbol) lexer.value();
                     getToken();
-                    if (lexer.tokenType() == TokenType.LP) {
+                    if (current(LP)) {
                         ArrayList<Node> list = new ArrayList<>();
                         getToken();
-                        if (lexer.tokenType() != TokenType.RP) list = new Args(lexer, resolver).arguments();
+                        if (!current(RP)) list = new Args(lexer, resolver).arguments();
 
                         // SyntaxError - メッセージ式の括弧が閉じられていません。
-                        if (lexer.tokenType() != TokenType.RP)
+                        if (!current(RP))
                             throw new SyntaxError(lexer.getLocation(), 5, "メッセージ式の括弧が閉じられていません。");
 
                         getToken();
                         node = new DotCallNode(lexer.getLocation(), node, sym, list);
-                    } else if (lexer.tokenType() == TokenType.ASSIGN) {
+                    } else if (current(ASSIGN)) {
                         getToken();
                         Node c = new LogicalExpr(lexer, resolver).parse();
                         node = new DotAssignNode(lexer.getLocation(), node, sym, c);

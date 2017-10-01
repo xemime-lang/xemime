@@ -7,6 +7,10 @@ import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
+import static net.zero918nobita.Xemime.lexer.TokenType.DIV;
+import static net.zero918nobita.Xemime.lexer.TokenType.MUL;
+import static net.zero918nobita.Xemime.lexer.TokenType.XOR;
+
 /**
  * 項の構文解析器
  * @author Kodai Matsumoto
@@ -41,16 +45,16 @@ class Term extends ParseUnit {
 
     private Node term(Node node) throws Exception {
         ExprNode result = null;
-        while ((lexer.tokenType() == TokenType.MUL) ||
-                (lexer.tokenType() == TokenType.DIV) ||
-                (lexer.tokenType() == TokenType.XOR)) {
+        while ((current(MUL)) ||
+                (current(DIV)) ||
+                (current(XOR))) {
             TokenType op = lexer.tokenType();
             getToken();
             skipLineBreaks();
             Node term = new Term(lexer, resolver).parse();
 
             // DivideByZeroError - 構文解析中にゼロ除算が行われている箇所を発見しました。
-            if (op == TokenType.DIV && term.equals(new Int(0, 0))) throw new DivideByZeroError(lexer.getLocation(), 1);
+            if (op == DIV && term.equals(new Int(0, 0))) throw new DivideByZeroError(lexer.getLocation(), 1);
 
             if (result == null) {
                 result = new ExprNode(lexer.getLocation(), op, node, term);

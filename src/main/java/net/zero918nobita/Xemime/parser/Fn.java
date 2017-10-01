@@ -4,11 +4,14 @@ import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.lexer.Lexer;
-import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.type.Type;
 
 import java.util.TreeMap;
+
+import static net.zero918nobita.Xemime.lexer.TokenType.LP;
+import static net.zero918nobita.Xemime.lexer.TokenType.RP;
+import static net.zero918nobita.Xemime.lexer.TokenType.SYMBOL;
 
 class Fn extends ParseUnit {
     /**
@@ -24,21 +27,21 @@ class Fn extends ParseUnit {
         getToken(); // skip `fn`
 
         // Syntax Error - `fn` の後ろに関数名を記述してください。
-        if (lexer.tokenType() != TokenType.SYMBOL)
+        if (!current(SYMBOL))
             throw new SyntaxError(lexer.getLocation(), 66, "`fn` の後ろに関数名を記述してください。");
 
         Symbol sym = (Symbol) lexer.value();
         getToken(); // skip symbol
 
         // Syntax Error - 関数名の後ろに ( ) 括弧で括られた引数リストを記述してください。
-        if (lexer.tokenType() != TokenType.LP)
+        if (!current(LP))
             throw new SyntaxError(lexer.getLocation(), 67, "関数名の後ろに ( ) 括弧で括られた引数リストを記述してください。");
 
         getToken(); // skip `(`
         TreeMap<Symbol, Type> args = new TreeMap<>();
 
-        if (lexer.tokenType() != TokenType.RP) {
-            if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 70, "");
+        if (!current(RP)) {
+            if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 70, "");
             Symbol name = (Symbol) lexer.value();
             getToken(); // skip symbol
 

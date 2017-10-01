@@ -4,11 +4,12 @@ import net.zero918nobita.Xemime.ast.ForNode;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.lexer.Lexer;
-import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.type.IntType;
 
 import java.util.ArrayList;
+
+import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
 /**
  * for 文の構文解析器
@@ -34,24 +35,24 @@ public class For extends ParseUnit {
         ArrayList<Node> body = new ArrayList<>();
 
         // Syntax Error - for キーワードの後ろにはカウンタ変数を指定してください。
-        if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 48, "for キーワードの後ろにはカウンタ変数を指定してください。");
+        if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 48, "for キーワードの後ろにはカウンタ変数を指定してください。");
 
         Symbol counter = (Symbol) lexer.value();
         getToken(); // skip symbol
 
         // Syntax Error - カウンタ変数の後ろには in キーワードを記述してください。
-        if (lexer.tokenType() != TokenType.IN) throw new SyntaxError(lexer.getLocation(), 40, "カウンタ変数の後ろには in キーワードを記述してください。");
+        if (!current(IN)) throw new SyntaxError(lexer.getLocation(), 40, "カウンタ変数の後ろには in キーワードを記述してください。");
 
         getToken(); // skip `in`
         Node range = new LogicalExpr(lexer, resolver).parse();
         skipLineBreaks();
 
         // Syntax Error - 範囲式の後ろに波括弧 `{` を記述してください。
-        if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 44, "範囲式の後ろに `{` を記述してください。");
+        if (!current(LB)) throw new SyntaxError(lexer.getLocation(), 44, "範囲式の後ろに `{` を記述してください。");
 
         getToken(); // skip `{`
         resolver.declareVar(new IntType(), counter);
-        while (lexer.tokenType() != TokenType.RB) {
+        while (!current(RB)) {
             body.add(new Expr(lexer, resolver).parse());
             skipLineBreaks();
         }

@@ -3,8 +3,9 @@ package net.zero918nobita.Xemime.parser;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.lexer.Lexer;
-import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
+
+import static net.zero918nobita.Xemime.lexer.TokenType.SEMICOLON;
 
 /**
  * 式の構文解析器
@@ -58,7 +59,7 @@ class Expr extends ParseUnit{
             // 論理式
             default:
                 node = new LogicalExpr(lexer, resolver).parse();
-                if (lexer.tokenType() == TokenType.SEMICOLON) {
+                if (current(SEMICOLON)) {
                     getToken();
                     node = new Unit(lexer.getLocation(), node);
                 }

@@ -69,3 +69,5 @@
 | 68 | SyntaxError | 引数リストが不正です。 | ``parser.Factor#parse`` |
 | 69 | SyntaxError | 引数をコンマ ``,`` で区切ってください。 | ``parser.Factor#parse`` |
 | 70 | SyntaxError |  | ``parser.Fn#parse`` |
+| 71 | SyntaxError | 引数リストが正しく ( ) 括弧で括られていません。 | ``parser.First#parse`` |
+| 72 | SyntaxError | 不明なトークンが検出されました。 | ``parser.First#parse`` |

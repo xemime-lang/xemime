@@ -6,6 +6,8 @@ import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
+import static net.zero918nobita.Xemime.lexer.TokenType.*;
+
 /**
  * 論理式の構文解析器
  * @author Kodai Matsumoto
@@ -26,7 +28,7 @@ class LogicalExpr extends ParseUnit {
      */
     @Override
     protected Node parse() throws Exception {
-        if (lexer.tokenType() == TokenType.IF) {
+        if (current(IF)) {
             return new If(lexer, resolver).parse();
         }
         Node node = new SimpleExpr(lexer, resolver).parse();
@@ -47,14 +49,14 @@ class LogicalExpr extends ParseUnit {
 
     private Node logicalExpr(Node node) throws Exception {
         ExprNode result = null;
-        while ((lexer.tokenType() == TokenType.AND) ||
-                (lexer.tokenType() == TokenType.L) ||
-                (lexer.tokenType() == TokenType.G) ||
-                (lexer.tokenType() == TokenType.EQ) ||
-                (lexer.tokenType() == TokenType.EQL) ||
-                (lexer.tokenType() == TokenType.NE) ||
-                (lexer.tokenType() == TokenType.LE) ||
-                (lexer.tokenType() == TokenType.GE)) {
+        while ((current(AND)) ||
+                (current(L)) ||
+                (current(G)) ||
+                (current(EQ)) ||
+                (current(EQL)) ||
+                (current(NE)) ||
+                (current(LE)) ||
+                (current(GE))) {
             TokenType op = lexer.tokenType();
             getToken();
             Node simpleExpr = new SimpleExpr(lexer, resolver).parse();

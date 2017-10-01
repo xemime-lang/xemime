@@ -3,10 +3,13 @@ package net.zero918nobita.Xemime.parser;
 import net.zero918nobita.Xemime.ast.IfNode;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.lexer.Lexer;
-import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
 import java.util.ArrayList;
+
+import static net.zero918nobita.Xemime.lexer.TokenType.ELSE;
+import static net.zero918nobita.Xemime.lexer.TokenType.LB;
+import static net.zero918nobita.Xemime.lexer.TokenType.RB;
 
 /**
  * if 文の構文解析器
@@ -34,25 +37,25 @@ class If extends ParseUnit {
         ArrayList<Node> els = null;
 
         // Syntax Error - 条件式の後ろに波括弧 `{` を記述してください。
-        if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 27, "");
+        if (!current(LB)) throw new SyntaxError(lexer.getLocation(), 27, "");
 
         getToken(); // skip "{"
-        while (lexer.tokenType() != TokenType.RB) {
+        while (!current(RB)) {
             then.add(new Expr(lexer, resolver).parse());
             skipLineBreaks();
         }
         getToken();
         skipLineBreaks();
-        if (lexer.tokenType() == TokenType.ELSE) {
+        if (current(ELSE)) {
             getToken();
             skipLineBreaks();
 
             // Syntax Error - `else` の後ろに波括弧 `{` を記述してください。
-            if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 29, "");
+            if (!current(LB)) throw new SyntaxError(lexer.getLocation(), 29, "");
 
             getToken(); // skip "{"
             els = new ArrayList<>();
-            while (lexer.tokenType() != TokenType.RB) {
+            while (!current(RB)) {
                 els.add(new Expr(lexer, resolver).parse());
                 skipLineBreaks();
             }
