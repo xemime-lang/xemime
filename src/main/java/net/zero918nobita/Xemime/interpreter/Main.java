@@ -3,7 +3,6 @@ package net.zero918nobita.Xemime.interpreter;
 import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.parser.Parser;
 import net.zero918nobita.Xemime.ast.*;
-import sun.reflect.generics.tree.Tree;
 
 import java.io.*;
 import java.util.ArrayList;

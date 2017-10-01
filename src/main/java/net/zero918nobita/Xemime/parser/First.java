@@ -11,7 +11,6 @@ import net.zero918nobita.Xemime.type.*;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
 

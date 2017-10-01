@@ -5,9 +5,7 @@ import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
@@ -41,6 +39,7 @@ class Args extends ParseUnit {
      */
     LinkedHashMap<Symbol, Node> arguments() throws Exception {
         LinkedHashMap<Symbol, Node> list = null;
+
         if (!current(RP)) {
             list = new LinkedHashMap<>();
 

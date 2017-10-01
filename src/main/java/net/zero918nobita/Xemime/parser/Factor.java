@@ -8,7 +8,6 @@ import net.zero918nobita.Xemime.resolver.TypeError;
 import net.zero918nobita.Xemime.type.BoolType;
 
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
