@@ -8,8 +8,8 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.type.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
@@ -39,7 +39,7 @@ class Fn extends ParseUnit {
 
         getToken(); // skip `(`
         skipLineBreaks();
-        TreeMap<Symbol, Type> args = new TreeMap<>();
+        LinkedHashMap<Symbol, Type> args = new LinkedHashMap<>();
 
         if (!current(RP)) {
             if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 70, "");

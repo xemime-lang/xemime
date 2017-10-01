@@ -7,7 +7,7 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.resolver.TypeError;
 import net.zero918nobita.Xemime.type.BoolType;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
@@ -79,12 +79,12 @@ class Factor extends ParseUnit {
             switch (lexer.tokenType()) {
                 // ドルマークを使用し括弧を省略した関数呼び出し
                 case DOLLAR: {
-                    TreeMap<Symbol, Node> list = null;
+                    LinkedHashMap<Symbol, Node> list = null;
                     getToken(); // skip `$`
                     if (!current(BR) &&
                             !current(EOS) &&
                             !current(SEMICOLON)) {
-                        list = new TreeMap<>();
+                        list = new LinkedHashMap<>();
                         if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 68, "");
                         Symbol label = (Symbol) lexer.value();
                         getToken(); // skip symbol
@@ -112,7 +112,7 @@ class Factor extends ParseUnit {
 
                 // 関数呼び出し
                 case LP: {
-                    TreeMap<Symbol, Node> list = new TreeMap<>();
+                    LinkedHashMap<Symbol, Node> list = new LinkedHashMap<>();
                     getToken();
                     if (!current(RP)) list = new Args(lexer, resolver).arguments();
                     if (!current(RP)) throw new Exception(lexer.getLocation() + ": 文法エラー");
@@ -132,7 +132,7 @@ class Factor extends ParseUnit {
                     Symbol sym = (Symbol) lexer.value();
                     getToken();
                     if (current(LP)) {
-                        TreeMap<Symbol, Node> list = new TreeMap<>();
+                        LinkedHashMap<Symbol, Node> list = new LinkedHashMap<>();
                         getToken();
                         if (!current(RP)) list = new Args(lexer, resolver).arguments();
 

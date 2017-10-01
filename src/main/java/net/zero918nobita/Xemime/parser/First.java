@@ -9,8 +9,8 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.resolver.TypeError;
 import net.zero918nobita.Xemime.type.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
@@ -159,7 +159,7 @@ class First extends ParseUnit {
         }
 
         while (current(LP)) {
-            TreeMap<Symbol, Node> list = new TreeMap<>();
+            LinkedHashMap<Symbol, Node> list = new LinkedHashMap<>();
             getToken();
             if (!current(RP)) list = new Args(lexer, resolver).arguments();
             if (!current(RP)) throw new SyntaxError(lexer.getLocation(), 71, "引数リストが正しく ( ) 括弧で括られていません。");

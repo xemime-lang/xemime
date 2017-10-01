@@ -3,6 +3,7 @@ package net.zero918nobita.Xemime.ast;
 import net.zero918nobita.Xemime.entity.Bool;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
 /**
@@ -118,7 +119,7 @@ public class Node {
         throw new Exception(location + ": `" + toString() + "` にフィールドは設定できません");
     }
 
-    public Node message(int location, Symbol symbol, TreeMap<Symbol, Node> params) throws Exception {
+    public Node message(int location, Symbol symbol, LinkedHashMap<Symbol, Node> params) throws Exception {
         throw new Exception(location + ": `" + toString() + "` にメソッドは設定できません");
     }
 }

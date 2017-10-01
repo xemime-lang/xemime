@@ -4,6 +4,7 @@ import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
 /**
@@ -21,7 +22,7 @@ public abstract class Func extends Node {
     /** 引数の個数 */
     int numberOfArgs = 0;
 
-    public Node call(int location, TreeMap<Symbol, Node> params, Address self) throws Exception {
+    public Node call(int location, LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
         if (params == null) {
             if (numberOfArgs != 0) throw new Exception(location + ": 引数の個数が違います");
         } else {
@@ -30,5 +31,5 @@ public abstract class Func extends Node {
         return exec(params, self);
     }
 
-    protected abstract Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception;
+    protected abstract Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception;
 }

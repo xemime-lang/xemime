@@ -4,9 +4,8 @@ import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.interpreter.Main;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 public class Handler extends Node {
     /**
@@ -60,13 +59,13 @@ public class Handler extends Node {
     }
 
     @Override
-    public Node message(int line, Symbol symbol, TreeMap<Symbol, Node> params) throws Exception {
+    public Node message(int line, Symbol symbol, LinkedHashMap<Symbol, Node> params) throws Exception {
         if (symbol.equals(Symbol.intern(0, "proto")))
             throw new Exception(line + ": protoフィールドはメソッドとして呼び出すことはできません");
         if (!hasMember(symbol)) throw new Exception(line + ": `" + symbol.getName() + "` というメソッドはありません");
         Node o = getMember(symbol);
         if (!(o instanceof Func)) throw new Exception(line + ": `" + symbol.getName() + "` はメソッドではありません");
-        if (params == null) params = new TreeMap<>();
+        if (params == null) params = new LinkedHashMap<>();
         params.put(Symbol.intern(0, "this"), this);
         return ((Func) o).call(getLocation(), params, Main.register(this));
     }

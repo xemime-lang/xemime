@@ -6,6 +6,7 @@ import net.zero918nobita.Xemime.interpreter.Frame;
 import net.zero918nobita.Xemime.interpreter.Main;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -47,7 +48,7 @@ public class Closure extends Func {
         return this;
     }
 
-    protected Node exec(TreeMap<Symbol, Node> params, Address dynamicSelf) throws Exception {
+    protected Node exec(LinkedHashMap<Symbol, Node> params, Address dynamicSelf) throws Exception {
         Node o = null;
         setArgs(params, dynamicSelf);
         if (body != null) o = body.run();
@@ -55,7 +56,7 @@ public class Closure extends Func {
         return o;
     }
 
-    private void setArgs(TreeMap<Symbol, Node> args, Address dynamicSelf) throws Exception {
+    private void setArgs(LinkedHashMap<Symbol, Node> args, Address dynamicSelf) throws Exception {
         if ((params == null) && (args == null)) {
             Main.loadLocalFrame(new Handler(0));
             return;

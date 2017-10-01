@@ -7,6 +7,7 @@ import sun.reflect.generics.tree.Tree;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -290,7 +291,7 @@ public class Main {
             }
 
             @Override
-            protected Address exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+            protected Address exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
                 return Main.register(params.get(Symbol.intern(0, "this")).run());
             }
         }
@@ -301,7 +302,7 @@ public class Main {
             }
 
             @Override
-            protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+            protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
                 Handler obj1 = (Handler) params.get(Symbol.intern(0, "this")).run();
                 Handler obj2 = new Handler(0);
                 obj2.setMember(Symbol.intern(0, "proto"), new Bool(0, false));
@@ -338,7 +339,7 @@ public class Main {
             }
 
             @Override
-            protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+            protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
                 if (Main.allowExitMethod) System.exit(0);
                 throw new Exception("この実行環境で Core.exit メソッドを使用することはできません");
             }
@@ -354,7 +355,7 @@ public class Main {
             }
 
             @Override
-            protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+            protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
                 Node o = params.get(Symbol.intern(0, "target")).run();
                 System.out.print(o);
                 return o;
@@ -371,7 +372,7 @@ public class Main {
             }
 
             @Override
-            protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+            protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
                 Node o = params.get(Symbol.intern(0, "target")).run();
                 System.out.println(o);
                 return o;

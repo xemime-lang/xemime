@@ -6,7 +6,7 @@ import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.type.Type;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 /**
  * 関数定義式を表すノードです。
@@ -17,10 +17,10 @@ public class FunctionNode extends Node {
     private int line;
     private Symbol name;
     private Type type;
-    private TreeMap<Symbol, Type> params;
+    private LinkedHashMap<Symbol, Type> params;
     private ArrayList<Node> body;
 
-    public FunctionNode(int location, Symbol name, Type type, TreeMap<Symbol, Type> params, ArrayList<Node> body) {
+    public FunctionNode(int location, Symbol name, Type type, LinkedHashMap<Symbol, Type> params, ArrayList<Node> body) {
         super(location);
         this.line = location;
         this.name = name;

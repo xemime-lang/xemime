@@ -10,15 +10,16 @@ import net.zero918nobita.Xemime.type.Type;
 import net.zero918nobita.Xemime.type.UnitType;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Function extends Func {
     private Type type;
-    private TreeMap<Symbol, Type> params;
+    private LinkedHashMap<Symbol, Type> params;
     private ArrayList<Node> body;
 
-    public Function(int location, Type type, TreeMap<Symbol, Type> params, ArrayList<Node> body) {
+    public Function(int location, Type type, LinkedHashMap<Symbol, Type> params, ArrayList<Node> body) {
         super(location);
         this.type = type;
         this.params = params;
@@ -31,7 +32,7 @@ public class Function extends Func {
         return this;
     }
 
-    protected Node exec(TreeMap<Symbol, Node> args, Address self) throws Exception {
+    protected Node exec(LinkedHashMap<Symbol, Node> args, Address self) throws Exception {
         Main.loadLocalFrame(new Handler(0));
         for (Map.Entry<Symbol, Node> entry : args.entrySet()) Main.defValue(entry.getKey(), entry.getValue());
         Node result;

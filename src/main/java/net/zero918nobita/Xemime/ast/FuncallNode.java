@@ -4,8 +4,8 @@ import net.zero918nobita.Xemime.entity.Func;
 import net.zero918nobita.Xemime.entity.Native;
 import net.zero918nobita.Xemime.interpreter.Main;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * 関数呼び出しを表すノードです。
@@ -14,9 +14,9 @@ import java.util.TreeMap;
 
 public class FuncallNode extends Node {
     private Node func;
-    private TreeMap<Symbol, Node> list;
+    private LinkedHashMap<Symbol, Node> list;
 
-    public FuncallNode(int location, Node node, TreeMap<Symbol, Node> list) throws Exception {
+    public FuncallNode(int location, Node node, LinkedHashMap<Symbol, Node> list) throws Exception {
         super(location);
         if (node instanceof Symbol || node instanceof Native) {
             func = node;
@@ -30,7 +30,7 @@ public class FuncallNode extends Node {
     @Override
     public Node run() throws Exception {
         if (func instanceof Native) {
-            TreeMap<Symbol, Node> params = new TreeMap<>();
+            LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
             for (Map.Entry<Symbol, Node> entry : list.entrySet()) params.put(entry.getKey(), entry.getValue().run());
             params.put(Symbol.intern(0, "this"), func);
             return ((Native) func).call(getLocation(), params, null);
@@ -45,7 +45,7 @@ public class FuncallNode extends Node {
             if (!(c instanceof Func)) throw new FatalException(getLocation(), 13);
 
             Func func = (Func) c;
-            TreeMap<Symbol, Node> params = new TreeMap<>();
+            LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
             for (Map.Entry<Symbol, Node> entry : list.entrySet()) params.put(entry.getKey(), entry.getValue().run());
             params.put(Symbol.intern(0, "this"), func);
             return func.call(getLocation(), params, null);

@@ -3,7 +3,7 @@ package net.zero918nobita.Xemime.entity;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 /**
  * 属性を表すノードです。
@@ -18,7 +18,7 @@ public class Attr extends Node {
         this.func = func;
     }
 
-    public Node exec(TreeMap<Symbol, Node> params, Address dynamicSelf) throws Exception {
+    public Node exec(LinkedHashMap<Symbol, Node> params, Address dynamicSelf) throws Exception {
         return func.exec(params, dynamicSelf);
     }
 }
