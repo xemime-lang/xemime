@@ -354,6 +354,9 @@ public class Lexer {
             case "FN":
                 tokenType = TokenType.FN;
                 break;
+            case "RETURN":
+                tokenType = TokenType.RETURN;
+                break;
             case "ATTR": // 属性定義
                 tokenType = TokenType.ATTR;
                 break;

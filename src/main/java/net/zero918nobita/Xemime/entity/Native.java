@@ -1,8 +1,10 @@
 package net.zero918nobita.Xemime.entity;
 
 import net.zero918nobita.Xemime.ast.Node;
+import net.zero918nobita.Xemime.ast.Symbol;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * 組み込みメソッドを表すノードです。<br>
@@ -22,8 +24,7 @@ public abstract class Native extends Func {
         return "<Native>";
     }
 
-    @Override
-    protected Node exec(ArrayList<Node> params, Address self) throws Exception {
+    protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
         return null;
     }
 }

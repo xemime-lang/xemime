@@ -8,6 +8,7 @@ import net.zero918nobita.Xemime.resolver.TypeError;
 import net.zero918nobita.Xemime.type.BoolType;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
@@ -78,25 +79,31 @@ class Factor extends ParseUnit {
             switch (lexer.tokenType()) {
                 // ドルマークを使用し括弧を省略した関数呼び出し
                 case DOLLAR: {
+                    TreeMap<Symbol, Node> list = null;
                     getToken(); // skip `$`
-                    ArrayList<Node> list = new ArrayList<>();
-                    if (current(SEMICOLON)) {
-                        node = new FuncallNode(lexer.getLocation(), node, list);
-                        break;
-                    }
                     if (!current(BR) &&
                             !current(EOS) &&
                             !current(SEMICOLON)) {
-                        Node expr = new LogicalExpr(lexer, resolver).parse();
-                        if (expr == null) throw new SyntaxError(lexer.getLocation(), 68, "引数リストが不正です。");
-                        list.add(expr);
+                        list = new TreeMap<>();
+                        if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 68, "");
+                        Symbol label = (Symbol) lexer.value();
+                        getToken(); // skip symbol
+                        if (!current(COLON)) throw new SyntaxError(lexer.getLocation(), 85, "");
+                        getToken(); // skip `:`
+                        list.put(label, new LogicalExpr(lexer, resolver).parse());
+
                         while (!current(BR) &&
                                 !current(EOS) &&
                                 lexer.tokenType() != SEMICOLON) {
-                            if (!current(COMMA))
-                                throw new SyntaxError(lexer.getLocation(), 69, "引数をコンマ `,` で区切ってください。");
-                            getToken();
-                            list.add(new LogicalExpr(lexer, resolver).parse());
+                            if (!current(COMMA)) throw new Exception("文法エラーです");
+                            getToken(); // skip `,`
+                            skipLineBreaks();
+                            if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 69, "");
+                            label = (Symbol) lexer.value();
+                            getToken(); // skip symbol
+                            if (!current(COLON)) throw new SyntaxError(lexer.getLocation(), 86, "");
+                            getToken(); // skip `:`
+                            list.put(label, new LogicalExpr(lexer, resolver).parse());
                         }
                     }
                     node = new FuncallNode(lexer.getLocation(), node, list);
@@ -105,7 +112,7 @@ class Factor extends ParseUnit {
 
                 // 関数呼び出し
                 case LP: {
-                    ArrayList<Node> list = new ArrayList<>();
+                    TreeMap<Symbol, Node> list = new TreeMap<>();
                     getToken();
                     if (!current(RP)) list = new Args(lexer, resolver).arguments();
                     if (!current(RP)) throw new Exception(lexer.getLocation() + ": 文法エラー");
@@ -125,7 +132,7 @@ class Factor extends ParseUnit {
                     Symbol sym = (Symbol) lexer.value();
                     getToken();
                     if (current(LP)) {
-                        ArrayList<Node> list = new ArrayList<>();
+                        TreeMap<Symbol, Node> list = new TreeMap<>();
                         getToken();
                         if (!current(RP)) list = new Args(lexer, resolver).arguments();
 

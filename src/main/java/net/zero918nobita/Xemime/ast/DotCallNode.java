@@ -1,6 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * メソッドの呼び出しを表すノードです。
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 public class DotCallNode extends Node {
     private Node obj;
     private Symbol symbol;
-    private ArrayList<Node> list;
+    private TreeMap<Symbol, Node> list;
 
-    public DotCallNode(int location, Node object, Symbol sym, ArrayList<Node> list) {
+    public DotCallNode(int location, Node object, Symbol sym, TreeMap<Symbol, Node> list) {
         super(location);
         obj = object;
         symbol = sym;
@@ -24,8 +25,8 @@ public class DotCallNode extends Node {
         Node o;
         o = obj.run();
         if (list != null) {
-            ArrayList<Node> list2 = new ArrayList<>();
-            for (Node arg : list) list2.add(arg.run());
+            TreeMap<Symbol, Node> list2 = new TreeMap<>();
+            for (Map.Entry<Symbol, Node> entry : list.entrySet()) list2.put(entry.getKey(), entry.getValue().run());
             list = list2;
         }
         o = o.message(getLocation(), symbol, list);

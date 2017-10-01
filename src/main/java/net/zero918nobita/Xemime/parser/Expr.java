@@ -1,6 +1,7 @@
 package net.zero918nobita.Xemime.parser;
 
 import net.zero918nobita.Xemime.ast.Node;
+import net.zero918nobita.Xemime.ast.ReturnNode;
 import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
@@ -54,6 +55,12 @@ class Expr extends ParseUnit{
             // fn (関数定義)
             case FN:
                 node = new Fn(lexer, resolver).parse();
+                break;
+
+            case RETURN:
+                getToken(); // skip `return`
+                Node return_value = new Expr(lexer, resolver).parse();
+                node = new ReturnNode(lexer.getLocation(), return_value);
                 break;
 
             // 論理式

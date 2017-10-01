@@ -10,7 +10,7 @@ import java.util.HashMap;
  * @author Kodai Matsumoto
  */
 
-public class Symbol extends Node {
+public class Symbol extends Node implements Comparable<Symbol> {
     private static HashMap<String, Symbol> table = new HashMap<>();
     private String name;
 
@@ -50,5 +50,9 @@ public class Symbol extends Node {
 
     public String toString() {
         return name;
+    }
+
+    public int compareTo(Symbol symbol) {
+        return hashCode() - symbol.hashCode();
     }
 }

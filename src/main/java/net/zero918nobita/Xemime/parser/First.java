@@ -11,6 +11,7 @@ import net.zero918nobita.Xemime.type.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
@@ -158,7 +159,7 @@ class First extends ParseUnit {
         }
 
         while (current(LP)) {
-            ArrayList<Node> list = new ArrayList<>();
+            TreeMap<Symbol, Node> list = new TreeMap<>();
             getToken();
             if (!current(RP)) list = new Args(lexer, resolver).arguments();
             if (!current(RP)) throw new SyntaxError(lexer.getLocation(), 71, "引数リストが正しく ( ) 括弧で括られていません。");
@@ -247,6 +248,10 @@ class First extends ParseUnit {
                 resolver.declareVar(new DoubleType(), sym);
             } else if (type_name.equals(Symbol.intern(0, "Bool"))) {
                 resolver.declareVar(new BoolType(), sym);
+            } else if (type_name.equals(Symbol.intern(0, "String"))) {
+                resolver.declareVar(new StrType(), sym);
+            } else {
+                throw new SyntaxError(type_name.getLocation(), 73, "`" + type_name + "` 型は定義されていません。");
             }
         }
 

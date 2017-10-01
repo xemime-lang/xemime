@@ -5,6 +5,7 @@ import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.ReturnNode;
 import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.interpreter.Main;
+import net.zero918nobita.Xemime.parser.FatalError;
 import net.zero918nobita.Xemime.type.Type;
 import net.zero918nobita.Xemime.type.UnitType;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Function extends Node {
+public class Function extends Func {
     private Type type;
     private TreeMap<Symbol, Type> params;
     private ArrayList<Node> body;
@@ -22,6 +23,7 @@ public class Function extends Node {
         this.type = type;
         this.params = params;
         this.body = body;
+        this.numberOfArgs = params.size();
     }
 
     @Override
@@ -35,7 +37,7 @@ public class Function extends Node {
         Node result;
         for (Node node : body) {
             result = node.run();
-            if (result instanceof ReturnNode) return result;
+            if (result instanceof ReturnNode) return ((ReturnNode) result).getValue();
         }
         if (!(type instanceof UnitType)) throw new FatalException(getLocation(), 65);
         Main.unloadLocalFrame();

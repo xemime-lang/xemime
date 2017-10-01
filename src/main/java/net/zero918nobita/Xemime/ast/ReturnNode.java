@@ -17,4 +17,8 @@ public class ReturnNode extends Node {
     public Node run() throws Exception {
         return this;
     }
+
+    public Node getValue() throws Exception {
+        return value.run();
+    }
 }

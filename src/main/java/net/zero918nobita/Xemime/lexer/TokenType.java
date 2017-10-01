@@ -29,6 +29,7 @@ public enum TokenType {
     BREAK,
     CONTINUE,
     FN,
+    RETURN,
 
     /** unit (無効な値) */
     UNIT,

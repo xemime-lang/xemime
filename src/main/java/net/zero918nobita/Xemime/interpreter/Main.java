@@ -3,6 +3,7 @@ package net.zero918nobita.Xemime.interpreter;
 import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.parser.Parser;
 import net.zero918nobita.Xemime.ast.*;
+import sun.reflect.generics.tree.Tree;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -218,6 +219,7 @@ public class Main {
                 try {
                     result = parser.parse(stringBuilder.toString());
                 } catch(Exception e) {
+                    e.printStackTrace();
                     System.out.println(e.getMessage());
                     System.exit(1);
                 }
@@ -288,8 +290,8 @@ public class Main {
             }
 
             @Override
-            protected Address exec(ArrayList<Node> params, Address self) throws Exception {
-                return Main.register(params.get(0).run());
+            protected Address exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+                return Main.register(params.get(Symbol.intern(0, "this")).run());
             }
         }
 
@@ -299,8 +301,8 @@ public class Main {
             }
 
             @Override
-            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
-                Handler obj1 = (Handler) params.get(0).run();
+            protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+                Handler obj1 = (Handler) params.get(Symbol.intern(0, "this")).run();
                 Handler obj2 = new Handler(0);
                 obj2.setMember(Symbol.intern(0, "proto"), new Bool(0, false));
                 if (obj1.hasMember(Symbol.intern(0, "proto"))) {
@@ -336,7 +338,7 @@ public class Main {
             }
 
             @Override
-            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
+            protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
                 if (Main.allowExitMethod) System.exit(0);
                 throw new Exception("この実行環境で Core.exit メソッドを使用することはできません");
             }
@@ -352,8 +354,8 @@ public class Main {
             }
 
             @Override
-            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
-                Node o = params.get(1).run();
+            protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+                Node o = params.get(Symbol.intern(0, "target")).run();
                 System.out.print(o);
                 return o;
             }
@@ -369,8 +371,8 @@ public class Main {
             }
 
             @Override
-            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
-                Node o = params.get(1).run();
+            protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+                Node o = params.get(Symbol.intern(0, "target")).run();
                 System.out.println(o);
                 return o;
             }

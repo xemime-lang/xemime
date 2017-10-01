@@ -1,13 +1,14 @@
 package net.zero918nobita.Xemime.parser;
 
 import net.zero918nobita.Xemime.ast.Node;
+import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
-import static net.zero918nobita.Xemime.lexer.TokenType.COMMA;
-import static net.zero918nobita.Xemime.lexer.TokenType.RP;
+import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
 /**
  * 引数リストの構文解析器
@@ -37,15 +38,28 @@ class Args extends ParseUnit {
      * 引数リストの構文解析と意味解析を行います。
      * @return 生成された AST
      */
-    ArrayList<Node> arguments() throws Exception {
-        ArrayList<Node> list = null;
+    TreeMap<Symbol, Node> arguments() throws Exception {
+        TreeMap<Symbol, Node> list = null;
         if (!current(RP)) {
-            list = new ArrayList<>();
-            list.add(new LogicalExpr(lexer, resolver).parse());
+            list = new TreeMap<>();
+
+            if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 82, "");
+            Symbol label = (Symbol) lexer.value();
+            getToken(); // skip symbol
+            if (!current(COLON)) throw new SyntaxError(lexer.getLocation(), 81, "");
+            getToken(); // skip `:`
+            list.put(label, new LogicalExpr(lexer, resolver).parse());
+
             while (!current(RP)) {
                 if (!current(COMMA)) throw new Exception("文法エラーです");
-                getToken();
-                list.add(new LogicalExpr(lexer, resolver).parse());
+                getToken(); // skip `,`
+                skipLineBreaks();
+                if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 83, "");
+                label = (Symbol) lexer.value();
+                getToken(); // skip symbol
+                if (!current(COLON)) throw new SyntaxError(lexer.getLocation(), 84, "");
+                getToken(); // skip `:`
+                list.put(label, new LogicalExpr(lexer, resolver).parse());
             }
         }
         return list;

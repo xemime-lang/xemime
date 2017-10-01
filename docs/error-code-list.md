@@ -71,3 +71,17 @@
 | 70 | SyntaxError |  | ``parser.Fn#parse`` |
 | 71 | SyntaxError | 引数リストが正しく ( ) 括弧で括られていません。 | ``parser.First#parse`` |
 | 72 | SyntaxError | 不明なトークンが検出されました。 | ``parser.First#parse`` |
+| 73 | SyntaxError | 指定された型は定義されていません。 | ``parser.First#parse`` |
+| 74 | SyntaxError |  | ``parser.Fn#parse`` |
+| 75 | SyntaxError |  | ``parser.Fn#parse`` |
+| 76 | SyntaxError | 指定された型は定義されていません。 | ``parser.Fn#parse`` |
+| 77 | SyntaxError |  | ``parser.Fn#parse`` |
+| 78 | SyntaxError |  | ``parser.Fn#parse`` |
+| 79 | SyntaxError |  | ``parser.Fn#parse`` |
+| 80 | SyntaxError |  | ``parser.Fn#parse`` |
+| 81 | SyntaxError |  | ``parser.Args#arguments`` |
+| 82 | SyntaxError |  | ``parser.Args#arguments`` |
+| 83 | SyntaxError |  | ``parser.Args#arguments`` |
+| 84 | SyntaxError |  | ``parser.Args#arguments`` |
+| 85 | SyntaxError |  | ``parser.Factor#parse`` |
+| 86 | SyntaxError |  | ``parser.Factor#parse`` |
