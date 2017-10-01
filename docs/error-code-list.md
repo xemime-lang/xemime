@@ -64,3 +64,8 @@
 | 63 | TypeError |  | ``parser.First#parse`` |
 | 64 | TypeError |  | ``resolver.StaticTypeChecker`` |
 | 65 | FatalException |  | ``parser.ReturnNode`` |
+| 66 | SyntaxError |  | ``parser.Fn#parse`` |
+| 67 | SyntaxError |  | ``parser.Fn#parse`` |
+| 68 | SyntaxError | 引数リストが不正です。 | ``parser.Factor#parse`` |
+| 69 | SyntaxError | 引数をコンマ ``,`` で区切ってください。 | ``parser.Factor#parse`` |
+| 70 | SyntaxError |  | ``parser.Fn#parse`` |

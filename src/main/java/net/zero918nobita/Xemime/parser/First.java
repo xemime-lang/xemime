@@ -13,6 +13,8 @@ import net.zero918nobita.Xemime.type.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static net.zero918nobita.Xemime.lexer.TokenType.*;
+
 /**
  * 一次子の構文解析器
  * @author Kodai Matsumoto
@@ -86,13 +88,13 @@ class First extends ParseUnit {
                 getToken(); // skip "attr"
 
                 // Syntax Error - `attr` の後ろに属性名を記述してください。
-                if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 16, "`attr` の後ろに属性名を記述してください。");
+                if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 16, "`attr` の後ろに属性名を記述してください。");
 
                 Symbol attr = (Symbol) lexer.value();
                 getToken(); // skip symbol
 
                 // Syntax Error - シンボルの後ろに波括弧 `{` を記述してください。
-                if (lexer.tokenType() != TokenType.LB) throw new SyntaxError(lexer.getLocation(), 17, "シンボルの後ろに波括弧 `{` を記述してください。");
+                if (!current(LB)) throw new SyntaxError(lexer.getLocation(), 17, "シンボルの後ろに波括弧 `{` を記述してください。");
 
                 HashMap<Symbol, Node> member = new HashMap<>();
                 getToken(); // skip "{"
@@ -101,13 +103,13 @@ class First extends ParseUnit {
                 getToken(); // skip name
 
                 // Syntax Error - メンバ名と値の区切りのコロン `:` が必要です。
-                if (lexer.tokenType() != TokenType.COLON) throw new SyntaxError(lexer.getLocation(), 18, "メンバ名と値の区切りのコロン `:` が必要です。");
+                if (!current(COLON)) throw new SyntaxError(lexer.getLocation(), 18, "メンバ名と値の区切りのコロン `:` が必要です。");
 
                 getToken(); // skip colon
                 Node value = new LogicalExpr(lexer, resolver).parse();
                 member.put(name, value);
 
-                while (lexer.tokenType() != TokenType.RB) {
+                while (!current(RB)) {
 
                     // Syntax Error - 区切りのカンマ `,` が必要です。
                     if (lexer.tokenType() != TokenType.COMMA) throw new SyntaxError(lexer.getLocation(), 19, "区切りのカンマ `,` が必要です。");
@@ -117,7 +119,7 @@ class First extends ParseUnit {
                     getToken(); // skip name
 
                     // Syntax Error - メンバ名と値の区切りのコロン `:` が必要です。
-                    if (lexer.tokenType() != TokenType.COLON) throw new SyntaxError(lexer.getLocation(), 20, "メンバ名と値の区切りのコロン `:` が必要です。");
+                    if (lexer.tokenType() != COLON) throw new SyntaxError(lexer.getLocation(), 20, "メンバ名と値の区切りのコロン `:` が必要です。");
 
                     getToken(); // skip colon
                     value = new LogicalExpr(lexer, resolver).parse();
@@ -131,7 +133,7 @@ class First extends ParseUnit {
 
             case SUBST: {
                 getToken(); // skip "subst"
-                if (lexer.tokenType() != TokenType.SYMBOL) throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
+                if (lexer.tokenType() != SYMBOL) throw new Exception(lexer.getLocation() + ": 実体宣言式が不正です。");
                 Symbol sym = (Symbol) lexer.value();
                 getToken(); // skip symbol
                 if (lexer.tokenType() == TokenType.ATTACH) {
@@ -177,7 +179,7 @@ class First extends ParseUnit {
         getToken();
 
         // Syntax Error - [value] はシンボルではないので、前置インクリメント演算子を付与することはできません。
-        if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメント演算子を付与することはできません。");
+        if (lexer.tokenType() != SYMBOL) throw new SyntaxError(lexer.getLocation(), 38, "`" + lexer.value() + "` はシンボルではないので、前置インクリメント演算子を付与することはできません。");
 
         Symbol symbol = (Symbol) lexer.value();
 
@@ -197,7 +199,7 @@ class First extends ParseUnit {
         getToken();
 
         // Syntax Error - [value] はシンボルではないので、前置デクリメント演算子を付与することはできません。
-        if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメント演算子を付与することはできません");
+        if (lexer.tokenType() != SYMBOL) throw new SyntaxError(lexer.getLocation(), 39, "`" + lexer.value() + "` はシンボルではないので、前置デクリメント演算子を付与することはできません");
 
         Symbol symbol = (Symbol) lexer.value();
 
@@ -226,18 +228,19 @@ class First extends ParseUnit {
     private Node declare() throws Exception {
         // 型推論がデフォルトで有効になります。
         boolean inference = true;
-        getToken(); // skip "let"
+        getToken(); // skip `let`
 
         // Syntax Error - 変数宣言式が不正です。宣言する変数の名称を記述してください。
-        if (lexer.tokenType() != TokenType.SYMBOL)
+        if (lexer.tokenType() != SYMBOL)
             throw new SyntaxError(lexer.getLocation(), 46, "変数宣言式が不正です。宣言する変数の名称を記述してください。");
+
         Symbol sym = (Symbol) lexer.value();
         getToken(); // skip symbol
 
-        if (lexer.tokenType() == TokenType.COLON) {
+        if (lexer.tokenType() == COLON) {
             inference = false;
             getToken(); // skip `:`
-            if (lexer.tokenType() != TokenType.SYMBOL) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
+            if (lexer.tokenType() != SYMBOL) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
             getToken();
             Symbol type_name = (Symbol) lexer.value();
             if (type_name.equals(Symbol.intern(0, "IntType"))) {
@@ -253,7 +256,7 @@ class First extends ParseUnit {
         if (lexer.tokenType() != TokenType.ASSIGN)
             throw new SyntaxError(lexer.getLocation(), 47, "変数宣言式が不正です。代入演算子を使用してください。");
 
-        getToken(); // skip "="
+        getToken(); // skip `=`
         Node value = new LogicalExpr(lexer, resolver).parse();
 
         if (inference) {

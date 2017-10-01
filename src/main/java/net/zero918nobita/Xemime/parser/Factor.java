@@ -77,7 +77,7 @@ class Factor extends ParseUnit {
             switch (lexer.tokenType()) {
                 // ドルマークを使用し括弧を省略した関数呼び出し
                 case DOLLAR: {
-                    getToken();
+                    getToken(); // skip `$`
                     ArrayList<Node> list = new ArrayList<>();
                     if (lexer.tokenType() == TokenType.SEMICOLON) {
                         node = new FuncallNode(lexer.getLocation(), node, list);
@@ -87,13 +87,13 @@ class Factor extends ParseUnit {
                             lexer.tokenType() != TokenType.EOS &&
                             lexer.tokenType() != TokenType.SEMICOLON) {
                         Node expr = new LogicalExpr(lexer, resolver).parse();
-                        if (expr == null) throw new Exception(lexer.getLocation() + ": 文法エラーです");
+                        if (expr == null) throw new SyntaxError(lexer.getLocation(), 68, "引数リストが不正です。");
                         list.add(expr);
                         while (lexer.tokenType() != TokenType.BR &&
                                 lexer.tokenType() != TokenType.EOS &&
                                 lexer.tokenType() != TokenType.SEMICOLON) {
                             if (lexer.tokenType() != TokenType.COMMA)
-                                throw new Exception(lexer.getLocation() + ": 文法エラーです");
+                                throw new SyntaxError(lexer.getLocation(), 69, "引数をコンマ `,` で区切ってください。");
                             getToken();
                             list.add(new LogicalExpr(lexer, resolver).parse());
                         }

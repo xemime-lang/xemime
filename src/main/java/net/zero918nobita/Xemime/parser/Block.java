@@ -3,10 +3,12 @@ package net.zero918nobita.Xemime.parser;
 import net.zero918nobita.Xemime.ast.BlockNode;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.lexer.Lexer;
-import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
 import java.util.ArrayList;
+
+import static net.zero918nobita.Xemime.lexer.TokenType.BR;
+import static net.zero918nobita.Xemime.lexer.TokenType.RB;
 
 /**
  * ブロック式の構文解析器
@@ -35,15 +37,15 @@ class Block extends ParseUnit {
         Node node = new Expr(lexer, resolver).parse();
 
         // Syntax Error - 不明なトークン [value] が発見されました。
-        if (lexer.tokenType() != TokenType.BR && lexer.tokenType() != TokenType.RB) throw new SyntaxError(lexer.getLocation(), 31, "不明なトークン `" + lexer.value() + "` が発見されました。");
+        if (!current(BR) && !current(RB)) throw new SyntaxError(lexer.getLocation(), 31, "不明なトークン `" + lexer.value() + "` が発見されました。");
 
         list = new ArrayList<>();
         list.add(node);
-        while (lexer.tokenType() != TokenType.RB) {
+        while (!current(RB)) {
             skipLineBreaks();
-            if (lexer.tokenType() == TokenType.RB) break;
+            if (current(RB)) break;
             node = new Expr(lexer, resolver).parse();
-            if (lexer.tokenType() == TokenType.BR || lexer.tokenType() == TokenType.RB) {
+            if (current(BR) || current(RB)) {
                 list.add(node);
             } else {
                 // Syntax Error - ブロック式内のステートメントにセミコロンが付いていません。

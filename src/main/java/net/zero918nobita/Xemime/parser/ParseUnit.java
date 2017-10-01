@@ -31,5 +31,9 @@ public abstract class ParseUnit {
         while (lexer.tokenType() == TokenType.BR) getToken();
     }
 
+    boolean current(TokenType tokenType) {
+        return lexer.tokenType() == tokenType;
+    }
+
     protected abstract Node parse() throws Exception;
 }

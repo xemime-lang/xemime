@@ -7,6 +7,9 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 
 import java.util.ArrayList;
 
+import static net.zero918nobita.Xemime.lexer.TokenType.COMMA;
+import static net.zero918nobita.Xemime.lexer.TokenType.RP;
+
 /**
  * 引数リストの構文解析器
  * @author Kodai Matsumoto
@@ -37,11 +40,11 @@ class Args extends ParseUnit {
      */
     ArrayList<Node> arguments() throws Exception {
         ArrayList<Node> list = null;
-        if (lexer.tokenType() != TokenType.RP) {
+        if (!current(RP)) {
             list = new ArrayList<>();
             list.add(new LogicalExpr(lexer, resolver).parse());
-            while (lexer.tokenType() != TokenType.RP) {
-                if (lexer.tokenType() != TokenType.COMMA) throw new Exception("文法エラーです");
+            while (!current(RP)) {
+                if (!current(COMMA)) throw new Exception("文法エラーです");
                 getToken();
                 list.add(new LogicalExpr(lexer, resolver).parse());
             }
