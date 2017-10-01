@@ -88,7 +88,7 @@ class StaticTypeChecker {
                 if (tLhs instanceof StrType && tRhs instanceof StrType) {
                     return new StrType();
                 } else if (tLhs instanceof StrType || tRhs instanceof StrType) {
-                    throw new TypeError(exprNode.getLocation(), 61, "");
+                    throw new TypeError(exprNode.getLocation(), 61, "文字列型データに他の型のデータを足すことはできません。");
                 }
             case SUB:
             case MUL:

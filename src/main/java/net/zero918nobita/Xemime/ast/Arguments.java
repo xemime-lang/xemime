@@ -6,12 +6,9 @@ public class Arguments {
     private boolean hasNamedArgs = false;
     private LinkedHashMap<Symbol, Node> params;
 
-    public Arguments(LinkedHashMap<Symbol, Node> params) {
+    public Arguments(LinkedHashMap<Symbol, Node> params, boolean hasNamedArgs) {
         this.params = params;
-    }
-
-    public void enableNamedArgs() {
-        hasNamedArgs = true;
+        this.hasNamedArgs = hasNamedArgs;
     }
 
     public boolean namedArgs() {

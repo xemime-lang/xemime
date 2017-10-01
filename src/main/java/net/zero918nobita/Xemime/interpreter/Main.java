@@ -219,7 +219,6 @@ public class Main {
                 try {
                     result = parser.parse(stringBuilder.toString());
                 } catch(Exception e) {
-                    e.printStackTrace();
                     System.out.println(e.getMessage());
                     System.exit(1);
                 }
@@ -227,7 +226,6 @@ public class Main {
                     try {
                         c.run();
                     } catch(Exception e) {
-                        e.printStackTrace();
                         System.out.println(e.getMessage());
                         System.exit(1);
                     }
