@@ -62,7 +62,7 @@
 | 62 | TypeError |  | ``parser.First#parse`` |
 | 63 | TypeError |  | ``parser.First#parse`` |
 | 64 | TypeError |  | ``resolver.StaticTypeChecker`` |
-| 65 | FatalException |  | ``parser.ReturnNode`` |
+| 65 | FatalException |  | ``entity.Function#exec`` |
 | 66 | SyntaxError |  | ``parser.Fn#parse`` |
 | 67 | SyntaxError |  | ``parser.Fn#parse`` |
 | 68 | SyntaxError | 引数リストが不正です。 | ``parser.Factor#parse`` |
