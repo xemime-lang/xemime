@@ -49,6 +49,7 @@
 | 48 | SyntaxError | ``for`` キーワードの後ろにはカウンタ変数を指定してください。 | ``parser.For#parse`` |
 | 49 | SyntaxError |  | `resolver.StaticTypeChecker`` |
 | 50 | SyntaxError | コロンの `:` の後ろでデータ型を指定してください。 | ``parser.First#run`` |
+| 51 | SemanticError | 代入式の変数の参照先を解決できません。 | ``resolver.Resolver#assignVar`` |
 | 52 | TypeError | 後置インクリメント演算子を付与された変数が整数型ではありません。 | ``parser.First#parse`` |
 | 53 | TypeError | 後置デクリメント演算子を付与された変数が整数型ではありません。 | ``parser.First#parse`` |
 | 54 | TypeError | 前置インクリメント演算子を付与された変数が整数型ではありません。　| ``parser.First#prefixIncrement`` |
