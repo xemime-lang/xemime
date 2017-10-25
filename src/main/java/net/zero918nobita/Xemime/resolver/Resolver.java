@@ -28,11 +28,11 @@ public class Resolver {
         scope.peek().defVar(type, symbol);
     }
 
-    public boolean assignVar(Symbol symbol, Node node) throws Exception {
+    public void assignVar(Symbol symbol, Node node) throws Exception {
         if (!scope.peek().hasVariable(symbol)) throw new Exception("未宣言の変数名です。");
         Type type_of_variable = getTypeOfVariable(symbol);
         Type type_of_value = stc.check(this, node);
-        return type_of_variable.equals(type_of_value);
+        if (!type_of_variable.equals(type_of_value)) throw new TypeError(node.getLocation(), 87, "代入式が不正です。変数の型と代入される値の型が一致しません。");
     }
 
     public void referVar(int location, Symbol sym) throws Exception {

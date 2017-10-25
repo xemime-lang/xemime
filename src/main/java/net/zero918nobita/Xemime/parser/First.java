@@ -264,7 +264,7 @@ class First extends ParseUnit {
             // 現在のスコープに変数を登録する
             resolver.declareVar(sym, value);
         } else {
-            if (!resolver.assignVar(sym, value)) throw new TypeError(value.getLocation(), 51, "代入されるデータの型が変数の型と一致しません。");
+            resolver.assignVar(sym, value);
         }
 
         return new DeclarationNode(lexer.getLocation(), sym, value);
