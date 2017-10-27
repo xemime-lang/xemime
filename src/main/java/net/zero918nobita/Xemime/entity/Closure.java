@@ -8,7 +8,6 @@ import net.zero918nobita.Xemime.interpreter.Main;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * クロージャ
