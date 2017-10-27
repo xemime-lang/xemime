@@ -85,4 +85,4 @@
 | 84 | SyntaxError |  | ``parser.Args#arguments`` |
 | 85 | SyntaxError |  | ``parser.Factor#parse`` |
 | 86 | SyntaxError |  | ``parser.Factor#parse`` |
-| 87 | TypeError |  | ``resolver.Resolver#assignVar`` |
+| 87 | TypeError | 代入式が不正です。変数の型と代入される値の型が一致しません。 | ``resolver.Resolver#assignVar`` |
