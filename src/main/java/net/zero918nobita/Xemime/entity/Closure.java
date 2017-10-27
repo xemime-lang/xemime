@@ -16,14 +16,14 @@ import java.util.Map;
 
 public class Closure extends Func {
     protected ArrayList<Symbol> params;
-    protected Address self = null;
+    private Address self = null;
     protected Node body;
 
     /**
      * 捕捉変数テーブル<br>
      * 捕捉変数(ラムダ式が使用する変数)
      */
-    protected Frame captured = null; // Main との連携も考えると、HashMap<Symbol, Address> にするかも…
+    private Frame captured = null; // Main との連携も考えると、HashMap<Symbol, Address> にするかも…
 
     public Closure(int location, ArrayList<Symbol> l, Node obj, Frame frame) {
         super(location);
