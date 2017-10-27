@@ -32,7 +32,7 @@ public class Resolver {
         if (!scope.peek().hasVariable(symbol)) throw new SemanticError(location, 51, symbol);
         Type type_of_variable = getTypeOfVariable(symbol);
         Type type_of_value = stc.check(this, node);
-        if (!type_of_variable.equals(type_of_value)) throw new TypeError(node.getLocation(), 87, "代入式が不正です。変数の型と代入される値の型が一致しません。");
+        if (!type_of_variable.equals(type_of_value)) throw new TypeError(location, 87, "代入式が不正です。変数の型と代入される値の型が一致しません。");
     }
 
     public void referVar(int location, Symbol sym) throws SemanticError {
