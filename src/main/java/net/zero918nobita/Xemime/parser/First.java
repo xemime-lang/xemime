@@ -257,6 +257,9 @@ class First extends ParseUnit {
         // Syntax Error - 変数宣言式が不正です。代入演算子を使用してください。
         if (!current(ASSIGN)) throw new SyntaxError(lexer.getLocation(), 47, "変数宣言式が不正です。代入演算子を使用してください。");
 
+        // 代入演算子の位置
+        int locationOfAssignmentOp = lexer.getLocation();
+
         getToken(); // skip `=`
         Node value = new LogicalExpr(lexer, resolver).parse();
 
@@ -264,7 +267,7 @@ class First extends ParseUnit {
             // 現在のスコープに変数を登録する
             resolver.declareVar(sym, value);
         } else {
-            resolver.assignVar(sym, value);
+            resolver.assignVar(locationOfAssignmentOp, sym, value);
         }
 
         return new DeclarationNode(lexer.getLocation(), sym, value);
@@ -282,9 +285,10 @@ class First extends ParseUnit {
         getToken(); // skip symbol
         if (current(ASSIGN)) {
             // 宣言済みの変数への代入
+            int locationOfAssignmentOp = lexer.getLocation();
             getToken();
             Node assignedValue = new LogicalExpr(lexer, resolver).parse();
-            resolver.assignVar(sym, assignedValue);
+            resolver.assignVar(locationOfAssignmentOp, sym, assignedValue);
             node = new AssignNode(lexer.getLocation(), sym, assignedValue);
         } else if (current(INCREMENT)) {
             int line = lexer.getLocation();
