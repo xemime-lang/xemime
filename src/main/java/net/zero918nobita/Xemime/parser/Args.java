@@ -37,7 +37,7 @@ class Args extends ParseUnit {
      * 引数リストの構文解析と意味解析を行います。
      * @return 生成された AST
      */
-    LinkedHashMap arguments() throws Exception {
+    LinkedHashMap<Symbol, Node> arguments() throws Exception {
         LinkedHashMap<Symbol, Node> list = null;
 
         if (!current(RP)) {
