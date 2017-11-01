@@ -107,6 +107,10 @@ public class Node {
         throw new Exception(location + ": `" + toString() + "` に `<` 演算子は使用できません");
     }
 
+    public Bool less(Node rhs) throws Exception {
+        return less(0, rhs);
+    }
+
     public Bool le(int location, Node rhs) throws Exception {
         throw new Exception(location + ": `" + toString() + "` に `<=` 演算子は使用できません");
     }

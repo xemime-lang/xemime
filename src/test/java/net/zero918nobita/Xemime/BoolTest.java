@@ -82,7 +82,7 @@ public class BoolTest {
     public void testLess() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `T` に `<` 演算子は使用できません");
-        Bool.T.less(0, Bool.Nil);
+        Bool.T.less(Bool.Nil);
     }
 
     @Test
