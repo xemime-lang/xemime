@@ -108,17 +108,17 @@ public class BoolTest {
 
     @Test
     public void testAnd() throws Exception {
-        assertThat(Bool.T.and(0, Bool.T), is(Bool.T));
-        assertThat(Bool.T.and(0, Bool.Nil), is(Bool.Nil));
-        assertThat(Bool.Nil.and(0, Bool.Nil), is(Bool.Nil));
-        assertThat(Bool.Nil.and(0, Bool.T), is(Bool.Nil));
+        assertThat(Bool.T.and(Bool.T), is(Bool.T));
+        assertThat(Bool.T.and(Bool.Nil), is(Bool.Nil));
+        assertThat(Bool.Nil.and(Bool.Nil), is(Bool.Nil));
+        assertThat(Bool.Nil.and(Bool.T), is(Bool.Nil));
     }
 
     @Test
     public void testAnd2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `&&` 演算子の右辺が真偽値ではありません");
-        Bool.T.and(0, new Str("foo"));
+        Bool.T.and(new Str("foo"));
     }
 
     @Test

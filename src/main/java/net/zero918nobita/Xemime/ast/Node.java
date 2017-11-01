@@ -139,6 +139,10 @@ public class Node {
         throw new Exception(location + "`" + toString() + "` に `&&` 演算子は使用できません");
     }
 
+    public Bool and(Node rhs) throws Exception {
+        return and(0, rhs);
+    }
+
     public Bool or(int location, Node rhs) throws Exception {
         throw new Exception(location + "`" + toString() + "` に `||` 演算子は使用できません");
     }
