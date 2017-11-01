@@ -54,7 +54,7 @@ public class BoolTest {
     public void testAdd() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `T` に `+` 演算子は使用できません");
-        Bool.T.add(0, Bool.T);
+        Bool.T.add(Bool.T);
     }
 
     @Test

@@ -20,7 +20,7 @@ public class StrTest {
 
     @Test
     public void testAdd() throws Exception {
-        assertThat(new Str("hello, ").add(0, new Str("world!")),
+        assertThat(new Str("hello, ").add(new Str("world!")),
                 is(new Str("hello, world!")));
     }
 
@@ -28,6 +28,6 @@ public class StrTest {
     public void testAdd2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: String型オブジェクトに他の型のオブジェクトを加算することはできません");
-        new Str("foo").add(0, new Int(0, 2));
+        new Str("foo").add(new Int(0, 2));
     }
 }

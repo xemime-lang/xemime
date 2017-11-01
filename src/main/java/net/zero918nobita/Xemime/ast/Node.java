@@ -53,6 +53,10 @@ public class Node {
         throw new Exception(location + ": `" + toString() + "` に `+` 演算子は使用できません");
     }
 
+    public Node add(Node rhs) throws Exception {
+        return add(0, rhs);
+    }
+
 
     /**
      * 減算を行います。
