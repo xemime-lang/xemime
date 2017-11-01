@@ -103,7 +103,7 @@ public class BoolTest {
     public void testGe() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `T` に `>=` 演算子は使用できません");
-        Bool.T.ge(0, Bool.Nil);
+        Bool.T.ge(Bool.Nil);
     }
 
     @Test
