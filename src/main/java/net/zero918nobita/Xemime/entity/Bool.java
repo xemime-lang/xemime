@@ -10,12 +10,16 @@ import net.zero918nobita.Xemime.ast.Node;
 public class Bool extends Node {
     private boolean bool;
 
-    public static Bool T = new Bool(0,true);
-    public static Bool Nil = new Bool(0,false);
+    public static Bool T = new Bool(true);
+    public static Bool Nil = new Bool(false);
 
     public Bool(int location, boolean bool) {
         super(location);
         this.bool = bool;
+    }
+
+    public Bool(boolean bool) {
+        this(0, bool);
     }
 
     @Override

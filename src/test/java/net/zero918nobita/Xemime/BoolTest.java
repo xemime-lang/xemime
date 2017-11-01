@@ -44,10 +44,10 @@ public class BoolTest {
 
     @Test
     public void testEquals() {
-        assertThat(Bool.T.equals(new Bool(0, true)), is(true));
-        assertThat(Bool.T.equals(new Bool(0, false)), is(false));
-        assertThat(Bool.Nil.equals(new Bool(0, false)), is(true));
-        assertThat(Bool.Nil.equals(new Bool(0, true)), is(false));
+        assertThat(Bool.T.equals(new Bool(true)), is(true));
+        assertThat(Bool.T.equals(new Bool(false)), is(false));
+        assertThat(Bool.Nil.equals(new Bool(false)), is(true));
+        assertThat(Bool.Nil.equals(new Bool(true)), is(false));
     }
 
     @Test
