@@ -123,17 +123,17 @@ public class BoolTest {
 
     @Test
     public void testOr() throws Exception {
-        assertThat(Bool.T.or(0, Bool.T), is(Bool.T));
-        assertThat(Bool.T.or(0, Bool.Nil), is(Bool.T));
-        assertThat(Bool.Nil.or(0, Bool.T), is(Bool.T));
-        assertThat(Bool.Nil.or(0, Bool.Nil), is(Bool.Nil));
+        assertThat(Bool.T.or(Bool.T), is(Bool.T));
+        assertThat(Bool.T.or(Bool.Nil), is(Bool.T));
+        assertThat(Bool.Nil.or(Bool.T), is(Bool.T));
+        assertThat(Bool.Nil.or(Bool.Nil), is(Bool.Nil));
     }
 
     @Test
     public void testOr2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `||` 演算子の右辺が真偽値ではありません");
-        Bool.T.or(0, new Str("foo"));
+        Bool.T.or(new Str("foo"));
     }
 
     @Test

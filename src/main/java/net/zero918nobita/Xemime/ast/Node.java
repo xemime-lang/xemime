@@ -147,6 +147,10 @@ public class Node {
         throw new Exception(location + "`" + toString() + "` に `||` 演算子は使用できません");
     }
 
+    public Bool or(Node rhs) throws Exception {
+        return or(0, rhs);
+    }
+
     public Bool xor(int location, Node rhs) throws Exception {
         throw new Exception(location + "`" + toString() + "` に `^` 演算子は使用できません");
     }
