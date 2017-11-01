@@ -15,6 +15,10 @@ public class Str extends Node {
         value = str;
     }
 
+    public Str(String str) {
+        this(0, str);
+    }
+
     @Override
     public String toString() {
         return value;

@@ -29,7 +29,7 @@ public class MinusNodeTest {
     public void testRun2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [14]");
-        MinusNode minus = new MinusNode(0, new Str(0, "foo"));
+        MinusNode minus = new MinusNode(0, new Str("foo"));
         minus.run();
     }
 }

@@ -118,7 +118,7 @@ public class BoolTest {
     public void testAnd2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `&&` 演算子の右辺が真偽値ではありません");
-        Bool.T.and(0, new Str(0, "foo"));
+        Bool.T.and(0, new Str("foo"));
     }
 
     @Test
@@ -133,7 +133,7 @@ public class BoolTest {
     public void testOr2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `||` 演算子の右辺が真偽値ではありません");
-        Bool.T.or(0, new Str(0, "foo"));
+        Bool.T.or(0, new Str("foo"));
     }
 
     @Test
@@ -148,6 +148,6 @@ public class BoolTest {
     public void testXor2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage(": `^` 演算子の右辺が真偽値ではありません");
-        Bool.T.xor(0, new Str(0, "foo"));
+        Bool.T.xor(0, new Str("foo"));
     }
 }
