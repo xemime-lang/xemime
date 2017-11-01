@@ -155,6 +155,10 @@ public class Node {
         throw new Exception(location + "`" + toString() + "` に `^` 演算子は使用できません");
     }
 
+    public Bool xor(Node rhs) throws Exception {
+        return xor(0, rhs);
+    }
+
     public Node message(int location, Symbol symbol) throws Exception {
         throw new Exception(location + ": `" + toString() + "` にフィールドは設定できません");
     }

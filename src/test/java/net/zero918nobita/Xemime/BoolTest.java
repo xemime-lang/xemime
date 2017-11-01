@@ -138,16 +138,16 @@ public class BoolTest {
 
     @Test
     public void testXor() throws Exception {
-        assertThat(Bool.T.xor(0, Bool.T), is(Bool.Nil));
-        assertThat(Bool.T.xor(0, Bool.Nil), is(Bool.T));
-        assertThat(Bool.Nil.xor(0, Bool.T), is(Bool.T));
-        assertThat(Bool.Nil.xor(0, Bool.Nil), is(Bool.Nil));
+        assertThat(Bool.T.xor(Bool.T), is(Bool.Nil));
+        assertThat(Bool.T.xor(Bool.Nil), is(Bool.T));
+        assertThat(Bool.Nil.xor(Bool.T), is(Bool.T));
+        assertThat(Bool.Nil.xor(Bool.Nil), is(Bool.Nil));
     }
 
     @Test
     public void testXor2() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage(": `^` 演算子の右辺が真偽値ではありません");
-        Bool.T.xor(0, new Str("foo"));
+        Bool.T.xor(new Str("foo"));
     }
 }
