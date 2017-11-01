@@ -99,6 +99,10 @@ public class Node {
         throw new Exception(location + ": `" + toString() + "` に `/` 演算子は使用できません");
     }
 
+    public Node divide(Node rhs) throws Exception {
+        return divide(0, rhs);
+    }
+
     public Bool less(int location, Node rhs) throws Exception {
         throw new Exception(location + ": `" + toString() + "` に `<` 演算子は使用できません");
     }

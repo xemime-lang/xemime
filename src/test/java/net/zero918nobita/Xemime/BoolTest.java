@@ -75,7 +75,7 @@ public class BoolTest {
     public void testDivide() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `T` に `/` 演算子は使用できません");
-        Bool.T.divide(0, Bool.T);
+        Bool.T.divide(Bool.T);
     }
 
     @Test
