@@ -92,15 +92,15 @@ class Fn extends ParseUnit {
     }
 
     private Type convertSymbolIntoType(Symbol symbol) throws Exception {
-        if (symbol.equals(Symbol.intern(0, "Int"))) {
+        if (symbol.equals(Symbol.intern("Int"))) {
             return new IntType();
-        } else if (symbol.equals(Symbol.intern(0, "Double"))) {
+        } else if (symbol.equals(Symbol.intern("Double"))) {
             return new DoubleType();
-        } else if (symbol.equals(Symbol.intern(0, "Bool"))) {
+        } else if (symbol.equals(Symbol.intern("Bool"))) {
             return new BoolType();
-        } else if (symbol.equals(Symbol.intern(0, "String"))) {
+        } else if (symbol.equals(Symbol.intern("String"))) {
             return new StrType();
-        } else if (symbol.equals(Symbol.intern(0, "Unit"))) {
+        } else if (symbol.equals(Symbol.intern("Unit"))) {
             return new UnitType();
         } else {
             throw new SyntaxError(symbol.getLocation(), 76, "`" + symbol + "` 型は定義されていません。");

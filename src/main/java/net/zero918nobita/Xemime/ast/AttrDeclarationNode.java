@@ -23,8 +23,8 @@ public class AttrDeclarationNode extends Node {
 
     @Override
     public Node run() throws Exception {
-        if (member.containsKey(Symbol.intern(0, "attach"))) {
-            Node attach = member.get(Symbol.intern(0, "attach")).run();
+        if (member.containsKey(Symbol.intern("attach"))) {
+            Node attach = member.get(Symbol.intern("attach")).run();
             if (attach instanceof Closure) {
                 Main.defValue(name, new Attr(attach.getLocation(), (Closure) attach));
             } else {

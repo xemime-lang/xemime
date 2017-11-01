@@ -26,9 +26,9 @@ public class Frame {
     }
 
     /** フレームに新しい階層を追加します。 */
-    public void loadLocalFrame(Handler table) {
+    void loadLocalFrame(Handler table) {
         localFrames.add(table);
-        localFrames.get(localFrames.size() - 1).setMember(Symbol.intern(0, "this"), Main.register(table));
+        localFrames.get(localFrames.size() - 1).setMember(Symbol.intern("this"), Main.register(table));
     }
 
     /** 最後にフレームに追加された階層を破棄します。 */
@@ -44,7 +44,7 @@ public class Frame {
         return false;
     }
 
-    public Address getAddressOfSymbol(Symbol sym) throws Exception {
+    Address getAddressOfSymbol(Symbol sym) throws Exception {
         if (localFrames.size() != 0)
             for (int i = localFrames.size() - 1; i > -1; i--)
                 if (localFrames.get(i).hasMember(sym)) return localFrames.get(i).getAddressOfMember(sym);
@@ -70,7 +70,7 @@ public class Frame {
                 if (localFrames.get(i).hasMember(sym)) localFrames.get(i).setMember(sym, Main.register(obj));
     }
 
-    public void defAddress(Symbol sym, Address ref) throws Exception {
+    void defAddress(Symbol sym, Address ref) throws Exception {
         if (localFrames.size() == 0) throw new Exception("深刻なエラー: フレームが存在しません");
         localFrames.get(localFrames.size() - 1).setMember(sym, ref);
     }

@@ -33,8 +33,13 @@ public class Symbol extends Node implements Comparable<Symbol> {
         return name;
     }
 
-    public static Symbol intern(int n, String s) {
-        if (!table.containsKey(s)) table.put(s, new Symbol(n, s));
+    public static Symbol intern(int location, String s) {
+        if (!table.containsKey(s)) table.put(s, new Symbol(location, s));
+        return table.get(s);
+    }
+
+    public static Symbol intern(String s) {
+        if (!table.containsKey(s)) table.put(s, new Symbol(0, s));
         return table.get(s);
     }
 

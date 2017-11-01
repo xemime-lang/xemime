@@ -29,11 +29,11 @@ public class Main {
     /** グローバル環境 */
     public static Default defaultObj = new Default() {{
         Address addressOfDefaultObj = Main.register(defaultObj);
-        setMember(Symbol.intern(0, "this"), addressOfDefaultObj);
-        setMember(Symbol.intern(0, "THIS"), addressOfDefaultObj);
-        setMember(Symbol.intern(0, "Default"), addressOfDefaultObj);
-        setMember(Symbol.intern(0, "Core"), register(new X_Core()));
-        setMember(Symbol.intern(0, "Object"), register(new X_Object()));
+        setMember(Symbol.intern("this"), addressOfDefaultObj);
+        setMember(Symbol.intern("THIS"), addressOfDefaultObj);
+        setMember(Symbol.intern("Default"), addressOfDefaultObj);
+        setMember(Symbol.intern("Core"), register(new X_Core()));
+        setMember(Symbol.intern("Object"), register(new X_Object()));
     }};
 
     /**
@@ -272,9 +272,9 @@ public class Main {
     private static class X_Object extends Handler {
         X_Object() {
             super(0);
-            setMember(Symbol.intern(0, "clone"), new X_Clone());
-            setMember(Symbol.intern(0, "new"), new X_New());
-            setMember(Symbol.intern(0, "proto"), new Bool(0, false));
+            setMember(Symbol.intern("clone"), new X_Clone());
+            setMember(Symbol.intern("new"), new X_New());
+            setMember(Symbol.intern("proto"), new Bool(0, false));
         }
 
         /**
@@ -288,7 +288,7 @@ public class Main {
 
             @Override
             protected Address exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
-                return Main.register(params.get(Symbol.intern(0, "this")).run());
+                return Main.register(params.get(Symbol.intern("this")).run());
             }
         }
 
@@ -299,11 +299,11 @@ public class Main {
 
             @Override
             protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
-                Handler obj1 = (Handler) params.get(Symbol.intern(0, "this")).run();
+                Handler obj1 = (Handler) params.get(Symbol.intern("this")).run();
                 Handler obj2 = new Handler(0);
-                obj2.setMember(Symbol.intern(0, "proto"), new Bool(0, false));
-                if (obj1.hasMember(Symbol.intern(0, "proto"))) {
-                    Handler proto = (Handler) obj1.getMember(Symbol.intern(0, "proto"));
+                obj2.setMember(Symbol.intern("proto"), new Bool(0, false));
+                if (obj1.hasMember(Symbol.intern("proto"))) {
+                    Handler proto = (Handler) obj1.getMember(Symbol.intern("proto"));
                     for (Map.Entry<Symbol, Address> entry : proto.getMembers().entrySet()) {
                         obj2.setMember(entry.getKey(), entry.getValue());
                     }
@@ -320,9 +320,9 @@ public class Main {
     private static class X_Core extends Handler {
         X_Core() {
             super(0);
-            setMember(Symbol.intern(0, "print"), new X_Print());
-            setMember(Symbol.intern(0, "println"), new X_Println());
-            setMember(Symbol.intern(0, "exit"), new X_Exit());
+            setMember(Symbol.intern("print"), new X_Print());
+            setMember(Symbol.intern("println"), new X_Println());
+            setMember(Symbol.intern("exit"), new X_Exit());
         }
 
         /**
@@ -352,7 +352,7 @@ public class Main {
 
             @Override
             protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
-                Node o = params.get(Symbol.intern(0, "target")).run();
+                Node o = params.get(Symbol.intern("target")).run();
                 System.out.print(o);
                 return o;
             }
@@ -369,7 +369,7 @@ public class Main {
 
             @Override
             protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
-                Node o = params.get(Symbol.intern(0, "target")).run();
+                Node o = params.get(Symbol.intern("target")).run();
                 System.out.println(o);
                 return o;
             }

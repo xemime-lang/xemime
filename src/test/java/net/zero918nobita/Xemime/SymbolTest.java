@@ -21,8 +21,8 @@ public class SymbolTest {
 
     @Test
     public void testEquals() {
-        Symbol a = Symbol.intern(0, "A");
-        Symbol b = Symbol.intern(0, "A");
+        Symbol a = Symbol.intern("A");
+        Symbol b = Symbol.intern("A");
         assertTrue(a.equals(b));
         assertTrue(b.equals(a));
     }
@@ -31,26 +31,26 @@ public class SymbolTest {
     public void testRun() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("シンボル `unknown` は定義されていません");
-        Symbol symbol = Symbol.intern(0, "unknown");
+        Symbol symbol = Symbol.intern("unknown");
         symbol.run();
     }
 
     @Test
     public void testRun2() throws Exception {
-        Main.defValue(Symbol.intern(0, "variable"), new Symbol(0, "value"));
-        Symbol symbol = Symbol.intern(0, "variable");
+        Main.defValue(Symbol.intern("variable"), new Symbol(0, "value"));
+        Symbol symbol = Symbol.intern("variable");
         assertThat(symbol.run().toString(), is("value"));
     }
 
     @Test
     public void testToString() {
-        Symbol symbol = Symbol.intern(0, "sample");
+        Symbol symbol = Symbol.intern("sample");
         assertThat(symbol.toString(), is("sample"));
     }
 
     @Test
     public void testGetName() {
-        Symbol symbol = Symbol.intern(0, "sample2");
+        Symbol symbol = Symbol.intern("sample2");
         assertThat(symbol.getName(), is("sample2"));
     }
 }

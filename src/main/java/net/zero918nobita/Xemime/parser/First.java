@@ -241,13 +241,13 @@ class First extends ParseUnit {
             if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
             getToken();
             Symbol type_name = (Symbol) lexer.value();
-            if (type_name.equals(Symbol.intern(0, "Int"))) {
+            if (type_name.equals(Symbol.intern("Int"))) {
                 resolver.declareVar(new IntType(), sym);
-            } else if (type_name.equals(Symbol.intern(0, "Double"))) {
+            } else if (type_name.equals(Symbol.intern("Double"))) {
                 resolver.declareVar(new DoubleType(), sym);
-            } else if (type_name.equals(Symbol.intern(0, "Bool"))) {
+            } else if (type_name.equals(Symbol.intern("Bool"))) {
                 resolver.declareVar(new BoolType(), sym);
-            } else if (type_name.equals(Symbol.intern(0, "String"))) {
+            } else if (type_name.equals(Symbol.intern("String"))) {
                 resolver.declareVar(new StrType(), sym);
             } else {
                 throw new SyntaxError(type_name.getLocation(), 73, "`" + type_name + "` 型は定義されていません。");
@@ -318,20 +318,20 @@ class First extends ParseUnit {
         Handler core;
         switch (sym.getName()) {
             case "print":
-                core = (Handler) Main.getValueOfSymbol(Symbol.intern(0, "Core"));
+                core = (Handler) Main.getValueOfSymbol(Symbol.intern("Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                node = core.message(lexer.getLocation(), Symbol.intern(0, "print"));
+                node = core.message(lexer.getLocation(), Symbol.intern("print"));
                 break;
             case "println":
-                core = (Handler) Main.getValueOfSymbol(Symbol.intern(0, "Core"));
+                core = (Handler) Main.getValueOfSymbol(Symbol.intern("Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                node = core.message(lexer.getLocation(), Symbol.intern(0, "println"));
+                node = core.message(lexer.getLocation(), Symbol.intern("println"));
                 break;
             case "exit":
                 if (!Main.allowExitMethod()) throw new Exception(lexer.getLocation() + ": この実行環境で実行することはできません");
-                core = (Handler) Main.getValueOfSymbol(Symbol.intern(0, "Core"));
+                core = (Handler) Main.getValueOfSymbol(Symbol.intern("Core"));
                 if (core == null) throw new Exception("深刻なエラー: Core オブジェクトがありません");
-                node = core.message(lexer.getLocation(), Symbol.intern(0, "exit"));
+                node = core.message(lexer.getLocation(), Symbol.intern("exit"));
                 break;
             default:
                 node = sym;

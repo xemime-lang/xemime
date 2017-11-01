@@ -32,7 +32,7 @@ public class FuncallNode extends Node {
         if (func instanceof Native) {
             LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
             for (Map.Entry<Symbol, Node> entry : list.entrySet()) params.put(entry.getKey(), entry.getValue().run());
-            params.put(Symbol.intern(0, "this"), func);
+            params.put(Symbol.intern("this"), func);
             return ((Native) func).call(getLocation(), params, null);
         } else {
             Symbol symbol = (Symbol)func;
@@ -47,7 +47,7 @@ public class FuncallNode extends Node {
             Func func = (Func) c;
             LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
             for (Map.Entry<Symbol, Node> entry : list.entrySet()) params.put(entry.getKey(), entry.getValue().run());
-            params.put(Symbol.intern(0, "this"), func);
+            params.put(Symbol.intern("this"), func);
             return func.call(getLocation(), params, null);
         }
     }

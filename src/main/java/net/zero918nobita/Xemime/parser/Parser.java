@@ -30,11 +30,11 @@ public class Parser {
         resolver = new Resolver();
         // 組み込みオブジェクトや省略表記のメソッドのシンボルを resolver に登録することで、
         // それらのシンボルに対する参照解決の失敗を防ぎます。
-        resolver.declareVar(new AnyType(), Symbol.intern(0, "Core"));
-        resolver.declareVar(new AnyType(), Symbol.intern(0, "Object"));
-        resolver.declareVar(new AnyType(), Symbol.intern(0, "print"));
-        resolver.declareVar(new AnyType(), Symbol.intern(0, "println"));
-        resolver.declareVar(new AnyType(), Symbol.intern(0, "exit"));
+        resolver.declareVar(new AnyType(), Symbol.intern("Core"));
+        resolver.declareVar(new AnyType(), Symbol.intern("Object"));
+        resolver.declareVar(new AnyType(), Symbol.intern("print"));
+        resolver.declareVar(new AnyType(), Symbol.intern("println"));
+        resolver.declareVar(new AnyType(), Symbol.intern("exit"));
     }
 
     /** 次のトークンをレキサを介して取得し、その種類を記録します。 */

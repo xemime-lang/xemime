@@ -60,13 +60,13 @@ public class Handler extends Node {
 
     @Override
     public Node message(int line, Symbol symbol, LinkedHashMap<Symbol, Node> params) throws Exception {
-        if (symbol.equals(Symbol.intern(0, "proto")))
+        if (symbol.equals(Symbol.intern("proto")))
             throw new Exception(line + ": protoフィールドはメソッドとして呼び出すことはできません");
         if (!hasMember(symbol)) throw new Exception(line + ": `" + symbol.getName() + "` というメソッドはありません");
         Node o = getMember(symbol);
         if (!(o instanceof Func)) throw new Exception(line + ": `" + symbol.getName() + "` はメソッドではありません");
         if (params == null) params = new LinkedHashMap<>();
-        params.put(Symbol.intern(0, "this"), this);
+        params.put(Symbol.intern("this"), this);
         return ((Func) o).call(getLocation(), params, Main.register(this));
     }
 }
