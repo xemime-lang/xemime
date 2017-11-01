@@ -61,7 +61,7 @@ public class BoolTest {
     public void testSub() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `T` に `-` 演算子は使用できません");
-        Bool.T.sub(0, Bool.T);
+        Bool.T.sub(Bool.T);
     }
 
     @Test

@@ -69,6 +69,10 @@ public class Node {
         throw new Exception(location + ": `" + toString() + "` に `-` 演算子は使用できません");
     }
 
+    public Node sub(Node rhs) throws Exception {
+        return sub(0, rhs);
+    }
+
     /**
      * 乗算を行います。
      * @param location 演算を行う行の行番号
