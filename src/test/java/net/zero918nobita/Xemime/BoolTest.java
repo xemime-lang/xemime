@@ -68,7 +68,7 @@ public class BoolTest {
     public void testMultiply() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("0: `T` に `*` 演算子は使用できません");
-        Bool.T.multiply(0, Bool.T);
+        Bool.T.multiply(Bool.T);
     }
 
     @Test

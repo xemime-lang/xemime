@@ -84,6 +84,10 @@ public class Node {
         throw new Exception(location + ": `" + toString() + "` に `*` 演算子は使用できません");
     }
 
+    public Node multiply(Node rhs) throws Exception {
+        return multiply(0, rhs);
+    }
+
     /**
      * 除算を行います。
      * @param location 演算を行う行の行番号
