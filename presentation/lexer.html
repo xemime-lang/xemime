@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Lexer</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        .node {
+            position: absolute;
+            padding: 10px;
+            z-index: 1;
+            overflow: hidden;
+            resize: horizontal;
+        }
+        .gray {
+            background-color: #999999;
+            color: white;
+            border: 3px solid #CCCCCC;
+        }
+        .green {
+            background-color: #669966;
+            color: white;
+            border: 3px solid #99BB99;
+        }
+        .blue {
+            background-color: #6699CC;
+            color: white;
+            border: 3px solid #99CCFF;
+        }
+    </style>
+</head>
+<body>
+<div class="node green" draggable="true">
+    if&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;｛<br><br><br><br>
+    }
+</div>
+
+<div class="node blue" draggable="true">BinExpr Node</div>
+
+<div class="node blue" draggable="true">BinExpr Node</div>
+
+<div class="node blue" draggable="true">Funcall Node</div>
+
+<div class="node blue" draggable="true">If Node</div>
+
+<div class="node gray" draggable="true">1</div>
+<div class="node gray" draggable="true">1</div>
+
+<div class="node gray" draggable="true">2</div>
+<div class="node gray" draggable="true">2</div>
+
+<div class="node gray" draggable="true">3</div>
+
+<div class="node green" draggable="true">println $ </div>
+
+<div class="node green" draggable="true">＋</div>
+
+<div class="node green" draggable="true">＊</div>
+
+<div class="node green" draggable="true">＞</div>
+
+<script>
+    let elements = document.getElementsByClassName('node');
+    let x, y;
+
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('mousedown', mdown, false);
+        elements[i].addEventListener('touchstart', mdown, false);
+        elements[i].style.top = i * 60 + "px";
+        elements[i].style.zIndex = i;
+    }
+
+    function mdown(e) {
+        if (e.keyCode === 32) return;
+        var event;
+        this.classList.add("drag");
+        if (e.type === "mousedown") {
+            event = e;
+        } else {
+            event = e.changedTouches[0];
+        }
+
+        x = event.pageX - this.offsetLeft;
+        y = event.pageY - this.offsetTop;
+
+        document.body.addEventListener("mousemove", mmove, false);
+        document.body.addEventListener("touchmove", mmove, false);
+    }
+
+    function mmove(e) {
+        let drag = document.getElementsByClassName('drag')[0];
+        var event;
+
+        if (e.type === "mousemove") {
+            event = e;
+        } else {
+            event = e.changedTouches[0];
+        }
+
+        e.preventDefault();
+
+        drag.style.top = event.pageY - y + "px";
+        drag.style.left = event.pageX - x + "px";
+
+        drag.addEventListener("mouseup", mup, false);
+        document.body.addEventListener("mouseleave", mup, false);
+        drag.addEventListener("touchend", mup, false);
+        document.body.addEventListener("touchleave", mup, false);
+    }
+
+    function mup(e) {
+        let drag = document.getElementsByClassName("drag")[0];
+
+        document.body.removeEventListener("mousemove", mmove, false);
+        drag.removeEventListener("mouseup", mup, false);
+        document.body.removeEventListener("touchmove", mmove, false);
+        drag.removeEventListener("touched", mup, false);
+
+        drag.classList.remove("drag");
+    }
+
+</script>
+</body>
+</html>
