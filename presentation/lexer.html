@@ -12,8 +12,6 @@
             position: absolute;
             padding: 10px;
             z-index: 1;
-            overflow: hidden;
-            resize: horizontal;
         }
         .gray {
             background-color: #999999;
@@ -30,40 +28,357 @@
             color: white;
             border: 3px solid #99CCFF;
         }
+        .aqua {
+            background-color: #336699;
+            color: white;
+            border: 3px solid #114477;
+        }
     </style>
 </head>
 <body>
-<div class="node green" draggable="true">
-    if&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;｛<br><br><br><br>
-    }
-</div>
-
-<div class="node blue" draggable="true">BinExpr Node</div>
-
-<div class="node blue" draggable="true">BinExpr Node</div>
-
-<div class="node blue" draggable="true">Funcall Node</div>
-
-<div class="node blue" draggable="true">If Node</div>
-
-<div class="node gray" draggable="true">1</div>
-<div class="node gray" draggable="true">1</div>
-
-<div class="node gray" draggable="true">2</div>
-<div class="node gray" draggable="true">2</div>
-
-<div class="node gray" draggable="true">3</div>
-
-<div class="node green" draggable="true">println $ </div>
-
-<div class="node green" draggable="true">＋</div>
-
-<div class="node green" draggable="true">＊</div>
-
-<div class="node green" draggable="true">＞</div>
-
 <script>
-    let elements = document.getElementsByClassName('node');
+
+const _source = 'green',
+    _entity = 'gray',
+    _node = 'aqua',
+    _arg = 'blue';
+
+function /*Element*/ addBlock ( /*String*/ text = 'Node', /*String*/ color = 'gray' ) {
+    let element = document.createElement('div');
+    element.classList.add('node');
+    element.classList.add(color);
+    element.innerHTML = text;
+    document.body.appendChild(element);
+    return element;
+}
+
+let _if = addBlock('if', _source),
+    _2 = addBlock('2', _entity),
+    _greater = addBlock('＞', _source),
+    _1 = addBlock('1', _entity),
+    _lb = addBlock('{', _source),
+    _println = addBlock('println', _source),
+    _dollar = addBlock('$', _source),
+    _1e = addBlock('1', _entity),
+    _add = addBlock('＋', _source),
+    _2e = addBlock('2', _entity),
+    _mul = addBlock('＊', _source),
+    _3 = addBlock('3', _entity),
+    _rb = addBlock('}', _source);
+
+_if.style.top = '200px';
+_if.style.left = '200px';
+_2.style.top = '200px';
+_2.style.left = '240px';
+_greater.style.top = '200px';
+_greater.style.left = '280px';
+_1.style.top = '200px';
+_1.style.left = '325px';
+_lb.style.top = '200px';
+_lb.style.left = '365px';
+_println.style.top = '253px';
+_println.style.left = '240px';
+_dollar.style.top = '253px';
+_dollar.style.left = '320px';
+_1e.style.top = '253px';
+_1e.style.left = '359px';
+_add.style.top = '253px';
+_add.style.left = '399px';
+_2e.style.top = '253px';
+_2e.style.left = '444px';
+_mul.style.top = '253px';
+_mul.style.left = '484px';
+_3.style.top = '253px';
+_3.style.left = '529px';
+_rb.style.top = '306px';
+_rb.style.left = '200px';
+
+let progress = 0;
+
+let procedures = [];
+
+let nodes = {};
+
+// `if` を見つけて If Node の生成を開始する
+procedures.push(() => {
+    _if.style.backgroundColor = '#CC6666';
+    _if.style.border = '3px solid #FF9999';
+    let element = addBlock('If Node', _node);
+    element.style.top = '412px';
+    element.style.left = '200px';
+    nodes['if'] = element;
+});
+
+// 論理式を発見して BinExpr Node の生成を開始する
+procedures.push(() => {
+    _if.style.backgroundColor = '#669966';
+    _if.style.border = '3px solid #99BB99';
+    _2.style.backgroundColor = '#CC6666';
+    _2.style.border = '3px solid #FF9999';
+    _greater.style.backgroundColor = '#CC6666';
+    _greater.style.border = '3px solid #FF9999';
+    _1.style.backgroundColor = '#CC6666';
+    _1.style.border = '3px solid #FF9999';
+    let element = addBlock('BinExpr Node', _node);
+    element.style.top = '465px';
+    element.style.left = '200px';
+    nodes['binExpr'] = element;
+});
+
+// > 演算子を発見して BinExpr Node を更新する
+procedures.push(() => {
+    _2.style.backgroundColor = '#999999';
+    _2.style.border = '3px solid #CCCCCC';
+    _1.style.backgroundColor = '#999999';
+    _1.style.border = '3px solid #CCCCCC';
+    let element = addBlock('＞', _arg);
+    element.style.top = '465px';
+    element.style.left = '330px';
+    nodes['greater'] = element;
+    nodes['binExpr'].style.width = '160px';
+});
+
+// `2` を発見して BinExpr Node を更新する
+procedures.push(() => {
+    _greater.style.backgroundColor = '#669966';
+    _greater.style.border = '3px solid #99CC99';
+    _2.style.backgroundColor = '#CC6666';
+    _2.style.border = '3px solid #FF9999';
+    let element = addBlock('2', _arg);
+    element.style.top = '465px';
+    element.style.left = '375px';
+    nodes['2'] = element;
+    nodes['binExpr'].style.width = '200px';
+});
+
+// `1` を発見して BinExpr Node を更新する
+procedures.push(() => {
+    _2.style.backgroundColor = '#999999';
+    _2.style.border = '3px solid #CCCCCC';
+    _1.style.backgroundColor = '#CC6666';
+    _1.style.border = '3px solid #FF9999';
+    let element = addBlock('1', _arg);
+    element.style.top = '465px';
+    element.style.left = '415px';
+    nodes['1'] = element;
+    nodes['binExpr'].style.width = '240px';
+});
+
+// If Node が BinExpr Node を取り込む
+procedures.push(() => {
+    _1.style.backgroundColor = '#999999';
+    _1.style.border = '3px solid #CCCCCC';
+    _lb.style.backgroundColor = '#CC6666';
+    _lb.style.border = '3px solid #FF9999';
+    nodes['if'].style.padding = '15px';
+    nodes['if'].style.width = '335px';
+    nodes['binExpr'].style.top = '417px';
+    nodes['binExpr'].style.left = '290px';
+    nodes['greater'].style.top = '417px';
+    nodes['greater'].style.left = '420px';
+    nodes['1'].style.top = '417px';
+    nodes['1'].style.left = '505px';
+    nodes['2'].style.top = '417px';
+    nodes['2'].style.left = '465px';
+});
+
+// `println` を発見する
+procedures.push(() => {
+    _lb.style.backgroundColor = '#669966';
+    _lb.style.border = '3px solid #99CC99';
+    _println.style.backgroundColor = '#CC6666';
+    _println.style.border = '3px solid #FF9999';
+    let element = addBlock('println', _arg);
+    element.style.top = '475px';
+    element.style.left = '200px';
+    nodes['println'] = element;
+});
+
+// 関数呼び出しを発見する
+procedures.push(() => {
+    _println.style.backgroundColor = '#669966';
+    _println.style.border = '3px solid #99CC99';
+    _dollar.style.backgroundColor = '#CC6666';
+    _dollar.style.border = '3px solid #FF9999';
+    nodes['println'].style.left = '280px';
+    let element = addBlock('Funcall', _node);
+    element.style.top = '475px';
+    element.style.left = '200px';
+    nodes['funcall'] = element;
+    nodes['funcall'].style.width = '145px';
+    nodes['funcall'].style.zIndex = '1';
+    nodes['println'].style.zIndex = '2';
+});
+
+// 式 `1 + 2 * 3` を発見して BinExpr Node の生成を開始する
+procedures.push(() => {
+    _dollar.style.backgroundColor = '#669966';
+    _dollar.style.border = '3px solid #99CC99';
+    _1e.style.backgroundColor = '#CC6666';
+    _1e.style.border = '3px solid #FF9999';
+    _add.style.backgroundColor = '#CC6666';
+    _add.style.border = '3px solid #FF9999';
+    _2e.style.backgroundColor = '#CC6666';
+    _2e.style.border = '3px solid #FF9999';
+    _mul.style.backgroundColor = '#CC6666';
+    _mul.style.border = '3px solid #FF9999';
+    _3.style.backgroundColor = '#CC6666';
+    _3.style.border = '3px solid #FF9999';
+    let element = addBlock('BinExpr Node', _node);
+    element.style.top = '528px';
+    element.style.left = '200px';
+    nodes['binExpr2'] = element;
+});
+
+// + 演算子を発見して BinExpr Node を更新する
+procedures.push(() => {
+    _1e.style.backgroundColor = '#999999';
+    _1e.style.border = '3px solid #CCCCCC';
+    _2e.style.backgroundColor = '#999999';
+    _2e.style.border = '3px solid #CCCCCC';
+    _mul.style.backgroundColor = '#669966';
+    _mul.style.border = '3px solid #99CC99';
+    _3.style.backgroundColor = '#999999';
+    _3.style.border = '3px solid #CCCCCC';
+    let element = addBlock('＋', _arg);
+    element.style.top = '528px';
+    element.style.left = '330px';
+    nodes['add'] = element;
+    nodes['binExpr2'].style.width = '160px';
+});
+
+procedures.push(() => {
+    _add.style.backgroundColor = '#669966';
+    _add.style.border = '3px solid #99CC99';
+    _1e.style.backgroundColor = '#CC6666';
+    _1e.style.border = '3px solid #FF9999';
+    let element = addBlock('1', _arg);
+    element.style.top = '528px';
+    element.style.left = '375px';
+    nodes['1e'] = element;
+    nodes['binExpr2'].style.width = '200px';
+});
+
+procedures.push(() => {
+    _1e.style.backgroundColor = '#999999';
+    _1e.style.border = '3px solid #CCCCCC';
+    _2e.style.backgroundColor = '#CC6666';
+    _2e.style.border = '3px solid #FF9999';
+    _mul.style.backgroundColor = '#CC6666';
+    _mul.style.border = '3px solid #FF9999';
+    _3.style.backgroundColor = '#CC6666';
+    _3.style.border = '3px solid #FF9999';
+    let element = addBlock('BinExpr Node', _node);
+    element.style.top = '581px';
+    element.style.left = '200px';
+    nodes['binExpr3'] = element;
+});
+
+procedures.push(() => {
+    _2e.style.backgroundColor = '#999999';
+    _2e.style.border = '3px solid #CCCCCC';
+    _3.style.backgroundColor = '#999999';
+    _3.style.border = '3px solid #CCCCCC';
+    let element = addBlock('＊', _arg);
+    element.style.top = '581px';
+    element.style.left = '330px';
+    nodes['mul'] = element;
+    nodes['binExpr3'].style.width = '160px';
+});
+
+procedures.push(() => {
+    _mul.style.backgroundColor = '#669966';
+    _mul.style.border = '3px solid #99CC99';
+    _2e.style.backgroundColor = '#CC6666';
+    _2e.style.border = '3px solid #FF9999';
+    let element = addBlock('2', _arg);
+    element.style.top = '581px';
+    element.style.left = '375px';
+    nodes['2e'] = element;
+    nodes['binExpr3'].style.width = '200px'
+});
+
+procedures.push(() => {
+    _2e.style.backgroundColor = '#999999';
+    _2e.style.border = '3px solid #CCCCCC';
+    _3.style.backgroundColor = '#CC6666';
+    _3.style.border = '3px solid #FF9999';
+    let element = addBlock('3', _arg);
+    element.style.top = '581px';
+    element.style.left = '415px';
+    nodes['3'] = element;
+    nodes['binExpr3'].style.width = '240px';
+});
+
+procedures.push(() => {
+    _3.style.backgroundColor = '#999999';
+    _3.style.border = '3px solid #CCCCCC';
+    nodes['binExpr2'].style.padding = '15px';
+    nodes['binExpr3'].style.top = '533px';
+    nodes['add'].style.top = '533px';
+    nodes['1e'].style.top = '533px';
+    nodes['binExpr3'].style.left = '415px';
+    nodes['binExpr2'].style.width = '460px';
+    nodes['mul'].style.top = '533px';
+    nodes['mul'].style.left = '545px';
+    nodes['2e'].style.top = '533px';
+    nodes['2e'].style.left = '590px';
+    nodes['3'].style.top = '533px';
+    nodes['3'].style.left = '630px';
+});
+
+procedures.push(() => {
+    nodes['funcall'].style.padding = '20px';
+    nodes['println'].style.top = '485px';
+    nodes['binExpr2'].style.top = '480px';
+    nodes['binExpr2'].style.left = '360px';
+    nodes['funcall'].style.width = '625px';
+    nodes['add'].style.top = '485px';
+    nodes['add'].style.left = '490px';
+    nodes['1e'].style.top = '485px';
+    nodes['1e'].style.left = '535px';
+    nodes['binExpr3'].style.top = '485px';
+    nodes['binExpr3'].style.left = '575px';
+    nodes['mul'].style.top = '485px';
+    nodes['mul'].style.left = '705px';
+    nodes['2e'].style.top = '485px';
+    nodes['2e'].style.left = '750px';
+    nodes['3'].style.top = '485px';
+    nodes['3'].style.left = '790px';
+});
+
+procedures.push(() => {
+    nodes['if'].innerHTML = 'If Node<br><br><br>then<br><br>';
+    nodes['funcall'].style.top = '485px';
+    nodes['funcall'].style.left = '270px';
+    nodes['if'].style.width = '720px';
+    nodes['println'].style.top = '495px';
+    nodes['println'].style.left = '350px';
+    nodes['binExpr2'].style.top = '490px';
+    nodes['binExpr2'].style.left = '430px';
+    nodes['add'].style.top = '495px';
+    nodes['add'].style.left = '560px';
+    nodes['1e'].style.top = '495px';
+    nodes['1e'].style.left = '605px';
+    nodes['binExpr3'].style.top = '495px';
+    nodes['binExpr3'].style.left = '645px';
+    nodes['mul'].style.top = '495px';
+    nodes['mul'].style.left = '775px';
+    nodes['2e'].style.top = '495px';
+    nodes['2e'].style.left = '820px';
+    nodes['3'].style.top = '495px';
+    nodes['3'].style.left = '860px';
+});
+
+document.addEventListener('keyup', (e) => {
+    if (progress >= procedures.length) return;
+    if (e.key === 'Enter') {
+        procedures[progress]();
+        progress ++;
+    }
+});
+
+    /*let elements = document.getElementsByClassName('node');
     let x, y;
 
     for (let i = 0; i < elements.length; i++) {
@@ -120,7 +435,7 @@
         drag.removeEventListener("touched", mup, false);
 
         drag.classList.remove("drag");
-    }
+    }*/
 
 </script>
 </body>
