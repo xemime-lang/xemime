@@ -372,7 +372,109 @@ procedures.push(() => {
 });
 
 procedures.push(() => {
+    nodes['if'].style.backgroundColor = '#CC66CC';
+    nodes['if'].style.border = '3px solid #FF99FF';
+});
 
+procedures.push(() => {
+    nodes['binExpr'].style.backgroundColor = '#CC66CC';
+    nodes['binExpr'].style.border = '3px solid #FF99FF';
+});
+
+procedures.push(() => {
+    nodes['2'].style.backgroundColor = '#999999';
+    nodes['2'].style.border = '3px solid #CCCCCC';
+});
+
+procedures.push(() => {
+    nodes['1'].style.backgroundColor = '#999999';
+    nodes['1'].style.border = '3px solid #CCCCCC';
+});
+
+procedures.push(() => {
+    nodes['binExpr'].style.backgroundColor = '#999999';
+    nodes['binExpr'].style.border = '3px solid #CCCCCC';
+    nodes['greater'].parentNode.removeChild(nodes['greater']);
+    nodes['2'].parentNode.removeChild(nodes['2']);
+    nodes['1'].parentNode.removeChild(nodes['1']);
+    nodes['binExpr'].innerHTML = 'T';
+    nodes['binExpr'].style.width = '10px';
+    nodes['funcall'].style.backgroundColor = '#CC66CC';
+    nodes['funcall'].style.border = '3px solid #FF99FF';
+});
+
+procedures.push(() => {
+    nodes['println'].style.backgroundColor = '#999999';
+    nodes['println'].style.border = '3px solid #CCCCCC';
+});
+
+procedures.push(() => {
+    nodes['binExpr2'].style.backgroundColor = '#CC66CC';
+    nodes['binExpr2'].style.border = '3px solid #FF99FF';
+});
+
+procedures.push(() => {
+    nodes['1e'].style.backgroundColor = '#999999';
+    nodes['1e'].style.border = '3px solid #CCCCCC';
+});
+
+procedures.push(() => {
+    nodes['binExpr3'].style.backgroundColor = '#CC66CC';
+    nodes['binExpr3'].style.border = '3px solid #FF99FF';
+});
+
+procedures.push(() => {
+    nodes['2e'].style.backgroundColor = '#999999';
+    nodes['2e'].style.border = '3px solid #CCCCCC';
+});
+
+procedures.push(() => {
+    nodes['3'].style.backgroundColor = '#999999';
+    nodes['3'].style.border = '3px solid #CCCCCC';
+});
+
+procedures.push(() => {
+    nodes['binExpr3'].style.backgroundColor = '#999999';
+    nodes['binExpr3'].style.border = '3px solid #CCCCCC';
+    nodes['binExpr3'].innerHTML = '6';
+    nodes['binExpr3'].style.width = '10px'
+    nodes['mul'].parentNode.removeChild(nodes['mul']);
+    nodes['2e'].parentNode.removeChild(nodes['2e']);
+    nodes['3'].parentNode.removeChild(nodes['3']);
+    nodes['binExpr2'].style.width = '230px';
+    nodes['funcall'].style.width = '450px';
+    nodes['if'].style.width = '540px';
+});
+
+procedures.push(() => {
+    nodes['binExpr2'].style.backgroundColor = '#999999';
+    nodes['binExpr2'].style.border = '3px solid #CCCCCC';
+    nodes['binExpr2'].innerHTML = '7';
+    nodes['binExpr2'].style.width = '10px';
+    nodes['add'].parentNode.removeChild(nodes['add']);
+    nodes['1e'].parentNode.removeChild(nodes['1e']);
+    nodes['binExpr3'].parentNode.removeChild(nodes['binExpr3']);
+    nodes['funcall'].style.width = '230px';
+    nodes['if'].style.width = '320px';
+});
+
+procedures.push(() => {
+    nodes['funcall'].style.backgroundColor = '#999999';
+    nodes['funcall'].style.border = '3px solid #CCCCCC';
+    nodes['println'].parentNode.removeChild(nodes['println']);
+    nodes['binExpr2'].parentNode.removeChild(nodes['binExpr2']);
+    nodes['funcall'].innerHTML = '7';
+    nodes['funcall'].style.width = '10px';
+    nodes['if'].style.width = '105px';
+});
+
+procedures.push(() => {
+    nodes['binExpr'].parentNode.removeChild(nodes['binExpr']);
+    nodes['funcall'].parentNode.removeChild(nodes['funcall']);
+    nodes['if'].style.backgroundColor = '#999999';
+    nodes['if'].style.border = '3px solid #CCCCCC';
+    nodes['if'].innerHTML = '7';
+    nodes['if'].style.width = '10px';
 });
 
 document.addEventListener('keyup', (e) => {
