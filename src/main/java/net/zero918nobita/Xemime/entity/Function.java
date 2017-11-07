@@ -5,14 +5,12 @@ import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.ReturnNode;
 import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.interpreter.Main;
-import net.zero918nobita.Xemime.parser.FatalError;
 import net.zero918nobita.Xemime.type.Type;
 import net.zero918nobita.Xemime.type.UnitType;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Function extends Func {
     private Type type;
