@@ -42,193 +42,189 @@ public class Lexer {
 
     /** 次のトークンを読み込み、種類を記録します。 */
     public boolean advance() throws Exception {
-            skipWhiteSpace();
-            int c = reader.read();
-            if (c < 0) return false;
-            switch (c) {
-                case ';': // ステートメントの末尾
-                    tokenType = TokenType.SEMICOLON;
-                    break;
-                case ',': // 引数リストまたは仮引数リストの区切り文字
-                    tokenType = TokenType.COMMA;
-                    break;
-                case '+': // 加算演算子
-                    c = reader.read();
-                    if (c == '+') {
-                        tokenType = TokenType.INCREMENT;
-                    } else {
-                        reader.unread();
-                        tokenType = TokenType.ADD;
-                    }
-                    break;
-                case '-':
-                    c = reader.read();
-                    if (c == '>') {
-                        // アロー演算子 ->
-                        tokenType = TokenType.ARROW;
-                    } else if (c == '-') {
-                        tokenType = TokenType.DECREMENT;
-                    } else {
-                        // 減算演算子 -
-                        reader.unread();
-                        tokenType = TokenType.SUB;
-                    }
-                    break;
-                case '*': // 乗算演算子
-                    tokenType = TokenType.MUL;
-                    break;
-                case '(': // 演算優先または引数/仮引数リストの左括弧
-                    tokenType = TokenType.LP;
-                    break;
-                case ')': // 演算優先または引数/仮引数リストの右括弧
-                    tokenType = TokenType.RP;
-                    break;
-                case '{': // ブロックの右括弧
-                    tokenType = TokenType.LB;
-                    break;
-                case '}': // ブロックの左括弧
-                    tokenType = TokenType.RB;
-                    break;
-                case '#':
-                    tokenType = TokenType.LAMBDA;
-                    break;
-                case '\n':
-                    line ++;
-                    tokenType = TokenType.BR;
-                    break;
-                case '=':
-                    c = reader.read();
-                    if (c == '=') {
-                        c = reader.read();
-                        if (c == '=') {
-                            // 等値演算子
-                            tokenType = TokenType.EQ;
-                        } else {
-                            // 等価演算子 ==
-                            reader.unread();
-                            tokenType = TokenType.EQL;
-                        }
-                    } else {
-                        // 代入演算子 =
-                        reader.unread();
-                        tokenType = TokenType.ASSIGN;
-                    }
-                    break;
-                case '!':
+        skipWhiteSpace();
+        int c = reader.read();
+        if (c < 0) return false;
+        switch (c) {
+            case ';': // ステートメントの末尾
+                tokenType = TokenType.SEMICOLON;
+                break;
+            case ',': // 引数リストまたは仮引数リストの区切り文字
+                tokenType = TokenType.COMMA;
+                break;
+            case '+': // 加算演算子
+                c = reader.read();
+                if (c == '+') {
+                    tokenType = TokenType.INCREMENT;
+                } else {
+                    reader.unread();
+                    tokenType = TokenType.ADD;
+                }
+                break;
+            case '-':
+                c = reader.read();
+                if (c == '>') {
+                    // アロー演算子 ->
+                    tokenType = TokenType.ARROW;
+                } else if (c == '-') {
+                    tokenType = TokenType.DECREMENT;
+                } else {
+                    // 減算演算子 -
+                    reader.unread();
+                    tokenType = TokenType.SUB;
+                }
+                break;
+            case '*': // 乗算演算子
+                tokenType = TokenType.MUL;
+                break;
+            case '(': // 演算優先または引数/仮引数リストの左括弧
+                tokenType = TokenType.LP;
+                break;
+            case ')': // 演算優先または引数/仮引数リストの右括弧
+                tokenType = TokenType.RP;
+                break;
+            case '{': // ブロックの右括弧
+                tokenType = TokenType.LB;
+                break;
+            case '}': // ブロックの左括弧
+                tokenType = TokenType.RB;
+                break;
+            case '#':
+                tokenType = TokenType.LAMBDA;
+                break;
+            case '\n':
+                line ++;
+                tokenType = TokenType.BR;
+                break;
+            case '=':
+                c = reader.read();
+                if (c == '=') {
                     c = reader.read();
                     if (c == '=') {
-                        // 非等価演算子 !=
-                        tokenType = TokenType.NE;
+                        // 等値演算子
+                        tokenType = TokenType.EQ;
                     } else {
-                        // 論理否定演算子 !
+                        // 等価演算子 ==
                         reader.unread();
-                        tokenType = TokenType.NOT;
+                        tokenType = TokenType.EQL;
                     }
-                    break;
-                case '<':
-                    c = reader.read();
-                    if (c == '=') {
-                        // 比較演算子 <=
-                        tokenType = TokenType.LE;
-                    } else if (c == '-') {
-                        // 属性追加演算子 <-
-                        tokenType = TokenType.ATTACH;
-                    } else {
-                        // 比較演算子 <
-                        reader.unread();
-                        tokenType = TokenType.L;
-                    }
-                    break;
-                case '>':
-                    c = reader.read();
-                    if (c == '=') {
-                        // 比較演算子 >=
-                        tokenType = TokenType.GE;
-                    } else {
-                        // 比較演算子 >
-                        reader.unread();
-                        tokenType = TokenType.G;
-                    }
-                    break;
-                case '&':
-                    c = reader.read();
-                    if (c == '&') {
-                        // 論理積演算子
-                        tokenType = TokenType.AND;
-                    } else {
-                        throw new Exception(getLocation() + ": 演算子 & は使えません");
-                    }
-                    break;
-                case '|':
-                    c = reader.read();
-                    if (c == '|') {
-                        // 論理和演算子
-                        tokenType = TokenType.OR;
-                    } else {
-                        throw new Exception(getLocation() + ": 演算子 | は使えません");
-                    }
-                    break;
-                case '^': // 排他的論理和演算子
-                    tokenType = TokenType.XOR;
-                    break;
-                case '/':
-                    c = reader.read();
-                    if (c == '/') {
-                        // 1行コメント
-                        skipLineComment();
-                        return advance();
-                    } else if (c == '*') {
-                        // 複数行コメント
-                        skipComment();
-                        return advance();
-                    } else {
-                        // 除算演算子
-                        reader.unread();
-                        tokenType = TokenType.DIV;
-                    }
-                    break;
-                case '"': // 文字列定数の始まりを示すダブルクォート
-                    lexString();
-                    tokenType = TokenType.STRING;
-                    break;
-                case '.': // メッセージ式
+                } else {
+                    // 代入演算子 =
+                    reader.unread();
+                    tokenType = TokenType.ASSIGN;
+                }
+                break;
+            case '!':
+                c = reader.read();
+                if (c == '=') {
+                    // 非等価演算子 !=
+                    tokenType = TokenType.NE;
+                } else {
+                    // 論理否定演算子 !
+                    reader.unread();
+                    tokenType = TokenType.NOT;
+                }
+                break;
+            case '<':
+                c = reader.read();
+                if (c == '=') {
+                    // 比較演算子 <=
+                    tokenType = TokenType.LE;
+                } else if (c == '-') {
+                    // 属性追加演算子 <-
+                    tokenType = TokenType.ATTACH;
+                } else {
+                    // 比較演算子 <
+                    reader.unread();
+                    tokenType = TokenType.L;
+                }
+                break;
+            case '>':
+                c = reader.read();
+                if (c == '=') {
+                    // 比較演算子 >=
+                    tokenType = TokenType.GE;
+                } else {
+                    // 比較演算子 >
+                    reader.unread();
+                    tokenType = TokenType.G;
+                }
+                break;
+            case '&':
+                c = reader.read();
+                if (c == '&') {
+                    // 論理積演算子
+                    tokenType = TokenType.AND;
+                } else {
+                    throw new Exception(getLocation() + ": 演算子 & は使えません");
+                }
+                break;
+            case '|':
+                c = reader.read();
+                if (c == '|') {
+                    // 論理和演算子
+                    tokenType = TokenType.OR;
+                } else {
+                    throw new Exception(getLocation() + ": 演算子 | は使えません");
+                }
+                break;
+            case '^': // 排他的論理和演算子
+                tokenType = TokenType.XOR;
+                break;
+            case '/':
+                c = reader.read();
+                if (c == '/') {
+                    // 1行コメント
+                    skipLineComment();
+                    return advance();
+                } else if (c == '*') {
+                    // 複数行コメント
+                    skipComment();
+                    return advance();
+                } else {
+                    // 除算演算子
+                    reader.unread();
+                    tokenType = TokenType.DIV;
+                }
+                break;
+            case '"': // 文字列定数の始まりを示すダブルクォート
+                lexString();
+                tokenType = TokenType.STRING;
+                break;
+            case '.': // メッセージ式
+                c = reader.read();
+                if (c == '.') {
                     c = reader.read();
                     if (c == '.') {
-                        c = reader.read();
-                        if (c == '.') {
-                            tokenType = TokenType.RANGE3;
-                        } else {
-                            reader.unread();
-                            tokenType = TokenType.RANGE2;
-                        }
+                        tokenType = TokenType.RANGE3;
                     } else {
                         reader.unread();
-                        tokenType = TokenType.PERIOD;
+                        tokenType = TokenType.RANGE2;
                     }
-                    break;
-                case '$': // 括弧を省略した関数呼び出し
-                    tokenType = TokenType.DOLLAR;
-                    break;
-                case ':': // 属性定義式のメンバ名と値の区切りとなるコロン
-                    tokenType = TokenType.COLON;
-                    break;
-                default:
-                    if (Character.isDigit((char) c)) {
-                        reader.unread();
-                        lexDigit();
-                        if (val.getClass() == Int.class) {
-                            tokenType = TokenType.INT;
-                        }
-                        if (val.getClass() == Double.class) {
-                            tokenType = TokenType.DOUBLE;
-                        }
-                    } else if (Character.isJavaIdentifierStart((char)c)) {
-                        reader.unread();
-                        lexSymbol();
-                    } else {
+                } else {
+                    reader.unread();
+                    tokenType = TokenType.PERIOD;
+                }
+                break;
+            case '$': // 括弧を省略した関数呼び出し
+                tokenType = TokenType.DOLLAR;
+                break;
+            case ':': // 属性定義式のメンバ名と値の区切りとなるコロン
+                tokenType = TokenType.COLON;
+                break;
+            default:
+                if (Character.isDigit((char) c)) {
+                    reader.unread();
+                    lexDigit();
+                    if (val.getClass() == Int.class) tokenType = TokenType.INT;
+                    else if (val.getClass() == Double.class) tokenType = TokenType.DOUBLE;
+                } else if (Character.isJavaIdentifierStart((char)c)) {
+                    reader.unread();
+                    lexSymbol();
+                } else {
                         throw new Exception(getLocation() + ": 不明なトークンです");
-                    }
-                    break;
+                }
+                break;
             }
         return true;
     }
