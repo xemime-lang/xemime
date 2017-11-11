@@ -28,9 +28,7 @@ class LogicalExpr extends ParseUnit {
      */
     @Override
     protected Node parse() throws Exception {
-        if (current(IF)) {
-            return new If(lexer, resolver).parse();
-        }
+        if (current(IF)) return new If(lexer, resolver).parse();
         Node node = new SimpleExpr(lexer, resolver).parse();
         switch (lexer.tokenType()) {
             case AND:

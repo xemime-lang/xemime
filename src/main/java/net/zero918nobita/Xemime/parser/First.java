@@ -99,7 +99,13 @@ class First extends ParseUnit {
                 getToken(); // skip "{"
 
                 Symbol name = (Symbol) lexer.value();
-                getToken(); // skip name
+                getToken();
+                skipLineBreaks();
+
+                if (current(SYMBOL) && lexer.value().equals(Symbol.intern("companion"))) {
+                    getToken();
+                    // if (!(current(SYMBOL) && lexer.value().equals(Symbol.intern("object")))) throw new SyntaxError(lexer.getLocation(), );
+                }
 
                 // Syntax Error - メンバ名と値の区切りのコロン `:` が必要です。
                 if (!current(COLON)) throw new SyntaxError(lexer.getLocation(), 18, "メンバ名と値の区切りのコロン `:` が必要です。");
@@ -107,6 +113,7 @@ class First extends ParseUnit {
                 getToken(); // skip colon
                 Node value = new LogicalExpr(lexer, resolver).parse();
                 member.put(name, value);
+                getToken();
 
                 while (!current(RB)) {
 

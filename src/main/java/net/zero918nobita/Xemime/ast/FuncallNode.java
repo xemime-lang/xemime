@@ -4,6 +4,7 @@ import net.zero918nobita.Xemime.entity.Func;
 import net.zero918nobita.Xemime.entity.Native;
 import net.zero918nobita.Xemime.interpreter.Main;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,9 +15,10 @@ import java.util.Map;
 
 public class FuncallNode extends Node {
     private Node func;
-    private LinkedHashMap<Symbol, Node> list;
+    private LinkedHashMap<Symbol, Node> map;
+    private ArrayList<Node> arrayList;
 
-    public FuncallNode(int location, Node node, LinkedHashMap<Symbol, Node> list) throws Exception {
+    public FuncallNode(int location, Node node, LinkedHashMap<Symbol, Node> map) throws Exception {
         super(location);
         if (node instanceof Symbol || node instanceof Native) {
             func = node;
@@ -24,31 +26,62 @@ public class FuncallNode extends Node {
             // Fatal Exception - 関数呼び出しに失敗しました。
             throw new FatalException(getLocation(), 9);
         }
-        this.list = list;
+        this.map = map;
+    }
+
+    public FuncallNode(int location, Node node, ArrayList<Node> arrayList) throws Exception {
+        super(location);
+        if (node instanceof Symbol || node instanceof Native) {
+            func = node;
+        } else {
+            // Fatal Exception - 関数呼び出しに失敗しました。
+            throw new FatalException(getLocation(), 88);
+        }
+        this.arrayList = arrayList;
     }
 
     @Override
     public Node run() throws Exception {
-        if (func instanceof Native) {
-            LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
-            for (Map.Entry<Symbol, Node> entry : list.entrySet()) params.put(entry.getKey(), entry.getValue().run());
-            params.put(Symbol.intern("this"), func);
-            return ((Native) func).call(getLocation(), params, null);
+        if (map != null) {
+            if (func instanceof Native) {
+                LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
+                for (Map.Entry<Symbol, Node> entry : map.entrySet()) params.put(entry.getKey(), entry.getValue().run());
+                params.put(Symbol.intern("this"), func);
+                return ((Native) func).call(getLocation(), params, null);
+            } else {
+                Symbol symbol = (Symbol) func;
+                Node c = Main.getValueOfSymbol(symbol);
+
+                // Fatal Exception - 指定された関数は存在しません。
+                if (c == null) throw new FatalException(getLocation(), 12);
+
+                // Fatal Exception - 呼び出し対象が関数ではありません。
+                if (!(c instanceof Func)) throw new FatalException(getLocation(), 13);
+
+                Func func = (Func) c;
+                LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
+                for (Map.Entry<Symbol, Node> entry : map.entrySet()) params.put(entry.getKey(), entry.getValue().run());
+                params.put(Symbol.intern("this"), func);
+                return func.call(getLocation(), params, null);
+            }
         } else {
-            Symbol symbol = (Symbol)func;
-            Node c = Main.getValueOfSymbol(symbol);
+            if (func instanceof Native) {
+                arrayList.add(0, func);
+                return ((Native) func).call(getLocation(), arrayList, null);
+            } else {
+                Symbol symbol = (Symbol) func;
+                Node c = Main.getValueOfSymbol(symbol);
 
-            // Fatal Exception - 指定された関数は存在しません。
-            if (c == null) throw new FatalException(getLocation(), 12);
+                // Fatal Exception - 指定された関数は存在しません
+                if (c == null) throw new FatalException(getLocation(), 89);
 
-            // Fatal Exception - 呼び出し対象が関数ではありません。
-            if (!(c instanceof Func)) throw new FatalException(getLocation(), 13);
+                // Fatal Exception - 呼び出し対象が関数ではありません
+                if (!(c instanceof Func)) throw new FatalException(getLocation(), 90);
 
-            Func func = (Func) c;
-            LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
-            for (Map.Entry<Symbol, Node> entry : list.entrySet()) params.put(entry.getKey(), entry.getValue().run());
-            params.put(Symbol.intern("this"), func);
-            return func.call(getLocation(), params, null);
+                Func func = (Func) c;
+                arrayList.add(0, func);
+                return func.call(getLocation(), arrayList, null);
+            }
         }
     }
 }

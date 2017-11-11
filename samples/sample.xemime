@@ -1,3 +1,6 @@
-let a = T
-a++
-println $ a
+fn bar(a : Int, b : Int) -> Int {
+    return a - b
+}
+
+println $ "Hello World!"
+println $ bar $ 1, 2

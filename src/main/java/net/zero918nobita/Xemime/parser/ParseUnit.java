@@ -13,6 +13,7 @@ import net.zero918nobita.Xemime.resolver.Resolver;
 public abstract class ParseUnit {
     protected Lexer lexer;
     protected Resolver resolver;
+    private boolean retreat = false;
 
     public ParseUnit(Lexer lexer, Resolver resolver) {
         this.lexer = lexer;
@@ -20,11 +21,19 @@ public abstract class ParseUnit {
     }
 
     public void getToken() throws Exception {
+        if (retreat) {
+            retreat = false;
+            return;
+        }
         if (lexer.advance()) {
             lexer.setTokenType(lexer.tokenType());
         } else {
             lexer.setTokenType(TokenType.EOS);
         }
+    }
+
+    void retreat() {
+        retreat = true;
     }
 
     void skipLineBreaks() throws Exception {

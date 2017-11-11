@@ -18,16 +18,11 @@ public enum TokenType {
     EOS,
 
     IF,
-    ELSE_IF,
     ELSE,
     SWITCH,
-    CASE,
-    DEFAULT,
     FOR,
     IN,
     WHILE,
-    BREAK,
-    CONTINUE,
     FN,
     RETURN,
 

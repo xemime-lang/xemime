@@ -86,3 +86,8 @@
 | 85 | SyntaxError |  | ``parser.Factor#parse`` |
 | 86 | SyntaxError |  | ``parser.Factor#parse`` |
 | 87 | TypeError | 代入式が不正です。変数の型と代入される値の型が一致しません。 | ``resolver.Resolver#assignVar`` |
+| 88 | | | |
+| 89 | | | |
+| 90 | | | |
+| 91 | | | |
+| 92 | | | |

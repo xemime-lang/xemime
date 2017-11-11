@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class Closure extends Func {
     protected ArrayList<Symbol> params;
-    private Address self = null;
+    protected Address self = null;
     protected Node body;
 
     /**
@@ -33,10 +33,6 @@ public class Closure extends Func {
         if (params != null) numberOfArgs = params.size();
     }
 
-    void setSelf(Address self) {
-        this.self = self;
-    }
-
     @Override
     public String toString() {
         return "<Lambda>";
@@ -48,6 +44,14 @@ public class Closure extends Func {
     }
 
     protected Node exec(LinkedHashMap<Symbol, Node> params, Address dynamicSelf) throws Exception {
+        Node o = null;
+        setArgs(params, dynamicSelf);
+        if (body != null) o = body.run();
+        removeArgs();
+        return o;
+    }
+
+    protected Node exec(ArrayList<Node> params, Address dynamicSelf) throws Exception {
         Node o = null;
         setArgs(params, dynamicSelf);
         if (body != null) o = body.run();
@@ -70,15 +74,40 @@ public class Closure extends Func {
                 }
             }
 
-        if (self != null) {
-            table.setMember(Symbol.intern(getLocation(), "THIS"), Main.register(self));
-        } else {
-            table.setMember(Symbol.intern(getLocation(), "THIS"), Main.defaultObj);
+            if (self != null) table.setMember(Symbol.intern(getLocation(), "THIS"), Main.register(self));
+            else table.setMember(Symbol.intern(getLocation(), "THIS"), Main.defaultObj);
+
+            if (dynamicSelf != null) table.setMember(Symbol.intern(getLocation(), "this"), Main.register(dynamicSelf));
+
+        for (int i = 0; i < args.size() - 1; i++) {
+            Symbol sym = params.get(i);
+            Node o = args.get(i + 1);
+            table.setMember(sym, Main.register(o));
         }
+    }
+
+    private void setArgs(ArrayList<Node> args, Address dynamicSelf) throws Exception {
+        if ((params == null) && (args == null)) {
+            Main.loadLocalFrame(new Handler(0));
+            return;
+        }
+
+        Handler table = new Handler(getLocation());
+        Main.loadLocalFrame(table);
+        if (captured != null)
+            for (Handler o : captured.getLocalFrames()) {
+                for (Map.Entry<Symbol, Address> entry : o.getMembers().entrySet()) {
+                    table.setMember(entry.getKey(), entry.getValue());
+                }
+            }
+
+        if (self != null) table.setMember(Symbol.intern(getLocation(), "THIS"), Main.register(self));
+        else table.setMember(Symbol.intern(getLocation(), "THIS"), Main.defaultObj);
+
         if (dynamicSelf != null) table.setMember(Symbol.intern(getLocation(), "this"), Main.register(dynamicSelf));
 
         for (int i = 0; i < args.size() - 1; i++) {
-            Symbol sym = (Symbol)params.get(i);
+            Symbol sym = params.get(i);
             Node o = args.get(i + 1);
             table.setMember(sym, Main.register(o));
         }

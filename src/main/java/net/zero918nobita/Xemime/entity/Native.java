@@ -4,7 +4,7 @@ import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 /**
  * 組み込みメソッドを表すノードです。<br>
@@ -24,7 +24,11 @@ public abstract class Native extends Func {
         return "<Native>";
     }
 
-    protected Node exec(TreeMap<Symbol, Node> params, Address self) throws Exception {
+    protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
+        return null;
+    }
+
+    protected Node exec(ArrayList<Node> params, Address self) throws Exception {
         return null;
     }
 }

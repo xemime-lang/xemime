@@ -42,4 +42,14 @@ public class Function extends Func {
         Main.unloadLocalFrame();
         return new Unit(0, null);
     }
+
+    protected Node exec(ArrayList<Node> args, Address self) throws Exception {
+        return exec(new LinkedHashMap<Symbol, Node>(){{
+            int i = 1;
+            for (Map.Entry<Symbol, Type> entry : params.entrySet()) {
+                put(entry.getKey(), args.get(i));
+                i ++;
+            }
+        }}, self);
+    }
 }

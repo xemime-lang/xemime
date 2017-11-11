@@ -225,6 +225,7 @@ public class Main {
                     try {
                         c.run();
                     } catch(Exception e) {
+                        e.printStackTrace();
                         System.out.println(e.getMessage());
                         System.exit(1);
                     }
@@ -339,6 +340,13 @@ public class Main {
                 if (Main.allowExitMethod) System.exit(0);
                 throw new Exception("この実行環境で Core.exit メソッドを使用することはできません");
             }
+
+            @Override
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
+                return exec(new LinkedHashMap<Symbol, Node>(){{
+                    put(Symbol.intern("this"), params.get(0));
+                }}, self);
+            }
         }
 
         /**
@@ -356,6 +364,14 @@ public class Main {
                 System.out.print(o);
                 return o;
             }
+
+            @Override
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
+                return exec(new LinkedHashMap<Symbol, Node>(){{
+                    put(Symbol.intern("this"), params.get(0));
+                    put(Symbol.intern("target"), params.get(1));
+                }}, self);
+            }
         }
 
         /**
@@ -372,6 +388,14 @@ public class Main {
                 Node o = params.get(Symbol.intern("target")).run();
                 System.out.println(o);
                 return o;
+            }
+
+            @Override
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
+                return exec(new LinkedHashMap<Symbol, Node>(){{
+                    put(Symbol.intern("this"), params.get(0));
+                    put(Symbol.intern("target"), params.get(1));
+                }}, self);
             }
         }
     }
