@@ -29,7 +29,7 @@ public class ScopeTest {
                 "{\n" +
                         "  let a = 2\n" +
                         "}\n" +
-                        "println $ target : a\n"
+                        "println $ a\n"
         );
     }
 }

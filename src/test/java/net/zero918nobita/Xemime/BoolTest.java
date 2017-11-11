@@ -30,8 +30,8 @@ public class BoolTest {
         System.setOut(new PrintStream(out));
         Main.exec(
                 "let variable = T\n" +
-                        "println(target : variable)\n" +
-                        "println(target : !variable)\n"
+                        "println(variable)\n" +
+                        "println(!variable)\n"
         );
         assertThat(out.toString(), is("T" + br + "NIL" + br));
     }

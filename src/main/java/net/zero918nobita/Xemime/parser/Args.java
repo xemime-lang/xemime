@@ -5,6 +5,7 @@ import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
@@ -37,8 +38,20 @@ class Args extends ParseUnit {
      * 引数リストの構文解析と意味解析を行います。
      * @return 生成された AST
      */
-    LinkedHashMap<Symbol, Node> arguments() throws Exception {
-        LinkedHashMap<Symbol, Node> list = null;
+    ArrayList<Node> arguments() throws Exception {
+        ArrayList<Node> list = null;
+        if (!current(RP)) {
+            list = new ArrayList<>();
+            list.add(new LogicalExpr(lexer, resolver).parse());
+            while (!current(RP)) {
+                if (!current(COMMA)) throw new SyntaxError(lexer.getLocation(), 93, "引数をコンマで区切ってください。");
+                getToken();
+                list.add(new LogicalExpr(lexer, resolver).parse());
+            }
+        }
+        return list;
+
+        /*LinkedHashMap<Symbol, Node> list = null;
 
         if (!current(RP)) {
             list = new LinkedHashMap<>();
@@ -62,6 +75,6 @@ class Args extends ParseUnit {
                 list.put(label, new LogicalExpr(lexer, resolver).parse());
             }
         }
-        return list;
+        return list;*/
     }
 }

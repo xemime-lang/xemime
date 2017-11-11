@@ -166,4 +166,8 @@ public class Node {
     public Node message(int location, Symbol symbol, LinkedHashMap<Symbol, Node> params) throws Exception {
         throw new Exception(location + ": `" + toString() + "` にメソッドは設定できません");
     }
+
+    public Node message(int location, Symbol symbol, ArrayList<Node> params) throws Exception {
+        throw new Exception(location + ": `" + toString() + "` にメソッドを設定できません");
+    }
 }

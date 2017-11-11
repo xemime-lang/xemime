@@ -144,7 +144,7 @@ class Factor extends ParseUnit {
 
                 // 関数呼び出し
                 case LP: {
-                    LinkedHashMap<Symbol, Node> list = new LinkedHashMap<>();
+                    ArrayList<Node> list = new ArrayList<>();
                     getToken();
                     if (!current(RP)) list = new Args(lexer, resolver).arguments();
                     if (!current(RP)) throw new Exception(lexer.getLocation() + ": 文法エラー");
@@ -164,7 +164,7 @@ class Factor extends ParseUnit {
                     Symbol sym = (Symbol) lexer.value();
                     getToken();
                     if (current(LP)) {
-                        LinkedHashMap<Symbol, Node> list = new LinkedHashMap<>();
+                        ArrayList<Node> list = new ArrayList<>();
                         getToken();
                         if (!current(RP)) list = new Args(lexer, resolver).arguments();
 
