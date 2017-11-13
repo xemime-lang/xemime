@@ -40,6 +40,10 @@ public class FuncallNode extends Node {
         this.arrayList = arrayList;
     }
 
+    public Node getFunc() {
+        return func;
+    }
+
     @Override
     public Node run() throws Exception {
         if (map != null) {
