@@ -3,7 +3,6 @@ package net.zero918nobita.Xemime.resolver;
 import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.entity.Double;
-import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.parser.FatalError;
 import net.zero918nobita.Xemime.type.*;
 
@@ -114,6 +113,22 @@ class StaticTypeChecker {
     }
 
     private Type check(Resolver resolver, FuncallNode funcallNode) throws TypeError, SemanticError, FatalError {
-        return new IntType();
+        Node func = funcallNode.getFunc();
+        Type type;
+        if (func instanceof Symbol) {
+            type = resolver.getTypeOfVariable((Symbol)func);
+            if (type instanceof FuncType) {
+                type = ((FuncType)type).getReturnType();
+            } else {
+                // Type Error - 指定されたシンボルの型が関数型ではありません。
+                throw new TypeError(func.getLocation(), 97, "指定されたシンボルの型が関数型ではありません。");
+            }
+        } else if (!(func instanceof Native)) {
+            // Fatal Error - シンボルまたは組み込み関数を指定してください。
+            throw new FatalError(funcallNode.getLocation(), 96);
+        } else {
+            type = ((Native) func).getReturnType();
+        }
+        return type;
     }
 }
