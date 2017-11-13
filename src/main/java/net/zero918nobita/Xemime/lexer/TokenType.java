@@ -29,6 +29,9 @@ public enum TokenType {
     /** unit (無効な値) */
     UNIT,
 
+    /** backquote (中置関数) */
+    BACKQUOTE,
+
     /** 真値 */
     T,
     /** 偽値 */

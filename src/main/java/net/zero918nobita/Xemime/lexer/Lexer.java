@@ -191,6 +191,16 @@ public class Lexer {
                 lexString();
                 tokenType = TokenType.STRING;
                 break;
+            case '`': // 中置関数名
+                c = reader.read();
+                if (Character.isJavaIdentifierStart((char)c)) {
+                    reader.unread();
+                    lexSymbol();
+                } else throw new Exception("");
+                c = reader.read();
+                if (c != '`') throw new Exception("");
+                tokenType = TokenType.BACKQUOTE;
+                break;
             case '.': // メッセージ式
                 c = reader.read();
                 if (c == '.') {

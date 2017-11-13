@@ -1,15 +1,17 @@
 package net.zero918nobita.Xemime.parser;
 
 import net.zero918nobita.Xemime.ast.ExprNode;
+import net.zero918nobita.Xemime.ast.FuncallNode;
 import net.zero918nobita.Xemime.ast.Node;
+import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
 
-import static net.zero918nobita.Xemime.lexer.TokenType.DIV;
-import static net.zero918nobita.Xemime.lexer.TokenType.MUL;
-import static net.zero918nobita.Xemime.lexer.TokenType.XOR;
+import java.util.ArrayList;
+
+import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
 /**
  * 項の構文解析器
@@ -37,6 +39,7 @@ class Term extends ParseUnit {
             case MUL:
             case DIV:
             case XOR:
+            case BACKQUOTE:
                 node = term(node);
                 break;
         }
@@ -44,11 +47,10 @@ class Term extends ParseUnit {
     }
 
     private Node term(Node node) throws Exception {
-        ExprNode result = null;
-        while ((current(MUL)) ||
-                (current(DIV)) ||
-                (current(XOR))) {
+        Node result = null;
+        while (current(MUL) || current(DIV) || current(XOR) || current(BACKQUOTE)) {
             TokenType op = lexer.tokenType();
+            Node value = lexer.value();
             getToken();
             skipLineBreaks();
             Node term = new Term(lexer, resolver).parse();
@@ -56,12 +58,26 @@ class Term extends ParseUnit {
             // DivideByZeroError - 構文解析中にゼロ除算が行われている箇所を発見しました。
             if (op == DIV && term.equals(new Int(0, 0))) throw new DivideByZeroError(lexer.getLocation(), 1);
 
-            if (result == null) {
-                result = new ExprNode(lexer.getLocation(), op, node, term);
-                resolver.getTypeOfNode(result);
+            if (op == BACKQUOTE) {
+                if (result == null) {
+                    result = new FuncallNode(lexer.getLocation(), value, new ArrayList<Node>(){{
+                        add(node);
+                        add(term);
+                    }});
+                } else {
+                    ArrayList<Node> arrayList = new ArrayList<>();
+                    arrayList.add(result);
+                    arrayList.add(term);
+                    result = new FuncallNode(lexer.getLocation(), value, arrayList);
+                }
             } else {
-                result = new ExprNode(lexer.getLocation(), op, result, term);
-                resolver.getTypeOfNode(result);
+                if (result == null) {
+                    result = new ExprNode(lexer.getLocation(), op, node, term);
+                    resolver.getTypeOfNode(result);
+                } else {
+                    result = new ExprNode(lexer.getLocation(), op, result, term);
+                    resolver.getTypeOfNode(result);
+                }
             }
         }
         return result;

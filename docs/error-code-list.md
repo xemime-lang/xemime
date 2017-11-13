@@ -86,9 +86,11 @@
 | 85 | SyntaxError |  | ``parser.Factor#parse`` |
 | 86 | SyntaxError |  | ``parser.Factor#parse`` |
 | 87 | TypeError | 代入式が不正です。変数の型と代入される値の型が一致しません。 | ``resolver.Resolver#assignVar`` |
-| 88 | | | |
-| 89 | | | |
-| 90 | | | |
-| 91 | | | |
-| 92 | | | |
+| 88 |  |  |  |
+| 89 |  |  |  |
+| 90 |  |  |  |
+| 91 |  |  |  |
+| 92 |  |  |  |
 | 93 | SyntaxError | 引数をコンマ ``,`` で区切ってください。 | ``parser.Args#arguments`` |
+| 94 | SyntaxError | 関数を中置関数化するための2つのバッククォートの間には、シンボル(関数名)を記述してください。 | ``parser.Term#parse`` |
+| 95 | SyntaxError | バッククォートで中置関数名が閉じられていません。 | ``parser.Term#parse`` |

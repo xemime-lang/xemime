@@ -225,7 +225,6 @@ public class Main {
                     try {
                         c.run();
                     } catch(Exception e) {
-                        e.printStackTrace();
                         System.out.println(e.getMessage());
                         System.exit(1);
                     }
