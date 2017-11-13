@@ -3,6 +3,9 @@ package net.zero918nobita.Xemime.interpreter;
 import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.parser.Parser;
 import net.zero918nobita.Xemime.ast.*;
+import net.zero918nobita.Xemime.type.AnyType;
+import net.zero918nobita.Xemime.type.Type;
+import net.zero918nobita.Xemime.type.UnitType;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -283,7 +286,7 @@ public class Main {
          */
         private static class X_Clone extends Native {
             X_Clone() {
-                super(0, 0);
+                super(0, new LinkedHashMap<>(), new AnyType());
             }
 
             @Override
@@ -294,7 +297,7 @@ public class Main {
 
         private static class X_New extends Native {
             X_New() {
-                super(0, 0);
+                super(0, new LinkedHashMap<>(), new AnyType());
             }
 
             @Override
@@ -331,7 +334,7 @@ public class Main {
          */
         private static class X_Exit extends Native {
             X_Exit() {
-                super(0, 0);
+                super(0, new LinkedHashMap<>(), new UnitType());
             }
 
             @Override
@@ -354,14 +357,15 @@ public class Main {
          */
         private static class X_Print extends Native {
             X_Print() {
-                super(0, 1);
+                super(0, new LinkedHashMap<Symbol, Type>(){{
+                    put(Symbol.intern("target"), new AnyType());
+                }}, new UnitType());
             }
 
             @Override
             protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
-                Node o = params.get(Symbol.intern("target")).run();
-                System.out.print(o);
-                return o;
+                System.out.print(params.get(Symbol.intern("target")).run());
+                return new Unit(getLocation(), null);
             }
 
             @Override
@@ -379,14 +383,15 @@ public class Main {
          */
         private static class X_Println extends Native {
             X_Println() {
-                super(0, 1);
+                super(0, new LinkedHashMap<Symbol, Type>(){{
+                    put(Symbol.intern("target"), new AnyType());
+                }}, new UnitType());
             }
 
             @Override
             protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
-                Node o = params.get(Symbol.intern("target")).run();
-                System.out.println(o);
-                return o;
+                System.out.println(params.get(Symbol.intern("target")).run());
+                return new Unit(getLocation(), null);
             }
 
             @Override

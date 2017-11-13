@@ -2,6 +2,7 @@ package net.zero918nobita.Xemime.entity;
 
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
+import net.zero918nobita.Xemime.type.Type;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -14,14 +15,20 @@ import java.util.LinkedHashMap;
  */
 
 public abstract class Native extends Func {
+    private LinkedHashMap<Symbol, Type> args;
+    private Type returnType;
 
-    public Native(int location, int args) {
+    public Native(int location, LinkedHashMap<Symbol, Type> args, Type returnType) {
         super(location);
-        numberOfArgs = args;
+        numberOfArgs = args.size();
     }
 
     public String toString() {
         return "<Native>";
+    }
+
+    public Type getReturnType() {
+        return returnType;
     }
 
     protected Node exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {

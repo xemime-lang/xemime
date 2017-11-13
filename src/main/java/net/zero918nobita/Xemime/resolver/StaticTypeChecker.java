@@ -1,13 +1,9 @@
 package net.zero918nobita.Xemime.resolver;
 
-import net.zero918nobita.Xemime.ast.ExprNode;
-import net.zero918nobita.Xemime.ast.MinusNode;
-import net.zero918nobita.Xemime.ast.Node;
-import net.zero918nobita.Xemime.ast.Symbol;
-import net.zero918nobita.Xemime.entity.Bool;
-import net.zero918nobita.Xemime.entity.Int;
+import net.zero918nobita.Xemime.ast.*;
+import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.entity.Double;
-import net.zero918nobita.Xemime.entity.Str;
+import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.parser.FatalError;
 import net.zero918nobita.Xemime.type.*;
 
@@ -32,6 +28,8 @@ class StaticTypeChecker {
             return check(resolver, (MinusNode) node);
         } else if (node instanceof ExprNode) {
             return check(resolver, (ExprNode) node);
+        } else if (node instanceof FuncallNode) {
+            return check(resolver, (FuncallNode)node);
         } else {
             throw new TypeError(node.getLocation(), 64, "");
         }
@@ -113,5 +111,9 @@ class StaticTypeChecker {
             default:
                 throw new FatalError(exprNode.getLocation(), 60);
         }
+    }
+
+    private Type check(Resolver resolver, FuncallNode funcallNode) throws TypeError, SemanticError, FatalError {
+        return new IntType();
     }
 }

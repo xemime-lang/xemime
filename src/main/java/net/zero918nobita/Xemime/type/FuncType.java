@@ -18,4 +18,8 @@ public class FuncType implements Type {
         this.returnType = returnType;
         this.params = params;
     }
+
+    public Type getReturnType() {
+        return returnType;
+    }
 }
