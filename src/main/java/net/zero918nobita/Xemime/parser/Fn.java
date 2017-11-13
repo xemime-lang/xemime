@@ -39,7 +39,7 @@ class Fn extends ParseUnit {
 
         getToken(); // skip `(`
         skipLineBreaks();
-        LinkedHashMap<Symbol, Type> args = new LinkedHashMap<>();
+        LinkedHashMap<Symbol, Type> params = new LinkedHashMap<>();
 
         if (!current(RP)) {
             if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 70, "");
@@ -51,7 +51,7 @@ class Fn extends ParseUnit {
             Type type = convertSymbolIntoType((Symbol) lexer.value());
             getToken(); // skip symbol
             skipLineBreaks();
-            args.put(name, type);
+            params.put(name, type);
             if (!current(RP)) while (!current(RP)) {
                 if (!current(COMMA)) throw new SyntaxError(lexer.getLocation(), 77, "");
                 getToken(); // skip `,`
@@ -63,13 +63,11 @@ class Fn extends ParseUnit {
                 getToken(); // skip `:`
                 if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 75, "");
                 type = convertSymbolIntoType((Symbol) lexer.value());
-                args.put(name, type);
+                params.put(name, type);
                 getToken();
                 skipLineBreaks();
             }
         }
-
-        for (Map.Entry<Symbol, Type> entry : args.entrySet()) resolver.declareVar(entry.getValue(), entry.getKey());
 
         getToken(); // skip `}`
         if (!current(ARROW)) throw new SyntaxError(lexer.getLocation(), 78, "");
@@ -78,7 +76,11 @@ class Fn extends ParseUnit {
         Type return_type = convertSymbolIntoType((Symbol) lexer.value());
         getToken(); // skip symbol
 
-        resolver.declareVar(new FuncType(return_type, args), func_name);
+        resolver.declareVar(new FuncType(return_type, params), func_name);
+
+        resolver.addScope();
+
+        for (Map.Entry<Symbol, Type> entry : params.entrySet()) resolver.declareVar(entry.getValue(), entry.getKey());
 
         if (!current(LB)) throw new SyntaxError(lexer.getLocation(), 80, "");
         getToken(); // skip `{`
@@ -88,7 +90,10 @@ class Fn extends ParseUnit {
             skipLineBreaks();
         }
         getToken(); // skip `}`
-        return new FunctionNode(lexer.getLocation(), func_name, return_type, args, body);
+
+        resolver.removeScope();
+
+        return new FunctionNode(lexer.getLocation(), func_name, return_type, params, body);
     }
 
     private Type convertSymbolIntoType(Symbol symbol) throws Exception {
