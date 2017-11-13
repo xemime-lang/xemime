@@ -7,3 +7,13 @@ fn foo(a : Int, b : Int) -> Int {
 
 println $ "Hello World!"
 println $ 1 `foo` 2
+
+fn func2(x :Int) -> Int {
+    return x + func1(x)
+}
+
+fn func1(x :Int) {
+    return x + 2
+}
+
+println $ func2 $ 2
