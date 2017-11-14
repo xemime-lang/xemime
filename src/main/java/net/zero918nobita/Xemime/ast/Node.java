@@ -4,7 +4,6 @@ import net.zero918nobita.Xemime.entity.Bool;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 /**
  * ノードの原型です。<br>
@@ -47,13 +46,20 @@ public class Node {
      * @param location 演算を行う行の行番号
      * @param rhs 足す数
      * @return 和
-     * @throws Exception 常に例外を発生させます。
+     * @throws FatalException 常に例外を発生させます。
      */
-    public Node add(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": `" + toString() + "` に `+` 演算子は使用できません");
+    public Node add(int location, Node rhs) throws FatalException {
+        // `+` 演算子は使用できません
+        throw new FatalException(location,  98);
     }
 
-    public Node add(Node rhs) throws Exception {
+    /**
+     * 加算を行います(行番号の指定を省略)。
+     * @param rhs 足す数
+     * @return 和
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Node add(Node rhs) throws FatalException {
         return add(0, rhs);
     }
 
@@ -63,28 +69,42 @@ public class Node {
      * @param location 演算を行う行の行番号
      * @param rhs 引く数
      * @return 差
-     * @throws Exception 常に例外を発生させます。
+     * @throws FatalException 常に例外を発生させます。
      */
-    public Node sub(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": `" + toString() + "` に `-` 演算子は使用できません");
+    public Node sub(int location, Node rhs) throws FatalException {
+        // `-` 演算子は使用できません
+        throw new FatalException(location, 99);
     }
 
-    public Node sub(Node rhs) throws Exception {
+    /**
+     * 減算を行います(行番号の指定を省略)。
+     * @param rhs 足す数
+     * @return 和
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Node sub(Node rhs) throws FatalException {
         return sub(0, rhs);
     }
 
     /**
      * 乗算を行います。
-     * @param location 演算を行う行の行番号
+     * @param location 演算を行う行の行番号(行番号)
      * @param rhs 掛ける数
      * @return 積
-     * @throws Exception 常に例外を発生させます。
+     * @throws FatalException 常に例外を発生させます。
      */
-    public Node multiply(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": `" + toString() + "` に `*` 演算子は使用できません");
+    public Node multiply(int location, Node rhs) throws FatalException {
+        // `*` 演算子は使用できません
+        throw new FatalException(location,  100);
     }
 
-    public Node multiply(Node rhs) throws Exception {
+    /**
+     * 乗算を行います(行番号の指定を省略)。
+     * @param rhs 掛ける数
+     * @return 積
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Node multiply(Node rhs) throws FatalException {
         return multiply(0, rhs);
     }
 
@@ -93,61 +113,152 @@ public class Node {
      * @param location 演算を行う行の行番号
      * @param rhs 割る数
      * @return 商
-     * @throws Exception 常に例外を発生させます。
+     * @throws FatalException 常に例外を発生させます。
      */
-    public Node divide(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": `" + toString() + "` に `/` 演算子は使用できません");
+    public Node divide(int location, Node rhs) throws FatalException {
+        // `/` 演算子は使用できません
+        throw new FatalException(location, 101);
     }
 
-    public Node divide(Node rhs) throws Exception {
+    /**
+     * 除算を行います(行番号の指定を省略)。
+     * @param rhs 割る数
+     * @return 商
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Node divide(Node rhs) throws FatalException {
         return divide(0, rhs);
     }
 
-    public Bool less(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": `" + toString() + "` に `<` 演算子は使用できません");
+    /**
+     * 大小を比較して、このオブジェクトが比較対象「より小さい」場合に真値を返します。
+     * @param location 比較を行う行の行番号
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool less(int location, Node rhs) throws FatalException {
+        // `<` 演算子は使用できません
+        throw new FatalException(location, 102);
     }
 
-    public Bool less(Node rhs) throws Exception {
+    /**
+     * 大小を比較して、このオブジェクトが比較対象「より小さい」場合に真値を返します(行番号の指定を省略)。
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool less(Node rhs) throws FatalException {
         return less(0, rhs);
     }
 
-    public Bool le(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": `" + toString() + "` に `<=` 演算子は使用できません");
+    /**
+     * 大小を比較して、このオブジェクトが比較対象「以下」の場合に真値を返します。
+     * @param location 比較を行う行の行番号
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool le(int location, Node rhs) throws FatalException {
+        // `<=` 演算子は使用できません
+        throw new FatalException(location, 103);
     }
 
-    public Bool le(Node rhs) throws Exception {
+    /**
+     * 大小を比較して、このオブジェクトが比較対象「以下」の場合に真値を返します(行番号の指定を省略)。
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool le(Node rhs) throws FatalException {
         return le(0, rhs);
     }
 
-    public Bool greater(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": `" + toString() + "` に `>` 演算子は使用できません");
+    /**
+     * 大小を比較して、このオブジェクトが比較対象「より大きい」場合に真値を返します。
+     * @param location 比較を行う行の行番号
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool greater(int location, Node rhs) throws FatalException {
+        // `>` 演算子は使用できません。
+        throw new FatalException(location, 104);
     }
 
-    public Bool greater(Node rhs) throws Exception {
+    /**
+     * 大小を比較して、このオブジェクトが比較対象「より大きい」場合に真値を返します(行番号の指定を省略)。
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool greater(Node rhs) throws FatalException {
         return greater(0, rhs);
     }
 
-    public Bool ge(int location, Node rhs) throws Exception {
-        throw new Exception(location + ": `" + toString() + "` に `>=` 演算子は使用できません");
+    /**
+     * 大小を比較して、このオブジェクトが比較対象「以上」の場合に真値を返します。
+     * @param location 比較を行う行の行番号
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool ge(int location, Node rhs) throws FatalException {
+        // `>=` 演算子は使用できません。
+        throw new FatalException(location, 105);
     }
 
-    public Bool ge(Node rhs) throws Exception {
+    /**
+     * 大小を比較して、このオブジェクトが比較対象「以上」の場合に真値を返します。
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 常に例外を発生させます。
+     */
+
+    public Bool ge(Node rhs) throws FatalException {
         return ge(0, rhs);
     }
 
-    public Bool and(int location, Node rhs) throws Exception {
-        throw new Exception(location + "`" + toString() + "` に `&&` 演算子は使用できません");
+    /**
+     * 論理積を返します。
+     * @param location 論理演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 論理積(真偽値)
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool and(int location, Node rhs) throws FatalException {
+        // `&&` 演算子は使用できません。
+        throw new FatalException(location, 106);
     }
 
-    public Bool and(Node rhs) throws Exception {
+    /**
+     * 論理積を返します(行番号の指定を省略)。
+     * @param rhs 右辺
+     * @return 論理積(真偽値)
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool and(Node rhs) throws FatalException {
         return and(0, rhs);
     }
 
-    public Bool or(int location, Node rhs) throws Exception {
-        throw new Exception(location + "`" + toString() + "` に `||` 演算子は使用できません");
+    /**
+     * 論理和を返します。
+     * @param location 論理演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 論理和(真偽値)
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool or(int location, Node rhs) throws FatalException {
+        throw new FatalException(location, 107);
     }
 
-    public Bool or(Node rhs) throws Exception {
+    /**
+     * 論理和を返します(行番号の指定を省略)。
+     * @param rhs 右辺
+     * @return 論理和(真偽値)
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Bool or(Node rhs) throws FatalException {
         return or(0, rhs);
     }
 
