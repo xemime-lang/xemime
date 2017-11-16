@@ -53,7 +53,7 @@ public class BoolTest {
 
     @Test
     public void testAdd() throws FatalException {
-        expectedException.expect(Exception.class);
+        expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [98]");
         Bool.T.add(Bool.T);
     }

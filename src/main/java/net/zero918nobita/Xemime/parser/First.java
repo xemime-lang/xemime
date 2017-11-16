@@ -257,6 +257,8 @@ class First extends ParseUnit {
                 resolver.declareVar(new BoolType(), sym);
             } else if (type_name.equals(Symbol.intern("String"))) {
                 resolver.declareVar(new StrType(), sym);
+            } else if (resolver.hasAttr(type_name)) {
+                resolver.declareVar(new SubstType(type_name), sym);
             } else {
                 throw new SyntaxError(type_name.getLocation(), 73, "`" + type_name + "` 型は定義されていません。");
             }
