@@ -1,10 +1,13 @@
 package net.zero918nobita.Xemime.resolver;
 
+import net.zero918nobita.Xemime.Pair;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.parser.FatalError;
 import net.zero918nobita.Xemime.type.Type;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Stack;
 
 /**
@@ -14,6 +17,7 @@ import java.util.Stack;
 
 public class Resolver {
     private Stack<Scope> scope = new Stack<>();
+    private HashSet<Symbol> substs = new HashSet<>();
     private StaticTypeChecker stc = new StaticTypeChecker();
 
     public Resolver() {
@@ -53,5 +57,14 @@ public class Resolver {
 
     public void removeScope() {
         scope.pop();
+    }
+
+    public void defineAttr(Symbol symbol) throws Exception {
+        if (substs.contains(symbol)) throw new Exception(symbol + "型はすでに定義されています。");
+        substs.add(symbol);
+    }
+
+    public boolean hasAttr(Symbol symbol) {
+        return substs.contains(symbol);
     }
 }
