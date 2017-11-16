@@ -1,9 +1,10 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.ast.FatalException;
 import net.zero918nobita.Xemime.ast.Node;
 
 /**
- * 真偽オブジェクト
+ * 真偽値
  * @author Kodai Matsumoto
  */
 
@@ -36,21 +37,42 @@ public class Bool extends Node {
         return bool;
     }
 
+    /**
+     * この真偽値を左辺、渡されたノードを右辺として論理積を求めます。
+     * @param location 論理演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 論理積(真偽値)
+     * @throws FatalException 右辺が真偽値ではない場合に例外を発生させます。
+     */
     @Override
-    public Bool and(int location, Node node) throws Exception {
-        if (node instanceof Bool) return (bool && (((Bool)node).isTrue())) ? Bool.T : Bool.Nil;
-        else throw new Exception(location + ": `&&` 演算子の右辺が真偽値ではありません");
+    public Bool and(int location, Node rhs) throws FatalException {
+        if (rhs instanceof Bool) return (bool && (((Bool)rhs).isTrue())) ? Bool.T : Bool.Nil;
+        else throw new FatalException(location,  117);
     }
 
+    /**
+     * この真偽値を左辺、渡されたノードを右辺として論理和を求めます。
+     * @param location 論理演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 論理和(真偽値)
+     * @throws FatalException 右辺が真偽値でない場合に例外を発生させます。
+     */
     @Override
-    public Bool or(int location, Node node) throws Exception {
-        if (node instanceof Bool) return (bool || (((Bool) node).isTrue())) ? Bool.T : Bool.Nil;
-        else throw new Exception(location + ": `||` 演算子の右辺が真偽値ではありません");
+    public Bool or(int location, Node rhs) throws FatalException {
+        if (rhs instanceof Bool) return (bool || (((Bool) rhs).isTrue())) ? Bool.T : Bool.Nil;
+        else throw new FatalException(location, 118);
     }
 
+    /**
+     * この真偽値を左辺、渡されたノードを右辺として排他的論理和を求めます。
+     * @param location 論理演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 排他的論理和(真偽値)
+     * @throws FatalException 右辺が真偽値でない場合に例外を発生させます。
+     */
     @Override
-    public Bool xor(int location, Node node) throws Exception {
-        if (node instanceof Bool) return (bool ^ (((Bool) node).isTrue())) ? Bool.T : Bool.Nil;
-        else throw new Exception(location + ": `^` 演算子の右辺が真偽値ではありません");
+    public Bool xor(int location, Node rhs) throws FatalException {
+        if (rhs instanceof Bool) return (bool ^ (((Bool) rhs).isTrue())) ? Bool.T : Bool.Nil;
+        else throw new FatalException(location, 119);
     }
 }

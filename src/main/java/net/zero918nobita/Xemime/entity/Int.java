@@ -3,7 +3,7 @@ package net.zero918nobita.Xemime.entity;
 import net.zero918nobita.Xemime.ast.*;
 
 /**
- * 整数オブジェクト
+ * 整数値
  * @author Kodai Matsumoto
  */
 
@@ -31,99 +31,151 @@ public class Int extends Numeric {
         return value.intValue();
     }
 
-    Double to_d() {
-        return new Double(0, this.getValue());
-    }
-
+    /**
+     * この整数値を左辺、渡されたノードを右辺として加算を行います。
+     * @param line 演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 和
+     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
+     */
     @Override
-    public Numeric add(int line, Node obj) throws Exception {
+    public Numeric add(int line, Node rhs) throws FatalException {
         Numeric result;
-        if (obj.getClass() == Int.class) {
-            Int i = (Int)obj;
+        if (rhs.getClass() == Int.class) {
+            Int i = (Int)rhs;
             result = new Int(0, value.intValue() + i.getValue());
             return result;
-        } else if (obj.getClass() == Double.class) {
-            Double dbl = (Double)obj;
+        } else if (rhs.getClass() == Double.class) {
+            Double dbl = (Double)rhs;
             result = new Double(0, value.intValue() + dbl.getValue());
             return result;
         } else {
-            throw new Exception(line + ": 数値以外のものを足そうとしました");
+            throw new FatalException(line,  106);
         }
     }
 
+    /**
+     * この整数値を左辺、渡されたノードを右辺として減算を行います。
+     * @param line 演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 差
+     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
+     */
     @Override
-    public Numeric sub(int line, Node obj) throws Exception {
+    public Numeric sub(int line, Node rhs) throws FatalException {
         Numeric result;
-        if (obj.getClass() == Int.class) {
-            Int i = (Int)obj;
+        if (rhs.getClass() == Int.class) {
+            Int i = (Int)rhs;
             result = new Int(0, value.intValue() - i.getValue());
             return result;
-        } else if (obj.getClass() == Double.class) {
-            Double dbl = (Double)obj;
+        } else if (rhs.getClass() == Double.class) {
+            Double dbl = (Double)rhs;
             result = new Double(0, value.intValue() - dbl.getValue());
             return result;
         } else {
-            throw new Exception(line + ": 数値以外のものを引こうとしました");
+            throw new FatalException(line, 107);
         }
     }
 
+    /**
+     * この整数を左辺、渡されたノードを右辺として乗算を行います。
+     * @param line 演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 積
+     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
+     */
     @Override
-    public Numeric multiply(int line, Node obj) throws Exception {
+    public Numeric multiply(int line, Node rhs) throws FatalException {
         Numeric result;
-        if (obj.getClass() == Int.class) {
-            Int i = (Int)obj;
+        if (rhs.getClass() == Int.class) {
+            Int i = (Int)rhs;
             result = new Int(0, value.intValue() * i.getValue());
             return result;
-        } else if (obj.getClass() == Double.class) {
-            Double dbl = (Double)obj;
+        } else if (rhs.getClass() == Double.class) {
+            Double dbl = (Double)rhs;
             result = new Double(0, value.intValue() * dbl.getValue());
             return result;
         } else {
-            throw new Exception(line + ": 数値以外のものを掛けようとしました");
+            throw new FatalException(line, 108);
         }
     }
 
+    /**
+     * この整数値を左辺、渡されたノードを右辺として除算が行います。
+     * @param line 演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 商
+     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
+     */
     @Override
-    public Numeric divide(int line, Node obj) throws Exception {
+    public Numeric divide(int line, Node rhs) throws FatalException {
         Numeric result;
-        if (obj.getClass() == Int.class) {
-            Int i = (Int)obj;
+        if (rhs.getClass() == Int.class) {
+            Int i = (Int)rhs;
             result = new Int(0, value.intValue() / i.getValue());
             return result;
-        } else if (obj.getClass() == Double.class) {
-            Double dbl = (Double)obj;
+        } else if (rhs.getClass() == Double.class) {
+            Double dbl = (Double)rhs;
             result = new Double(0, value.intValue() / dbl.getValue());
             return result;
         } else {
-            throw new Exception(line + ": 数値以外のものを割ろうとしました");
+            throw new FatalException(line, 109);
         }
     }
 
+    /**
+     * 大小を比較して、この整数値が比較対象「より小さい」場合に真値を返します。
+     * @param line 比較を行う行の行番号
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
+     */
     @Override
-    public Bool less(int line, Node obj) throws Exception {
-        if (obj instanceof Int) return (this.getValue() < ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
-        else if (obj instanceof Double) return (this.getValue() < ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
-        else throw new Exception(line + ": IntType, DoubleType 以外のデータ型と大小を比較することはできません");
+    public Bool less(int line, Node rhs) throws FatalException {
+        if (rhs instanceof Int) return (this.getValue() < ((Int) rhs).getValue()) ? Bool.T : Bool.Nil;
+        else if (rhs instanceof Double) return (this.getValue() < ((Double) rhs).getValue()) ? Bool.T : Bool.Nil;
+        else throw new FatalException(line, 110);
     }
 
+    /**
+     * 大小を比較して、この整数値が比較対象「以上」の場合に真値を返します。
+     * @param line 比較を行う行の行番号
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
+     */
     @Override
-    public Bool le(int line, Node obj) throws Exception {
-        if (obj instanceof Int) return (this.getValue() <= ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
-        else if (obj instanceof Double) return (this.getValue() <= ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
-        else throw new Exception(line + ": IntType, DoubleType 以外のデータ型と大小を比較することはできません");
+    public Bool le(int line, Node rhs) throws FatalException {
+        if (rhs instanceof Int) return (this.getValue() <= ((Int) rhs).getValue()) ? Bool.T : Bool.Nil;
+        else if (rhs instanceof Double) return (this.getValue() <= ((Double) rhs).getValue()) ? Bool.T : Bool.Nil;
+        else throw new FatalException(line, 111);
     }
 
+    /**
+     * 大小を比較して、この整数値が比較対象「より大きい」場合に真値を返します。
+     * @param line 比較を行う行の行番号
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
+     */
     @Override
-    public Bool greater(int line, Node obj) throws Exception {
-        if (obj instanceof Int) return (this.getValue() > ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
-        else if (obj instanceof Double) return (this.getValue() > ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
-        else throw new Exception(line + ": IntType, DoubleType 以外のデータ型と大小を比較することはできません");
+    public Bool greater(int line, Node rhs) throws FatalException {
+        if (rhs instanceof Int) return (this.getValue() > ((Int) rhs).getValue()) ? Bool.T : Bool.Nil;
+        else if (rhs instanceof Double) return (this.getValue() > ((Double) rhs).getValue()) ? Bool.T : Bool.Nil;
+        else throw new FatalException(line, 112);
     }
 
+    /**
+     * 大小を比較して、この整数値が比較対象「以上」の場合に真値を返します。
+     * @param line 比較を行う行の行番号
+     * @param rhs 比較対象
+     * @return 真偽値
+     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
+     */
     @Override
-    public Bool ge(int line, Node obj) throws Exception {
-        if (obj instanceof Int) return (this.getValue() >= ((Int) obj).getValue()) ? Bool.T : Bool.Nil;
-        else if (obj instanceof Double) return (this.getValue() >= ((Double) obj).getValue()) ? Bool.T : Bool.Nil;
-        else throw new Exception(line + ": IntType, DoubleType 以外のデータ型と大小を比較することはできません");
+    public Bool ge(int line, Node rhs) throws FatalException {
+        if (rhs instanceof Int) return (this.getValue() >= ((Int) rhs).getValue()) ? Bool.T : Bool.Nil;
+        else if (rhs instanceof Double) return (this.getValue() >= ((Double) rhs).getValue()) ? Bool.T : Bool.Nil;
+        else throw new FatalException(line, 113);
     }
 }

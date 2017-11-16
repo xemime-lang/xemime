@@ -104,3 +104,26 @@
 | 103 | Fatal Exception | ``<=`` 演算子は使用できません。 | ``ast.Node#le`` |
 | 104 | Fatal Exception | ``>`` 演算子は使用できません。 | ``ast.Node#greater`` |
 | 105 | Fatal Exception | ``>=`` 演算子は使用できません。 | ``ast.Node#ge`` |
+| 106 | Fatal Exception | 整数に数値型以外のオブジェクトを足すことはできません。 | ``entity.Int#add`` |
+| 107 | Fatal Exception | 整数から数値型以外のオブジェクトを引くことはできません。 | ``entitiy.Int#sub`` |
+| 108 | Fatal Exception | 整数に数値型以外のオブジェクトを掛けることはできません。 | ``entity.Int#multiply`` |
+| 109 | Fatal Exception | 整数を数値型以外のオブジェクトで割ることはできません。 | ``entity.Int#divide`` |
+| 110 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#less`` |
+| 111 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#le`` |
+| 112 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#greater``|
+| 113 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#ge`` |
+| 114 | Fatal Exception | ``&&`` 演算子は使用できません。 | ``ast.Node#and`` |
+| 115 | Fatal Exception | 論理和演算子は使用できません。 | ``ast.Node#or`` |
+| 116 | Fatal Exception | ``^`` 演算子は使用できません。 | ``ast.Node#xor`` |
+| 117 | Fatal Exception | 論理積演算子の右辺が真偽値ではありません。 | ``ast.Bool#and`` |
+| 118 | Fatal Exception | 論理和演算子の右辺が真偽値ではありません。 | ``ast.Bool#or`` |
+| 119 | Fatal Exception | 排他的論理和演算子の右辺が真偽値ではありません。 | ``ast.Bool#xor`` |
+| 120 | Fatal Exception | ``+`` 演算子の右辺が数値ではありません。 | ``ast.Double#add`` |
+| 121 | Fatal Exception | ``-`` 演算子の右辺が数値ではありません。 | ``ast.Double#sub`` |
+| 122 | Fatal Exception | ``*`` 演算子の右辺が数値ではありません。 | ``ast.Double#multiply`` |
+| 123 | Fatal Exception | ``/`` 演算子の右辺が数値ではありません。 | ``ast.Double#divide`` |
+| 124 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#less`` |
+| 125 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#le`` |
+| 126 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#greater``|
+| 127 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#ge`` |
+| 128 | Fatal Exception | Str型オブジェクトに他の型のオブジェクトを加算することはできません。 | ``entity.Str#add`` |

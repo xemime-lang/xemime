@@ -1,9 +1,10 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.ast.FatalException;
 import net.zero918nobita.Xemime.ast.Node;
 
 /**
- * 文字列を表すノードです。
+ * 文字列
  * @author Kodai Matsumoto
  */
 
@@ -29,12 +30,19 @@ public class Str extends Node {
         return (obj instanceof Str) && (this.value.equals(obj.toString()));
     }
 
+    /**
+     * 文字列を結合します。
+     * @param line 文字列の結合を行う行の行番号
+     * @param obj 結合する文字列
+     * @return 結合後の文字列
+     * @throws FatalException 渡されたノードが評価されて文字列にならなかった場合に例外を発生させます。
+     */
     @Override
-    public Str add(int line, Node obj) throws Exception {
+    public Str add(int line, Node obj) throws FatalException {
         if (obj instanceof Str) {
             return new Str(0, this.value + ((Str) obj).value);
         } else {
-            throw new Exception(line + ": String型オブジェクトに他の型のオブジェクトを加算することはできません");
+            throw new FatalException(line, 128);
         }
     }
 }
