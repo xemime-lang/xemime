@@ -15,6 +15,10 @@ public class Double extends Numeric {
         value = num;
     }
 
+    public Double(double num) {
+        this(0, num);
+    }
+
     @Override
     public String toString() {
         return String.valueOf(value);

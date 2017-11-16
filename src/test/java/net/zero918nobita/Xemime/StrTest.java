@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.FatalException;
 import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.entity.Str;
 import org.junit.Rule;
@@ -25,9 +26,9 @@ public class StrTest {
     }
 
     @Test
-    public void testAdd2() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: String型オブジェクトに他の型のオブジェクトを加算することはできません");
-        new Str("foo").add(new Int(0, 2));
+    public void testAdd2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [128]");
+        new Str("foo").add(new Int(2));
     }
 }

@@ -21,8 +21,8 @@ public class MinusNodeTest {
 
     @Test
     public void testRun() throws Exception {
-        MinusNode minus = new MinusNode(0, new Double(0, 0.2));
-        assertThat(minus.run(), is(new Double(0, -0.2)));
+        MinusNode minus = new MinusNode(0, new Double(0.2));
+        assertThat(minus.run(), is(new Double(-0.2)));
     }
 
     @Test

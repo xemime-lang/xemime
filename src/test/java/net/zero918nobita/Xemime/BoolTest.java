@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime;
 
+import net.zero918nobita.Xemime.ast.FatalException;
 import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.entity.Str;
 import net.zero918nobita.Xemime.interpreter.Main;
@@ -51,58 +52,58 @@ public class BoolTest {
     }
 
     @Test
-    public void testAdd() throws Exception {
+    public void testAdd() throws FatalException {
         expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `T` に `+` 演算子は使用できません");
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [98]");
         Bool.T.add(Bool.T);
     }
 
     @Test
-    public void testSub() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `T` に `-` 演算子は使用できません");
+    public void testSub() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [99]");
         Bool.T.sub(Bool.T);
     }
 
     @Test
-    public void testMultiply() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `T` に `*` 演算子は使用できません");
+    public void testMultiply() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [100]");
         Bool.T.multiply(Bool.T);
     }
 
     @Test
-    public void testDivide() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `T` に `/` 演算子は使用できません");
+    public void testDivide() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [101]");
         Bool.T.divide(Bool.T);
     }
 
     @Test
-    public void testLess() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `T` に `<` 演算子は使用できません");
+    public void testLess() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [102]");
         Bool.T.less(Bool.Nil);
     }
 
     @Test
-    public void testLe() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `T` に `<=` 演算子は使用できません");
+    public void testLe() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [103]");
         Bool.T.le(Bool.Nil);
     }
 
     @Test
-    public void testGreater() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `T` に `>` 演算子は使用できません");
+    public void testGreater() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [104]");
         Bool.T.greater(Bool.Nil);
     }
 
     @Test
-    public void testGe() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `T` に `>=` 演算子は使用できません");
+    public void testGe() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [105]");
         Bool.T.ge(Bool.Nil);
     }
 
@@ -115,9 +116,9 @@ public class BoolTest {
     }
 
     @Test
-    public void testAnd2() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `&&` 演算子の右辺が真偽値ではありません");
+    public void testAnd2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [117]");
         Bool.T.and(new Str("foo"));
     }
 
@@ -130,9 +131,9 @@ public class BoolTest {
     }
 
     @Test
-    public void testOr2() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("0: `||` 演算子の右辺が真偽値ではありません");
+    public void testOr2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [118]");
         Bool.T.or(new Str("foo"));
     }
 
@@ -145,9 +146,9 @@ public class BoolTest {
     }
 
     @Test
-    public void testXor2() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage(": `^` 演算子の右辺が真偽値ではありません");
+    public void testXor2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [119]");
         Bool.T.xor(new Str("foo"));
     }
 }

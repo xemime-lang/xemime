@@ -13,6 +13,10 @@ public class Int extends Numeric {
         value = num;
     }
 
+    public Int(int num) {
+        this(0, num);
+    }
+
     @Override
     public String toString() {
         return String.valueOf(value);

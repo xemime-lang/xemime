@@ -17,13 +17,13 @@ import static org.junit.Assert.assertTrue;
 public class DoubleTest {
     @Test
     public void testToString() {
-        assertThat(new Double(0, 0.2).toString(), is("0.2"));
+        assertThat(new Double(0.2).toString(), is("0.2"));
     }
 
     @Test
     public void testEquals() {
-        assertTrue(new Double(0, 0.2).equals(new Double(0, 0.20)));
-        assertTrue(new Double(0, 2.0).equals(new Int(0, 2)));
-        assertFalse(new Double(0, 0.2).equals(new Double(0, 2)));
+        assertTrue(new Double(0.2).equals(new Double(0.20)));
+        assertTrue(new Double(2.0).equals(new Int(2)));
+        assertFalse(new Double(0.2).equals(new Double(2)));
     }
 }
