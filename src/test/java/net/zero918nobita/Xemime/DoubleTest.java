@@ -67,9 +67,23 @@ public class DoubleTest {
     }
 
     @Test
+    public void testMultiply2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [122]");
+        new Double(0.2).multiply(new Str("hello"));
+    }
+
+    @Test
     public void testDivide() throws FatalException {
         assertThat(new Double(0.2).divide(new Double(0.1)).toString(), is("2.0"));
         assertThat(new Double(0.2).divide(new Int(2)).toString(), is("0.1"));
+    }
+
+    @Test
+    public void testDivide2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [123]");
+        new Double(0.2).divide(new Str("hello"));
     }
 
     @Test
@@ -77,6 +91,16 @@ public class DoubleTest {
         assertThat(new Double(0.2).less(new Double(0.3)).toString(), is("T"));
         assertThat(new Double(0.3).less(new Double(0.2)).toString(), is("NIL"));
         assertThat(new Double(0.2).less(new Double(0.2)).toString(), is("NIL"));
+        assertThat(new Double(0.2).less(new Int(2)).toString(), is("T"));
+        assertThat(new Double(1.2).less(new Int(1)).toString(), is("NIL"));
+        assertThat(new Double(1.0).less(new Int(1)).toString(), is("NIL"));
+    }
+
+    @Test
+    public void testLess2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [124]");
+        new Double(0.2).less(new Str("hello"));
     }
 
     @Test
@@ -84,6 +108,16 @@ public class DoubleTest {
         assertThat(new Double(0.2).le(new Double(0.3)).toString(), is("T"));
         assertThat(new Double(0.3).le(new Double(0.2)).toString(), is("NIL"));
         assertThat(new Double(0.2).le(new Double(0.2)).toString(), is("T"));
+        assertThat(new Double(0.2).le(new Int(2)).toString(), is("T"));
+        assertThat(new Double(1.2).le(new Int(1)).toString(), is("NIL"));
+        assertThat(new Double(1.0).le(new Int(1)).toString(), is("T"));
+    }
+
+    @Test
+    public void testLe2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [125]");
+        new Double(0.2).le(new Str("hello"));
     }
 
     @Test
@@ -91,6 +125,16 @@ public class DoubleTest {
         assertThat(new Double(0.2).greater(new Double(0.1)).toString(), is("T"));
         assertThat(new Double(0.1).greater(new Double(0.2)).toString(), is("NIL"));
         assertThat(new Double(0.2).greater(new Double(0.2)).toString(), is("NIL"));
+        assertThat(new Double(0.2).greater(new Int(0)).toString(), is("T"));
+        assertThat(new Double(0.2).greater(new Int(1)).toString(), is("NIL"));
+        assertThat(new Double(1.0).greater(new Int(1)).toString(), is("NIL"));
+    }
+
+    @Test
+    public void testGreater2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [126]");
+        new Double(0.2).greater(new Str("hello"));
     }
 
     @Test
@@ -98,5 +142,15 @@ public class DoubleTest {
         assertThat(new Double(0.2).ge(new Double(0.1)).toString(), is("T"));
         assertThat(new Double(0.1).ge(new Double(0.2)).toString(), is("NIL"));
         assertThat(new Double(0.2).ge(new Double(0.2)).toString(), is("T"));
+        assertThat(new Double(0.2).ge(new Int(0)).toString(), is("T"));
+        assertThat(new Double(0.2).ge(new Int(1)).toString(), is("NIL"));
+        assertThat(new Double(1.0).ge(new Int(1)).toString(), is("T"));
+    }
+
+    @Test
+    public void testGe2() throws FatalException {
+        expectedException.expect(FatalException.class);
+        expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [127]");
+        new Double(0.2).ge(new Str("hello"));
     }
 }
