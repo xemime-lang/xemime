@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.entity.Range;
 import net.zero918nobita.Xemime.entity.Unit;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class ForNode extends Node {
+public class ForNode extends Node implements Recognizable {
     private Symbol counter;
     private Node range;
     private ArrayList<Node> body;
@@ -22,6 +24,11 @@ public class ForNode extends Node {
         this.counter = counter;
         this.range = range;
         this.body = body;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.FOR;
     }
 
     @Override

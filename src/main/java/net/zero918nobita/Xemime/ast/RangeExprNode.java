@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.entity.Range;
 
@@ -8,7 +10,7 @@ import net.zero918nobita.Xemime.entity.Range;
  * @author Kodai Matsumoto
  */
 
-public class RangeExprNode extends Node {
+public class RangeExprNode extends Node implements Recognizable {
     private Node left;
     private Node right;
     private boolean hasMaxElement;
@@ -18,6 +20,11 @@ public class RangeExprNode extends Node {
         this.left = left;
         this.right = right;
         this.hasMaxElement = hasMaxElement;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.RANGE_EXPR;
     }
 
     @Override

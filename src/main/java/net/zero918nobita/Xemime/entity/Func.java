@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 
@@ -12,10 +14,15 @@ import java.util.LinkedHashMap;
  * @author Kodai Matsumoto
  */
 
-public abstract class Func extends Node {
+public abstract class Func extends Node implements Recognizable {
 
     Func(int location) {
         super(location);
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.FUNC;
     }
 
     /** 引数の個数 */

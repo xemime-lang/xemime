@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Bool;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import java.util.LinkedHashMap;
  * @author Kodai Matsumoto
  */
 
-public class Node {
+public class Node implements Recognizable {
     /** 行番号 */
     private int location;
 
@@ -22,6 +24,11 @@ public class Node {
      */
     public Node(int location) {
         this.location = location;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.NODE;
     }
 
     /**

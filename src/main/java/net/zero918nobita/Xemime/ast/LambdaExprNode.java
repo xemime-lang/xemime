@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.entity.Closure;
 import net.zero918nobita.Xemime.entity.Handler;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class LambdaExprNode extends Node {
+public class LambdaExprNode extends Node implements Recognizable {
     private int line;
     private ArrayList<Symbol> params;
     private Node body;
@@ -22,6 +24,11 @@ public class LambdaExprNode extends Node {
         line = location;
         this.params = params;
         this.body = body;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.LAMBDA_EXPR;
     }
 
     @Override

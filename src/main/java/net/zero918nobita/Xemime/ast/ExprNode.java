@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Address;
 import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.lexer.TokenType;
@@ -11,7 +13,7 @@ import net.zero918nobita.Xemime.lexer.TokenType;
  * @author Kodai Matsumoto
  */
 
-public class ExprNode extends Node {
+public class ExprNode extends Node implements Recognizable {
     /** 演算子の種類 */
     private TokenType op;
     /** 左辺 */
@@ -31,6 +33,11 @@ public class ExprNode extends Node {
         op = operator;
         this.lhs = lhs;
         this.rhs = rhs;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.EXPR;
     }
 
     /**

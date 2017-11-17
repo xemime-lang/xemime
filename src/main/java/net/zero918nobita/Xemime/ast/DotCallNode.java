@@ -1,5 +1,8 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,7 +12,7 @@ import java.util.Map;
  * @author Kodai Matsumoto
  */
 
-public class DotCallNode extends Node {
+public class DotCallNode extends Node implements Recognizable {
     private Node obj;
     private Symbol symbol;
     private ArrayList<Node> list;
@@ -20,6 +23,11 @@ public class DotCallNode extends Node {
         obj = object;
         symbol = sym;
         this.list = list;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.DOT_CALL;
     }
 
     public DotCallNode(int location, Node object, Symbol sym, LinkedHashMap<Symbol, Node> map) {

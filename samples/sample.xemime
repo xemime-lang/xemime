@@ -8,6 +8,11 @@ fn foo(a : Int, b : Int) -> Int {
 println $ "Hello World!"
 println $ 1 `foo` 2
 
+let obj = Object.clone()
+obj.a = 2
+println $ obj.a
+
+/*
 fn func2(x :Int) -> Int {
     return x + func1(x)
 }
@@ -17,3 +22,4 @@ fn func1(x :Int) {
 }
 
 println $ func2 $ 2
+*/

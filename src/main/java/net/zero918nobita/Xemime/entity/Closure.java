@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.interpreter.Frame;
@@ -14,7 +16,7 @@ import java.util.Map;
  * @author Kodai Matsumoto
  */
 
-public class Closure extends Func {
+public class Closure extends Func implements Recognizable {
     protected ArrayList<Symbol> params;
     protected Address self = null;
     protected Node body;
@@ -31,6 +33,11 @@ public class Closure extends Func {
         body = obj;
         captured = frame;
         if (params != null) numberOfArgs = params.size();
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.CLOSURE;
     }
 
     @Override

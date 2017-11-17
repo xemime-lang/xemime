@@ -1,11 +1,14 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
+
 /**
  * フィールド参照を表すノードです。
  * @author Kodai Matsumoto
  */
 
-public class DotExprNode extends Node {
+public class DotExprNode extends Node implements Recognizable {
     private Node obj;
     private Symbol symbol;
 
@@ -13,6 +16,11 @@ public class DotExprNode extends Node {
         super(location);
         obj = object;
         symbol = sym;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.DOT_EXPR;
     }
 
     @Override

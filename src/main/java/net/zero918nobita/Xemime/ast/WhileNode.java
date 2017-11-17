@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.entity.Unit;
 
@@ -10,7 +12,7 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class WhileNode extends Node {
+public class WhileNode extends Node implements Recognizable {
     private Node condition;
     private ArrayList<Node> body;
 
@@ -18,6 +20,11 @@ public class WhileNode extends Node {
         super(location);
         this.condition = condition;
         this.body = body;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.WHILE;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Address;
 import net.zero918nobita.Xemime.entity.Handler;
 import net.zero918nobita.Xemime.interpreter.Main;
@@ -9,7 +11,7 @@ import net.zero918nobita.Xemime.interpreter.Main;
  * @author Kodai Matsumoto
  */
 
-public class DotAssignNode extends Node {
+public class DotAssignNode extends Node implements Recognizable {
     private Node code1;
     private Symbol symbol;
     private Node code2;
@@ -19,6 +21,11 @@ public class DotAssignNode extends Node {
         code1 = object;
         symbol = sym;
         code2 = rhs;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.DOT_ASSIGN;
     }
 
     @Override

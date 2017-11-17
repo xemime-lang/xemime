@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.ast.Node;
 
 /**
@@ -9,12 +11,17 @@ import net.zero918nobita.Xemime.ast.Node;
  * @author Kodai Matsumoto
  */
 
-public class Address extends Node implements Comparable {
+public class Address extends Node implements Comparable, Recognizable {
     private int address;
 
     public Address(int location, int address) {
         super(location);
         this.address = address;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.ADDRESS;
     }
 
     /** アドレスを取得します。 */

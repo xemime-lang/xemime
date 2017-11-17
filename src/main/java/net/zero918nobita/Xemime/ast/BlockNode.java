@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Handler;
 import net.zero918nobita.Xemime.interpreter.Main;
 
@@ -11,12 +13,17 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class BlockNode extends Node {
+public class BlockNode extends Node implements Recognizable {
     private ArrayList<Node> list;
 
     public BlockNode(int location, ArrayList<Node> list) {
         super(location);
         this.list = list;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.BLOCK;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Bool;
 
 /**
@@ -8,12 +10,17 @@ import net.zero918nobita.Xemime.entity.Bool;
  * @author Kodai Matsumoto
  */
 
-public class NotNode extends Node {
+public class NotNode extends Node implements Recognizable {
     private Node node;
 
     public NotNode(int location, Node node) {
         super(location);
         this.node = node;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.NOT;
     }
 
     @Override

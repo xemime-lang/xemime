@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.ast.FatalException;
 import net.zero918nobita.Xemime.ast.Node;
 
@@ -8,7 +10,7 @@ import net.zero918nobita.Xemime.ast.Node;
  * @author Kodai Matsumoto
  */
 
-public class Double extends Numeric {
+public class Double extends Numeric implements Recognizable {
 
     public Double(int location, double num) {
         super(location);
@@ -17,6 +19,11 @@ public class Double extends Numeric {
 
     public Double(double num) {
         this(0, num);
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.DOUBLE;
     }
 
     @Override

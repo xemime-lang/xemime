@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Int;
 import net.zero918nobita.Xemime.interpreter.Main;
 
@@ -8,13 +10,18 @@ import net.zero918nobita.Xemime.interpreter.Main;
  * @author Kodai Matsumotopackage net.zero918nobita.Xemime.ast;
  */
 
-public class SuffixDecrementNode extends Node {
+public class SuffixDecrementNode extends Node implements Recognizable {
     private Symbol symbol;
     private static Int one = new Int(0, 1);
 
     public SuffixDecrementNode(int location, Symbol symbol) {
         super(location);
         this.symbol = symbol;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.SUFFIX_DEC;
     }
 
     @Override

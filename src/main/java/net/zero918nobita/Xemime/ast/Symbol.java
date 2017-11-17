@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Address;
 import net.zero918nobita.Xemime.interpreter.Main;
 
@@ -10,13 +12,18 @@ import java.util.HashMap;
  * @author Kodai Matsumoto
  */
 
-public class Symbol extends Node implements Comparable<Symbol> {
+public class Symbol extends Node implements Comparable<Symbol>, Recognizable {
     private static HashMap<String, Symbol> table = new HashMap<>();
     private String name;
 
     public Symbol(int location, String name) {
         super(location);
         this.name = name;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.SYMBOL;
     }
 
     @Override

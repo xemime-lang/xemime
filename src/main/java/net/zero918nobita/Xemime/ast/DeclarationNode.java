@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Address;
 import net.zero918nobita.Xemime.interpreter.Main;
 import net.zero918nobita.Xemime.lexer.TokenType;
@@ -9,9 +11,14 @@ import net.zero918nobita.Xemime.lexer.TokenType;
  * @author Kodai Matsumoto
  */
 
-public class DeclarationNode extends ExprNode {
+public class DeclarationNode extends ExprNode implements Recognizable {
     public DeclarationNode(int location, Symbol symbol, Node node) {
         super(location, TokenType.DECLARE, symbol, node);
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.DECLARATION;
     }
 
     public Node run() throws Exception {

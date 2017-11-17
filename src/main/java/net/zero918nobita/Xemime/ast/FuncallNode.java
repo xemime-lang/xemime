@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Func;
 import net.zero918nobita.Xemime.entity.Native;
 import net.zero918nobita.Xemime.interpreter.Main;
@@ -13,7 +15,7 @@ import java.util.Map;
  * @author Kodai Matsumoto
  */
 
-public class FuncallNode extends Node {
+public class FuncallNode extends Node implements Recognizable {
     private Node func;
     private LinkedHashMap<Symbol, Node> map;
     private ArrayList<Node> arrayList;
@@ -27,6 +29,11 @@ public class FuncallNode extends Node {
             throw new FatalException(getLocation(), 9);
         }
         this.map = map;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.FUNCALL;
     }
 
     public FuncallNode(int location, Node node, ArrayList<Node> arrayList) throws Exception {

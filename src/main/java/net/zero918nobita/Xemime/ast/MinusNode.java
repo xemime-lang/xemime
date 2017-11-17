@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Double;
 import net.zero918nobita.Xemime.entity.Int;
 
@@ -9,12 +11,17 @@ import net.zero918nobita.Xemime.entity.Int;
  * @author Kodai Matsumoto
  */
 
-public class MinusNode extends Node {
+public class MinusNode extends Node implements Recognizable {
     private Node node;
 
     public MinusNode(int location, Node node) {
         super(location);
         this.node = node;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.MINUS;
     }
 
     @Override

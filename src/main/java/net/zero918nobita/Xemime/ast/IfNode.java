@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Bool;
 
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
  * @author Kodai Matsumoto
  */
 
-public class IfNode extends Node {
+public class IfNode extends Node implements Recognizable {
     private Node condition;
     private ArrayList<Node> then;
     private ArrayList<Node> els;
@@ -19,6 +21,11 @@ public class IfNode extends Node {
         this.condition = condition;
         this.then = then;
         this.els = els;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.IF;
     }
 
     @Override

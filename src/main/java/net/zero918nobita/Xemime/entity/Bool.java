@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.NodeType;
 import net.zero918nobita.Xemime.ast.FatalException;
 import net.zero918nobita.Xemime.ast.Node;
 
@@ -17,6 +18,11 @@ public class Bool extends Node {
     public Bool(int location, boolean bool) {
         super(location);
         this.bool = bool;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.BOOL;
     }
 
     public Bool(boolean bool) {

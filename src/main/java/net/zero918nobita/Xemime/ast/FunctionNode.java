@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Function;
 import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.interpreter.Main;
@@ -13,7 +15,7 @@ import java.util.LinkedHashMap;
  * @author Kodai Matsumoto
  */
 
-public class FunctionNode extends Node {
+public class FunctionNode extends Node implements Recognizable {
     private int line;
     private Symbol name;
     private Type type;
@@ -27,6 +29,11 @@ public class FunctionNode extends Node {
         this.type = type;
         this.params = params;
         this.body = body;
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.FN;
     }
 
     @Override
