@@ -1,25 +1,2 @@
-fn foo(a : Int, b : Int) -> Int {
-    fn bar(n :Int) -> Int {
-        return n + 1
-    }
-    return a + b - bar(3)
-}
-
-println $ "Hello World!"
-println $ 1 `foo` 2
-
-let obj = Object.clone()
-obj.a = 2
-println $ obj.a
-
-/*
-fn func2(x :Int) -> Int {
-    return x + func1(x)
-}
-
-fn func1(x :Int) {
-    return x + 2
-}
-
-println $ func2 $ 2
-*/
+let a = #x -> x * x
+println $ a(3) + a(4)
