@@ -294,6 +294,13 @@ public class Main {
             protected Address exec(LinkedHashMap<Symbol, Node> params, Address self) throws Exception {
                 return Main.register(params.get(Symbol.intern("this")).run());
             }
+
+            @Override
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
+                return exec(new LinkedHashMap<Symbol, Node>(){{
+                    put(Symbol.intern("this"), params.get(0));
+                }}, self);
+            }
         }
 
         private static class X_New extends Native {
@@ -313,6 +320,13 @@ public class Main {
                     }
                 }
                 return Main.register(obj2);
+            }
+
+            @Override
+            protected Node exec(ArrayList<Node> params, Address self) throws Exception {
+                return exec(new LinkedHashMap<Symbol, Node>(){{
+                    put(Symbol.intern("this"), params.get(0));
+                }}, self);
             }
         }
     }
