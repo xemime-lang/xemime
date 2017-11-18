@@ -5,6 +5,7 @@ import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
+import net.zero918nobita.Xemime.type.AnyType;
 import net.zero918nobita.Xemime.type.ArrayType;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ class Lambda extends ParseUnit {
         }
         getToken();
         resolver.addScope();
-        for (Symbol sym : list) resolver.declareVar(new ArrayType(), sym);
+        for (Symbol sym : list) resolver.declareVar(new AnyType(), sym);
         Node expr = new LogicalExpr(lexer, resolver).parse();
         resolver.removeScope();
         return new LambdaExprNode(lexer.getLocation(), list, expr);
