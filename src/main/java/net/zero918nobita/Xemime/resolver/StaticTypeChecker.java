@@ -7,6 +7,8 @@ import net.zero918nobita.Xemime.entity.Double;
 import net.zero918nobita.Xemime.parser.FatalError;
 import net.zero918nobita.Xemime.type.*;
 
+import java.util.LinkedHashMap;
+
 /**
  * 意味解析中に、静的型チェックを行います。
  * @author Kodai Matsumoto
@@ -29,8 +31,12 @@ class StaticTypeChecker {
                 return check(resolver, (MinusNode) node);
             case EXPR:
                 return check(resolver, (ExprNode) node);
+            case LAMBDA_EXPR:
+                return check(resolver, (LambdaExprNode) node);
             case FUNCALL:
                 return check(resolver, (FuncallNode) node);
+            case DOT_EXPR:
+                return check(resolver, (DotExprNode) node);
             case DOT_CALL:
                 return check(resolver, (DotCallNode) node);
             default:
@@ -106,15 +112,34 @@ class StaticTypeChecker {
                 } else if (tLhs instanceof DoubleType) {
                     if (tRhs instanceof IntType || tRhs instanceof DoubleType) {
                         return new DoubleType();
+                    } else if (tRhs instanceof AnyType) {
+                        return new AnyType();
                     } else {
                         throw new TypeError(exprNode.getLocation(), 58, "演算子の右辺のデータの型が不正です。");
                     }
+                } else if (tLhs instanceof AnyType) {
+                    return new AnyType();
                 } else {
-                    throw new TypeError(exprNode.getLocation(), 57,  "演算子の左辺のデータの型が不正です。");
+                    throw new TypeError(exprNode.getLocation(), 57, "演算子の左辺のデータの型が不正です。");
+                }
+            case AND:
+            case OR:
+            case XOR:
+                if ((tLhs instanceof BoolType || tLhs instanceof AnyType) &&
+                        (tRhs instanceof BoolType || tRhs instanceof AnyType)) {
+                    return new BoolType();
+                } else if (tLhs instanceof BoolType || tLhs instanceof AnyType) {
+                    throw new TypeError(exprNode.getLocation(), 129, "論理演算子の右辺のデータの型が不正です。");
+                } else {
+                    throw new TypeError(exprNode.getLocation(), 130, "論理演算子の左辺のデータの型が不正です。");
                 }
             default:
                 throw new FatalError(exprNode.getLocation(), 60);
         }
+    }
+
+    private Type check(Resolver resolver, LambdaExprNode lambdaExprNode) throws TypeError, SemanticError, FatalError {
+        return new FuncType(new AnyType(), new LinkedHashMap<>());
     }
 
     private Type check(Resolver resolver, FuncallNode funcallNode) throws TypeError, SemanticError, FatalError {
@@ -125,7 +150,6 @@ class StaticTypeChecker {
             if (type instanceof FuncType) {
                 type = ((FuncType)type).getReturnType();
             } else {
-                // Type Error - 指定されたシンボルの型が関数型ではありません。
                 throw new TypeError(func.getLocation(), 97, "指定されたシンボルの型が関数型ではありません。");
             }
         } else if (!(func instanceof Native)) {
@@ -135,6 +159,10 @@ class StaticTypeChecker {
             type = ((Native) func).getReturnType();
         }
         return type;
+    }
+
+    private Type check(Resolver resolver, DotExprNode dotExprNode) throws TypeError, SemanticError, FatalError {
+        return new IntType();
     }
 
     private Type check(Resolver resolver, DotCallNode dotCallNode) throws TypeError, SemanticError, FatalError {
