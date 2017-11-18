@@ -30,7 +30,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <author>true</author>
-                    <source>1.7</source>
+                    <source>1.8</source>
                     <show>private</show>
                     <encoding>UTF-8</encoding>
                     <charset>UTF-8</charset>
