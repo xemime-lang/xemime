@@ -127,3 +127,5 @@
 | 126 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#greater``|
 | 127 | Fatal Exception | 整数を Int / Double 以外の型のデータと比較することはできません。 | ``entity.Int#ge`` |
 | 128 | Fatal Exception | Str型オブジェクトに他の型のオブジェクトを加算することはできません。 | ``entity.Str#add`` |
+| 129 | Type Error |  |  |
+| 130 | Type Error |  |  |

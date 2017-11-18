@@ -38,7 +38,13 @@ public class FuncallNode extends Node implements Recognizable {
 
     public FuncallNode(int location, Node node, ArrayList<Node> arrayList) throws Exception {
         super(location);
-        if (node instanceof Symbol || node instanceof Native) {
+        if (node instanceof Symbol ||
+                node instanceof Native ||
+                node instanceof LambdaExprNode ||
+                node instanceof ExprNode ||
+                node instanceof DotAssignNode ||
+                node instanceof DotExprNode ||
+                node instanceof DotCallNode) {
             func = node;
         } else {
             // Fatal Exception - 関数呼び出しに失敗しました。
@@ -60,38 +66,40 @@ public class FuncallNode extends Node implements Recognizable {
                 params.put(Symbol.intern("this"), func);
                 return ((Native) func).call(getLocation(), params, null);
             } else {
-                Symbol symbol = (Symbol) func;
-                Node c = Main.getValueOfSymbol(symbol);
-
-                // Fatal Exception - 指定された関数は存在しません。
-                if (c == null) throw new FatalException(getLocation(), 12);
-
-                // Fatal Exception - 呼び出し対象が関数ではありません。
-                if (!(c instanceof Func)) throw new FatalException(getLocation(), 13);
-
-                Func func = (Func) c;
+                if (func instanceof Symbol) {
+                    Symbol symbol = (Symbol) func;
+                    Node c = Main.getValueOfSymbol(symbol);
+                    // Fatal Exception - 指定された関数は存在しません。
+                    if (c == null) throw new FatalException(getLocation(), 12);
+                    // Fatal Exception - 呼び出し対象が関数ではありません。
+                    if (!(c instanceof Func)) throw new FatalException(getLocation(), 13);
+                    func = c;
+                } else {
+                    func = func.run();
+                }
                 LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
                 for (Map.Entry<Symbol, Node> entry : map.entrySet()) params.put(entry.getKey(), entry.getValue().run());
                 params.put(Symbol.intern("this"), func);
-                return func.call(getLocation(), params, null);
+                return ((Func)func).call(getLocation(), params, null);
             }
         } else {
             if (func instanceof Native) {
                 arrayList.add(0, func);
                 return ((Native) func).call(getLocation(), arrayList, null);
             } else {
-                Symbol symbol = (Symbol) func;
-                Node c = Main.getValueOfSymbol(symbol);
-
-                // Fatal Exception - 指定された関数は存在しません
-                if (c == null) throw new FatalException(getLocation(), 89);
-
-                // Fatal Exception - 呼び出し対象が関数ではありません
-                if (!(c instanceof Func)) throw new FatalException(getLocation(), 90);
-
-                Func func = (Func) c;
+                if (func instanceof Symbol) {
+                    Symbol symbol = (Symbol) func;
+                    Node c = Main.getValueOfSymbol(symbol);
+                    // Fatal Exception - 指定された関数は存在しません
+                    if (c == null) throw new FatalException(getLocation(), 89);
+                    // Fatal Exception - 呼び出し対象が関数ではありません
+                    if (!(c instanceof Func)) throw new FatalException(getLocation(), 90);
+                    func = c;
+                } else {
+                    func = func.run();
+                }
                 arrayList.add(0, func);
-                return func.call(getLocation(), arrayList, null);
+                return ((Func)func).call(getLocation(), arrayList, null);
             }
         }
     }
