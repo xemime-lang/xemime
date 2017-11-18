@@ -1,5 +1,6 @@
 package net.zero918nobita.Xemime.resolver;
 
+import net.zero918nobita.Xemime.NodeType;
 import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.entity.Double;
@@ -13,24 +14,28 @@ import net.zero918nobita.Xemime.type.*;
 
 class StaticTypeChecker {
     Type check(Resolver resolver, Node node) throws TypeError, SemanticError, FatalError {
-        if (node instanceof Bool) {
-            return check(resolver, (Bool) node);
-        }else if (node instanceof Int) {
-            return check(resolver, (Int) node);
-        } else if (node instanceof Double) {
-            return check(resolver, (Double) node);
-        } else if (node instanceof Str) {
-            return check(resolver, (Str) node);
-        } else if (node instanceof Symbol) {
-            return check(resolver, (Symbol) node);
-        } else if (node instanceof MinusNode) {
-            return check(resolver, (MinusNode) node);
-        } else if (node instanceof ExprNode) {
-            return check(resolver, (ExprNode) node);
-        } else if (node instanceof FuncallNode) {
-            return check(resolver, (FuncallNode)node);
-        } else {
-            throw new TypeError(node.getLocation(), 64, "");
+        switch (node.recognize()) {
+            case BOOL:
+                return check(resolver, (Bool) node);
+            case INT:
+                return check(resolver, (Int) node);
+            case DOUBLE:
+                return check(resolver, (Double) node);
+            case STR:
+                return check(resolver, (Str) node);
+            case SYMBOL:
+                return check(resolver, (Symbol) node);
+            case MINUS:
+                return check(resolver, (MinusNode) node);
+            case EXPR:
+                return check(resolver, (ExprNode) node);
+            case FUNCALL:
+                return check(resolver, (FuncallNode) node);
+            case DOT_CALL:
+                return check(resolver, (DotCallNode) node);
+            default:
+                System.out.println(node.getClass());
+                throw new TypeError(node.getLocation(), 64, "");
         }
     }
 
@@ -115,7 +120,7 @@ class StaticTypeChecker {
     private Type check(Resolver resolver, FuncallNode funcallNode) throws TypeError, SemanticError, FatalError {
         Node func = funcallNode.getFunc();
         Type type;
-        if (func instanceof Symbol) {
+        if (func.is(NodeType.SYMBOL)) {
             type = resolver.getTypeOfVariable((Symbol)func);
             if (type instanceof FuncType) {
                 type = ((FuncType)type).getReturnType();
@@ -130,5 +135,9 @@ class StaticTypeChecker {
             type = ((Native) func).getReturnType();
         }
         return type;
+    }
+
+    private Type check(Resolver resolver, DotCallNode dotCallNode) throws TypeError, SemanticError, FatalError {
+        return new IntType();
     }
 }

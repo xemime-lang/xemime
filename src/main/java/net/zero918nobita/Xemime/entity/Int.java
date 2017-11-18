@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.ast.*;
 
 /**
@@ -7,7 +9,7 @@ import net.zero918nobita.Xemime.ast.*;
  * @author Kodai Matsumoto
  */
 
-public class Int extends Numeric {
+public class Int extends Numeric implements Recognizable {
     public Int(int location, int num) {
         super(location);
         value = num;
@@ -15,6 +17,11 @@ public class Int extends Numeric {
 
     public Int(int num) {
         this(0, num);
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.INT;
     }
 
     @Override

@@ -31,6 +31,11 @@ public class Node implements Recognizable {
         return NodeType.NODE;
     }
 
+    @Override
+    public boolean is(NodeType comparison) {
+        return comparison == recognize();
+    }
+
     /**
      * 行番号を取得します。
      * @return 行番号

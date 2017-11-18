@@ -7,4 +7,5 @@ package net.zero918nobita.Xemime;
 
 public interface Recognizable {
     NodeType recognize();
+    boolean is(NodeType comparison);
 }
