@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.entity;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.ast.FatalException;
 import net.zero918nobita.Xemime.ast.Node;
 
@@ -8,7 +10,7 @@ import net.zero918nobita.Xemime.ast.Node;
  * @author Kodai Matsumoto
  */
 
-public class Str extends Node {
+public class Str extends Node implements Recognizable {
     private final String value;
 
     public Str(int location, String str) {
@@ -18,6 +20,11 @@ public class Str extends Node {
 
     public Str(String str) {
         this(0, str);
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.STR;
     }
 
     @Override
