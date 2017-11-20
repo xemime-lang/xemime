@@ -22,18 +22,19 @@ public class FuncallNode extends Node implements Recognizable {
 
     public FuncallNode(int location, Node node, LinkedHashMap<Symbol, Node> map) throws Exception {
         super(location);
-        if (node instanceof Symbol || node instanceof Native) {
+        if (node instanceof Symbol ||
+                node instanceof Native ||
+                node instanceof LambdaExprNode ||
+                node instanceof ExprNode ||
+                node instanceof DotAssignNode ||
+                node instanceof DotExprNode ||
+                node instanceof DotCallNode) {
             func = node;
         } else {
             // Fatal Exception - 関数呼び出しに失敗しました。
             throw new FatalException(getLocation(), 9);
         }
         this.map = map;
-    }
-
-    @Override
-    public NodeType recognize() {
-        return NodeType.FUNCALL;
     }
 
     public FuncallNode(int location, Node node, ArrayList<Node> arrayList) throws Exception {
@@ -51,6 +52,25 @@ public class FuncallNode extends Node implements Recognizable {
             throw new FatalException(getLocation(), 88);
         }
         this.arrayList = arrayList;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof FuncallNode)) return false;
+        FuncallNode funcallNode = (FuncallNode) object;
+
+        if (!func.equals(funcallNode.func)) return false;
+
+        if (funcallNode.arrayList == null && funcallNode.map != null && arrayList != null)
+            return (map.equals(funcallNode.map));
+        else
+            return funcallNode.arrayList != null && funcallNode.map == null &&
+                    map != null && arrayList.equals(funcallNode.arrayList);
+    }
+
+    @Override
+    public NodeType recognize() {
+        return NodeType.FUNCALL;
     }
 
     public Node getFunc() {
