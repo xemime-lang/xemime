@@ -28,6 +28,14 @@ public class IfNode extends Node implements Recognizable {
         return NodeType.IF;
     }
 
+    public ArrayList<Node> getThen() {
+        return then;
+    }
+
+    public ArrayList<Node> getEls() {
+        return els;
+    }
+
     @Override
     public Node run() throws Exception {
         boolean cond = !condition.run().equals(Bool.Nil);

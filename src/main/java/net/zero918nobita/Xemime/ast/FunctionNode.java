@@ -44,6 +44,14 @@ public class FunctionNode extends Node implements Recognizable {
         return NodeType.FN;
     }
 
+    public ArrayList<Node> getBody() {
+        return body;
+    }
+
+    public void setBody(ArrayList<Node> body) {
+        this.body = body;
+    }
+
     @Override
     public Node run() throws Exception {
         Main.defValue(name, new Function(line, type, params, body));

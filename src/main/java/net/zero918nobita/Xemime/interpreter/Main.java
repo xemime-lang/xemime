@@ -3,6 +3,7 @@ package net.zero918nobita.Xemime.interpreter;
 import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.parser.Parser;
 import net.zero918nobita.Xemime.ast.*;
+import net.zero918nobita.Xemime.resolver.Marshaller;
 import net.zero918nobita.Xemime.type.AnyType;
 import net.zero918nobita.Xemime.type.Type;
 import net.zero918nobita.Xemime.type.UnitType;
@@ -195,6 +196,7 @@ public class Main {
                             parser.goDown(1);
                             continue;
                         }
+                        Marshaller.marshal(result);
                         for (Node c : result) {
                             try {
                                 System.out.println(c.run());
@@ -224,8 +226,10 @@ public class Main {
                     System.out.println(e.getMessage());
                     System.exit(1);
                 }
+                Marshaller.marshal(result);
                 for (Node c : result) {
                     try {
+                        System.out.println(c.getClass());
                         c.run();
                     } catch(Exception e) {
                         e.printStackTrace();
@@ -265,7 +269,7 @@ public class Main {
                 "  |   / _ \\/ __ `__ \\/ / __ `__ \\/ _ \\\n" +
                 " /   /  __/ / / / / / / / / / / /  __/\n" +
                 "/_/|_\\___/_/ /_/ /_/_/_/ /_/ /_/\\___/ \n\n" +
-                "Xemime Version 1.0.0 2017-11-19");
+                "Xemime Version 1.0.0 2017-11-20");
     }
 
     /**
