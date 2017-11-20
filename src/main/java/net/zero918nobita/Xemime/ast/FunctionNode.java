@@ -32,6 +32,14 @@ public class FunctionNode extends Node implements Recognizable {
     }
 
     @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof FunctionNode)) return false;
+        FunctionNode functionNode = (FunctionNode) object;
+        return (line == functionNode.line && name.equals(functionNode.name) &&
+            params.equals(functionNode.params));
+    }
+
+    @Override
     public NodeType recognize() {
         return NodeType.FN;
     }
