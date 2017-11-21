@@ -1,8 +1,10 @@
 package net.zero918nobita.Xemime.resolver;
 
 import net.zero918nobita.Xemime.ast.Symbol;
+import net.zero918nobita.Xemime.type.AnyType;
 import net.zero918nobita.Xemime.type.Type;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -16,6 +18,7 @@ public class Scope {
     private int scopeID;
     private Scope parent;
     private HashMap<Symbol, Variable> variables;
+    private ArrayList<Symbol> postponedSymbols = new ArrayList<>();
 
     public Scope(Scope parent) {
         this.parent = parent;
@@ -34,16 +37,11 @@ public class Scope {
         StringBuilder output = new StringBuilder();
         output.append("Scope<#");
         output.append(scopeID);
-        output.append("> {");
-        for (int i = 0; i < variables.size(); i++) {
-            output.append(", ");
-            output.append(variables.get(i));
-        }
+        output.append(">{");
         int i = 0;
         for (Symbol sym : variables.keySet()) {
-            output.append("[");
             output.append(variables.get(sym).getType());
-            output.append("]");
+            output.append(" ");
             output.append(sym);
             i ++;
             if (i < variables.size()) output.append(", ");
@@ -59,14 +57,12 @@ public class Scope {
         variables.put(sym, new Variable(type));
     }
 
-    public void referVar(int location, Symbol sym) throws SemanticError {
-        if (variables.containsKey(sym)) return;
+    public boolean referVar(Symbol sym) throws SemanticError {
+        if (variables.containsKey(sym)) return true;
         Scope s = this;
         while ((s = s.parent()) != null)
-            if (s.variables.containsKey(sym)) return;
-
-        // SemanticError - シンボルの参照の解決に失敗しました
-        throw new SemanticError(location, 2, sym);
+            if (s.variables.containsKey(sym)) return true;
+        return false;
     }
 
     Type getTypeOfVariable(Symbol sym) throws SemanticError {
@@ -74,7 +70,10 @@ public class Scope {
         Scope s = this;
         while ((s = s.parent()) != null)
             if (s.variables.containsKey(sym)) return s.variables.get(sym).getType();
-        throw new SemanticError(sym.getLocation(), 22, sym);
+        // throw new SemanticError(sym.getLocation(), 22, sym);
+        // 未定義シンボルとして保留する
+        postponedSymbols.add(sym);
+        return new AnyType();
     }
 
     boolean hasVariable(Symbol sym) {
@@ -83,5 +82,9 @@ public class Scope {
         while ((s = s.parent()) != null)
             if (s.variables.containsKey(sym)) return true;
         return false;
+    }
+
+    ArrayList<Symbol> getPostponedSymbols() {
+        return postponedSymbols;
     }
 }

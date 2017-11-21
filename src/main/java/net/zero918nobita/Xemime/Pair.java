@@ -16,6 +16,16 @@ public class Pair<A, B> {
         this.right = right;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        return object instanceof Pair && left.equals(((Pair) object).left) && right.equals(((Pair) object).right);
+    }
+
+    @Override
+    public String toString() {
+        return "Pair{" + left + ", " + right + "}";
+    }
+
     public A getLeft() {
         return left;
     }

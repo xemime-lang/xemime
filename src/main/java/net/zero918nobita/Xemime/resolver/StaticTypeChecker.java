@@ -106,6 +106,8 @@ class StaticTypeChecker {
                         return new IntType();
                     } else if (tRhs instanceof DoubleType) {
                         return new DoubleType();
+                    } else if (tRhs instanceof AnyType) {
+                        return tRhs;
                     } else {
                         throw new TypeError(exprNode.getLocation(), 59, "演算子の右辺のデータの型が不正です。");
                     }
@@ -113,12 +115,12 @@ class StaticTypeChecker {
                     if (tRhs instanceof IntType || tRhs instanceof DoubleType) {
                         return new DoubleType();
                     } else if (tRhs instanceof AnyType) {
-                        return new AnyType();
+                        return tRhs;
                     } else {
                         throw new TypeError(exprNode.getLocation(), 58, "演算子の右辺のデータの型が不正です。");
                     }
                 } else if (tLhs instanceof AnyType) {
-                    return new AnyType();
+                    return tLhs;
                 } else {
                     throw new TypeError(exprNode.getLocation(), 57, "演算子の左辺のデータの型が不正です。");
                 }
@@ -149,7 +151,7 @@ class StaticTypeChecker {
             type = resolver.getTypeOfVariable((Symbol)func);
             if (type instanceof FuncType) {
                 type = ((FuncType)type).getReturnType();
-            } else {
+            } else if (!(type instanceof AnyType)){
                 throw new TypeError(func.getLocation(), 97, "指定されたシンボルの型が関数型ではありません。");
             }
         } else if (!(func instanceof Native)) {

@@ -1,2 +1,10 @@
-let a = #x -> x * x
-println $ a(3) + a(4)
+let a = foo(3)
+println $ a
+
+fn foo(x : Int) -> Int {
+    return x * bar()
+}
+
+fn bar() -> Int {
+    return 2
+}

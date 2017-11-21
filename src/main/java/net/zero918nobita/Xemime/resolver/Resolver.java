@@ -1,6 +1,5 @@
 package net.zero918nobita.Xemime.resolver;
 
-import net.zero918nobita.Xemime.Pair;
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.parser.FatalError;
@@ -19,6 +18,7 @@ public class Resolver {
     private Stack<Scope> scope = new Stack<>();
     private HashSet<Symbol> substs = new HashSet<>();
     private StaticTypeChecker stc = new StaticTypeChecker();
+    private ArrayList<Symbol> postponedSymbols = new ArrayList<>();
 
     public Resolver() {
         scope.add(new Scope(null));
@@ -39,8 +39,8 @@ public class Resolver {
         if (!type_of_variable.equals(type_of_value)) throw new TypeError(location, 87, "代入式が不正です。変数の型と代入される値の型が一致しません。");
     }
 
-    public void referVar(int location, Symbol sym) throws SemanticError {
-        scope.peek().referVar(location, sym);
+    public boolean referVar(Symbol sym) throws SemanticError {
+        return scope.peek().referVar(sym);
     }
 
     public Type getTypeOfNode(Node node) throws FatalError, SemanticError, TypeError {
@@ -56,6 +56,7 @@ public class Resolver {
     }
 
     public void removeScope() {
+        postpone(scope.peek().getPostponedSymbols());
         scope.pop();
     }
 
@@ -66,5 +67,13 @@ public class Resolver {
 
     public boolean hasAttr(Symbol symbol) {
         return substs.contains(symbol);
+    }
+
+    private void postpone(ArrayList<Symbol> symbols) {
+        postponedSymbols.addAll(symbols);
+    }
+
+    public ArrayList<Symbol> getPostponedSymbols() {
+        return postponedSymbols;
     }
 }

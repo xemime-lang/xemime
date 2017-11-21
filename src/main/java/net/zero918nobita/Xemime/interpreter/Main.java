@@ -4,6 +4,7 @@ import net.zero918nobita.Xemime.entity.*;
 import net.zero918nobita.Xemime.parser.Parser;
 import net.zero918nobita.Xemime.ast.*;
 import net.zero918nobita.Xemime.resolver.Marshaller;
+import net.zero918nobita.Xemime.resolver.Ruminator;
 import net.zero918nobita.Xemime.type.AnyType;
 import net.zero918nobita.Xemime.type.Type;
 import net.zero918nobita.Xemime.type.UnitType;
@@ -190,13 +191,14 @@ public class Main {
                         ArrayList<Node> result;
                         try {
                             result = parser.parse(line);
+                            result = Marshaller.marshal(result);
+                            Ruminator.ruminate(parser.getPostponedSymbols(), parser.getResolver());
                         } catch(Exception e) {
                             System.out.println(e.getMessage());
                             System.out.print("[" + (parser.getLocation() + 1) + "]> ");
                             parser.goDown(1);
                             continue;
                         }
-                        Marshaller.marshal(result);
                         for (Node c : result) {
                             try {
                                 System.out.println(c.run());
@@ -222,14 +224,15 @@ public class Main {
                 ArrayList<Node> result = null;
                 try {
                     result = parser.parse(stringBuilder.toString());
+                    result = Marshaller.marshal(result);
+                    Ruminator.ruminate(parser.getPostponedSymbols(), parser.getResolver());
                 } catch(Exception e) {
+                    e.printStackTrace();
                     System.out.println(e.getMessage());
                     System.exit(1);
                 }
-                Marshaller.marshal(result);
                 for (Node c : result) {
                     try {
-                        System.out.println(c.getClass());
                         c.run();
                     } catch(Exception e) {
                         e.printStackTrace();

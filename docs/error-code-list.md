@@ -1,7 +1,7 @@
 | エラーコード | 部類 | 内容 | 発生場所 ( 先頭に `net.zero918nobita.Xemime.` が付きます ) |
 | ---- | ---- | ---- | ---- |
 | 1 | Divide By Zero Error | 構文解析中にゼロ除算が行われている箇所を発見しました。 | ``parser.Term#term`` |
-| 2 | Semantic Error | シンボルの参照の解決に失敗しました。 | ``resolver.Scope#referVar`` |
+| 2* | Semantic Error | シンボルの参照の解決に失敗しました。 | ``resolver.Scope#referVar`` |
 | 3 | Fatal Error | 呼び出しが禁止されているメソッドが呼び出されました。 | ``parser.Args#parse`` |
 | 4 | Syntax Error | メッセージ式のピリオドの後ろがシンボルではありません。 | ``parser.Factor#parse`` |
 | 5 | Syntax Error | メッセージ式の括弧が閉じられていません。 | ``parser.Factor#parse`` |
@@ -129,3 +129,4 @@
 | 128 | Fatal Exception | Str型オブジェクトに他の型のオブジェクトを加算することはできません。 | ``entity.Str#add`` |
 | 129 | Type Error |  |  |
 | 130 | Type Error |  |  |
+| 131 | Type Error |  |  |

@@ -10,4 +10,9 @@ public class IntType implements Type {
     public boolean equals(Object obj) {
         return obj instanceof IntType;
     }
+
+    @Override
+    public String toString() {
+        return "Int";
+    }
 }

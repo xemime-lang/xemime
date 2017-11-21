@@ -36,6 +36,14 @@ public class IfNode extends Node implements Recognizable {
         return els;
     }
 
+    public void setThen(ArrayList<Node> then) {
+        this.then = then;
+    }
+
+    public void setEls(ArrayList<Node> els) {
+        this.els = els;
+    }
+
     @Override
     public Node run() throws Exception {
         boolean cond = !condition.run().equals(Bool.Nil);
