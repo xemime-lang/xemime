@@ -8,3 +8,5 @@ fn foo(x : Int) -> Int {
 fn bar() -> Int {
     return 2
 }
+
+let b : [Any] = [2, 3, 5]
