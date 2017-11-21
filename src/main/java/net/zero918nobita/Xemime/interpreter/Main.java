@@ -192,6 +192,7 @@ public class Main {
                         try {
                             result = parser.parse(line);
                             result = Marshaller.marshal(result);
+                            parser.getResolver().finishResolving();
                             Ruminator.ruminate(parser.getPostponedSymbols(), parser.getResolver());
                         } catch(Exception e) {
                             System.out.println(e.getMessage());
@@ -225,6 +226,7 @@ public class Main {
                 try {
                     result = parser.parse(stringBuilder.toString());
                     result = Marshaller.marshal(result);
+                    parser.getResolver().finishResolving();
                     Ruminator.ruminate(parser.getPostponedSymbols(), parser.getResolver());
                 } catch(Exception e) {
                     e.printStackTrace();

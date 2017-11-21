@@ -60,6 +60,10 @@ public class Resolver {
         scope.pop();
     }
 
+    public void finishResolving() {
+        postpone(scope.peek().getPostponedSymbols());
+    }
+
     public void defineAttr(Symbol symbol) throws Exception {
         if (substs.contains(symbol)) throw new Exception(symbol + "型はすでに定義されています。");
         substs.add(symbol);

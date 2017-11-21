@@ -62,6 +62,7 @@ public class Scope {
         Scope s = this;
         while ((s = s.parent()) != null)
             if (s.variables.containsKey(sym)) return true;
+        postponedSymbols.add(sym);
         return false;
     }
 
