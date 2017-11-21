@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 
 public class Node implements Recognizable {
     /** 行番号 */
-    private int location;
+    protected int location;
 
     /**
      * ノードを生成します。

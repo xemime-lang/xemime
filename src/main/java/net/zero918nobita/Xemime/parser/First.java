@@ -291,7 +291,7 @@ class First extends ParseUnit {
         Node node;
         Symbol sym = (Symbol) lexer.value();
         // 変数の参照を解決する
-        resolver.referVar(sym);
+        resolver.referVar(lexer.getLocation(), sym);
         getToken(); // skip symbol
         if (current(ASSIGN)) {
             // 宣言済みの変数への代入

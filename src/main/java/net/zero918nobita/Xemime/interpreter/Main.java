@@ -258,6 +258,9 @@ public class Main {
         allowExitMethod = false;
         parser = new Parser();
         ArrayList<Node> result = parser.parse(source);
+        result = Marshaller.marshal(result);
+        parser.getResolver().finishResolving();
+        Ruminator.ruminate(parser.getPostponedSymbols(), parser.getResolver());
         for (Node node : result) node.run();
     }
 

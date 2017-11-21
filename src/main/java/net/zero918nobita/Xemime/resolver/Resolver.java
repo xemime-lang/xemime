@@ -39,8 +39,8 @@ public class Resolver {
         if (!type_of_variable.equals(type_of_value)) throw new TypeError(location, 87, "代入式が不正です。変数の型と代入される値の型が一致しません。");
     }
 
-    public boolean referVar(Symbol sym) throws SemanticError {
-        return scope.peek().referVar(sym);
+    public boolean referVar(int location, Symbol sym) throws SemanticError {
+        return scope.peek().referVar(location, sym);
     }
 
     public Type getTypeOfNode(Node node) throws FatalError, SemanticError, TypeError {

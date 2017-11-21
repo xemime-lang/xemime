@@ -57,11 +57,12 @@ public class Scope {
         variables.put(sym, new Variable(type));
     }
 
-    public boolean referVar(Symbol sym) throws SemanticError {
+    public boolean referVar(int location, Symbol sym) throws SemanticError {
         if (variables.containsKey(sym)) return true;
         Scope s = this;
         while ((s = s.parent()) != null)
             if (s.variables.containsKey(sym)) return true;
+        sym.setLocation(location);
         postponedSymbols.add(sym);
         return false;
     }
