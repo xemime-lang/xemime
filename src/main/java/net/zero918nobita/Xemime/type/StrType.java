@@ -5,4 +5,9 @@ public class StrType implements Type {
     public boolean equals(Object obj) {
         return obj instanceof StrType;
     }
+
+    @Override
+    public String toString() {
+        return "String";
+    }
 }

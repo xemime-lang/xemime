@@ -70,8 +70,10 @@ class Fn extends ParseUnit {
         }
 
         getToken(); // skip `}`
+        skipLineBreaks();
         if (!current(ARROW)) throw new SyntaxError(lexer.getLocation(), 78, "");
         getToken(); // skip `->`
+        skipLineBreaks();
         if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 79, "");
         Type return_type = convertSymbolIntoType((Symbol) lexer.value());
         getToken(); // skip symbol

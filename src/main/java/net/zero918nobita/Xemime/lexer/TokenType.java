@@ -99,6 +99,10 @@ public enum TokenType {
     LB,
     /** 右波括弧 */
     RB,
+    /** 左角括弧 */
+    LSB,
+    /** 右角括弧 */
+    RSB,
 
     INCREMENT,
     DECREMENT,

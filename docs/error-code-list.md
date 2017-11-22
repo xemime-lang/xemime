@@ -130,3 +130,6 @@
 | 129 | Type Error |  |  |
 | 130 | Type Error |  |  |
 | 131 | Type Error |  |  |
+| 132 | Syntax Error |  |  |
+| 133 | Syntax Error |  |  |
+| 134 | Type Error |  |  |

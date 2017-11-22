@@ -25,6 +25,8 @@ class StaticTypeChecker {
                 return check(resolver, (Double) node);
             case STR:
                 return check(resolver, (Str) node);
+            case ARRAY:
+                return check(resolver, (Array) node);
             case SYMBOL:
                 return check(resolver, (Symbol) node);
             case MINUS:
@@ -59,6 +61,15 @@ class StaticTypeChecker {
 
     private Type check(Resolver resolver, Str str) {
         return new StrType();
+    }
+
+    private Type check(Resolver resolver, Array array) throws FatalError, SemanticError, TypeError {
+        if (array.getElements().size() == 0) return new ArrayType(new AnyType());
+        Type type = resolver.getTypeOfNode(array.getElement(0));
+        for (int i = 1; i < array.getElements().size(); i++) {
+            if (!resolver.getTypeOfNode(array.getElement(i)).equals(type)) throw new TypeError(array.getLocation(), 134, "配列の要素の型が不正です。");
+        }
+        return new ArrayType(type);
     }
 
     private Type check(Resolver resolver, Symbol symbol) throws SemanticError {

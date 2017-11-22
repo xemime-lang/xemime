@@ -6,4 +6,22 @@ package net.zero918nobita.Xemime.type;
  */
 
 public class ArrayType implements Type {
+    private Type type;
+    public ArrayType(Type type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + type + "]";
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return object instanceof ArrayType && ((ArrayType) object).type.equals(type);
+    }
+
+    public Type getType() {
+        return type;
+    }
 }

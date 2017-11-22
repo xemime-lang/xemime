@@ -11,6 +11,7 @@ public enum NodeType {
     INT,
     DOUBLE,
     STR,
+    ARRAY,
     NIX,
     ADDRESS,
     SYMBOL,

@@ -10,3 +10,5 @@ fn bar() -> Int {
 }
 
 let b : [Any] = [2, 3, 5]
+
+println $ b

@@ -1,6 +1,7 @@
 package net.zero918nobita.Xemime.parser;
 
 import net.zero918nobita.Xemime.ast.*;
+import net.zero918nobita.Xemime.entity.Array;
 import net.zero918nobita.Xemime.entity.Handler;
 import net.zero918nobita.Xemime.entity.Unit;
 import net.zero918nobita.Xemime.interpreter.Main;
@@ -161,8 +162,24 @@ class First extends ParseUnit {
                 node = null;
                 break;
 
+            case LSB:
+                getToken();
+                skipLineBreaks();
+                Node first = new Expr(lexer, resolver).parse();
+                ArrayList<Node> elements = new ArrayList<>();
+                elements.add(first);
+                while (!current(RSB)) {
+                    if (!current(COMMA)) throw new SyntaxError(lexer.getLocation(), 133, "");
+                    getToken();
+                    skipLineBreaks();
+                    elements.add(new Expr(lexer, resolver).parse());
+                }
+                getToken();
+                node = new Array(lexer.getLocation(), new AnyType(), elements);
+                break;
+
             default:
-                throw new SyntaxError(lexer.getLocation(), 72, "不明なトークン `" + lexer.value() + "` が検出されました。");
+                throw new SyntaxError(lexer.getLocation(), 72, "不明なトークンが検出されました。");
         }
 
         while (current(LP)) {
@@ -235,6 +252,7 @@ class First extends ParseUnit {
     private Node declare() throws Exception {
         // 型推論がデフォルトで有効になります。
         boolean inference = true;
+        boolean isArray = false;
         getToken(); // skip `let`
 
         // Syntax Error - 変数宣言式が不正です。宣言する変数の名称を記述してください。
@@ -246,21 +264,37 @@ class First extends ParseUnit {
         if (current(COLON)) {
             inference = false;
             getToken(); // skip `:`
+            skipLineBreaks();
+            if (current(LSB)) {
+                isArray = true;
+                getToken(); // skip `[`
+            }
             if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 50, "コロン `:` の後ろでデータ型を指定してください。");
             getToken();
             Symbol type_name = (Symbol) lexer.value();
             if (type_name.equals(Symbol.intern("Int"))) {
-                resolver.declareVar(new IntType(), sym);
+                resolver.declareVar((!isArray) ? new IntType() : new ArrayType(new IntType()), sym);
             } else if (type_name.equals(Symbol.intern("Double"))) {
-                resolver.declareVar(new DoubleType(), sym);
+                resolver.declareVar((!isArray) ? new DoubleType() : new ArrayType(new DoubleType()), sym);
             } else if (type_name.equals(Symbol.intern("Bool"))) {
-                resolver.declareVar(new BoolType(), sym);
+                resolver.declareVar((!isArray) ? new BoolType() : new ArrayType(new BoolType()), sym);
             } else if (type_name.equals(Symbol.intern("String"))) {
-                resolver.declareVar(new StrType(), sym);
+                resolver.declareVar((!isArray) ? new StrType() : new ArrayType(new StrType()), sym);
+            } else if (type_name.equals(Symbol.intern("Any"))) {
+                resolver.declareVar((!isArray) ? new AnyType() : new ArrayType(new AnyType()), sym);
             } else if (resolver.hasAttr(type_name)) {
-                resolver.declareVar(new SubstType(type_name), sym);
+                resolver.declareVar((!isArray) ? new SubstType(type_name) : new ArrayType(new SubstType(type_name)), sym);
             } else {
                 throw new SyntaxError(type_name.getLocation(), 73, "`" + type_name + "` 型は定義されていません。");
+            }
+        }
+
+        if (isArray) {
+            if (current(RSB)) {
+                getToken();
+                skipLineBreaks();
+            } else {
+                throw new SyntaxError(lexer.getLocation(), 132, "");
             }
         }
 
@@ -271,6 +305,7 @@ class First extends ParseUnit {
         int locationOfAssignmentOp = lexer.getLocation();
 
         getToken(); // skip `=`
+        skipLineBreaks();
         Node value = new LogicalExpr(lexer, resolver).parse();
 
         if (inference) {

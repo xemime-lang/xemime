@@ -10,4 +10,9 @@ public class DoubleType implements Type {
     public boolean equals(Object obj) {
         return obj instanceof DoubleType;
     }
+
+    @Override
+    public String toString() {
+        return "Double";
+    }
 }
