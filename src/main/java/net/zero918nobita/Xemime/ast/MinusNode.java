@@ -4,6 +4,7 @@ import net.zero918nobita.Xemime.NodeType;
 import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Double;
 import net.zero918nobita.Xemime.entity.Int;
+import net.zero918nobita.Xemime.entity.Numeric;
 
 /**
  * 単項演算子 `-` を表すノードです。<br>
@@ -22,6 +23,11 @@ public class MinusNode extends Node implements Recognizable {
     @Override
     public NodeType recognize() {
         return NodeType.MINUS;
+    }
+
+    @Override
+    public String toString() {
+        return (node instanceof Numeric) ? "-" + node : "-(" + node + ")";
     }
 
     @Override

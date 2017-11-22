@@ -191,6 +191,15 @@ class First extends ParseUnit {
             node = new FuncallNode(lexer.getLocation(), node, list);
         }
 
+        while (current(LSB)) {
+            getToken(); // skip `[`
+            skipLineBreaks();
+            Node index = new SimpleExpr(lexer, resolver).parse();
+            if (!current(RSB)) throw new SyntaxError(lexer.getLocation(), 136, "");
+            node = new ArrayReferenceNode(lexer.getLocation(), node, index);
+            getToken(); // skip `]`
+        }
+
         return node;
     }
 

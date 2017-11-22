@@ -7,7 +7,7 @@ import net.zero918nobita.Xemime.ast.Node;
  * @author Kodai Matsumoto
  */
 
-abstract class Numeric extends Node {
+public abstract class Numeric extends Node {
     protected Number value;
 
     Numeric(int location) {
