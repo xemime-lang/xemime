@@ -138,8 +138,8 @@
 | 137 | Runtime Exception | 配列参照の添え字が ``0`` 未満になっているため、要素を取り出すことができません。 | ``ast.ArrayReferenceNode#run`` |
 | 138 | Runtime Exception | 配列参照の添え字が配列の要素数以上になっているため、要素を取り出すことができません。 | ``ast.ArrayReferenceNode#run`` |
 | 139 | Type Error |  |  |
-| 140 | Fatal Exception |  |  |
-| 141 | Fatal Exception |  |  |
+| 140 | Fatal Exception | mod 演算子は使用できません。 | ``ast.Node#mod`` |
+| 141 | Fatal Exception | mod 演算子は使用できません。 | ``entity.Int#mod`` |
 | 142 | Type Error |  |  |
 | 143 | Type Error |  |  |
 | 144 | Type Error |  |  |
