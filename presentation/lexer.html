@@ -33,9 +33,14 @@
             color: white;
             border: 3px solid #114477;
         }
+        #next {
+            width: 200px;
+            height: 50px;
+        }
     </style>
 </head>
 <body>
+<button id="next">次へ</button>
 <script>
 
 const _source = 'green',
@@ -483,6 +488,12 @@ document.addEventListener('keyup', (e) => {
         procedures[progress]();
         progress ++;
     }
+});
+
+document.getElementById('next').addEventListener('click', (e) => {
+    if (progress >= procedures.length) return;
+    procedures[progress]();
+    progress ++;
 });
 
     /*let elements = document.getElementsByClassName('node');
