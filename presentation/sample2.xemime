@@ -2,8 +2,8 @@ let b : [Int] = [2, 3, 5]
 println $ b
 println $ b[1]
 
-let c = #x -> x * 2
-println $ c(8)
+let plus = #a, b -> a + b
+println $ 3 `plus` 4
 
 let i = 1;
 while (i <= 10) {
