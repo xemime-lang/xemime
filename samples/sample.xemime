@@ -9,6 +9,6 @@ fn bar() -> Int {
     return 2
 }
 
-let b : [Any] = [2, 3, 5]
+let b : [Int] = [1, 2, 3]
 
-println $ b
+println $ b[1] + 1
