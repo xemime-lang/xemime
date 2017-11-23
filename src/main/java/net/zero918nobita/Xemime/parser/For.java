@@ -51,6 +51,7 @@ public class For extends ParseUnit {
         if (!current(LB)) throw new SyntaxError(lexer.getLocation(), 44, "範囲式の後ろに `{` を記述してください。");
 
         getToken(); // skip `{`
+        skipLineBreaks();
         resolver.declareVar(new IntType(), counter);
         while (!current(RB)) {
             body.add(new Expr(lexer, resolver).parse());

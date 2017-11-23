@@ -131,6 +131,25 @@ public class Node implements Recognizable {
     }
 
     /**
+     * このノードを左辺、渡されたノードを右辺として剰余を求めます。
+     * @param location 演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 剰余
+     * @throws FatalException 常に例外を発生させます。
+     */
+    public Node mod(int location, Node rhs) throws FatalException {
+        // `%` 演算子は使用できません
+        throw new FatalException(location, 140);
+    }
+
+    /**
+     * 行番号を 0 として mod メソッドを呼び出します。
+     */
+    public Node mod(Node rhs) throws FatalException {
+        return mod(0, rhs);
+    }
+
+    /**
      * 大小を比較して、このノードが比較対象「より小さい」場合に真値を返します。
      * @param location 比較を行う行の行番号
      * @param rhs 比較対象

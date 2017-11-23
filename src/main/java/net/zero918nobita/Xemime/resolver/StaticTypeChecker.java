@@ -146,6 +146,11 @@ class StaticTypeChecker {
                 } else {
                     throw new TypeError(exprNode.getLocation(), 57, "演算子の左辺のデータの型が不正です。");
                 }
+            case MOD:
+                if (tLhs instanceof IntType && tRhs instanceof IntType) return tLhs;
+                else if (tLhs instanceof IntType) throw new TypeError(exprNode.getLocation(), 142, "剰余演算子の右辺が整数型データではありません。");
+                else if (tRhs instanceof IntType) throw new TypeError(exprNode.getLocation(), 143, "剰余演算子の左辺が整数型データではありません。");
+                else throw new TypeError(exprNode.getLocation(), 144, "剰余演算子の両辺が整数型データではありません。");
             case AND:
             case OR:
             case XOR:

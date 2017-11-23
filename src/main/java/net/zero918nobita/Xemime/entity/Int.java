@@ -135,6 +135,23 @@ public class Int extends Numeric implements Recognizable {
     }
 
     /**
+     * この整数値を左辺、渡されたノードを右辺として剰余を求めます。
+     * @param line 演算を行う行の行番号
+     * @param rhs 右辺
+     * @return 剰余
+     * @throws FatalException 右辺が整数値ではない場合に例外を発生させます。
+     */
+    @Override
+    public Numeric mod(int line, Node rhs) throws FatalException {
+        if (rhs.getClass() == Int.class) {
+            Int i = (Int) rhs;
+            return new Int(0, value.intValue() % i.getValue());
+        } else {
+            throw new FatalException(line, 141);
+        }
+    }
+
+    /**
      * 大小を比較して、この整数値が比較対象「より小さい」場合に真値を返します。
      * @param line 比較を行う行の行番号
      * @param rhs 比較対象

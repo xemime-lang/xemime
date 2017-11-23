@@ -38,6 +38,7 @@ class Term extends ParseUnit {
         switch (lexer.tokenType()) {
             case MUL:
             case DIV:
+            case MOD:
             case XOR:
             case BACKQUOTE:
                 node = term(node);
@@ -48,7 +49,7 @@ class Term extends ParseUnit {
 
     private Node term(Node node) throws Exception {
         Node result = null;
-        while (current(MUL) || current(DIV) || current(XOR) || current(BACKQUOTE)) {
+        while (current(MUL) || current(DIV) || current(XOR) || current(MOD) || current(BACKQUOTE)) {
             TokenType op = lexer.tokenType();
             Node value = lexer.value();
             getToken();

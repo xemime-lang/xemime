@@ -1,14 +1,1 @@
-let a = foo(3)
-println $ a
-
-fn foo(x : Int) -> Int {
-    return x * bar()
-}
-
-fn bar() -> Int {
-    return 2
-}
-
-let b : [Int] = [1, 2, 3]
-
-println $ b[1] + 1
+println $ "Hello, world!"
