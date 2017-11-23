@@ -229,7 +229,6 @@ public class Main {
                     parser.getResolver().finishResolving();
                     Ruminator.ruminate(parser.getPostponedSymbols(), parser.getResolver());
                 } catch(Exception e) {
-                    e.printStackTrace();
                     System.out.println(e.getMessage());
                     System.exit(1);
                 }
@@ -276,7 +275,7 @@ public class Main {
                 "  |   / _ \\/ __ `__ \\/ / __ `__ \\/ _ \\\n" +
                 " /   /  __/ / / / / / / / / / / /  __/\n" +
                 "/_/|_\\___/_/ /_/ /_/_/_/ /_/ /_/\\___/ \n\n" +
-                "Xemime Version 1.0.0 2017-11-20");
+                "Xemime Version 1.0.0 2017-11-23");
     }
 
     /**

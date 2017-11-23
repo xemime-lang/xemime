@@ -12,6 +12,7 @@ public enum NodeType {
     DOUBLE,
     STR,
     ARRAY,
+    ARRAY_REFERENCE,
     NIX,
     ADDRESS,
     SYMBOL,

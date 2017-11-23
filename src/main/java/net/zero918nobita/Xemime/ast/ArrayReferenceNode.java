@@ -1,5 +1,7 @@
 package net.zero918nobita.Xemime.ast;
 
+import net.zero918nobita.Xemime.NodeType;
+import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Array;
 import net.zero918nobita.Xemime.entity.Int;
 
@@ -8,7 +10,7 @@ import net.zero918nobita.Xemime.entity.Int;
  * @author Kodai Matsumoto
  */
 
-public class ArrayReferenceNode extends Node {
+public class ArrayReferenceNode extends Node implements Recognizable {
     private Node array;
     private Node index;
 
@@ -19,8 +21,17 @@ public class ArrayReferenceNode extends Node {
     }
 
     @Override
+    public NodeType recognize() {
+        return NodeType.ARRAY_REFERENCE;
+    }
+
+    @Override
     public String toString() {
         return (array instanceof Symbol) ? array + "[" + index + "]" : "(" + array + ")[" + index + "]";
+    }
+
+    public Node getArray() {
+        return array;
     }
 
     @Override

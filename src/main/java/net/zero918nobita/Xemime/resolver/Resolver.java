@@ -40,7 +40,10 @@ public class Resolver {
         if (!type_of_variable.equals(type_of_value) &&
                 !(type_of_variable instanceof AnyType) &&
                 !(type_of_variable instanceof ArrayType && ((ArrayType)type_of_variable).getType() instanceof AnyType) &&
-                !(type_of_variable instanceof ArrayType && ((ArrayType)type_of_variable).getType() instanceof DoubleType) && type_of_value instanceof ArrayType && ((ArrayType)type_of_value).getType() instanceof IntType)
+                !(type_of_variable instanceof ArrayType &&
+                        ((ArrayType)type_of_variable).getType() instanceof DoubleType &&
+                        type_of_value instanceof ArrayType &&
+                        ((ArrayType)type_of_value).getType() instanceof IntType))
             throw new TypeError(location, 87,
                     "代入式が不正です。変数の型と代入される値の型が一致しません。\n" +
                             "変数の型: " + type_of_variable + ", 値の型: " + type_of_value);

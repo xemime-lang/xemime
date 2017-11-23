@@ -27,6 +27,8 @@ class StaticTypeChecker {
                 return check(resolver, (Str) node);
             case ARRAY:
                 return check(resolver, (Array) node);
+            case ARRAY_REFERENCE:
+                return check(resolver, (ArrayReferenceNode)node);
             case SYMBOL:
                 return check(resolver, (Symbol) node);
             case MINUS:
@@ -42,8 +44,7 @@ class StaticTypeChecker {
             case DOT_CALL:
                 return check(resolver, (DotCallNode) node);
             default:
-                System.out.println(node.getClass());
-                throw new TypeError(node.getLocation(), 64, "");
+                throw new TypeError(node.getLocation(), 64, "`" + node + "` の静的型チェックに失敗しました。");
         }
     }
 
@@ -67,9 +68,19 @@ class StaticTypeChecker {
         if (array.getElements().size() == 0) return new ArrayType(new AnyType());
         Type type = resolver.getTypeOfNode(array.getElement(0));
         for (int i = 1; i < array.getElements().size(); i++) {
-            if (!resolver.getTypeOfNode(array.getElement(i)).equals(type)) throw new TypeError(array.getLocation(), 134, "配列の要素の型が不正です。");
+            if (type instanceof IntType && resolver.getTypeOfNode(array.getElement(i)) instanceof DoubleType) {
+                type = new DoubleType();
+            } else if (!resolver.getTypeOfNode(array.getElement(i)).equals(type) &&
+                    !(type instanceof DoubleType && resolver.getTypeOfNode(array.getElement(i)) instanceof IntType))
+                type = new AnyType();
         }
         return new ArrayType(type);
+    }
+
+    private Type check(Resolver resolver, ArrayReferenceNode arrayReferenceNode) throws FatalError, SemanticError, TypeError {
+        if (!(resolver.getTypeOfNode(arrayReferenceNode.getArray()) instanceof ArrayType))
+            throw new TypeError(arrayReferenceNode.getLocation(), 139, "配列参照 `" + arrayReferenceNode + "` の対象となっている `" + arrayReferenceNode.getArray() + "` は配列ではありません。");
+        return ((ArrayType)resolver.getTypeOfNode(arrayReferenceNode.getArray())).getType();
     }
 
     private Type check(Resolver resolver, Symbol symbol) throws SemanticError {
