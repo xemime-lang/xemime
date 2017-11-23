@@ -8,7 +8,6 @@ import net.zero918nobita.Xemime.resolver.TypeError;
 import net.zero918nobita.Xemime.type.BoolType;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
@@ -91,55 +90,12 @@ class Factor extends ParseUnit {
                             if (!current(COMMA))
                                 throw new SyntaxError(lexer.getLocation(), 69, "引数をコンマで区切ってください。");
                             getToken();
+                            skipLineBreaks();
                             list.add(new LogicalExpr(lexer, resolver).parse());
                         }
                     }
                     node = new FuncallNode(lexer.getLocation(), node, list);
                     break;
-                    /*LinkedHashMap<Symbol, Node> map = null;
-                    ArrayList<Node> arrayList = null;
-                    getToken(); // skip `$`
-                    if (!current(BR) && !current(EOS) && !current(SEMICOLON)) {
-                        Node tmp = lexer.value();
-                        getToken();
-                        if (current(COLON)) {
-                            // 名前付き引数を有効にする
-                            getToken(); // skip `:`
-                            map = new LinkedHashMap<>();
-                            map.put((Symbol)tmp, new LogicalExpr(lexer, resolver).parse());
-
-                            Symbol label;
-
-                            while (!current(BR) && !current(EOS)) {
-                                if (!current(COMMA)) throw new Exception("文法エラーです");
-                                getToken(); // skip `,`
-                                skipLineBreaks();
-                                if (!current(SYMBOL)) throw new SyntaxError(lexer.getLocation(), 69, "");
-                                label = (Symbol)lexer.value();
-                                getToken(); // skip symbol
-                                if (!current(COLON)) throw new SyntaxError(lexer.getLocation(), 86, "");
-                                getToken(); // skip `:`
-                                map.put(label, new LogicalExpr(lexer, resolver).parse());
-                            }
-                        } else {
-                            // 名前付き引数を無効にする
-                            arrayList = new ArrayList<>();
-                            arrayList.add(new LogicalExpr(lexer, resolver).parse());
-
-                            while (!current(BR) && !current(EOS)) {
-                                if (!current(COMMA)) throw new Exception("文法エラーです");
-                                getToken(); // skip `,`
-                                skipLineBreaks();
-                                arrayList.add(new LogicalExpr(lexer, resolver).parse());
-                            }
-                        }
-                    }
-                    if (map != null) {
-                        node = new FuncallNode(lexer.getLocation(), node, map);
-                    } else {
-                        node = new FuncallNode(lexer.getLocation(), node, arrayList);
-                    }
-                    break;*/
                 }
 
                 // 関数呼び出し

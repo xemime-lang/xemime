@@ -61,7 +61,6 @@ class If extends ParseUnit {
             }
             getToken();
         }
-        getToken();
         return new IfNode(lexer.getLocation(), condition, then, els);
     }
 }

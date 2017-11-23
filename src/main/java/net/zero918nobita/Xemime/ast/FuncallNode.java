@@ -19,6 +19,7 @@ public class FuncallNode extends Node implements Recognizable {
     private Node func;
     private LinkedHashMap<Symbol, Node> map;
     private ArrayList<Node> arrayList;
+    private boolean includesMySelf = false;
 
     public FuncallNode(int location, Node node, LinkedHashMap<Symbol, Node> map) throws Exception {
         super(location);
@@ -55,6 +56,11 @@ public class FuncallNode extends Node implements Recognizable {
     }
 
     @Override
+    public String toString() {
+        return "Funcall(" + func + ", " + ((map == null) ? arrayList : map) + ")";
+    }
+
+    @Override
     public boolean equals(Object object) {
         if (!(object instanceof FuncallNode)) return false;
         FuncallNode funcallNode = (FuncallNode) object;
@@ -83,7 +89,10 @@ public class FuncallNode extends Node implements Recognizable {
             if (func instanceof Native) {
                 LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
                 for (Map.Entry<Symbol, Node> entry : map.entrySet()) params.put(entry.getKey(), entry.getValue().run());
-                params.put(Symbol.intern("this"), func);
+                if (!includesMySelf) {
+                    params.put(Symbol.intern("this"), func);
+                    includesMySelf = true;
+                }
                 return ((Native) func).call(getLocation(), params, null);
             } else {
                 if (func instanceof Symbol) {
@@ -99,12 +108,18 @@ public class FuncallNode extends Node implements Recognizable {
                 }
                 LinkedHashMap<Symbol, Node> params = new LinkedHashMap<>();
                 for (Map.Entry<Symbol, Node> entry : map.entrySet()) params.put(entry.getKey(), entry.getValue().run());
-                params.put(Symbol.intern("this"), func);
+                if (!includesMySelf) {
+                    params.put(Symbol.intern("this"), func);
+                    includesMySelf = true;
+                }
                 return ((Func)func).call(getLocation(), params, null);
             }
         } else {
             if (func instanceof Native) {
-                arrayList.add(0, func);
+                if (!includesMySelf) {
+                    arrayList.add(0, func);
+                    includesMySelf = true;
+                }
                 return ((Native) func).call(getLocation(), arrayList, null);
             } else {
                 if (func instanceof Symbol) {
@@ -118,7 +133,10 @@ public class FuncallNode extends Node implements Recognizable {
                 } else {
                     func = func.run();
                 }
-                arrayList.add(0, func);
+                if (!includesMySelf) {
+                    arrayList.add(0, func);
+                    includesMySelf = true;
+                }
                 return ((Func)func).call(getLocation(), arrayList, null);
             }
         }

@@ -229,7 +229,6 @@ public class Main {
                     parser.getResolver().finishResolving();
                     Ruminator.ruminate(parser.getPostponedSymbols(), parser.getResolver());
                 } catch(Exception e) {
-                    e.printStackTrace();
                     System.out.println(e.getMessage());
                     System.exit(1);
                 }
