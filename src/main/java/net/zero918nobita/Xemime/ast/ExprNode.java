@@ -6,6 +6,10 @@ import net.zero918nobita.Xemime.entity.Address;
 import net.zero918nobita.Xemime.entity.Bool;
 import net.zero918nobita.Xemime.lexer.TokenType;
 
+import static net.zero918nobita.Xemime.lexer.TokenType.AND;
+import static net.zero918nobita.Xemime.lexer.TokenType.OR;
+import static net.zero918nobita.Xemime.lexer.TokenType.XOR;
+
 /**
  * 二項演算を表すノードです。<br>
  * parser パッケージの Parser.parse メソッドによってインスタンスが生成され、
@@ -54,11 +58,11 @@ public class ExprNode extends Node implements Recognizable {
         Node e_rhs = rhs.run();
 
         // 演算子の種類によって処理を分岐させます
-        if (op == TokenType.AND) { // `&&`
+        if (op == AND) { // `&&`
             result = e_lhs.and(getLocation(), e_rhs);
-        } else if (op == TokenType.OR) { // `||`
+        } else if (op == OR) { // `||`
             result = e_lhs.or(getLocation(), e_rhs);
-        } else if (op == TokenType.XOR) { // `^`
+        } else if (op == XOR) { // `^`
             result = e_lhs.xor(getLocation(), e_rhs);
         } else {
             switch (op) {
@@ -73,6 +77,9 @@ public class ExprNode extends Node implements Recognizable {
                     break;
                 case DIV: // `/`
                     result = e_lhs.divide(getLocation(), e_rhs);
+                    break;
+                case MOD:
+                    result = e_lhs.mod(getLocation(), e_rhs);
                     break;
                 case L: // `<`
                     result = e_lhs.less(getLocation(), e_rhs);

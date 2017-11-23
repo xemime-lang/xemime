@@ -195,6 +195,9 @@ public class Lexer {
                     tokenType = DIV;
                 }
                 break;
+            case '%': // 剰余演算子
+                tokenType = MOD;
+                break;
             case '"': // 文字列定数の始まりを示すダブルクォート
                 lexString();
                 tokenType = STRING;

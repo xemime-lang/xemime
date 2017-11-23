@@ -66,6 +66,8 @@ public enum TokenType {
     MUL,
     /** 除算演算子 */
     DIV,
+    /** 剰余演算子 */
+    MOD,
 
     /** === */
     EQ,
