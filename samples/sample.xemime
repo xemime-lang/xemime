@@ -1,1 +1,14 @@
-println $ "Hello, world!"
+let a : Any = 2
+a = foo()
+println $ a
+
+fn foo() -> String {
+    return "foo"
+}
+
+let obj = Object.clone();
+obj.prop = 1
+obj.method = #x -> x + 2
+
+println $ obj.prop
+println $ obj.method $ 3
