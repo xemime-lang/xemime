@@ -16,17 +16,17 @@ Xemime インタプリタでは、EBNF ( 拡張バッカス・ナウア記法 ) 
 | " ... " | 文字列 |
 
 ```
-#program: プログラム, stmt: 文
-program = [ { stmt } ] ;
+#program: プログラム, expr: 式, br: 1つ以上の改行
+program = [ { expr , br } ]
 
-# for_stmt: for文, if_stmt: if文, import_stmt: インポート文, logical_expr: 論理式
-# switch_stmt: switch文, while_stmt: while文
-stmt = for_stmt
-    | if_stmt
-    | import_stmt
-    | logical_expr , ";"
-    | switch_stmt
-    | while_stmt
+# logical_expr: 論理式, if: if文, for: for文, while: while文,
+# fn: fn文 ( 関数定義 ), return: return文
+expr = logical_expr
+    | if
+    | for
+    | while
+    | fn
+    | return
     ;
 
 # arithmetic_expr 算術式
@@ -36,27 +36,33 @@ logical_expr = arithmetic_expr , [ { ( "&&" |  "==" | "!=" | "<" | "<=" | ">" | 
 arithmetic_expr = term , [ { ( "+" | "-" | "||" ) , term } ] ;
 
 # factor: 因子
-term = factor , [ { ( "*" | "/" ) , factor } ] ;
+term = factor , [ { ( "*" | "/" | "%" | "^" | "`" , SYMBOL , "`" ) , factor } ] ;
 
 # first: 一次子, lambda_expr: ラムダ式, NIL: 偽値, STRING: 文字列リテラル, T: 真値
 factor = first
-    | lambda_expr
-    | NIL
     | STRING
     | T
+    | NIL
+    | lambda_expr
     | "!" , factor
     ;
 
 # assignment_expr: 代入式, block_expr: ブロック式, declaration_expr: 宣言式
-# function_call: 関数呼び出し, NUMBER: 数値リテラル, SYMBOL: シンボル
+# function_call: 関数呼び出し, NUMBER: 数値リテラル, SYMBOL: シンボル, UNIT: unit値
 first = assignment_expr
     | block_expr
     | declaration_expr
     | function_call
     | NUMBER
     | SYMBOL
+    | UNIT
+    | "++" , SYMBOL
+    | "--" , SYMBOL
+    | "+" , first
     | "-" , first
-    | "(" , expr , ")"
+    | "(" , logical_expr , ")"
+    | "[" , [br] , [ expr , [ { br , expr } ] , [br] ] , "]"
+    | "{" , [br] , expr , [ { br , expr } ] , [br] , "}"
     ;
 
 assignment_expr = SYMBOL , "=" , logical_expr ;
@@ -86,5 +92,8 @@ type = "int"
     | "enum"
     | "tuple"
     ;
+    
+BR: 改行
+br = { BR }
 
 ```
