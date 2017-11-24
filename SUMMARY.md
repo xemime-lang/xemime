@@ -1,12 +1,8 @@
 # SUMMARY
 
-* [チュートリアル](docs/tutorials.md)
+* [GitHubリポジトリ](https://github.com/xemime-lang/xemime)
 
-* 組み込みオブジェクト
-    * [Bool](docs/Bool.md)
-    * [Int](docs/Int.md)
-    * [String](docs/String.md)
-    * [Array](docs/Array.md)
+* [チュートリアル](docs/tutorials.md)
 
 * [構文定義 ( EBNF ) ](syntax.md)
 

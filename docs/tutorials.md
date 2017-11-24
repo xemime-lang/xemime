@@ -89,8 +89,8 @@ let obj = Object.clone();
 obj.prop = 1
 obj.method = #x -> x + 2
 
-println $ obj.prop
-println $ obj.method $ 3
+println $ obj.prop  // => 1
+println $ obj.method $ 3  // => 5
 ```
 
 ``Object.clone`` メソッドで最も単純なオブジェクトを生成します。  
