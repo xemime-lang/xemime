@@ -5,5 +5,5 @@ package net.zero918nobita.Xemime.type;
  * @author Kodai Matsumoto
  */
 
-public class OptionalType implements Type {
+public class OptionalType extends Type {
 }

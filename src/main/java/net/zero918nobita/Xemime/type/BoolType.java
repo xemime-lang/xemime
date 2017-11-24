@@ -5,7 +5,9 @@ package net.zero918nobita.Xemime.type;
  * @author Kodai Matsumoto
  */
 
-public class BoolType implements Type {
+public class BoolType extends Type {
+    private static BoolType myself;
+
     @Override
     public boolean equals(Object obj) {
         return obj instanceof BoolType;
@@ -14,5 +16,10 @@ public class BoolType implements Type {
     @Override
     public String toString() {
         return "Bool";
+    }
+
+    public static BoolType gen() {
+        if (myself == null) myself = new BoolType();
+        return myself;
     }
 }

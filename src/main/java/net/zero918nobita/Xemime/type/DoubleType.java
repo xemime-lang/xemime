@@ -5,7 +5,8 @@ package net.zero918nobita.Xemime.type;
  * @author Kodai Matsumoto
  */
 
-public class DoubleType implements Type {
+public class DoubleType extends Type {
+    private static DoubleType myself;
     @Override
     public boolean equals(Object obj) {
         return obj instanceof DoubleType;
@@ -14,5 +15,10 @@ public class DoubleType implements Type {
     @Override
     public String toString() {
         return "Double";
+    }
+
+    public static DoubleType gen() {
+        if (myself == null) myself = new DoubleType();
+        return myself;
     }
 }

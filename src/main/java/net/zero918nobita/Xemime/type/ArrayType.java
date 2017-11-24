@@ -5,7 +5,7 @@ package net.zero918nobita.Xemime.type;
  * @author Kodai Matsumoto
  */
 
-public class ArrayType implements Type {
+public class ArrayType extends Type {
     private Type type;
     public ArrayType(Type type) {
         this.type = type;

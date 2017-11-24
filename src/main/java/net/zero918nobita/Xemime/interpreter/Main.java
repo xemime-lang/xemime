@@ -359,7 +359,7 @@ public class Main {
          */
         private static class X_Exit extends Native {
             X_Exit() {
-                super(0, new LinkedHashMap<>(), new UnitType());
+                super(0, new LinkedHashMap<>(), UnitType.gen());
             }
 
             @Override

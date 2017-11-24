@@ -5,5 +5,5 @@ package net.zero918nobita.Xemime.type;
  * @author Kodai Matsumoto
  */
 
-public class AttrType implements Type {
+public class AttrType extends Type {
 }

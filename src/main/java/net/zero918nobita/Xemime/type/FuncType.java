@@ -10,7 +10,7 @@ import java.util.TreeMap;
  * @author Kodai Matsumoto
  */
 
-public class FuncType implements Type {
+public class FuncType extends Type {
     private Type returnType;
     private LinkedHashMap<Symbol, Type> params;
 

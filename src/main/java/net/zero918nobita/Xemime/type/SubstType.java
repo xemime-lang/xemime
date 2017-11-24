@@ -7,7 +7,7 @@ import net.zero918nobita.Xemime.ast.Symbol;
  * @author Kodai Matsumoto
  */
 
-public class SubstType implements Type {
+public class SubstType extends Type {
     private Symbol attr_name;
 
     public SubstType(Symbol attr_name) {

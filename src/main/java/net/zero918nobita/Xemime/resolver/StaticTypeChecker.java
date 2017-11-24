@@ -49,30 +49,30 @@ class StaticTypeChecker {
     }
 
     private Type check(Resolver resolver, Bool bool) {
-        return new BoolType();
+        return BoolType.gen();
     }
 
     private Type check(Resolver resolver, Int num) {
-        return new IntType();
+        return IntType.gen();
     }
 
     private Type check(Resolver resolver, Double num) {
-        return new DoubleType();
+        return DoubleType.gen();
     }
 
     private Type check(Resolver resolver, Str str) {
-        return new StrType();
+        return StrType.gen();
     }
 
     private Type check(Resolver resolver, Array array) throws FatalError, SemanticError, TypeError {
-        if (array.getElements().size() == 0) return new ArrayType(new AnyType());
+        if (array.getElements().size() == 0) return new ArrayType(AnyType.gen());
         Type type = resolver.getTypeOfNode(array.getElement(0));
         for (int i = 1; i < array.getElements().size(); i++) {
             if (type instanceof IntType && resolver.getTypeOfNode(array.getElement(i)) instanceof DoubleType) {
-                type = new DoubleType();
+                type = DoubleType.gen();
             } else if (!resolver.getTypeOfNode(array.getElement(i)).equals(type) &&
                     !(type instanceof DoubleType && resolver.getTypeOfNode(array.getElement(i)) instanceof IntType))
-                type = new AnyType();
+                type = AnyType.gen();
         }
         return new ArrayType(type);
     }
@@ -116,7 +116,7 @@ class StaticTypeChecker {
         switch (exprNode.getOperator()) {
             case ADD:
                 if (tLhs instanceof StrType && tRhs instanceof StrType) {
-                    return new StrType();
+                    return StrType.gen();
                 } else if (tLhs instanceof StrType || tRhs instanceof StrType) {
                     throw new TypeError(exprNode.getLocation(), 61, "文字列型データに他の型のデータを足すことはできません。");
                 }
@@ -125,9 +125,9 @@ class StaticTypeChecker {
             case DIV:
                 if (tLhs instanceof IntType) {
                     if (tRhs instanceof IntType) {
-                        return new IntType();
+                        return IntType.gen();
                     } else if (tRhs instanceof DoubleType) {
-                        return new DoubleType();
+                        return DoubleType.gen();
                     } else if (tRhs instanceof AnyType) {
                         return tRhs;
                     } else {
@@ -135,7 +135,7 @@ class StaticTypeChecker {
                     }
                 } else if (tLhs instanceof DoubleType) {
                     if (tRhs instanceof IntType || tRhs instanceof DoubleType) {
-                        return new DoubleType();
+                        return DoubleType.gen();
                     } else if (tRhs instanceof AnyType) {
                         return tRhs;
                     } else {
@@ -156,7 +156,7 @@ class StaticTypeChecker {
             case XOR:
                 if ((tLhs instanceof BoolType || tLhs instanceof AnyType) &&
                         (tRhs instanceof BoolType || tRhs instanceof AnyType)) {
-                    return new BoolType();
+                    return BoolType.gen();
                 } else if (tLhs instanceof BoolType || tLhs instanceof AnyType) {
                     throw new TypeError(exprNode.getLocation(), 129, "論理演算子の右辺のデータの型が不正です。");
                 } else {
@@ -168,7 +168,7 @@ class StaticTypeChecker {
     }
 
     private Type check(Resolver resolver, LambdaExprNode lambdaExprNode) throws TypeError, SemanticError, FatalError {
-        return new FuncType(new AnyType(), new LinkedHashMap<>());
+        return new FuncType(AnyType.gen(), new LinkedHashMap<>());
     }
 
     private Type check(Resolver resolver, FuncallNode funcallNode) throws TypeError, SemanticError, FatalError {
@@ -191,10 +191,10 @@ class StaticTypeChecker {
     }
 
     private Type check(Resolver resolver, DotExprNode dotExprNode) throws TypeError, SemanticError, FatalError {
-        return new IntType();
+        return IntType.gen();
     }
 
     private Type check(Resolver resolver, DotCallNode dotCallNode) throws TypeError, SemanticError, FatalError {
-        return new IntType();
+        return IntType.gen();
     }
 }

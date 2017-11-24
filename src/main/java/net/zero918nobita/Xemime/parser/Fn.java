@@ -108,7 +108,7 @@ class Fn extends ParseUnit {
         } else if (symbol.equals(Symbol.intern("String"))) {
             return new StrType();
         } else if (symbol.equals(Symbol.intern("Unit"))) {
-            return new UnitType();
+            return UnitType.gen();
         } else {
             throw new SyntaxError(symbol.getLocation(), 76, "`" + symbol + "` 型は定義されていません。");
         }

@@ -5,7 +5,8 @@ package net.zero918nobita.Xemime.type;
  * @author Kodai Matsumoto
  */
 
-public class IntType implements Type {
+public class IntType extends Type {
+    private static IntType myself;
     @Override
     public boolean equals(Object obj) {
         return obj instanceof IntType;
@@ -14,5 +15,10 @@ public class IntType implements Type {
     @Override
     public String toString() {
         return "Int";
+    }
+
+    public static IntType gen() {
+        if (myself == null) myself = new IntType();
+        return myself;
     }
 }
