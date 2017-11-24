@@ -15,12 +15,12 @@ import static net.zero918nobita.Xemime.lexer.TokenType.SUB;
  * @author Kodai Matsumoto
  */
 
-class SimpleExpr extends ParseUnit {
+class ArithmeticExpr extends ParseUnit {
     /**
      * @param lexer 字句解析器
      * @param resolver 意味解析器
      */
-    SimpleExpr(Lexer lexer, Resolver resolver) {
+    ArithmeticExpr(Lexer lexer, Resolver resolver) {
         super(lexer, resolver);
     }
 

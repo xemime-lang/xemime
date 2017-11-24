@@ -29,7 +29,7 @@ class LogicalExpr extends ParseUnit {
     @Override
     protected Node parse() throws Exception {
         if (current(IF)) return new If(lexer, resolver).parse();
-        Node node = new SimpleExpr(lexer, resolver).parse();
+        Node node = new ArithmeticExpr(lexer, resolver).parse();
         switch (lexer.tokenType()) {
             case AND:
             case L:
@@ -57,7 +57,7 @@ class LogicalExpr extends ParseUnit {
                 (current(GE))) {
             TokenType op = lexer.tokenType();
             getToken();
-            Node simpleExpr = new SimpleExpr(lexer, resolver).parse();
+            Node simpleExpr = new ArithmeticExpr(lexer, resolver).parse();
             if (result == null) result = new ExprNode(lexer.getLocation(), op, node, simpleExpr);
             else result = new ExprNode(lexer.getLocation(), op, result, simpleExpr);
         }

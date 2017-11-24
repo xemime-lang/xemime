@@ -12,7 +12,6 @@ import net.zero918nobita.Xemime.type.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import static net.zero918nobita.Xemime.lexer.TokenType.*;
 
@@ -194,7 +193,7 @@ class First extends ParseUnit {
         while (current(LSB)) {
             getToken(); // skip `[`
             skipLineBreaks();
-            Node index = new SimpleExpr(lexer, resolver).parse();
+            Node index = new ArithmeticExpr(lexer, resolver).parse();
             if (!current(RSB)) throw new SyntaxError(lexer.getLocation(), 136, "");
             node = new ArrayReferenceNode(lexer.getLocation(), node, index);
             getToken(); // skip `]`
