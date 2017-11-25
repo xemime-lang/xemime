@@ -17,7 +17,7 @@ Xemime インタプリタでは、EBNF ( 拡張バッカス・ナウア記法 ) 
 
 ```
 #program: プログラム, expr: 式, br: 1つ以上の改行
-program = [ { expr , br } ]
+program = [ { expr , [br] } ]
 
 # logical_expr: 論理式, if: if文, for: for文, while: while文,
 # fn: fn文 ( 関数定義 ), return: return文
@@ -36,7 +36,10 @@ logical_expr = arithmetic_expr , [ { ( "&&" |  "==" | "!=" | "<" | "<=" | ">" | 
 arithmetic_expr = term , [ { ( "+" | "-" | "||" ) , term } ] ;
 
 # factor: 因子
-term = factor , [ { ( "*" | "/" | "%" | "^" | "`" , SYMBOL , "`" ) , factor } ] ;
+term = factor , [ { ( "*" | "/" | "%" | "^" | "`" , SYMBOL , "`" ) , factor } ]
+    | term , ".." , term
+    | term , "..." , term
+    ;
 
 # first: 一次子, lambda_expr: ラムダ式, NIL: 偽値, STRING: 文字列リテラル, T: 真値
 factor = first
@@ -45,6 +48,8 @@ factor = first
     | NIL
     | lambda_expr
     | "!" , factor
+    | function_call
+    | message_expr
     ;
 
 # assignment_expr: 代入式, block_expr: ブロック式, declaration_expr: 宣言式
@@ -52,17 +57,18 @@ factor = first
 first = assignment_expr
     | block_expr
     | declaration_expr
-    | function_call
     | NUMBER
     | SYMBOL
     | UNIT
     | "++" , SYMBOL
     | "--" , SYMBOL
+    | SYMBOL , "++"
+    | SYMBOL , "--"
     | "+" , first
     | "-" , first
     | "(" , logical_expr , ")"
-    | "[" , [br] , [ expr , [ { br , expr } ] , [br] ] , "]"
-    | "{" , [br] , expr , [ { br , expr } ] , [br] , "}"
+    | "[" , [br] , [ expr , [ { [br] , expr } ] , [br] ] , "]"
+    | "{" , [br] , expr , [ { [br] , expr } ] , [br] , "}"
     ;
 
 assignment_expr = SYMBOL , "=" , logical_expr ;
@@ -71,9 +77,13 @@ block_expr = "{" , logical_expr , [ ";" ] , "}"
     | "{" , logical_expr , { ";" , logical_expr } , [ ";" ] , "}"
     ;
 
-declaration_expr = "let" , SYMBOL , type ,  "=" , logical_expr ;
+declaration_expr = "let" , SYMBOL , [":"] , type ,  "=" , logical_expr ;
 
-function_call = first , "(" , [ logical_expr , [ { "," , logical_expr } ] ] , ")" ;
+function_call = factor , "(" , [ logical_expr , [ { "," , logical_expr } ] ] , ")"
+    | factor , "$" , [ logical_expr , [ { "," , logical_expr } ] ]
+    ;
+
+message_expr = factor , "." , SYMBOL
 
 import_stmt = "import" , STRING , "as" , SYMBOL ;
 
@@ -81,16 +91,16 @@ lambda_expr = "#" , "(", [ SYMBOL , [ { "," , SYMBOL } ] ] , ")", "->", logical_
     | "#", [ [ { "," , SYMBOL } ] ] , "->" , logical_expr
     ;
 
-type = "int"
-    | "char"
-    | "float"
-    | "double"
-    | "long"
-    | "subst"
-    | "attr"
-    | "proc"
-    | "enum"
-    | "tuple"
+type = "Any"
+    | "Bool"
+    | Int"
+    | "Double"
+    | "String"
+    | "[Any]"
+    | "[Bool]"
+    | "[Int]"
+    | "[Double]"
+    | "[String]"
     ;
     
 BR: 改行
