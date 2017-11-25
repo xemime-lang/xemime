@@ -68,14 +68,11 @@ first = assignment_expr
     | "-" , first
     | "(" , logical_expr , ")"
     | "[" , [br] , [ expr , [ { [br] , expr } ] , [br] ] , "]"
-    | "{" , [br] , expr , [ { [br] , expr } ] , [br] , "}"
     ;
 
 assignment_expr = SYMBOL , "=" , logical_expr ;
 
-block_expr = "{" , logical_expr , [ ";" ] , "}"
-    | "{" , logical_expr , { ";" , logical_expr } , [ ";" ] , "}"
-    ;
+block_expr = "{" , [br] , expr , [ { [br] , expr } ] , [br] , "}";
 
 declaration_expr = "let" , SYMBOL , [":"] , type ,  "=" , logical_expr ;
 
