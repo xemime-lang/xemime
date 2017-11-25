@@ -146,7 +146,7 @@ class Factor extends ParseUnit {
             case RANGE2: {
                 Node left = node;
                 getToken();
-                Node right = new Expr(lexer, resolver).parse();
+                Node right = new Term(lexer, resolver).parse();
                 node = new RangeExprNode(lexer.getLocation(), left, right, true);
                 break;
             }
@@ -155,7 +155,7 @@ class Factor extends ParseUnit {
             case RANGE3: {
                 Node left = node;
                 getToken();
-                Node right = new Expr(lexer, resolver).parse();
+                Node right = new Term(lexer, resolver).parse();
                 node = new RangeExprNode(lexer.getLocation(), left, right, false);
                 break;
             }
