@@ -80,7 +80,7 @@ function_call = factor , "(" , [ logical_expr , [ { "," , logical_expr } ] ] , "
     | factor , "$" , [ logical_expr , [ { "," , logical_expr } ] ]
     ;
 
-message_expr = factor , "." , SYMBOL
+message_expr = factor , "." , SYMBOL ;
 
 import_stmt = "import" , STRING , "as" , SYMBOL ;
 
