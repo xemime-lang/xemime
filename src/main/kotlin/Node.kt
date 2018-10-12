@@ -91,6 +91,7 @@ open class Node(var location: Int) : Recognizable {
     throw FatalException(location, 115)
   }
 
+  @Throws(FatalException::class)
   fun or(rhs: Node) = or(0, rhs)
 
   @Throws(FatalException::class)
