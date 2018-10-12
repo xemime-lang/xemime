@@ -1,10 +1,6 @@
 package net.zero918nobita.xemime;
 
-/**
- * recognize メソッドで識別可能なノードに実装されるインターフェースです。
- * @author Kodai Matsumoto
- */
-
+/** recognize メソッドで識別可能 */
 public interface Recognizable {
     NodeType recognize();
     boolean is(NodeType comparison);
