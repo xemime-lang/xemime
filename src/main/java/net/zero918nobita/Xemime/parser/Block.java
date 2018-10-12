@@ -10,24 +10,12 @@ import java.util.ArrayList;
 import static net.zero918nobita.Xemime.lexer.TokenType.BR;
 import static net.zero918nobita.Xemime.lexer.TokenType.RB;
 
-/**
- * ブロック式の構文解析器
- * @author Kodai Matsumoto
- */
-
+/** ブロック式のパーサ */
 class Block extends ParseUnit {
-    /**
-     * @param lexer 字句解析器
-     * @param resolver 意味解析器
-     */
     Block(Lexer lexer, Resolver resolver) {
         super(lexer, resolver);
     }
 
-    /**
-     * ブロック式の構文解析と意味解析を行います。
-     * @return 生成された AST
-     */
     @Override
     protected Node parse() throws Exception {
         ArrayList<Node> list;
