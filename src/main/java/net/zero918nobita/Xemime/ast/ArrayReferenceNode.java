@@ -5,11 +5,6 @@ import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.entity.Array;
 import net.zero918nobita.Xemime.entity.Int;
 
-/**
- * 配列参照
- * @author Kodai Matsumoto
- */
-
 public class ArrayReferenceNode extends Node implements Recognizable {
     private Node array;
     private Node index;
