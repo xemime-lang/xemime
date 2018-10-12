@@ -32,10 +32,6 @@ public class Array extends Node implements Recognizable {
         return this;
     }
 
-    public void addElement(Node node) {
-        elements.add(node);
-    }
-
     public Node getElement(int index) {
         if (index >= elements.size()) throw new ArrayIndexOutOfBoundsException();
         return elements.get(index);
