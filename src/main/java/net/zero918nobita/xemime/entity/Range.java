@@ -2,17 +2,12 @@ package net.zero918nobita.xemime.entity;
 
 import net.zero918nobita.xemime.ast.Node;
 
-/**
- * 範囲リテラルを表すノードです。
- * @author Kodai Matsumoto
- */
-
 public class Range extends Node {
     private int left;
     private boolean hasMaxElement;
     private int right;
 
-    public Range(int location, Int left, Int right, boolean isMaxElement) throws Exception {
+    public Range(int location, Int left, Int right, boolean isMaxElement) {
         super(location);
         this.hasMaxElement = isMaxElement;
         this.left = left.getValue().intValue();
