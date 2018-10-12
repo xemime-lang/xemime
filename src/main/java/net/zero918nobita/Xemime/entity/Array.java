@@ -3,18 +3,9 @@ package net.zero918nobita.Xemime.entity;
 import net.zero918nobita.Xemime.NodeType;
 import net.zero918nobita.Xemime.Recognizable;
 import net.zero918nobita.Xemime.ast.Node;
-import net.zero918nobita.Xemime.parser.FatalError;
-import net.zero918nobita.Xemime.resolver.SemanticError;
-import net.zero918nobita.Xemime.resolver.TypeError;
 import net.zero918nobita.Xemime.type.Type;
 
 import java.util.ArrayList;
-import java.util.function.Function;
-
-/**
- * 配列
- * @author Kodai Matsumoto
- */
 
 public class Array extends Node implements Recognizable {
     private Type type;

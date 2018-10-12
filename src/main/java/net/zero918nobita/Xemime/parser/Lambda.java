@@ -6,7 +6,6 @@ import net.zero918nobita.Xemime.ast.Symbol;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.resolver.Resolver;
 import net.zero918nobita.Xemime.type.AnyType;
-import net.zero918nobita.Xemime.type.ArrayType;
 
 import java.util.ArrayList;
 

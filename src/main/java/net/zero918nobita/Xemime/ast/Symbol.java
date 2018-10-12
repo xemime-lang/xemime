@@ -36,10 +36,6 @@ public class Symbol extends Node implements Comparable<Symbol>, Recognizable {
         return name.hashCode();
     }
 
-    public void setLocation(int location) {
-        this.location = location;
-    }
-
     public String getName() {
         return name;
     }

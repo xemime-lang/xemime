@@ -1,14 +1,10 @@
 package net.zero918nobita.Xemime.parser;
 
-import net.zero918nobita.Xemime.Pair;
 import net.zero918nobita.Xemime.ast.*;
-import net.zero918nobita.Xemime.entity.Array;
 import net.zero918nobita.Xemime.lexer.Lexer;
 import net.zero918nobita.Xemime.lexer.TokenType;
 import net.zero918nobita.Xemime.resolver.Resolver;
-import net.zero918nobita.Xemime.resolver.Scope;
 import net.zero918nobita.Xemime.type.AnyType;
-import net.zero918nobita.Xemime.type.FuncType;
 
 import java.util.ArrayList;
 

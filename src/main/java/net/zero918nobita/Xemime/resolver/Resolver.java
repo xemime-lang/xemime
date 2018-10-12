@@ -2,7 +2,6 @@ package net.zero918nobita.Xemime.resolver;
 
 import net.zero918nobita.Xemime.ast.Node;
 import net.zero918nobita.Xemime.ast.Symbol;
-import net.zero918nobita.Xemime.entity.Double;
 import net.zero918nobita.Xemime.parser.FatalError;
 import net.zero918nobita.Xemime.type.*;
 
