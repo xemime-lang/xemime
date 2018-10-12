@@ -96,14 +96,11 @@ open class Node(var location: Int) : Recognizable {
 
   @Throws(FatalException::class)
   open fun xor(location: Int, rhs: Node): Bool {
-    // `^` 演算子は使用できません。
     throw FatalException(location, 116)
   }
 
   @Throws(FatalException::class)
-  fun xor(rhs: Node): Bool {
-    return xor(0, rhs)
-  }
+  fun xor(rhs: Node) = xor(0, rhs)
 
   @Throws(Exception::class)
   open fun message(location: Int, symbol: Symbol): Node {
