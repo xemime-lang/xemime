@@ -15,14 +15,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-/**
- * エントリーポイント
- * @author Kodai Matsumoto
- */
-
 public class Main {
 
-    /** 構文解析器 */
     private static Parser parser;
 
     /** 実体テーブル */
@@ -42,7 +36,7 @@ public class Main {
     }};
 
     /**
-     * ローカル変数のフレーム<br>
+     * ローカル変数のフレーム
      * ブロック式の評価が始まった直後に新たなフレームが追加され、
      * 評価が完了した直後に、最後に追加されたフレームが破棄されます。
      */
@@ -64,31 +58,16 @@ public class Main {
         frame.unloadLocalFrame();
     }
 
-    /**
-     * 指定したシンボルがすでに変数テーブルに記録されているかを調べます。
-     * @param sym シンボル
-     * @return 記録されていれば true 、そうでなければ false
-     */
     public static boolean hasSymbol(Symbol sym) {
         return frame.hasSymbol(sym) || defaultObj.hasMember(sym);
     }
 
-    /**
-     * シンボルの参照先アドレスを取得します。
-     * @param sym シンボル
-     * @return 参照
-     */
     public static Address getAddressOfSymbol(Symbol sym) throws Exception {
         return (frame.hasSymbol(sym)) ?
                 frame.getAddressOfSymbol(sym) :
                 defaultObj.getAddressOfMember(sym);
     }
 
-    /**
-     * シンボルの値を取得します。
-     * @param sym シンボル
-     * @return 値
-     */
     public static Node getValueOfSymbol(Symbol sym) throws Exception {
         if (frame.hasSymbol(sym)) {
             return frame.getValueOfSymbol(sym);
@@ -98,54 +77,33 @@ public class Main {
         }
     }
 
-    /**
-     * 参照先の実体を取得します。
-     * @param address アドレス
-     * @return 実体
-     */
     public static Node getValueOfReference(Address address) {
         return entities.get(address);
     }
 
-    /**
-     * シンボルに参照をセットします。
-     * @param sym シンボル
-     * @param ref 参照
-     */
+    /** シンボルに参照をセットする */
     public static void setAddress(Symbol sym, Address ref) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setAddress(sym, ref); return; }
         if (!defaultObj.hasMember(sym)) throw new Exception(parser.getLocation() + ": 変数 `" + sym.getName() + "` は宣言されていません");
         defaultObj.setMember(sym, ref);
     }
 
-    /**
-     * 宣言済みの変数に値をセットします。
-     * @param sym シンボル
-     * @param obj 値
-     * @throws Exception 変数が宣言されていなかった場合に例外を発生させます。
-     */
+    /** 宣言済みの変数に値をセットする */
     public static void setValue(Symbol sym, Node obj) throws Exception {
         if (frame.hasSymbol(sym)) { frame.setValue(sym, obj); return; }
         Address ref = register(obj);
+        // 変数が宣言されていない場合に例外を投げる
         if (!defaultObj.hasMember(sym)) throw new Exception(parser.getLocation() + ": 変数 `" + sym.getName() + "` は宣言されていません");
         defaultObj.setMember(sym, ref);
     }
 
-    /**
-     * 変数を参照で宣言します。
-     * @param sym 変数
-     * @param ref 参照
-     */
+    /** 変数を参照で宣言する */
     public static void defAddress(Symbol sym, Address ref) throws Exception {
         if (frame.numberOfLayers() != 0) { frame.defAddress(sym, ref); return; }
         defaultObj.setMember(sym, ref);
     }
 
-    /**
-     * 変数を値で宣言します。
-     * @param sym 変数
-     * @param obj 値
-     */
+    /** 変数を値で宣言する */
     public static void defValue(Symbol sym, Node obj) throws Exception {
         if (frame.numberOfLayers() != 0) { frame.defValue(sym, obj); return; }
         Address ref = register(obj);
@@ -166,7 +124,6 @@ public class Main {
      * Xemime インタプリタにおいて最初に呼び出され、
      * コマンドライン引数によって実行モード(対話的実行 or ソースファイル実行)を設定し、
      * 実際にパーサも読み込んで解釈と実行を開始します。
-     * @param args コマンドライン引数
      */
     public static void main(String[] args) {
         allowExitMethod = true;
@@ -247,11 +204,7 @@ public class Main {
         }
     }
 
-    /**
-     * 外部からこの Xemime インタプリタを利用する場合に、ソースコードを渡して呼び出せば実行されます。
-     * @param source ソースコード
-     * @throws Exception ソースコードの解析中または実行中にエラーが発生する場合があります。
-     */
+    /** 指定したソースコードの実行 */
     public static void exec(String source) throws Exception {
         allowExitMethod = false;
         parser = new Parser();
@@ -266,9 +219,7 @@ public class Main {
         return allowExitMethod;
     }
 
-    /**
-     * ロゴとバージョン情報を出力します。
-     */
+    /** ロゴとバージョン情報の出力 */
     private static void usage() {
         System.out.println("   _  __               _              \n" +
                 "  | |/ /__  ____ ___  (_)___ ___  ___ \n" +
@@ -279,7 +230,7 @@ public class Main {
     }
 
     /**
-     * Object 組み込みオブジェクト<br>
+     * Object 組み込みオブジェクト
      * オブジェクト生成、クローン処理を担うメソッドを実装した最も基本的なオブジェクトです。<br>
      * これをクローンして新たなオブジェクトを用意することを推奨しています。
      */
@@ -292,7 +243,7 @@ public class Main {
         }
 
         /**
-         * Object.clone メソッド<br>
+         * Object.clone メソッド
          * clone メソッドのみを実装した、最も単純なオブジェクトを生成してその参照を返します。
          */
         private static class X_Clone extends Native {
