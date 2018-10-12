@@ -9,11 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
 
-/**
- * 変数の参照の解決を行います。
- * @author Kodai Matsumoto
- */
-
+/** 変数の参照の解決 */
 public class Resolver {
     private Stack<Scope> scope = new Stack<>();
     private HashSet<Symbol> substs = new HashSet<>();
