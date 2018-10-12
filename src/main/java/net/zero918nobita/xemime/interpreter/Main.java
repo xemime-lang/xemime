@@ -21,8 +21,8 @@ public class Main {
 
     /** 実体テーブル */
     private static TreeMap<Address, Node> entities = new TreeMap<Address, Node>() {{
-        put(new Address(0, 0), Bool.Nil);
-        put(new Address(0, 1), Bool.T);
+        put(new Address(0, 0), Bool.getNil());
+        put(new Address(0, 1), Bool.getT());
     }};
 
     /** グローバル環境 */

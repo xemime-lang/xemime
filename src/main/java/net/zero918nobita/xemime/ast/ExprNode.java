@@ -5,6 +5,7 @@ import net.zero918nobita.xemime.Recognizable;
 import net.zero918nobita.xemime.entity.Address;
 import net.zero918nobita.xemime.entity.Bool;
 import net.zero918nobita.xemime.lexer.TokenType;
+import org.jetbrains.annotations.NotNull;
 
 import static net.zero918nobita.xemime.lexer.TokenType.AND;
 import static net.zero918nobita.xemime.lexer.TokenType.OR;
@@ -44,11 +45,7 @@ public class ExprNode extends Node implements Recognizable {
         return NodeType.EXPR;
     }
 
-    /**
-     * 二項演算を行い、得られた値を返します。
-     * @return 演算結果
-     * @throws Exception 左辺または右辺が不正である場合に例外を発生させます。
-     */
+    /** 二項演算 */
     public Node run() throws Exception {
         // 二項演算の結果
         Node result = null;
@@ -97,18 +94,18 @@ public class ExprNode extends Node implements Recognizable {
                     if (lhs instanceof Symbol && rhs instanceof Symbol) {
                         Address a1 = ((Symbol)lhs).getAddress();
                         Address a2 = ((Symbol)rhs).getAddress();
-                        result = a1.equals(a2) ? Bool.T : Bool.Nil;
+                        result = a1.equals(a2) ? Bool.getT() : Bool.getNil();
                     } else {
-                        result = Bool.Nil;
+                        result = Bool.getNil();
                     }
                     break;
                 case EQL: // `==`
-                    if (e_lhs.equals(e_rhs)) result = Bool.T;
-                    else result = Bool.Nil;
+                    if (e_lhs.equals(e_rhs)) result = Bool.getT();
+                    else result = Bool.getNil();
                     break;
                 case NE: // `!=`
-                    if (e_lhs.equals(e_rhs)) result = Bool.Nil;
-                    else result = Bool.T;
+                    if (e_lhs.equals(e_rhs)) result = Bool.getNil();
+                    else result = Bool.getT();
                     break;
             }
         }

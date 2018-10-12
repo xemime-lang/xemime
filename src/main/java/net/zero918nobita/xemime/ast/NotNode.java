@@ -3,13 +3,9 @@ package net.zero918nobita.xemime.ast;
 import net.zero918nobita.xemime.NodeType;
 import net.zero918nobita.xemime.Recognizable;
 import net.zero918nobita.xemime.entity.Bool;
+import org.jetbrains.annotations.NotNull;
 
-/**
- * 否定演算子を表すノードです。<br>
- * 評価されると、真偽(Bool)型の T は NIL に、NIL は T に変換します。
- * @author Kodai Matsumoto
- */
-
+/** 論理否定演算子 */
 public class NotNode extends Node implements Recognizable {
     private Node node;
 
@@ -19,11 +15,13 @@ public class NotNode extends Node implements Recognizable {
     }
 
     @Override
+    @NotNull
     public NodeType recognize() {
         return NodeType.NOT;
     }
 
     @Override
+    @NotNull
     public Node run() throws Exception {
         Node o = node.run();
 
@@ -31,7 +29,7 @@ public class NotNode extends Node implements Recognizable {
         if (o.getClass() != Bool.class) throw new FatalException(getLocation(), 15);
 
         Bool p = (Bool)o;
-        if (p.isTrue()) return Bool.Nil;
-        else return Bool.T;
+        if (p.equals(Bool.getT())) return Bool.getNil();
+        else return Bool.getT();
     }
 }

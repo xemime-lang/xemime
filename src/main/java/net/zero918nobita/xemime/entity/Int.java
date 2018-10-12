@@ -3,11 +3,7 @@ package net.zero918nobita.xemime.entity;
 import net.zero918nobita.xemime.NodeType;
 import net.zero918nobita.xemime.Recognizable;
 import net.zero918nobita.xemime.ast.*;
-
-/**
- * 整数値
- * @author Kodai Matsumoto
- */
+import org.jetbrains.annotations.NotNull;
 
 public class Int extends Numeric implements Recognizable {
     public Int(int location, int num) {
@@ -20,6 +16,7 @@ public class Int extends Numeric implements Recognizable {
     }
 
     @Override
+    @NotNull
     public NodeType recognize() {
         return NodeType.INT;
     }
@@ -42,15 +39,9 @@ public class Int extends Numeric implements Recognizable {
         return value.intValue();
     }
 
-    /**
-     * この整数値を左辺、渡されたノードを右辺として加算を行います。
-     * @param line 演算を行う行の行番号
-     * @param rhs 右辺
-     * @return 和
-     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
-     */
     @Override
-    public Numeric add(int line, Node rhs) throws FatalException {
+    @NotNull
+    public Numeric add(int line, @NotNull Node rhs) throws FatalException {
         Numeric result;
         if (rhs.getClass() == Int.class) {
             Int i = (Int)rhs;
@@ -65,15 +56,9 @@ public class Int extends Numeric implements Recognizable {
         }
     }
 
-    /**
-     * この整数値を左辺、渡されたノードを右辺として減算を行います。
-     * @param line 演算を行う行の行番号
-     * @param rhs 右辺
-     * @return 差
-     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
-     */
     @Override
-    public Numeric sub(int line, Node rhs) throws FatalException {
+    @NotNull
+    public Numeric sub(int line, @NotNull Node rhs) throws FatalException {
         Numeric result;
         if (rhs.getClass() == Int.class) {
             Int i = (Int)rhs;
@@ -88,15 +73,9 @@ public class Int extends Numeric implements Recognizable {
         }
     }
 
-    /**
-     * この整数を左辺、渡されたノードを右辺として乗算を行います。
-     * @param line 演算を行う行の行番号
-     * @param rhs 右辺
-     * @return 積
-     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
-     */
     @Override
-    public Numeric multiply(int line, Node rhs) throws FatalException {
+    @NotNull
+    public Numeric multiply(int line, @NotNull Node rhs) throws FatalException {
         Numeric result;
         if (rhs.getClass() == Int.class) {
             Int i = (Int)rhs;
@@ -111,15 +90,9 @@ public class Int extends Numeric implements Recognizable {
         }
     }
 
-    /**
-     * この整数値を左辺、渡されたノードを右辺として除算が行います。
-     * @param line 演算を行う行の行番号
-     * @param rhs 右辺
-     * @return 商
-     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
-     */
     @Override
-    public Numeric divide(int line, Node rhs) throws FatalException {
+    @NotNull
+    public Numeric divide(int line, @NotNull Node rhs) throws FatalException {
         Numeric result;
         if (rhs.getClass() == Int.class) {
             Int i = (Int)rhs;
@@ -134,15 +107,9 @@ public class Int extends Numeric implements Recognizable {
         }
     }
 
-    /**
-     * この整数値を左辺、渡されたノードを右辺として剰余を求めます。
-     * @param line 演算を行う行の行番号
-     * @param rhs 右辺
-     * @return 剰余
-     * @throws FatalException 右辺が整数値ではない場合に例外を発生させます。
-     */
     @Override
-    public Numeric mod(int line, Node rhs) throws FatalException {
+    @NotNull
+    public Numeric mod(int line, @NotNull Node rhs) throws FatalException {
         if (rhs.getClass() == Int.class) {
             Int i = (Int) rhs;
             return new Int(0, value.intValue() % i.getValue());
@@ -151,59 +118,35 @@ public class Int extends Numeric implements Recognizable {
         }
     }
 
-    /**
-     * 大小を比較して、この整数値が比較対象「より小さい」場合に真値を返します。
-     * @param line 比較を行う行の行番号
-     * @param rhs 比較対象
-     * @return 真偽値
-     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
-     */
     @Override
-    public Bool less(int line, Node rhs) throws FatalException {
-        if (rhs instanceof Int) return (this.getValue() < ((Int) rhs).getValue()) ? Bool.T : Bool.Nil;
-        else if (rhs instanceof Double) return (this.getValue() < ((Double) rhs).getValue()) ? Bool.T : Bool.Nil;
+    @NotNull
+    public Bool less(int line, @NotNull Node rhs) throws FatalException {
+        if (rhs instanceof Int) return (this.getValue() < ((Int) rhs).getValue()) ? Bool.getT() : Bool.getNil();
+        else if (rhs instanceof Double) return (this.getValue() < ((Double) rhs).getValue()) ? Bool.getT() : Bool.getNil();
         else throw new FatalException(line, 110);
     }
 
-    /**
-     * 大小を比較して、この整数値が比較対象「以上」の場合に真値を返します。
-     * @param line 比較を行う行の行番号
-     * @param rhs 比較対象
-     * @return 真偽値
-     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
-     */
     @Override
-    public Bool le(int line, Node rhs) throws FatalException {
-        if (rhs instanceof Int) return (this.getValue() <= ((Int) rhs).getValue()) ? Bool.T : Bool.Nil;
-        else if (rhs instanceof Double) return (this.getValue() <= ((Double) rhs).getValue()) ? Bool.T : Bool.Nil;
+    @NotNull
+    public Bool le(int line, @NotNull Node rhs) throws FatalException {
+        if (rhs instanceof Int) return (this.getValue() <= ((Int) rhs).getValue()) ? Bool.getT() : Bool.getNil();
+        else if (rhs instanceof Double) return (this.getValue() <= ((Double) rhs).getValue()) ? Bool.getT() : Bool.getNil();
         else throw new FatalException(line, 111);
     }
 
-    /**
-     * 大小を比較して、この整数値が比較対象「より大きい」場合に真値を返します。
-     * @param line 比較を行う行の行番号
-     * @param rhs 比較対象
-     * @return 真偽値
-     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
-     */
     @Override
-    public Bool greater(int line, Node rhs) throws FatalException {
-        if (rhs instanceof Int) return (this.getValue() > ((Int) rhs).getValue()) ? Bool.T : Bool.Nil;
-        else if (rhs instanceof Double) return (this.getValue() > ((Double) rhs).getValue()) ? Bool.T : Bool.Nil;
+    @NotNull
+    public Bool greater(int line, @NotNull Node rhs) throws FatalException {
+        if (rhs instanceof Int) return (this.getValue() > ((Int) rhs).getValue()) ? Bool.getT() : Bool.getNil();
+        else if (rhs instanceof Double) return (this.getValue() > ((Double) rhs).getValue()) ? Bool.getT() : Bool.getNil();
         else throw new FatalException(line, 112);
     }
 
-    /**
-     * 大小を比較して、この整数値が比較対象「以上」の場合に真値を返します。
-     * @param line 比較を行う行の行番号
-     * @param rhs 比較対象
-     * @return 真偽値
-     * @throws FatalException 右辺が数値ではない場合に例外を発生させます。
-     */
     @Override
-    public Bool ge(int line, Node rhs) throws FatalException {
-        if (rhs instanceof Int) return (this.getValue() >= ((Int) rhs).getValue()) ? Bool.T : Bool.Nil;
-        else if (rhs instanceof Double) return (this.getValue() >= ((Double) rhs).getValue()) ? Bool.T : Bool.Nil;
+    @NotNull
+    public Bool ge(int line, @NotNull Node rhs) throws FatalException {
+        if (rhs instanceof Int) return (this.getValue() >= ((Int) rhs).getValue()) ? Bool.getT() : Bool.getNil();
+        else if (rhs instanceof Double) return (this.getValue() >= ((Double) rhs).getValue()) ? Bool.getT() : Bool.getNil();
         else throw new FatalException(line, 113);
     }
 }

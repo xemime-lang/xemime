@@ -34,7 +34,7 @@ public class LambdaExprNode extends Node implements Recognizable {
     @Override
     public Node run() throws Exception {
         Handler table = new Handler(0);
-        for (Symbol sym : params) table.setMember(sym, Main.register(Bool.Nil));
+        for (Symbol sym : params) table.setMember(sym, Main.register(Bool.getNil()));
         Main.loadLocalFrame(table);
         if (body instanceof LambdaExprNode) body = body.run();
         Main.unloadLocalFrame();

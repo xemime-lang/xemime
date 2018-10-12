@@ -41,13 +41,13 @@ class Factor extends ParseUnit {
 
             // 真値
             case T:
-                node = Bool.T;
+                node = Bool.getT();
                 getToken();
                 break;
 
             // 偽値
             case NIL:
-                node = Bool.Nil;
+                node = Bool.getNil();
                 getToken();
                 break;
 

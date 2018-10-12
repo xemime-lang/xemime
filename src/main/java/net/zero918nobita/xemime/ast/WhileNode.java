@@ -29,7 +29,7 @@ public class WhileNode extends Node implements Recognizable {
 
     @Override
     public Node run() throws Exception {
-        while (!condition.run().equals(Bool.Nil))
+        while (!condition.run().equals(Bool.getNil()))
             for (Node node : body) node.run();
         return new Unit(getLocation(), null);
     }
