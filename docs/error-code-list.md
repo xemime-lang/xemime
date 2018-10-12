@@ -1,4 +1,4 @@
-| エラーコード | 部類 | 内容 | 発生場所 ( 先頭に `net.zero918nobita.Xemime.` が付きます ) |
+| エラーコード | 部類 | 内容 | 発生場所 ( 先頭に `net.zero918nobita.xemime.` が付きます ) |
 | ---- | ---- | ---- | ---- |
 | 1 | Divide By Zero Error | 構文解析中にゼロ除算が行われている箇所を発見しました。 | ``parser.Term#term`` |
 | 2* | Semantic Error | シンボルの参照の解決に失敗しました。 | ``resolver.Scope#referVar`` |

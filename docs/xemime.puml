@@ -1,6 +1,6 @@
 @startuml{xemime.png}
 
-package net.zero918nobita.Xemime.ast {
+package net.zero918nobita.xemime.ast {
     +class AssignNode {
         +AssignNode(int location, Symbol symbol, Node node)
         +Node run() throws Exception
@@ -122,7 +122,7 @@ package net.zero918nobita.Xemime.ast {
     SubstanceDeclarationNode --|> ExprNode
 }
 
-package net.zero918nobita.Xemime.entity {
+package net.zero918nobita.xemime.entity {
     +class Address {
         -int address
         +Address(int location, int address)
@@ -198,7 +198,7 @@ package net.zero918nobita.Xemime.entity {
     Substance --|> Node
 }
 
-package net.zero918nobita.Xemime.interpreter {
+package net.zero918nobita.xemime.interpreter {
     +class Frame {
     }
 
@@ -226,7 +226,7 @@ package net.zero918nobita.Xemime.interpreter {
     }
 }
 
-package net.zero918nobita.Xemime.lexer {
+package net.zero918nobita.xemime.lexer {
     class Lexer {
     }
 
@@ -274,7 +274,7 @@ package net.zero918nobita.Xemime.lexer {
     }
 }
 
-package net.zero918nobita.Xemime.parser {
+package net.zero918nobita.xemime.parser {
     class Args {
     }
 
@@ -347,7 +347,7 @@ package net.zero918nobita.Xemime.parser {
     Term --|> ParseUnit
 }
 
-package net.zero918nobita.Xemime.resolver {
+package net.zero918nobita.xemime.resolver {
     class Resolver {
     }
 
@@ -360,7 +360,7 @@ package net.zero918nobita.Xemime.resolver {
     SemanticError --|> java.lang.Exception
 }
 
-package net.zero918nobita.Xemime.utils {
+package net.zero918nobita.xemime.utils {
     class VirtualMemoryMonitor {
     }
 }

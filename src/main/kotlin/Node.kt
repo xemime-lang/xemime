@@ -1,8 +1,8 @@
-package net.zero918nobita.Xemime.ast
+package net.zero918nobita.xemime.ast
 
-import net.zero918nobita.Xemime.NodeType
-import net.zero918nobita.Xemime.Recognizable
-import net.zero918nobita.Xemime.entity.Bool
+import net.zero918nobita.xemime.NodeType
+import net.zero918nobita.xemime.Recognizable
+import net.zero918nobita.xemime.entity.Bool
 import java.util.ArrayList
 import java.util.LinkedHashMap
 
