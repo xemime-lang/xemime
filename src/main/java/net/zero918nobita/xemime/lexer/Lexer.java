@@ -9,11 +9,6 @@ import java.math.BigDecimal;
 
 import static net.zero918nobita.xemime.lexer.TokenType.*;
 
-/**
- * 字句解析器です。
- * @author Kodai Matsumoto
- */
-
 public class Lexer {
     /** 行番号 */
     private int line;
