@@ -31,14 +31,10 @@ public class Double extends Numeric implements Recognizable {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Double) {
-            return ((Double) obj).getValue() == this.value.doubleValue();
+            return ((Double) obj).getValue().doubleValue() == this.value.doubleValue();
         } else {
-            return (obj instanceof Int) && ((Int) obj).getValue() == this.value.doubleValue();
+            return (obj instanceof Int) && ((Int) obj).getValue().intValue() == this.value.doubleValue();
         }
-    }
-
-    public double getValue() {
-        return value.doubleValue();
     }
 
     @Override
@@ -47,11 +43,11 @@ public class Double extends Numeric implements Recognizable {
         Numeric result;
         if (rhs.getClass() == Int.class) {
             Int i = (Int)rhs;
-            result = new Double(0, value.doubleValue() + i.getValue());
+            result = new Double(0, value.doubleValue() + i.getValue().intValue());
             return result;
         } else if (rhs.getClass() == Double.class) {
             Double dbl = (Double) rhs;
-            result = new Double(0, value.doubleValue() + dbl.getValue());
+            result = new Double(0, value.doubleValue() + dbl.getValue().doubleValue());
             return result;
         } else {
             throw new FatalException(line, 120);
@@ -64,11 +60,11 @@ public class Double extends Numeric implements Recognizable {
         Numeric result;
         if (rhs.getClass() == Int.class) {
             Int i = (Int)rhs;
-            result = new Double(0, value.doubleValue() - i.getValue());
+            result = new Double(0, value.doubleValue() - i.getValue().intValue());
             return result;
         } else if (rhs.getClass() == Double.class) {
             Double dbl = (Double)rhs;
-            result = new Double(0, value.doubleValue() - dbl.getValue());
+            result = new Double(0, value.doubleValue() - dbl.getValue().doubleValue());
             return result;
         } else {
             throw new FatalException(line, 121);
@@ -81,11 +77,11 @@ public class Double extends Numeric implements Recognizable {
         Numeric result;
         if (rhs.getClass() == Int.class) {
             Int i = (Int)rhs;
-            result = new Double(0, value.doubleValue() * i.getValue());
+            result = new Double(0, value.doubleValue() * i.getValue().intValue());
             return result;
         } else if (rhs.getClass() == Double.class) {
             Double dbl = (Double)rhs;
-            result = new Double(0, value.doubleValue() * dbl.getValue());
+            result = new Double(0, value.doubleValue() * dbl.getValue().doubleValue());
             return result;
         } else {
             throw new FatalException(line, 122);
@@ -98,11 +94,11 @@ public class Double extends Numeric implements Recognizable {
         Numeric result;
         if (rhs.getClass() == Int.class) {
             Int i = (Int)rhs;
-            result = new Double(0, value.doubleValue() / i.getValue());
+            result = new Double(0, value.doubleValue() / i.getValue().intValue());
             return result;
         } else if (rhs.getClass() == Double.class) {
             Double dbl = (Double)rhs;
-            result = new Double(0, value.doubleValue() / dbl.getValue());
+            result = new Double(0, value.doubleValue() / dbl.getValue().doubleValue());
             return result;
         } else {
             throw new FatalException(line, 123);
@@ -112,32 +108,32 @@ public class Double extends Numeric implements Recognizable {
     @Override
     @NotNull
     public Bool less(int line, @NotNull Node rhs) throws FatalException {
-        if (rhs instanceof Int) return (this.getValue() < ((Int) rhs).getValue()) ? Bool.getT() : Bool.getNil();
-        else if (rhs instanceof Double) return (this.getValue() < ((Double) rhs).getValue()) ? Bool.getT() : Bool.getNil();
+        if (rhs instanceof Int) return (this.getValue().doubleValue() < ((Int) rhs).getValue().intValue()) ? Bool.getT() : Bool.getNil();
+        else if (rhs instanceof Double) return (this.getValue().doubleValue() < ((Double) rhs).getValue().doubleValue()) ? Bool.getT() : Bool.getNil();
         else throw new FatalException(line, 124);
     }
 
     @Override
     @NotNull
     public Bool le(int line, @NotNull Node rhs) throws FatalException {
-        if (rhs instanceof Int) return (this.getValue() <= ((Int) rhs).getValue()) ? Bool.getT() : Bool.getNil();
-        else if (rhs instanceof Double) return (this.getValue() <= ((Double) rhs).getValue()) ? Bool.getT() : Bool.getNil();
+        if (rhs instanceof Int) return (this.getValue().doubleValue() <= ((Int) rhs).getValue().intValue()) ? Bool.getT() : Bool.getNil();
+        else if (rhs instanceof Double) return (this.getValue().doubleValue() <= ((Double) rhs).getValue().doubleValue()) ? Bool.getT() : Bool.getNil();
         else throw new FatalException(line, 125);
     }
 
     @Override
     @NotNull
     public Bool greater(int line, @NotNull Node rhs) throws FatalException {
-        if (rhs instanceof Int) return (this.getValue() > ((Int) rhs).getValue()) ? Bool.getT() : Bool.getNil();
-        else if (rhs instanceof Double) return (this.getValue() > ((Double) rhs).getValue()) ? Bool.getT() : Bool.getNil();
+        if (rhs instanceof Int) return (this.getValue().doubleValue() > ((Int) rhs).getValue().intValue()) ? Bool.getT() : Bool.getNil();
+        else if (rhs instanceof Double) return (this.getValue().doubleValue() > ((Double) rhs).getValue().doubleValue()) ? Bool.getT() : Bool.getNil();
         else throw new FatalException(line, 126);
     }
 
     @Override
     @NotNull
     public Bool ge(int line, @NotNull Node rhs) throws FatalException {
-        if (rhs instanceof Int) return (this.getValue() >= ((Int) rhs).getValue()) ? Bool.getT() : Bool.getNil();
-        else if (rhs instanceof Double) return (this.getValue() >= ((Double) rhs).getValue()) ? Bool.getT() : Bool.getNil();
+        if (rhs instanceof Int) return (this.getValue().doubleValue() >= ((Int) rhs).getValue().intValue()) ? Bool.getT() : Bool.getNil();
+        else if (rhs instanceof Double) return (this.getValue().doubleValue() >= ((Double) rhs).getValue().doubleValue()) ? Bool.getT() : Bool.getNil();
         else throw new FatalException(line, 127);
     }
 }

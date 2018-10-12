@@ -35,9 +35,9 @@ public class ArrayReferenceNode extends Node implements Recognizable {
         Node eIndex = index.run();
         if (!(eArray instanceof Array)) throw new FatalException(getLocation(), 135);
         if (!(eIndex instanceof Int)) throw new FatalException(getLocation(), 136);
-        if (((Int) eIndex).getValue() < 0) throw new RuntimeException(getLocation() + ": 配列参照`" + this + "` の添え字 `" + index + "` が 0 未満になっているため、要素を取り出すことができません。 [137]");
-        if (((Int) eIndex).getValue() >= ((Array) eArray).getElements().size())
+        if (((Int) eIndex).getValue().intValue() < 0) throw new RuntimeException(getLocation() + ": 配列参照`" + this + "` の添え字 `" + index + "` が 0 未満になっているため、要素を取り出すことができません。 [137]");
+        if (((Int) eIndex).getValue().intValue() >= ((Array) eArray).getElements().size())
             throw new RuntimeException(getLocation() + ": 配列参照 `" + this + "` の添え字 `" + index + "` が配列 `" + array + "` の要素数以上になっているため、要素を取り出すことができません。 [138]");
-        return ((Array) eArray).getElement(((Int) eIndex).getValue());
+        return ((Array) eArray).getElement(((Int) eIndex).getValue().intValue());
     }
 }

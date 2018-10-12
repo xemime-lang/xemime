@@ -36,8 +36,8 @@ public class MinusNode extends Node implements Recognizable {
         if (o.getClass() != Int.class && o.getClass() != Double.class)
             // Fatal Exception - 数値以外のデータには単項演算子 `-` を適用できません
             throw new FatalException(getLocation(), 14);
-        if (o.getClass() == Int.class) return new Int(getLocation(), -((Int)o).getValue());
-        return new Double(getLocation(), -((Double)o).getValue());
+        if (o.getClass() == Int.class) return new Int(getLocation(), -((Int)o).getValue().intValue());
+        return new Double(getLocation(), -((Double)o).getValue().doubleValue());
     }
 
     public Node getAbs() {

@@ -15,8 +15,8 @@ public class Range extends Node {
     public Range(int location, Int left, Int right, boolean isMaxElement) throws Exception {
         super(location);
         this.hasMaxElement = isMaxElement;
-        this.left = left.getValue();
-        this.right = right.getValue();
+        this.left = left.getValue().intValue();
+        this.right = right.getValue().intValue();
     }
 
     public int getRight() {
