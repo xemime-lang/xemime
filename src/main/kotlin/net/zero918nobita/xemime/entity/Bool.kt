@@ -7,10 +7,8 @@ import kotlin.Int
 
 class Bool(location: Int, private val bool: Boolean) : Node(location) {
   companion object {
-    @JvmStatic
-    val T = Bool(true)
-    @JvmStatic
-    val Nil = Bool(false)
+    @JvmStatic val T = Bool(true)
+    @JvmStatic val Nil = Bool(false)
   }
 
   constructor(boolean: Boolean) : this(0, boolean)

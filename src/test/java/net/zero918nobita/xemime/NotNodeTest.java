@@ -15,9 +15,9 @@ import static org.junit.Assert.assertThat;
 public class NotNodeTest {
     @Test
     public void testRun() throws Exception {
-        NotNode t = new NotNode(0, Bool.T);
-        NotNode nil = new NotNode(0, Bool.Nil);
-        assertThat(t.run(), is(Bool.Nil));
-        assertThat(nil.run(), is(Bool.T));
+        NotNode t = new NotNode(0, Bool.getT());
+        NotNode nil = new NotNode(0, Bool.getNil());
+        assertThat(t.run(), is(Bool.getNil()));
+        assertThat(nil.run(), is(Bool.getT()));
     }
 }

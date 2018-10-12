@@ -39,116 +39,116 @@ public class BoolTest {
 
     @Test
     public void testToString() {
-        assertThat(Bool.T.toString(), is("T"));
-        assertThat(Bool.Nil.toString(), is("NIL"));
+        assertThat(Bool.getT().toString(), is("T"));
+        assertThat(Bool.getNil().toString(), is("NIL"));
     }
 
     @Test
     public void testEquals() {
-        assertThat(Bool.T.equals(new Bool(true)), is(true));
-        assertThat(Bool.T.equals(new Bool(false)), is(false));
-        assertThat(Bool.Nil.equals(new Bool(false)), is(true));
-        assertThat(Bool.Nil.equals(new Bool(true)), is(false));
+        assertThat(Bool.getT().equals(new Bool(true)), is(true));
+        assertThat(Bool.getT().equals(new Bool(false)), is(false));
+        assertThat(Bool.getNil().equals(new Bool(false)), is(true));
+        assertThat(Bool.getNil().equals(new Bool(true)), is(false));
     }
 
     @Test
     public void testAdd() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [98]");
-        Bool.T.add(Bool.T);
+        Bool.getT().add(Bool.getT());
     }
 
     @Test
     public void testSub() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [99]");
-        Bool.T.sub(Bool.T);
+        Bool.getT().sub(Bool.getT());
     }
 
     @Test
     public void testMultiply() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [100]");
-        Bool.T.multiply(Bool.T);
+        Bool.getT().multiply(Bool.getT());
     }
 
     @Test
     public void testDivide() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [101]");
-        Bool.T.divide(Bool.T);
+        Bool.getT().divide(Bool.getT());
     }
 
     @Test
     public void testLess() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [102]");
-        Bool.T.less(Bool.Nil);
+        Bool.getT().less(Bool.getNil());
     }
 
     @Test
     public void testLe() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [103]");
-        Bool.T.le(Bool.Nil);
+        Bool.getT().le(Bool.getNil());
     }
 
     @Test
     public void testGreater() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [104]");
-        Bool.T.greater(Bool.Nil);
+        Bool.getT().greater(Bool.getNil());
     }
 
     @Test
     public void testGe() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [105]");
-        Bool.T.ge(Bool.Nil);
+        Bool.getT().ge(Bool.getNil());
     }
 
     @Test
     public void testAnd() throws Exception {
-        assertThat(Bool.T.and(Bool.T), is(Bool.T));
-        assertThat(Bool.T.and(Bool.Nil), is(Bool.Nil));
-        assertThat(Bool.Nil.and(Bool.Nil), is(Bool.Nil));
-        assertThat(Bool.Nil.and(Bool.T), is(Bool.Nil));
+        assertThat(Bool.getT().and(Bool.getT()), is(Bool.getT()));
+        assertThat(Bool.getT().and(Bool.getNil()), is(Bool.getNil()));
+        assertThat(Bool.getNil().and(Bool.getNil()), is(Bool.getNil()));
+        assertThat(Bool.getNil().and(Bool.getT()), is(Bool.getNil()));
     }
 
     @Test
     public void testAnd2() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [117]");
-        Bool.T.and(new Str("foo"));
+        Bool.getT().and(new Str("foo"));
     }
 
     @Test
     public void testOr() throws Exception {
-        assertThat(Bool.T.or(Bool.T), is(Bool.T));
-        assertThat(Bool.T.or(Bool.Nil), is(Bool.T));
-        assertThat(Bool.Nil.or(Bool.T), is(Bool.T));
-        assertThat(Bool.Nil.or(Bool.Nil), is(Bool.Nil));
+        assertThat(Bool.getT().or(Bool.getT()), is(Bool.getT()));
+        assertThat(Bool.getT().or(Bool.getNil()), is(Bool.getT()));
+        assertThat(Bool.getNil().or(Bool.getT()), is(Bool.getT()));
+        assertThat(Bool.getNil().or(Bool.getNil()), is(Bool.getNil()));
     }
 
     @Test
     public void testOr2() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [118]");
-        Bool.T.or(new Str("foo"));
+        Bool.getT().or(new Str("foo"));
     }
 
     @Test
     public void testXor() throws Exception {
-        assertThat(Bool.T.xor(Bool.T), is(Bool.Nil));
-        assertThat(Bool.T.xor(Bool.Nil), is(Bool.T));
-        assertThat(Bool.Nil.xor(Bool.T), is(Bool.T));
-        assertThat(Bool.Nil.xor(Bool.Nil), is(Bool.Nil));
+        assertThat(Bool.getT().xor(Bool.getT()), is(Bool.getNil()));
+        assertThat(Bool.getT().xor(Bool.getNil()), is(Bool.getT()));
+        assertThat(Bool.getNil().xor(Bool.getT()), is(Bool.getT()));
+        assertThat(Bool.getNil().xor(Bool.getNil()), is(Bool.getNil()));
     }
 
     @Test
     public void testXor2() throws FatalException {
         expectedException.expect(FatalException.class);
         expectedException.expectMessage("0: インタプリタ内部の深刻なエラーが発生しました。 [119]");
-        Bool.T.xor(new Str("foo"));
+        Bool.getT().xor(new Str("foo"));
     }
 }
