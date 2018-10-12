@@ -8,8 +8,8 @@ package net.zero918nobita.xemime;
  */
 
 public class Pair<A, B> {
-    protected final A left;
-    protected final B right;
+    private final A left;
+    private final B right;
 
     public Pair(A left, B right) {
         this.left = left;
