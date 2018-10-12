@@ -4,12 +4,8 @@ import net.zero918nobita.xemime.ast.Symbol;
 
 import java.util.ArrayList;
 
-/**
- * 未解決シンボルを再解決します。
- * @author Kodai Matsumoto
- */
-
 public class Ruminator {
+    /** 未解決シンボルの再解決 */
     public static void ruminate(ArrayList<Symbol> symbols, Resolver resolver) throws SemanticError {
         for (Symbol sym : symbols)
             if (!resolver.referVar(sym.getLocation(), sym))
