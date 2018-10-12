@@ -9,11 +9,7 @@ import java.io.PrintStream;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * net.zero918nobita.Xemime.ast.AssignNode のテストクラスです。
- * @author Kodai Matsumoto
- */
-
+/** net.zero918nobita.Xemime.ast.AssignNode のテスト */
 public class AssignNodeTest {
     private String br = System.lineSeparator();
 
